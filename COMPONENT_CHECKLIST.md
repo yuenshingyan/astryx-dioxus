@@ -9,37 +9,37 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
 - Use idiomatic Rust/Dioxus abstractions for supporting APIs rather than copying React architecture. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- All items remain unchecked. [Button is in progress](docs/button-port.md), not complete. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- Button is complete for the source-faithful migration baseline. Its contrast audit is completed with an explicit [accepted upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that the contrast targets pass. Other components remain unchecked. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
-- [ ] **[Button](https://astryx.atmeta.com/components/Button)**
+- [x] **[Button](https://astryx.atmeta.com/components/Button)**
 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Button/Button.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Button).
 
   - **Finite choices**
-    - [ ] `variant`: `primary`, `secondary` (default), `ghost`, `destructive`.
-    - [ ] `size`: `sm`, `md` (default), `lg`; implicit leading Icon size sm for sm/md buttons, md for lg.
-    - [ ] `elevation`: `none` (default), `low`, `med`, `high`; ignored inside ButtonGroup, which owns elevation.
-    - [ ] HTML `type`: `button` (default), `submit`, `reset`; optional form/name/value participation.
+    - [x] `variant`: `primary`, `secondary` (default), `ghost`, `destructive`.
+    - [x] `size`: `sm`, `md` (default), `lg`; implicit leading Icon size sm for sm/md buttons, md for lg.
+    - [x] `elevation`: `none` (default), `low`, `med`, `high`; ignored inside ButtonGroup, which owns elevation.
+    - [x] HTML `type`: `button` (default), `submit`, `reset`; optional form/name/value participation.
   - **States, content, and activation**
-    - [ ] `isDisabled=false` default; disabled uses aria-disabled and stays focusable.
-    - [ ] `isLoading=false` default; spinner replaces icon, aria-busy/aria-disabled, blocks repeat activation without dropping focus, live-announces Loading.
-    - [ ] `clickAction` synchronous or Promise-returning, automatic pending spinner/deduplication; regular onClick alternative. `isInterruptible=false` default; true retains busy/spinner but permits fresh clicks without dedupe while pending.
-    - [ ] `isIconOnly=false` default; square icon-only requires icon, label becomes aria-label; trailing content ignored. Dedicated IconButton is a separate component/import.
-    - [ ] Required label, optional visible children override, leading icon, trailing Icon or Badge with inherited color, optional tooltip.
-    - [ ] Content-width default or arbitrary width/full-width; constrained labels ellipsize with full accessible name and focus tooltip; icon-only stays square.
-    - [ ] Native action button versus href anchor/custom `as` link; target/rel for navigation.
-    - [ ] Rest, hover, pointer-down, keyboard-focus, disabled, loading; touch press paints temporary ::before layer, so style child rather than overriding that pseudo-element.
-    - [ ] Contrast: label/badge 4.5:1, essential icon/spinner and focus 3:1; necessary boundary 3:1, disabled exceptions. Badge contrast covers all 14 variants on page/surface in rest/hover/down, with custom end content checked separately.
+    - [x] `isDisabled=false` default; disabled uses aria-disabled and stays focusable.
+    - [x] `isLoading=false` default; spinner replaces icon, aria-busy/aria-disabled, blocks repeat activation without dropping focus, live-announces Loading.
+    - [x] `clickAction` synchronous or Promise-returning, automatic pending spinner/deduplication; regular onClick alternative. `isInterruptible=false` default; true retains busy/spinner but permits fresh clicks without dedupe while pending.
+    - [x] `isIconOnly=false` default; square icon-only requires icon, label becomes aria-label; trailing content ignored. Dedicated IconButton is a separate component/import.
+    - [x] Required label, optional visible children override, leading icon, trailing Icon or Badge with inherited color, optional tooltip.
+    - [x] Content-width default or arbitrary width/full-width; constrained labels ellipsize with full accessible name and focus tooltip; icon-only stays square.
+    - [x] Native action button versus href anchor/custom `as` link; target/rel for navigation.
+    - [x] Rest, hover, pointer-down, keyboard-focus, disabled, loading; touch press paints temporary ::before layer, so style child rather than overriding that pseudo-element.
+    - [x] Complete the source-color contrast audit and resolve the fidelity/contrast conflict. Targets: label/badge 4.5:1, essential icon/spinner and focus 3:1; necessary boundary 3:1, disabled exceptions. Audit all 14 Badge colors on page/surface in rest/hover/down. **Decision: retain original paint under the [accepted upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict). The audit found 267/672 Badge and 4/48 Button-label failures; these are known failures, not passing contrast results. Custom content remains the caller's responsibility.**
   - **Inline example and templates**
-    - [ ] Inline **Actions in narrow rows**: long review/invitation labels truncate; square icon controls and static short Cancel remain usable.
-    - [ ] **Button — Floating** (`ButtonFloating.doc.mjs`): elevation med FAB.
-    - [ ] **Button — Variants** (`ButtonShowcase.doc.mjs`): four styles.
-    - [ ] **Button — Sizes** (`ButtonSizeVariants.doc.mjs`): sm/md/lg.
-    - [ ] **Button — Variants** (`ButtonVariants.doc.mjs`): all four in default/disabled/loading.
-    - [ ] **Button — End Slot** (`ButtonWithEndSlot.doc.mjs`): trailing count/status badge.
-    - [ ] **Button — Icon** (`ButtonWithIcon.doc.mjs`): leading icon and label.
+    - [x] Inline **Actions in narrow rows**: long review/invitation labels truncate; square icon controls and static short Cancel remain usable.
+    - [x] **Button — Floating** (`ButtonFloating.doc.mjs`): elevation med FAB.
+    - [x] **Button — Variants** (`ButtonShowcase.doc.mjs`): four styles.
+    - [x] **Button — Sizes** (`ButtonSizeVariants.doc.mjs`): sm/md/lg.
+    - [x] **Button — Variants** (`ButtonVariants.doc.mjs`): all four in default/disabled/loading.
+    - [x] **Button — End Slot** (`ButtonWithEndSlot.doc.mjs`): trailing count/status badge.
+    - [x] **Button — Icon** (`ButtonWithIcon.doc.mjs`): leading icon and label.
 
 - [ ] **[Button Group](https://astryx.atmeta.com/components/ButtonGroup)**
 

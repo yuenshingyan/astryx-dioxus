@@ -4,10 +4,13 @@ Reusable Astryx UI components for Dioxus 0.7.
 
 ## Status
 
-Button is a source-based port in progress, with upstream variants, sizes,
-loading, slots, link/form behavior, and activation guards. Shared tokens are
-adapted from the original source. It is not yet a complete migration: see
-[Button port status](docs/button-port.md) for parity gaps and verification.
+Button implements the upstream variants, sizes, loading/actions, slots,
+tooltips, touch behavior, link/form modes, and shared size/icon/spinner/group
+integration. The showcase includes the documented Button patterns and a locally
+bundled Figtree font. See [Button implementation and verification](docs/button-port.md)
+for source references, tested behavior, API adapters, and verification boundaries.
+The [component checklist](COMPONENT_CHECKLIST.md) records verification separately;
+Button's implementation does not mark unrelated components or unrun audits complete.
 Publishing remains disabled until package metadata and licensing are confirmed.
 See [third-party notices](THIRD_PARTY_NOTICES.md) for the upstream MIT license.
 
@@ -64,6 +67,10 @@ cargo check --example showcase --target wasm32-unknown-unknown
 ```
 
 For browser interaction checks, see [Button browser testing](docs/button-port.md#browser-checks).
+The separate [core-palette contrast audit](docs/button-port.md#core-palette-contrast-conflict)
+reports inherited upstream failures under an accepted source-fidelity exception;
+run `node tests/button.contrast.mjs` (it exits 1). Those failures are not a claim
+of passing contrast or accessibility compliance.
 
 ## Migration workflow
 
