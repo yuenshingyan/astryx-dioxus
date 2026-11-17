@@ -2,11 +2,12 @@
 
 ## Meta Astryx
 
-`src/components/button.rs` and `assets/astryx.css` adapt portions of Meta Astryx's Button implementation, design tokens, and catalog theme:
+`src/components/button.rs`, `src/components/button_support.rs`, `assets/button-controller.js`, and `assets/astryx.css` adapt Meta Astryx's Button, Spinner, icon sizing, grouping/context contracts, tooltip/press behavior, design tokens, and Button-specific theme values:
 
 - Repository: https://github.com/meta/astryx
 - Reference revision: `476a3153417dbf75c565f7df05b0784e94ddd59e`
-- Sources: `packages/core/src/Button/Button.tsx`, `packages/core/src/theme/tokens.stylex.ts`, and `apps/docsite/src/themes/astryxTheme.ts`.
+- Sources: `packages/core/src/Button/Button.tsx`, `packages/core/src/Badge/Badge.tsx` (contrast-audit mappings), `packages/core/src/Spinner/{Spinner.tsx,spinnerRotor.ts}`, `packages/core/src/Icon/IconSize.stylex.ts`, `packages/core/src/Tooltip/useTooltip.tsx`, `packages/core/src/utils/{pressFeedback.ts,pressGesture.ts}`, `packages/core/src/theme/tokens.stylex.ts`, `packages/themes/neutral/src/{neutralTheme.ts,neutralPaletteRefs.generated.ts}`, and `apps/docsite/src/themes/astryxTheme.ts`.
+- The showcase's named Button patterns are adapted from `packages/cli/assets/templates/blocks/components/Button/` at the same revision.
 
 Upstream license:
 
@@ -33,3 +34,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## Figtree font (showcase only)
+
+- File: `assets/fonts/Figtree-latin.woff2`.
+- Copyright 2022 The Figtree Project Authors (https://github.com/erikdkennedy/figtree).
+- License: SIL Open Font License 1.1; complete text in [assets/fonts/OFL.txt](assets/fonts/OFL.txt).
+- Source: https://fonts.gstatic.com/s/figtree/v9/_Xms-HUzqDCFdgfMm4S9DaRvzig.woff2, the Latin variable font served by Google Fonts for Figtree.
+- Bundled locally for deterministic showcase typography. Button itself inherits the application's font and does not download fonts.

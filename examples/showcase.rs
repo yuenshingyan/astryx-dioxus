@@ -4,6 +4,16 @@ use std::pin::Pin;
 use astryx_dioxus::{Button, ButtonElevation, ButtonSize, ButtonType, ButtonVariant, STYLES};
 use dioxus::prelude::*;
 
+#[path = "showcase/button_contract.rs"]
+mod button_contract;
+#[path = "showcase/button_patterns.rs"]
+mod button_patterns;
+
+use button_contract::ButtonContractExamples;
+use button_patterns::DocumentedButtonPatterns;
+
+const FIGTREE: Asset = asset!("/assets/fonts/Figtree-latin.woff2");
+
 fn main() {
     dioxus::launch(App);
 }
@@ -29,15 +39,20 @@ fn App() -> Element {
     rsx! {
         document::Title { "Astryx Dioxus — Button" }
         document::Style { "{STYLES}" }
+        document::Style { "@font-face {{font-family:Figtree;src:url('{FIGTREE}') format('woff2');font-style:normal;font-weight:300 900;font-display:swap;}}" }
         document::Style { "
             body {{ font-family: Figtree, system-ui, sans-serif; margin: 0; background: #f8f4ed; }}
             main {{ max-width: 56rem; margin: 3rem auto; padding: 1.5rem; }}
             section {{ margin-block: 2rem; }}
             .showcase-row {{ display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }}
+            .demo-count {{ font-size:12px;line-height:20px;padding:0 6px;border-radius:9999px;background:light-dark(#e2e2e2,#303030);color:light-dark(#1b1b1b,#d4d4d4); }}
+            .demo-count--info {{ background:light-dark(#b9d7ff,#88bcff3d);color:light-dark(#003978,#a1caff); }}
+            .demo-count--warning {{ background:light-dark(#fae19e,#e2b6233d);color:light-dark(#4b3900,#eec448); }}
         " }
         main { "data-astryx-theme": "astryx",
             h1 { "Astryx Button" }
-            p { "Source-based port in progress; see docs/button-port.md for verification and parity gaps." }
+            p { "Documented Button patterns, interaction states, and integration examples. See docs/button-port.md for verification." }
+            DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
                 h2 { id: "variants-heading", "Variants" }
                 div { class: "showcase-row",
@@ -126,6 +141,7 @@ fn App() -> Element {
                 }
                 p { id: "form-count", "Submissions: {form_count}" }
             }
+            ButtonContractExamples {}
         }
     }
 }

@@ -1,36 +1,32 @@
-# Button port status
+# Button implementation and verification
 
-**In progress — keep the Button checklist item unchecked.**
+**Status: source-faithful Button implementation complete**, with the explicit upstream-palette exception below. This does not claim contrast compliance or completion of other components.
+
+## Implemented Button surface
+
+- Primary, Secondary (default), Ghost, and Destructive variants; Small/Medium/Large sizes; None/Low/Medium/High elevation; Button/Submit/Reset form types.
+- Visible label, custom children, leading icon, icon-only mode, trailing content, explicit width, truncation, and forwarded root attributes/callbacks.
+- Controlled loading and caller-owned async actions; same-tick deduplication; interruptible overlapping actions; click callback before action; `prevent_default()` cancels the action.
+- Busy and disabled controls remain focusable and cancel activation without native `disabled`. Blocked clicks do not activate ancestors. Blocked submit/reset server markup is safe before mount.
+- Native links, explicit router renderers, provider renderers, target/rel forwarding, disabled-link fallback, safe destinations, and focus preservation across repeated anchor/button replacement.
+- Explicit tooltips: hover/focus triggers, hoverable content, Escape/blur dismissal, viewport-constrained placement, existing description-ID composition, repeated-name suppression, and disabled-control hints.
+- Automatic truncated-label tooltips: measured only on keyboard focus; full label shown without a duplicate description; no hover/tap activation; explicit/wrapping tooltips take precedence.
+- Shared SVG Spinner with original 135-degree rounded arc, small 14px frame, inherited foreground/track alpha, phase-aligned rotation, and reduced-motion timing. Loading preserves control geometry and announces through a persistent live region.
+- Shared Icon sizing: unsized Button icons use Small (16px) in small/medium buttons and Medium (20px) in large buttons; explicit Icon sizes win.
+- Reactive size and button-environment providers; connected-group disabled state, own elevation suppression, corners/dividers, roving focus, orientation/RTL navigation, and touch release-target tracking. Headless slot environments provide the integration boundary for input-owned button slots without pretending the standalone InputGroup has been ported.
+- Touch feedback, scroll-intent delay/cancellation, momentum-stop guard, leave/re-enter tracking, quick-tap flash/release fade, expanded touch targets bounded by neighbouring controls, and no popup-anchor press scale.
+- Scope-owned async tasks, timers, frames, layers, controllers, and shared document listeners are cleaned up on unmount. Old release timers cannot clear a newer held press; touch suppression cannot swallow keyboard activation.
 
 ## Reference
 
-- [Component catalog](https://astryx.atmeta.com/components/Button) identifies `@astryxdesign/core` v0.7.16.
-- This implementation references upstream commit [`476a3153417dbf75c565f7df05b0784e94ddd59e`](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e), not a verified v0.7.16 release snapshot.
-- [Button source](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Button/Button.tsx).
-- [Button contract](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/docs/specs/components/Button/Button.spec.md).
-- [Core tokens](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/theme/tokens.stylex.ts).
-- [Catalog theme](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/apps/docsite/src/themes/astryxTheme.ts).
-- [Upstream license attribution](../THIRD_PARTY_NOTICES.md).
+- [Astryx Button page](https://astryx.atmeta.com/components/Button), displayed package version `@astryxdesign/core` v0.7.16.
+- Implementation reference: [`meta/astryx` revision `476a3153417dbf75c565f7df05b0784e94ddd59e`](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e).
+- [Button source](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Button/Button.tsx) and [contract](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/docs/specs/components/Button/Button.spec.md).
+- Upstream Spinner, icon-size, Tooltip, press-gesture, token, and theme sources are listed in [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md).
 
-## Implemented surface
+The showcase contains all six named upstream Button template patterns (Variants showcase, Variants states, Sizes, Floating, Icon, End Slot), plus Actions in narrow rows and the interaction/integration cases above. It includes the original Neutral preview palette and the Astryx catalog-brand palette. Figtree is bundled locally for the showcase; the library Button inherits its application's font.
 
-- Required `label`; optional custom children, leading `icon`, and `end_content`.
-- `ButtonVariant::{Primary, Secondary, Ghost, Destructive}`; Secondary is the default.
-- `ButtonSize::{Small, Medium, Large}`; Medium is the default, with 28/32/36px heights.
-- `ButtonElevation::{None, Low, Medium, High}`.
-- `ButtonType::{Button, Submit, Reset}`, plus `name`, `value`, and `form`.
-- `is_disabled`, `is_loading`, `is_interruptible`, and `is_icon_only`.
-- Caller-controlled loading and optional caller-supplied `click_action` futures.
-- Click callback runs before the async action; `prevent_default()` cancels the action.
-- Same-tick deduplication for non-interruptible actions. Pending state lasts until all accepted action futures finish.
-- Focusable disabled/busy controls with `aria-disabled`, activation guards, and no native `disabled` attribute. Blocked clicks do not reach ancestors; Enter/Space are prevented while other keys reach `onkeydown`.
-- Safe server-rendered types for blocked submit/reset buttons until mount installs event guards.
-- Busy links remain anchors; truly disabled links become inert buttons.
-- Native link `href`, `target`, and `rel`; CSS `width`, `class`, `style`, and global attributes.
-- URL boundary checks: relative URLs and HTTP(S), mailto, and tel schemes are accepted. Control characters and other schemes render an inert button.
-- Busy content remains in layout, with a centered private loading indicator; explicit loading is immediate, action/interruptible loading is delayed by the upstream 310ms token.
-- Caller-provided `loading_label` for localized announcements. Its default is empty, so pass it when loading needs a spoken status message. First-render loading populates the live region after mount and an animation frame.
-- Core token names/values, optional `data-astryx-theme="astryx"` catalog styling, focus outline, hover/press paint, truncation, shadow tiers, forced-colors borders, and reduced-motion handling.
+## Rust integration
 
 ```rust
 use astryx_dioxus::{Button, ButtonVariant};
@@ -38,49 +34,38 @@ use dioxus::prelude::*;
 
 fn example() -> Element {
     rsx! {
-        Button { label: "Save", variant: ButtonVariant::Primary }
+        Button { label: "Save", variant: ButtonVariant::Primary, tooltip: "Save your changes" }
         Button { label: "Saving", is_loading: true, loading_label: "Loading" }
     }
 }
 ```
 
-For async work, `ButtonAction` is a callback returning `Pin<Box<dyn Future<Output = ()>>>`. See `examples/showcase.rs` for a complete example. The button owns its Dioxus task; unmount cancels the awaiting task. Callers own error handling and any independently detached operations. Interruptible mode accepts overlapping actions; it does not itself cancel earlier actions.
+- `ButtonSize` is the shared `ControlSize` scale. Resolve explicit size, then the nearest size provider, then the medium fallback.
+- `SizeProvider` supplies inherited sizes. `ButtonGroup` supplies a connected environment. `ButtonEnvironmentProvider` is a headless adapter for application/input-slot owners; nested slot environments do not clear an enclosing connected group's disabled state.
+- `ButtonLinkProvider` supplies a reactive `ButtonLinkRenderer`; a Button's `render_link` overrides it. A renderer receives `ButtonLinkProps` and must forward its attributes, click/key/mount handlers, native link properties, and content to one focusable link root.
+- Use `onmounted` to obtain the actual root's `MountedData` instead of React refs. Root focus, blur, keyboard, mouse, pointer, and touch callbacks are public props.
+- `ButtonAction` returns `Pin<Box<dyn Future<Output = ()>>>`. The button owns the awaiting Dioxus task. Callers own error handling and independently detached operations. Interruptible mode accepts overlapping actions; it does not cancel earlier work itself.
+- `label` must provide a non-empty accessible name. Loading text defaults to English `Loading`; override `loading_label` for the application's locale.
+- Width and form values use Rust strings: express pixel lengths as CSS strings and serialize application values before passing them.
+- Tooltip descriptions for opaque caller-rendered slots are initially conservative in server markup. The mounted controller resolves actual rendered names and removes repeated-name descriptions, including decorative Icons. `aria-labelledby` remains authoritative.
+- All slot content is visually hidden while loading, including custom-colored content. This avoids the upstream contract's documented colored-end-content visibility bug.
+- The supporting Icon, Spinner, ButtonGroup, provider, and input-slot contracts satisfy Button's dependencies; they do not automatically complete those separate standalone migration checklist entries.
 
-## Starter API migration
+## Verification
 
-The user approved breaking the provisional starter API/defaults:
+`tests/button.rs`, `tests/button_complete.rs`, and `tests/button_support.rs` cover the Rust rendering, provider, naming, and state contracts. Run the normal project checks from [README.md](../README.md).
 
-- `Button { "Save" }` becomes `Button { label: "Save" }`.
-- `disabled: true` becomes `is_disabled: true`.
-- The default variant changes from Primary to Secondary; request Primary explicitly where needed.
-- Use `button_type` for form behavior. Label text must provide a non-empty accessible name, including icon-only controls.
-- Replace provisional `--astryx-*` token overrides with the original upstream semantic token names used in `assets/astryx.css`.
+### Browser checks
 
-## Remaining parity and verification gaps
+Requires Node.js 22+, Dioxus CLI 0.7, the WebAssembly target, and a dedicated Chrome/Chromium instance. No npm package is required.
 
-- Explicit Tooltip integration and automatic keyboard-focus tooltips for truncated labels are not implemented. Native `title` through global attributes is not an equivalent replacement.
-- Coarse-pointer press tracking, touch-target expansion, and grouped press tracking are not implemented. Fine-pointer press feedback is implemented; do not claim touch parity.
-- ButtonGroup, InputGroup, size-provider inheritance, router/link providers, and standalone Icon/Spinner integration await their corresponding components.
-- The private CSS loading indicator is not yet a verified port of the standalone Spinner component.
-- Icon slot dimensions have defaults but do not implement the upstream Icon size-provider contract.
-- Loading hides all visible slot content, including content with its own colors. This intentionally avoids upstream's documented custom-colored end-content visibility gap.
-- Reduced motion removes both loading delay and spinner animation; no claim is made that its static indicator exactly matches upstream Spinner behavior.
-- The catalog theme uses Figtree when available; this project does not download or bundle the font. System fallback changes text metrics.
-- No pixel-diff baseline against an upstream browser rendering has been approved. Source-derived tokens and geometry alone do not establish visual fidelity.
-- Keyboard/browser checks and the Chromium accessibility tree do not replace screen-reader testing, Safari/Firefox testing, or touch-device testing.
-- Browser checks are manual, not part of the existing GitHub Actions workflow.
-
-## Browser checks
-
-These tests use Node.js 22+'s built-in WebSocket and Chrome DevTools Protocol. No npm package or browser-driver dependency is required.
-
-1. From the project root, serve the showcase (Rust, Dioxus CLI 0.7, and the WebAssembly target are required):
+1. Serve the showcase from the project root:
 
    ```sh
    dx serve --example showcase --web --addr 127.0.0.1 --port 8080 --open false
    ```
 
-2. Start a separate Chrome instance with a dedicated temporary profile and a loopback-only debugging endpoint. On macOS:
+2. Start a separate browser instance with a temporary profile and a loopback debugging endpoint. On macOS:
 
    ```sh
    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
@@ -88,20 +73,43 @@ These tests use Node.js 22+'s built-in WebSocket and Chrome DevTools Protocol. N
      --user-data-dir="$(mktemp -d)" --no-first-run about:blank
    ```
 
-   Use the corresponding Chrome/Chromium executable on other platforms. Do not expose the debugging port publicly or reuse a personal browser profile.
-
 3. Run:
 
    ```sh
    node tests/button.browser.mjs
    ```
 
-   Optional overrides: `CDP_URL`, `SHOWCASE_URL`, and `SCREENSHOT_PATH` (for an inspection screenshot, not an approved visual baseline).
+   Optional overrides: `CDP_URL`, `SHOWCASE_URL`, `SCREENSHOT_PATH`.
 
-4. Stop the showcase and dedicated browser processes after testing.
+4. Stop the dedicated processes after testing; never expose the debugging port publicly or reuse a personal browser profile.
 
-The script checks native Enter/Space activation, click handling, disabled/busy guards and ancestor propagation, link behavior, blocked/native form submission, stable loading geometry and focus, live-region updates, async deduplication, interruptible actions, `prevent_default`, sizes, icon-only geometry, ellipsis, accessible names/disabled exposure, reduced motion, and forced-colors borders.
+The browser suite exercises native mouse/keyboard/touch activation; disabled/busy/form guards; propagation; loading geometry/focus/live regions; async deduplication/interruption/unmount cancellation; explicit and truncated-label tooltips; hoverability/dismissal/description deduplication; size/icon inheritance; group navigation and sliding touch selection; reactive router adapters; repeated focus-preserving root swaps; scroll cancellation; repeated-press timing; reduced motion; and forced colors.
 
-## Verification record
+### Upstream appearance comparison
 
-Local Rust checks and browser checks are recorded in the implementation task's completion report. A passing check does not mark this migration complete while the gaps above remain.
+`tests/fixtures/button-neutral-reference.json` records measurements taken from the actual Astryx Button page's Neutral examples in light and dark modes. The browser suite compares all four variants' computed fill/text colors, radius, font size/weight/line height, height, padding, gap, and width against those values. Width permits at most 1/32 CSS pixel (two Chromium layout subpixels); other recorded values must match exactly. These are explicit property assertions, not automatically accepted screenshot updates.
+
+## Core-palette contrast conflict
+
+Run the reproducible source-color audit:
+
+```sh
+node tests/button.contrast.mjs
+node tests/button.contrast.mjs --json
+```
+
+It uses the pinned upstream core tokens and Button/Badge fill/foreground mappings. It composites 14 Badge colors × 4 Button variants × 3 states × 2 backdrops × 2 color modes: **267 of 672 Badge combinations fall below 4.5:1**. It also checks 48 Button-label combinations; four fail: dark Primary on each backdrop reaches **4.3639:1 on hover** and **4.0267:1 when pressed**. The upstream Button contract already documents the dark-accent hover/press issue.
+
+This is a source-color calculation, not a claim that the standalone Badge renderer has been implemented or that every application theme was browser-audited. The script exits 1 while these conflicts remain; those failures must not be reported as a passing check.
+
+### Decision: retain the original palette
+
+The user delegated this choice. Retain the upstream colors rather than silently redesigning Button or caller-owned Badge content. The completed migration accepts the reported source-palette defects at the pinned revision as a **fidelity exception**, not a successful contrast result. Functional/appearance verification and the completed contrast investigation are recorded separately in the checklist.
+
+This exception is limited to the unchanged upstream palette analyzed here. It does not authorize new contrast regressions, waive checks on custom themes/content, or claim that the Badge component or a WCAG compliance program is complete. Any later palette correction must be an explicit, separately reviewed visual change.
+
+## Verification boundaries
+
+- Chromium browser checks and source comparison are not a claim of screen-reader certification or a completed Safari/Firefox/device matrix.
+- The upstream contract documents contrast limitations for the default core dark accent under hover/press and custom-colored end content. Matching upstream paint does not prove arbitrary caller-supplied content or themes meet a contrast target. The source-color matrix above records failures rather than silently treating Button's example slot markup as a passing Badge audit.
+- The component checklist remains the verification ledger. Check only items actually verified; implementing the behavior does not justify marking a failing contrast audit passed or claiming other component migrations complete.
