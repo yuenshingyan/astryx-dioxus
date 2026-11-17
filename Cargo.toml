@@ -1,0 +1,17 @@
+[package]
+name = "astryx-dioxus"
+version = "0.1.0"
+edition = "2024"
+description = "Astryx UI components for Dioxus"
+publish = false
+
+[dependencies]
+dioxus = { version = "0.7.3", default-features = false, features = ["lib"] }
+
+[dev-dependencies]
+dioxus = { version = "0.7.3", features = ["web"] }
+dioxus-ssr = "0.7.3"
+
+[[example]]
+name = "showcase"
+path = "examples/showcase.rs"
