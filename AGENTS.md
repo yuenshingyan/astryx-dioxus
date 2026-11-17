@@ -49,12 +49,15 @@ fn primary_variant() -> ButtonVariant {
 
 - Split functions by responsibility; impose no fixed function-length or parameter-count limit.
 - Prefer early returns.
+- Prefer iterator methods such as `.iter().map(...)`, `.filter(...)`, and `.collect()` over explicit `for` loops when they express the operation clearly. Use `for` loops when they make control flow or side effects clearer.
+- Write idiomatic, semantically clear Rust: express intent through types, ownership, borrowing, pattern matching, and standard-library abstractions. Avoid unnecessary clones, allocations, and clever constructs that obscure behavior.
 - Keep items private by default. Use `pub(crate)` for internal cross-module access and `pub` for intended public APIs.
 - Keep reusable components focused on rendering and UI interaction.
 - Let callers supply application-specific network, storage, and business operations through props or callbacks. For example, a Save button emits a click callback; the caller performs the save.
 
 ## Types & Safety
 
+- Adopt an enum-first approach: model finite alternatives and mutually exclusive states with enums rather than strings, numeric tags, or combinations of boolean flags. Put state-specific data in enum variants to make invalid states unrepresentable; do not introduce enums for open-ended values.
 - Represent optional values with `Option<T>`.
 - Keep bindings immutable unless mutation is needed.
 - Validate external inputs at public boundaries using manual checks, in addition to compile-time prop types.
@@ -130,6 +133,9 @@ cargo check --locked --example showcase --target wasm32-unknown-unknown
 
 ## Git Workflow
 
+- Before changing files for a new task, create and switch to a new task-specific branch. Continue related follow-up work on that task's branch.
+- Do not make changes or commits directly on `main` or `master`.
+- Do not rename an existing branch as a substitute for creating a new task branch.
 - Use Conventional Commits, such as `feat: add badge component` or `fix: preserve button keyboard behavior`.
 
 ## Security
