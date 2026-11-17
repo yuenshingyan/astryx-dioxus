@@ -1,0 +1,42 @@
+/* Starter tokens, not yet a port of the original Astryx design system. */
+:root {
+  --astryx-primary: #6d28d9;
+  --astryx-on-primary: #fff;
+  --astryx-surface: #f4f0ff;
+  --astryx-text: #261447;
+  --astryx-radius: 0.625rem;
+}
+
+.astryx-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.625rem 1.125rem;
+  border: 1px solid transparent;
+  border-radius: var(--astryx-radius);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.astryx-button--primary {
+  background: var(--astryx-primary);
+  color: var(--astryx-on-primary);
+}
+
+.astryx-button--secondary {
+  background: var(--astryx-surface);
+  color: var(--astryx-text);
+  border-color: currentColor;
+}
+
+.astryx-button:focus-visible {
+  outline: 3px solid var(--astryx-primary);
+  outline-offset: 3px;
+}
+
+.astryx-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
