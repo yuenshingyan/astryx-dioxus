@@ -1,4 +1,7 @@
-use astryx_dioxus::{Button, ButtonVariant, STYLES};
+use std::future::Future;
+use std::pin::Pin;
+
+use astryx_dioxus::{Button, ButtonElevation, ButtonSize, ButtonType, ButtonVariant, STYLES};
 use dioxus::prelude::*;
 
 fn main() {
@@ -8,21 +11,120 @@ fn main() {
 #[component]
 fn App() -> Element {
     let mut count = use_signal(|| 0);
+    let mut ancestor_count = use_signal(|| 0);
+    let mut form_count = use_signal(|| 0);
+    let mut is_loading = use_signal(|| false);
+    let variants = [
+        (ButtonVariant::Primary, "Primary"),
+        (ButtonVariant::Secondary, "Secondary"),
+        (ButtonVariant::Ghost, "Ghost"),
+        (ButtonVariant::Destructive, "Destructive"),
+    ];
+    let sizes = [
+        (ButtonSize::Small, "Small"),
+        (ButtonSize::Medium, "Medium"),
+        (ButtonSize::Large, "Large"),
+    ];
 
     rsx! {
-        document::Title { "Astryx Dioxus" }
+        document::Title { "Astryx Dioxus — Button" }
         document::Style { "{STYLES}" }
-        main { style: "max-width: 56rem; margin: 4rem auto; padding: 1.5rem; font-family: system-ui, sans-serif;",
-            h1 { "Astryx Dioxus" }
-            p { "A component library migration, one component at a time." }
-            section { "aria-labelledby": "buttons-heading",
-                h2 { id: "buttons-heading", "Buttons" }
-                div { style: "display: flex; flex-wrap: wrap; gap: 1rem;",
-                    Button { onclick: move |_| count += 1, "Clicked {count} times" }
-                    Button { variant: ButtonVariant::Secondary, "Secondary" }
-                    Button { disabled: true, "Disabled" }
+        document::Style { "
+            body {{ font-family: Figtree, system-ui, sans-serif; margin: 0; background: #f8f4ed; }}
+            main {{ max-width: 56rem; margin: 3rem auto; padding: 1.5rem; }}
+            section {{ margin-block: 2rem; }}
+            .showcase-row {{ display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }}
+        " }
+        main { "data-astryx-theme": "astryx",
+            h1 { "Astryx Button" }
+            p { "Source-based port in progress; see docs/button-port.md for verification and parity gaps." }
+            section { "aria-labelledby": "variants-heading",
+                h2 { id: "variants-heading", "Variants" }
+                div { class: "showcase-row",
+                    {variants.iter().map(|(variant, label)| rsx! {
+                        Button { label: *label, variant: *variant }
+                    })}
                 }
-                p { role: "status", "Click count: {count}" }
+            }
+            section { "aria-labelledby": "sizes-heading",
+                h2 { id: "sizes-heading", "Sizes" }
+                div { class: "showcase-row",
+                    {sizes.iter().map(|(size, label)| rsx! {
+                        Button { label: *label, size: *size }
+                    })}
+                }
+            }
+            section { "aria-labelledby": "states-heading",
+                h2 { id: "states-heading", "Interaction and loading" }
+                div { class: "showcase-row", onclick: move |_| ancestor_count += 1,
+                    Button { id: "counter", label: format!("Clicked {} times", count()), onclick: move |_| count += 1 }
+                    Button { id: "disabled", label: "Disabled", is_disabled: true, onclick: move |_| count += 100 }
+                    Button { id: "loading", label: "Save", is_loading: true, loading_label: "Loading" }
+                    Button { id: "toggle-loading", label: "Toggle loading", onclick: move |_| is_loading.toggle() }
+                    Button { id: "controlled-loading", label: "Controlled loading", is_loading: is_loading(), loading_label: "Loading" }
+                    Button {
+                        id: "async-action",
+                        label: "Async action",
+                        loading_label: "Loading",
+                        click_action: move |_| -> Pin<Box<dyn Future<Output = ()>>> {
+                            Box::pin(async move {
+                                count += 1;
+                                let _ = document::eval("await new Promise(resolve => setTimeout(resolve, 800)); return true;").await;
+                            })
+                        },
+                    }
+                    Button {
+                        id: "interruptible-action",
+                        label: "Interruptible action",
+                        is_interruptible: true,
+                        loading_label: "Loading",
+                        click_action: move |_| -> Pin<Box<dyn Future<Output = ()>>> {
+                            Box::pin(async move {
+                                count += 1;
+                                let _ = document::eval("await new Promise(resolve => setTimeout(resolve, 800)); return true;").await;
+                            })
+                        },
+                    }
+                    Button {
+                        id: "prevented-action",
+                        label: "Prevented action",
+                        onclick: move |event: MouseEvent| event.prevent_default(),
+                        click_action: move |_| -> Pin<Box<dyn Future<Output = ()>>> {
+                            Box::pin(async move { count += 100; })
+                        },
+                    }
+                }
+                p { id: "click-count", "Click count: {count}" }
+                p { id: "ancestor-count", "Ancestor clicks: {ancestor_count}" }
+            }
+            section { "aria-labelledby": "content-heading",
+                h2 { id: "content-heading", "Content and width" }
+                div { class: "showcase-row",
+                    Button { label: "Add", icon: rsx! { span { "aria-hidden": "true", "+" } } }
+                    Button { id: "icon-only", label: "Add item", is_icon_only: true, icon: rsx! { span { "aria-hidden": "true", "+" } } }
+                    Button { label: "Messages", end_content: rsx! { span { "3" } } }
+                    Button { label: "Save changes", strong { "Custom content" } }
+                    Button { label: "Floating action", elevation: ButtonElevation::High }
+                }
+                div { style: "width: 140px; margin-top: 1rem;",
+                    Button { id: "truncated", label: "A long label that must truncate", width: "100%" }
+                }
+            }
+            section { "aria-labelledby": "links-heading",
+                h2 { id: "links-heading", "Links and forms" }
+                div { class: "showcase-row",
+                    Button { id: "link", label: "Go to variants", href: "#variants-heading" }
+                    Button { id: "disabled-link", label: "Disabled link", href: "#variants-heading", is_disabled: true }
+                    Button { id: "busy-link", label: "Busy link", href: "#variants-heading", is_loading: true, loading_label: "Loading" }
+                }
+                form {
+                    id: "demo-form",
+                    onsubmit: move |event| { event.prevent_default(); form_count += 1; },
+                    Button { id: "submit", label: "Submit", button_type: ButtonType::Submit }
+                    Button { id: "disabled-submit", label: "Disabled submit", button_type: ButtonType::Submit, is_disabled: true }
+                    Button { id: "busy-submit", label: "Busy submit", button_type: ButtonType::Submit, is_loading: true }
+                }
+                p { id: "form-count", "Submissions: {form_count}" }
             }
         }
     }

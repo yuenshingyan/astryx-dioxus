@@ -4,10 +4,12 @@ Reusable Astryx UI components for Dioxus 0.7.
 
 ## Status
 
-Initial scaffold. The button and CSS are starter implementations, not faithful
-ports of Astryx. The original component source and design tokens are needed
-before migration can begin. Publishing is disabled until package metadata and
-licensing are confirmed.
+Button is a source-based port in progress, with upstream variants, sizes,
+loading, slots, link/form behavior, and activation guards. Shared tokens are
+adapted from the original source. It is not yet a complete migration: see
+[Button port status](docs/button-port.md) for parity gaps and verification.
+Publishing remains disabled until package metadata and licensing are confirmed.
+See [third-party notices](THIRD_PARTY_NOTICES.md) for the upstream MIT license.
 
 ## Run the showcase
 
@@ -36,7 +38,7 @@ use dioxus::prelude::*;
 fn App() -> Element {
     rsx! {
         document::Style { "{STYLES}" }
-        Button { onclick: move |_| println!("clicked"), "Save" }
+        Button { label: "Save", onclick: move |_| println!("clicked") }
     }
 }
 ```
@@ -60,6 +62,8 @@ cargo test
 cargo clippy --all-targets -- -D warnings
 cargo check --example showcase --target wasm32-unknown-unknown
 ```
+
+For browser interaction checks, see [Button browser testing](docs/button-port.md#browser-checks).
 
 ## Migration workflow
 
