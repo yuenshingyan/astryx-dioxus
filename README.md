@@ -16,7 +16,12 @@ named patterns and interactive regression cases are in the showcase; see
 [ButtonGroup verification](docs/button-group-port.md). IconButton's standalone
 audit now covers its thin Button API, five named examples, inherited theme aspect,
 state/geometry matrix, and native interactions; see
-[IconButton verification](docs/icon-button-port.md). Supporting layer-boundary
+[IconButton verification](docs/icon-button-port.md). Link adds native/action/disabled
+forms, safe optional destinations, external announcements, typography/clamping,
+provider routing, linkification, and all six named patterns; see
+[Link verification](docs/link-port.md). `LinkRenderProps.href` is now `Option<String>`
+(an approved API correction); native attribute forwarding still works, while
+string-specific router logic must handle `None`. Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
 Publishing remains disabled until package metadata and licensing are confirmed.
@@ -62,7 +67,10 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/button/`, `src/button_group/`, `src/icon/`, `src/icon_button/`, `src/spinner/`: upstream-owned component modules, named using Rust conventions.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
-- `src/link/`: shared link types, context, provider, and renderer resolution; not a completed standalone Link component.
+- `src/link/`: Link, shared renderer/provider types, target/rel handling, and linkification.
+- `src/text/`, `src/theme/`: Text typography/clamp support and upstream-owned type definitions; standalone Text/Theme checklists remain independent.
+- `src/hooks/`, `src/tooltip/`: shared press/tooltip renderer bridges under their source owners.
+- `src/interactive_role_context/`, `src/utils/`: inherited role and shared navigation policy; no combined control environment.
 - `src/input_group/`: the input-owned internal state contract used by existing controls; not a completed InputGroup component.
 - `src/compatibility/`: adapters for provisional public APIs only. Core components resolve independent upstream-owned contexts instead of a combined Button environment.
 - `src/lib.rs`: selected public re-exports; existing root imports remain available.
@@ -81,10 +89,12 @@ cargo check --example showcase --target wasm32-unknown-unknown
 ```
 
 For browser interaction checks, see [Button browser testing](docs/button-port.md#browser-checks),
-[ButtonGroup testing](docs/button-group-port.md#verification), and
-[IconButton testing](docs/icon-button-port.md#verification).
-Run all three: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
-and `node tests/icon_button.browser.mjs`.
+[ButtonGroup testing](docs/button-group-port.md#verification),
+[IconButton testing](docs/icon-button-port.md#verification), and [Link testing](docs/link-port.md#verification).
+Run all four: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
+`node tests/icon_button.browser.mjs`, and `node tests/link.browser.mjs`.
+The Link audit `node tests/link.contrast.mjs` reports 19/96 active text failures
+and intentionally exits 1; merely using the disabled color does not disable a link.
 The non-text audit `node tests/icon_button.contrast.mjs` reports conditional
 boundary findings and intentionally exits 1; all modeled essential glyph/arc
 and focus/backdrop cases meet 3:1.

@@ -8,11 +8,15 @@ use dioxus::html::PlatformEventData;
 use dioxus::prelude::*;
 
 use crate::button_group::button_group_context::use_button_group;
+use crate::hooks::use_press_feedback::{
+    PressFeedbackConfig, use_press_feedback_with_compatibility,
+};
 use crate::icon::{IconDefaultSizeProvider, IconSize};
 use crate::input_group::input_group_internal_context::use_input_group_internal;
 use crate::link::{LinkComponentType, LinkRenderProps, use_link_component};
 use crate::size_context::use_size;
 use crate::spinner::{Spinner, SpinnerShade, SpinnerSize};
+use crate::tooltip::use_tooltip::tooltip_element;
 
 /// Button height: the shared 28/32/36px control-size scale.
 pub use crate::size_context::ElementSize as ButtonSize;
@@ -188,30 +192,22 @@ pub fn Button(
             .as_deref()
             .is_some_and(|href| !is_safe_destination(href));
     let controller_id = use_hook(|| format!("astryx-button-{}", current_scope_id().0));
-    let mut browser_controller = use_signal(|| None::<document::Eval>);
-    use_drop(move || {
-        if let Some(controller) = *browser_controller.peek() {
-            let _ = controller.send("dispose");
-        }
-    });
     let mut pending_actions = use_signal(|| 0usize);
     let mut is_mounted = use_signal(|| false);
     let mut is_live_region_ready = use_signal(|| !is_loading);
     let is_pending = pending_actions() > 0;
     let is_loading_state = is_loading || is_pending;
-    let controller_config = (
-        controller_id.clone(),
-        label.clone(),
-        tooltip.clone(),
-        is_icon_only,
-        is_loading_state,
-        is_disabled,
+    let feedback_mounted = use_press_feedback_with_compatibility(
+        PressFeedbackConfig {
+            id: controller_id.clone(),
+            label: label.clone(),
+            tooltip: tooltip.clone(),
+            is_icon_only,
+            is_loading: is_loading_state,
+            is_disabled,
+        },
+        include_str!("../../assets/button-controller.js"),
     );
-    use_effect(use_reactive(&controller_config, move |config| {
-        if let Some(controller) = *browser_controller.read() {
-            let _ = controller.send(config);
-        }
-    }));
     let availability = Availability::resolve(is_disabled, is_loading_state, is_interruptible);
     let is_blocked = availability.blocks_activation();
     let is_delayed = is_pending || is_interruptible;
@@ -261,17 +257,7 @@ pub fn Button(
     } else {
         caller_description
     };
-    let tooltip_element = tooltip.as_ref().map(|tooltip| {
-        rsx! {
-            div {
-                id: tooltip_id.clone(),
-                class: "astryx-button-tooltip",
-                role: "tooltip",
-                popover: "manual",
-                "{tooltip}"
-            }
-        }
-    });
+    let tooltip_element = tooltip_element(&controller_id, tooltip.as_deref());
     let aria_busy = (is_loading_state || is_caller_busy).then_some("true");
     let aria_disabled = (is_blocked || is_caller_disabled).then_some("true");
     let mut attributes: Vec<_> = attributes
@@ -377,14 +363,8 @@ pub fn Button(
         }
         onkeydown.call(event);
     };
-    let mounted_config = controller_config.clone();
     let handle_mounted = move |event: MountedEvent| {
-        if let Some(previous) = *browser_controller.peek() {
-            let _ = previous.send("dispose");
-        }
-        let controller = document::eval(include_str!("../../assets/button-controller.js"));
-        let _ = controller.send(mounted_config.clone());
-        browser_controller.set(Some(controller));
+        feedback_mounted.call(event.clone());
         is_mounted.set(true);
         onmounted.call(event);
         if !*is_live_region_ready.peek() {
@@ -472,7 +452,7 @@ pub fn Button(
                 }
             });
             let link = renderer.call(LinkRenderProps {
-                href,
+                href: Some(href),
                 target,
                 rel,
                 attributes: link_attributes,

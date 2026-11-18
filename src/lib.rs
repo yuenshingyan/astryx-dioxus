@@ -5,22 +5,44 @@
 mod button;
 mod button_group;
 mod compatibility;
+mod hooks;
 mod icon;
 mod icon_button;
 mod input_group;
+mod interactive_role_context;
 mod layer;
 mod link;
 mod size_context;
 mod spinner;
+mod text;
+mod theme;
+mod tooltip;
+mod utils;
 
 pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, ButtonVariant};
 pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation};
-pub use icon::{Icon, IconDefaultSizeContext, IconDefaultSizeProvider, IconSize, use_icon_size};
+pub use hooks::use_interactive_role::{InteractiveRole, use_interactive_role};
+pub use icon::{
+    Icon, IconDefaultSizeContext, IconDefaultSizeProvider, IconEntry, IconRequest, IconSize,
+    InvalidIconName, get_extended_icon, register_icons, use_icon_size,
+};
 pub use icon_button::IconButton;
+pub use interactive_role_context::{
+    InteractiveRoleContext, InteractiveRoleProvider, use_interactive_role_context,
+};
 pub use layer::LayerContentBoundary;
-pub use link::{LinkComponentType, LinkProvider, LinkRenderProps, use_link_component};
+pub use link::{
+    Link, LinkComponentType, LinkDownload, LinkProvider, LinkRenderProps, LinkifyCaptures,
+    LinkifyError, LinkifyMatch, LinkifyNode, LinkifyPattern, UseLinkifyOptions, linkify,
+    use_link_component, use_linkify,
+};
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
 pub use spinner::{Spinner, SpinnerShade, SpinnerSize};
+pub use text::{Text, TextTag};
+pub use theme::{
+    InvalidTextName, TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap,
+    WordBreak,
+};
 
 // Compatibility spellings of provisional APIs. Core code uses upstream owners.
 pub use compatibility::{

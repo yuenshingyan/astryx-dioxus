@@ -12,15 +12,22 @@ mod button_group;
 mod button_patterns;
 #[path = "showcase/icon_button.rs"]
 mod icon_button;
+#[path = "showcase/link.rs"]
+mod link;
 
 use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
 use icon_button::IconButtonExamples;
+use link::LinkExamples;
 
 const FIGTREE: Asset = asset!("/assets/fonts/Figtree-latin.woff2");
 
 fn main() {
+    if let Err(err) = link::register_neutral_icons() {
+        eprintln!("Showcase icon setup failed: {err}");
+        return;
+    }
     dioxus::launch(App);
 }
 
@@ -43,7 +50,7 @@ fn App() -> Element {
     ];
 
     rsx! {
-        document::Title { "Astryx Dioxus — Button, ButtonGroup, and IconButton" }
+        document::Title { "Astryx Dioxus — Buttons and Link" }
         document::Style { "{STYLES}" }
         document::Style { "@font-face {{font-family:Figtree;src:url('{FIGTREE}') format('woff2');font-style:normal;font-weight:300 900;font-display:swap;}}" }
         document::Style { "
@@ -56,12 +63,14 @@ fn App() -> Element {
             .demo-count--warning {{ background:light-dark(#fae19e,#e2b6233d);color:light-dark(#4b3900,#eec448); }}
         " }
         main { "data-astryx-theme": "astryx",
-            h1 { "Astryx Button, ButtonGroup, and IconButton" }
-            p { "Documented patterns, interaction states, and integrations. See docs/button-port.md and docs/button-group-port.md for verification." }
+            h1 { "Astryx Buttons and Link" }
+            p { "Documented patterns, interaction states, and integrations. See docs/ for each component's verification notes." }
             nav { "aria-label": "Showcase sections",
                 a { href: "#button-group-examples", "ButtonGroup examples" }
                 " · "
                 a { href: "#icon-button-examples", "IconButton examples" }
+                " · "
+                a { href: "#link-examples", "Link examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -155,6 +164,7 @@ fn App() -> Element {
             ButtonContractExamples {}
             ButtonGroupExamples {}
             IconButtonExamples {}
+            LinkExamples {}
         }
     }
 }
