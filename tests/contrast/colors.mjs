@@ -16,6 +16,8 @@ export function createColorResolver(tokens, mode) {
     if (value.startsWith('var(')) return color(tokens[value.slice(4, -1)]);
     if (value.startsWith('light-dark(')) return color(splitTopLevel(value.slice(11, -1))[mode]);
     if (value === 'transparent') return [0, 0, 0, 0];
+    if (value === 'black') return [0, 0, 0, 1];
+    if (value === 'white') return [1, 1, 1, 1];
     if (value.startsWith('#')) {
       let hex = value.slice(1);
       if (hex.length === 3 || hex.length === 4) hex = [...hex].map(character => character + character).join('');

@@ -10,6 +10,7 @@ use crate::input_group::input_group_internal_context::{
     InputGroupInternalContext, InputGroupInternalState,
 };
 use crate::size_context::{ElementSize, SizeContext};
+use crate::text::text_clamp_context::TextClampContext;
 
 /// Starts a new layer's surface-context scope without adding a DOM element.
 ///
@@ -29,5 +30,6 @@ pub fn LayerContentBoundary(children: Element) -> Element {
         InputGroupInternalContext(Signal::new(InputGroupInternalState::default()))
     });
     use_context_provider(|| ButtonEnvironmentContext(Signal::new(ButtonEnvironment::default())));
+    use_context_provider(|| TextClampContext(Signal::new(false)));
     children
 }

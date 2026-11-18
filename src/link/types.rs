@@ -6,7 +6,8 @@ use dioxus::prelude::*;
 /// link root. Preserve modified clicks and normal browser navigation.
 #[derive(Clone, PartialEq)]
 pub struct LinkRenderProps {
-    pub href: String,
+    /// Destination, if present. Inherited link roles can render without a URL.
+    pub href: Option<String>,
     pub target: Option<String>,
     pub rel: Option<String>,
     pub attributes: Vec<Attribute>,

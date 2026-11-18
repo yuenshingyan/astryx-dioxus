@@ -9,7 +9,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- Button, [ButtonGroup](docs/button-group-port.md), and [IconButton](docs/icon-button-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), and [Link](docs/link-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
@@ -114,33 +114,33 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [x] `IconButtonShowcase` — **IconButton**: wrench icon button.
     - [x] `IconButtonTooltipIconButton` — **IconButton — With Tooltips**: hover action explanations.
 
-- [ ] **[Link](https://astryx.atmeta.com/components/Link)**
+- [x] **[Link](https://astryx.atmeta.com/components/Link)**
 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Link/Link.doc.mjs). Templates in `Link/` under [pinned root](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components).
 
   - **Typography and modes**
-    - [ ] `type`: `body` (default), `large`, `label`, `supporting`, `code`, `display-1`, `display-2`, `display-3`, `inherit`; custom theme text types remain open-ended.
-    - [ ] `size`: `4xs`, `3xs`, `2xs`, `xsm`, `sm`, `base`, `lg`, `xl`, `2xl`, `3xl`, `4xl`.
-    - [ ] `weight`: `normal`, `medium`, `semibold`, `bold`; `color`: `primary`, `secondary`, `disabled`, `placeholder`, `accent` (default), `inherit`.
-    - [ ] `display`: `inline` (default), `block`; maxLines default 0, arbitrary positive clamp.
-    - [ ] `hasUnderline`, `isDisabled`, `isExternalLink`, `isStandalone`: each false by default / true.
-    - [ ] Inline anchor versus standalone base font sizing; custom `as` versus provider/native anchor; onClick without href may render button.
+    - [x] `type`: `body` (default), `large`, `label`, `supporting`, `code`, `display-1`, `display-2`, `display-3`, `inherit`; custom theme text types remain open-ended.
+    - [x] `size`: `4xs`, `3xs`, `2xs`, `xsm`, `sm`, `base`, `lg`, `xl`, `2xl`, `3xl`, `4xl`.
+    - [x] `weight`: `normal`, `medium`, `semibold`, `bold`; `color`: `primary`, `secondary`, `disabled`, `placeholder`, `accent` (default), `inherit`.
+    - [x] `display`: `inline` (default), `block`; maxLines default 0, arbitrary positive clamp.
+    - [x] `hasUnderline`, `isDisabled`, `isExternalLink`, `isStandalone`: each false by default / true.
+    - [x] Inline anchor versus standalone base font sizing; custom `as` versus provider/native anchor; onClick without href may render button.
 
   - **Navigation, content, and access**
-    - [ ] Required children supply name for text links; label only for non-self-descriptive/icon-only content; optional tooltip.
-    - [ ] External link opens new tab with icon and safe rel; newTabLabel defaults `(opens in new tab)`; target=_blank merges noopener noreferrer.
-    - [ ] Download false/true or suggested filename; referrer policy and arbitrary target/rel remain browser attributes, not closed visual variants.
-    - [ ] Disabled link retains Tab stop and announced state but cannot navigate/onClick; rejected URL inert and never calls router.
-    - [ ] Shared URL rule strips controls/trims/case-inspects schemes: rejects javascript:, vbscript:, data:text/html; accepts ordinary relative/fragments/http(s)/mailto/tel/safe custom schemes/downloads. Resources have separate policies.
-    - [ ] Outer Text maxLines can clamp flowing text Link; link-owned box/display/maxLines, button rendering, or block children break outer clamp. Text contrast 4.5:1 including pressed overlay.
+    - [x] Required children supply name for text links; label only for non-self-descriptive/icon-only content; optional tooltip.
+    - [x] External link opens new tab with icon and safe rel; newTabLabel defaults `(opens in new tab)`; target=_blank merges noopener noreferrer.
+    - [x] Download false/true or suggested filename; referrer policy and arbitrary target/rel remain browser attributes, not closed visual variants.
+    - [x] Disabled link retains Tab stop and announced state but cannot navigate/onClick; rejected URL inert and never calls router.
+    - [x] Shared URL rule strips controls/trims/case-inspects schemes: rejects javascript:, vbscript:, data:text/html; accepts ordinary relative/fragments/http(s)/mailto/tel/safe custom schemes/downloads. Resources have separate policies.
+    - [x] Outer Text maxLines can clamp flowing text Link; link-owned box/display/maxLines, button rendering, or block children break outer clamp. Audit text contrast 4.5:1 including pressed overlay. **[Source-color results](docs/link-port.md#contrast-and-verification-boundaries): 19/96 active cases below 4.5:1, including disabled-color and accent pressed paint; 0/24 focus failures at 3:1. Original colors are retained under the existing fidelity decision, not reported as passing contrast.**
 
   - **Named templates**
-    - [ ] `LinkExternalLinks` — **Link — External Links**: new-tab external icon list.
-    - [ ] `LinkInlineLink` — **Link — Inline Text**: body paragraph link.
-    - [ ] `LinkShowcase` — **Link**: standalone link.
-    - [ ] `LinksWithTooltips` — **Link — With Tooltips**: standalone horizontal row.
-    - [ ] `useLinkComponentHookUsage` — **useLinkComponent — Article Cards**: as override, nearest provider, native fallback with router location.
-    - [ ] `useLinkifyHookUsage` — **useLinkify — Links in a Comment Thread**: URL/email/issue patterns and unchanged plain comment.
+    - [x] `LinkExternalLinks` — **Link — External Links**: new-tab external icon list.
+    - [x] `LinkInlineLink` — **Link — Inline Text**: body paragraph link.
+    - [x] `LinkShowcase` — **Link**: standalone link.
+    - [x] `LinksWithTooltips` — **Link — With Tooltips**: standalone horizontal row.
+    - [x] `useLinkComponentHookUsage` — **useLinkComponent — Article Cards**: as override, nearest provider, native fallback with router location.
+    - [x] `useLinkifyHookUsage` — **useLinkify — Links in a Comment Thread**: URL/email/issue patterns and unchanged plain comment.
 
 - [ ] **[More Menu](https://astryx.atmeta.com/components/MoreMenu)**
 
