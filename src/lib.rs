@@ -2,15 +2,30 @@
 //!
 //! Include [`STYLES`] once using `document::Style` in your application root.
 
-mod components;
+mod button;
+mod button_group;
+mod compatibility;
+mod icon;
+mod input_group;
+mod link;
+mod size_context;
+mod spinner;
 
-pub use components::{
-    Button, ButtonAction, ButtonElevation, ButtonEnvironment, ButtonEnvironmentContext,
-    ButtonEnvironmentProvider, ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation,
-    ButtonLinkProps, ButtonLinkProvider, ButtonLinkRenderer, ButtonSize, ButtonSizeContext,
-    ButtonType, ButtonVariant, ControlSize, Icon, IconDefaultSizeContext, IconDefaultSizeProvider,
-    IconSize, SizeProvider, Spinner, SpinnerShade, SpinnerSize, use_button_environment,
+pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, ButtonVariant};
+pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation};
+pub use icon::{Icon, IconDefaultSizeContext, IconDefaultSizeProvider, IconSize, use_icon_size};
+pub use link::{LinkComponentType, LinkProvider, LinkRenderProps, use_link_component};
+pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
+pub use spinner::{Spinner, SpinnerShade, SpinnerSize};
+
+// Compatibility spellings of provisional APIs. Core code uses upstream owners.
+pub use compatibility::{
+    ButtonEnvironment, ButtonEnvironmentContext, ButtonEnvironmentProvider, use_button_environment,
 };
+pub use link::{
+    ButtonLinkProvider, LinkComponentType as ButtonLinkRenderer, LinkRenderProps as ButtonLinkProps,
+};
+pub use size_context::{ElementSize as ControlSize, SizeContext as ButtonSizeContext};
 
 /// Base styles and design tokens. Include once in your application root.
 pub const STYLES: &str = include_str!("../assets/astryx.css");

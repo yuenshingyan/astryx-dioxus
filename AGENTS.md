@@ -33,7 +33,7 @@ use std::fmt::Debug;
 
 use dioxus::prelude::*;
 
-use crate::components::ButtonVariant;
+use crate::ButtonVariant;
 
 fn primary_variant() -> ButtonVariant {
     ButtonVariant::Primary

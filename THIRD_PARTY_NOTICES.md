@@ -2,7 +2,7 @@
 
 ## Meta Astryx
 
-`src/components/button.rs`, `src/components/button_support.rs`, `assets/button-controller.js`, and `assets/astryx.css` adapt Meta Astryx's Button, Spinner, icon sizing, grouping/context contracts, tooltip/press behavior, design tokens, and Button-specific theme values:
+The implementations under `src/button/`, `src/button_group/`, `src/icon/`, `src/spinner/`, `src/size_context/`, `src/input_group/`, and `src/link/`, together with `assets/button-controller.js` and `assets/astryx.css` adapt Meta Astryx's Button, Spinner, icon sizing, grouping/context contracts, tooltip/press behavior, design tokens, and Button-specific theme values:
 
 - Repository: https://github.com/meta/astryx
 - Reference revision: `476a3153417dbf75c565f7df05b0784e94ddd59e`

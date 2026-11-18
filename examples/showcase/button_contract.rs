@@ -3,8 +3,8 @@ use std::pin::Pin;
 
 use astryx_dioxus::{
     Button, ButtonElevation, ButtonEnvironment, ButtonEnvironmentProvider, ButtonGroup,
-    ButtonGroupElevation, ButtonGroupOrientation, ButtonLinkProps, ButtonLinkProvider, ButtonSize,
-    ControlSize, Icon, IconSize, SizeProvider,
+    ButtonGroupElevation, ButtonGroupOrientation, ButtonSize, ElementSize, Icon, IconSize,
+    LinkProvider, LinkRenderProps, SizeProvider,
 };
 use dioxus::prelude::*;
 
@@ -12,15 +12,15 @@ fn plus() -> Element {
     rsx! { svg { view_box: "0 0 24 24", fill: "none", stroke: "currentColor", stroke_width: "2", path { d: "M12 5v14M5 12h14" } } }
 }
 
-fn router_link(props: ButtonLinkProps) -> Element {
+fn router_link(props: LinkRenderProps) -> Element {
     render_router_link(props, "custom")
 }
 
-fn alternate_link(props: ButtonLinkProps) -> Element {
+fn alternate_link(props: LinkRenderProps) -> Element {
     render_router_link(props, "alternate")
 }
 
-fn render_router_link(props: ButtonLinkProps, marker: &'static str) -> Element {
+fn render_router_link(props: LinkRenderProps, marker: &'static str) -> Element {
     rsx! {
         a {
             href: props.href,
@@ -63,16 +63,17 @@ pub fn ButtonContractExamples() -> Element {
         }
         section { "aria-labelledby": "providers-heading",
             h2 { id: "providers-heading", "Inherited sizes and icon defaults" }
+            p { "The disabled input-slot example uses the legacy adapter; it is not a standalone InputGroup port." }
             div { class: "showcase-row",
                 Button { id: "provider-toggle", label: "Change inherited size", onclick: move |_| is_small.toggle() }
-                SizeProvider { size: if is_small() { ControlSize::Small } else { ControlSize::Large },
+                SizeProvider { size: if is_small() { ElementSize::Small } else { ElementSize::Large },
                     Button { id: "inherited-size", label: "Inherited" }
                     Button { id: "explicit-size", label: "Explicit medium", size: ButtonSize::Medium }
                 }
                 Button { id: "default-icon", label: "Default icon", tooltip: "Default icon", icon: rsx! { Icon { icon: plus() } } }
                 Button { id: "large-icon", label: "Large button", size: ButtonSize::Large, icon: rsx! { Icon { icon: plus() } } }
                 Button { id: "explicit-icon", label: "Explicit icon size", icon: rsx! { Icon { icon: plus(), size: IconSize::Large } } }
-                ButtonEnvironmentProvider { environment: ButtonEnvironment { size: Some(ControlSize::Small), is_disabled: true, ..Default::default() },
+                ButtonEnvironmentProvider { environment: ButtonEnvironment { size: Some(ElementSize::Small), is_disabled: true, ..Default::default() },
                     div { class: "astryx-input-group", Button { id: "input-addon", label: "Disabled input addon" } }
                 }
             }
@@ -100,7 +101,7 @@ pub fn ButtonContractExamples() -> Element {
             h2 { id: "routing-heading", "Router adapters and focus retention" }
             div { class: "showcase-row",
                 Button { id: "router-toggle", label: "Change provider adapter", onclick: move |_| is_alternate_router.toggle() }
-                ButtonLinkProvider { render: if is_alternate_router() { alternate_router } else { default_router },
+                LinkProvider { component: if is_alternate_router() { alternate_router } else { default_router },
                     Button { id: "custom-link", label: "Provider link", href: "#providers-heading", onfocus: move |_| callback_count += 10 }
                     Button { id: "custom-link-disabled", label: "Disabled provider link", href: "#providers-heading", is_disabled: true }
                     Button { id: "explicit-overrides-provider", label: "Explicit overrides provider", href: "#providers-heading", render_link: alternate_link }

@@ -7,14 +7,15 @@ use dioxus::core::{AttributeValue, current_scope_id};
 use dioxus::html::PlatformEventData;
 use dioxus::prelude::*;
 
-use super::button_link::{ButtonLinkContext, ButtonLinkProps, ButtonLinkRenderer};
-use super::button_support::{
-    ButtonSizeContext, IconDefaultSizeProvider, IconSize, Spinner, SpinnerShade, SpinnerSize,
-    use_button_environment,
-};
+use crate::button_group::button_group_context::use_button_group;
+use crate::icon::{IconDefaultSizeProvider, IconSize};
+use crate::input_group::input_group_internal_context::use_input_group_internal;
+use crate::link::{LinkComponentType, LinkRenderProps, use_link_component};
+use crate::size_context::use_size;
+use crate::spinner::{Spinner, SpinnerShade, SpinnerSize};
 
 /// Button height: the shared 28/32/36px control-size scale.
-pub use super::button_support::ControlSize as ButtonSize;
+pub use crate::size_context::ElementSize as ButtonSize;
 
 /// Visual emphasis of a button. Secondary is the upstream default.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -137,7 +138,7 @@ pub fn Button(
     #[props(default)] href: Option<String>,
     #[props(default)] target: Option<String>,
     #[props(default)] rel: Option<String>,
-    #[props(default)] render_link: Option<ButtonLinkRenderer>,
+    #[props(default)] render_link: Option<LinkComponentType>,
     #[props(default)] name: Option<String>,
     #[props(default)] value: Option<String>,
     #[props(default)] form: Option<String>,
@@ -171,19 +172,18 @@ pub fn Button(
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     let tooltip = tooltip.filter(|text| !text.trim().is_empty());
-    let environment = use_button_environment();
-    let inherited_size = try_consume_context::<ButtonSizeContext>().map(|context| (context.0)());
-    let size = size
-        .or(inherited_size)
-        .or(environment.size)
-        .unwrap_or_default();
-    let elevation = if environment.is_grouped {
+    let group = use_button_group();
+    let input_group = use_input_group_internal();
+    let size = use_size(size);
+    let is_grouped = group.is_some();
+    let elevation = if is_grouped {
         ButtonElevation::None
     } else {
         elevation
     };
     let is_disabled = is_disabled
-        || environment.is_disabled
+        || group.is_some_and(|group| group.is_disabled)
+        || input_group.is_disabled
         || href
             .as_deref()
             .is_some_and(|href| !is_safe_destination(href));
@@ -432,9 +432,9 @@ pub fn Button(
         }
     };
 
-    let provider_link = try_consume_context::<ButtonLinkContext>().map(|context| (context.0)());
+    let link_component = use_link_component(render_link);
     if let Some(href) = href.filter(|_| !is_disabled) {
-        if let Some(renderer) = render_link.or(provider_link) {
+        if let Some(renderer) = link_component {
             let mut link_attributes = attributes;
             [
                 ("class", Some(classes)),
@@ -457,7 +457,7 @@ pub fn Button(
                 ("data-astryx-pressable", Some(String::new())),
                 (
                     "data-astryx-grouped",
-                    environment.is_grouped.then(|| "true".to_string()),
+                    is_grouped.then(|| "true".to_string()),
                 ),
                 ("aria-label", aria_label),
                 ("aria-busy", aria_busy.map(str::to_string)),
@@ -470,7 +470,7 @@ pub fn Button(
                     link_attributes.push(Attribute::new(name, value, None, false));
                 }
             });
-            let link = renderer.call(ButtonLinkProps {
+            let link = renderer.call(LinkRenderProps {
                 href,
                 target,
                 rel,
@@ -499,7 +499,7 @@ pub fn Button(
                 "data-astryx-edge-comp": (variant == ButtonVariant::Ghost).then_some(""),
                 "data-astryx-button-id": controller_id.clone(),
                 "data-astryx-pressable": "",
-                "data-astryx-grouped": environment.is_grouped.then_some("true"),
+                "data-astryx-grouped": is_grouped.then_some("true"),
                 "aria-label": aria_label,
                 "aria-describedby": described_by,
                 "aria-busy": aria_busy,
@@ -532,7 +532,7 @@ pub fn Button(
             "data-astryx-edge-comp": (variant == ButtonVariant::Ghost).then_some(""),
             "data-astryx-button-id": controller_id,
             "data-astryx-pressable": "",
-            "data-astryx-grouped": environment.is_grouped.then_some("true"),
+            "data-astryx-grouped": is_grouped.then_some("true"),
             "aria-label": aria_label,
             "aria-describedby": described_by,
             "aria-busy": aria_busy,
