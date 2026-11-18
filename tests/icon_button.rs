@@ -10,7 +10,7 @@ fn render(component: fn() -> Element) -> String {
 }
 
 #[test]
-fn icon_button_is_a_named_square_button_without_a_visible_label() {
+fn icon_button_is_named_and_icon_only_without_a_visible_label() {
     let html = render(|| rsx! { IconButton { label: "Settings", icon: rsx! { span { "⚙" } } } });
     assert!(html.contains("aria-label=\"Settings\""), "{html}");
     assert!(html.contains("data-icon-only=\"true\""), "{html}");
