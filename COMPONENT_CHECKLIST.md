@@ -8,8 +8,8 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Options and defaults are upstream contracts, not seeded playground values. Arbitrary text, data, dimensions, URLs, and theme extensions are not finite style variants. Boolean options cover both true and false unless their documented contract says otherwise.
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
-- Use idiomatic Rust/Dioxus abstractions for supporting APIs rather than copying React architecture. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- Button is complete for the source-faithful migration baseline. Its contrast audit is completed with an explicit [accepted upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that the contrast targets pass. Other components remain unchecked. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
+- Button and [ButtonGroup](docs/button-group-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
@@ -41,23 +41,23 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [x] **Button — End Slot** (`ButtonWithEndSlot.doc.mjs`): trailing count/status badge.
     - [x] **Button — Icon** (`ButtonWithIcon.doc.mjs`): leading icon and label.
 
-- [ ] **[Button Group](https://astryx.atmeta.com/components/ButtonGroup)**
+- [x] **[Button Group](https://astryx.atmeta.com/components/ButtonGroup)**
 
   - Sources: [English doc, nested component API](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/ButtonGroup/ButtonGroup.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/ButtonGroup).
 
   - **Choices and behavior**
-    - [ ] `orientation`: `horizontal` (default), `vertical`.
-    - [ ] Group default `size`: `sm`, `md` (default), `lg`; individual child size may override.
-    - [ ] `elevation`: `none` (default), `low`, `med`, `high`; connected children share one lifted surface, dividers, outer-edge radii.
-    - [ ] `isDisabled=false` default versus whole-group disabled; pending work belongs on initiating child rather than disabling group.
-    - [ ] Required accessible group label; Button/IconButton children, normally matching variants; automatic internal dividers.
-    - [ ] One Tab stop; orientation-aware arrows, Home/End to edges; label announced with members.
-    - [ ] Touch slides highlight across buttons and activates release target, outside release does nothing; native mouse press, menu trigger retains own opening. Invisible touch targets grow toward 44px bounded by neighbor gap.
-    - [ ] Text contrast 4.5:1; essential icon/spinner, necessary divider/boundary, focus 3:1; disabled appearance exempt.
+    - [x] `orientation`: `horizontal` (default), `vertical`.
+    - [x] Group default `size`: `sm`, `md` (default), `lg`; individual child size may override.
+    - [x] `elevation`: `none` (default), `low`, `med`, `high`; connected children share one lifted surface, dividers, outer-edge radii.
+    - [x] `isDisabled=false` default versus whole-group disabled; pending work belongs on initiating child rather than disabling group.
+    - [x] Required accessible group label; Button/IconButton children, normally matching variants; automatic internal dividers.
+    - [x] One Tab stop; orientation-aware arrows, Home/End to edges; label announced with members.
+    - [x] Touch slides highlight across buttons and activates release target, outside release does nothing; native mouse press, menu trigger retains own opening. Invisible touch targets grow toward 44px bounded by neighbor gap.
+    - [x] Complete the source-color contrast audit: text 4.5:1; essential icon/spinner, necessary divider/boundary, focus 3:1; disabled appearance exempt. **Retain original colors under the existing source-fidelity decision. The [Group audit](docs/button-group-port.md#source-palette-exception) reports 4/48 label failures and 24/48 dividers below conditional 3:1; these are known findings, not passing contrast or compliance claims.**
   - **Templates**
-    - [ ] **ButtonGroup — Basic** (`ButtonGroupBasic.doc.mjs`): three named connected actions.
-    - [ ] **ButtonGroup — Floating** (`ButtonGroupFloating.doc.mjs`): med elevation shared action bar.
-    - [ ] **ButtonGroup** (`ButtonGroupShowcase.doc.mjs`): named showcase, metadata gives no further description.
+    - [x] **ButtonGroup — Basic** (`ButtonGroupBasic.doc.mjs`): three named connected actions.
+    - [x] **ButtonGroup — Floating** (`ButtonGroupFloating.doc.mjs`): med elevation shared action bar.
+    - [x] **ButtonGroup** (`ButtonGroupShowcase.doc.mjs`): named showcase, metadata gives no further description.
 
 - [ ] **[Dropdown Menu](https://astryx.atmeta.com/components/DropdownMenu)**
 
