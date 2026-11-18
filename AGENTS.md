@@ -117,7 +117,9 @@ cargo check --locked --example showcase --target wasm32-unknown-unknown
 
 ## File & Project Structure
 
-- Keep each component in its own module under `src/components/`.
+- Follow the original Astryx project structure and module ownership. Inspect the pinned upstream source before organizing a port; adapt file and module names to Rust conventions without changing those ownership boundaries.
+- Keep components, contexts, providers, hooks, and utilities with their upstream owners. Do not collect independent components into catch-all support modules, move shared infrastructure under the first component that uses it, or merge separate upstream contexts into a new abstraction.
+- Ask for approval before any Rust/Dioxus adaptation that changes the upstream structure or ownership boundaries.
 - Keep shared styles and tokens in the existing `assets/astryx.css` layout initially. Ask before reorganizing CSS.
 - Keep showcase code in `examples/`; reusable components must not depend on the showcase.
 - Ask before adding any dependency.
