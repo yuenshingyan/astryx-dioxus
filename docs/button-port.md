@@ -40,9 +40,11 @@ fn example() -> Element {
 }
 ```
 
-- `ButtonSize` is the shared `ControlSize` scale. Resolve explicit size, then the nearest size provider, then the medium fallback.
-- `SizeProvider` supplies inherited sizes. `ButtonGroup` supplies a connected environment. `ButtonEnvironmentProvider` is a headless adapter for application/input-slot owners; nested slot environments do not clear an enclosing connected group's disabled state.
-- `ButtonLinkProvider` supplies a reactive `ButtonLinkRenderer`; a Button's `render_link` overrides it. A renderer receives `ButtonLinkProps` and must forward its attributes, click/key/mount handlers, native link properties, and content to one focusable link root.
+- `ButtonSize` uses Astryx's shared `ElementSize` scale. `SizeContext`, `SizeProvider`, and `use_size` belong to `src/size_context/`. Explicit size wins over the nearest provider, then the medium fallback.
+- Button reads separate ButtonGroup and InputGroup-internal contexts from their upstream owners. Neither requires setup for standalone Button usage. Group disabled state and input-owned disabled state are independent; either can block activation.
+- `LinkProvider { component: ... }` supplies a reactive `LinkComponentType`; Button's `render_link` overrides it. Renderers receive `LinkRenderProps` and must forward attributes, click/key/mount handlers, native link properties, and content to one focusable link root.
+- Compatibility only: `ControlSize` aliases `ElementSize`, `ButtonSizeContext` aliases `SizeContext`, and `ButtonLinkProps`/`ButtonLinkRenderer` alias the shared link types. `ButtonLinkProvider { render: ... }` forwards to `LinkProvider`.
+- The provisional `ButtonEnvironment`, context, provider, and hook remain in `src/compatibility/` solely to preserve existing public APIs. The adapter translates old settings into independent contexts; Button does not read the combined environment. ButtonGroup publishes a legacy snapshot for direct consumers of the old public context. These compatibility APIs are not upstream primitives or the recommended basis for new component implementations.
 - Use `onmounted` to obtain the actual root's `MountedData` instead of React refs. Root focus, blur, keyboard, mouse, pointer, and touch callbacks are public props.
 - `ButtonAction` returns `Pin<Box<dyn Future<Output = ()>>>`. The button owns the awaiting Dioxus task. Callers own error handling and independently detached operations. Interruptible mode accepts overlapping actions; it does not cancel earlier work itself.
 - `label` must provide a non-empty accessible name. Loading text defaults to English `Loading`; override `loading_label` for the application's locale.
@@ -53,7 +55,7 @@ fn example() -> Element {
 
 ## Verification
 
-`tests/button.rs`, `tests/button_complete.rs`, and `tests/button_support.rs` cover the Rust rendering, provider, naming, and state contracts. Run the normal project checks from [README.md](../README.md).
+`tests/button.rs` and `tests/button_complete.rs` cover Button rendering and interaction contracts. Component/provider tests live in `tests/button_group.rs`, `tests/icon.rs`, `tests/spinner.rs`, `tests/size_context.rs`, and `tests/link_provider.rs`; `tests/compatibility.rs` protects the provisional public APIs. Run the normal project checks from [README.md](../README.md).
 
 ### Browser checks
 
