@@ -205,6 +205,7 @@ pub fn Button(
         tooltip.clone(),
         is_icon_only,
         is_loading_state,
+        is_disabled,
     );
     use_effect(use_reactive(&controller_config, move |config| {
         if let Some(controller) = *browser_controller.read() {

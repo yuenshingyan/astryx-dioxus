@@ -34,7 +34,7 @@ pub(crate) struct ButtonGroupContext(pub Signal<Option<ButtonGroupContextValue>>
 // Preserve actual group constraints when legacy slot adapters override their
 // own synthetic group state. Core consumers only read ButtonGroupContext.
 #[derive(Clone, Copy)]
-pub(crate) struct ConnectedButtonGroupContext(pub Signal<ButtonGroupContextValue>);
+pub(crate) struct ConnectedButtonGroupContext(pub Signal<Option<ButtonGroupContextValue>>);
 
 pub(crate) fn use_button_group() -> Option<ButtonGroupContextValue> {
     try_consume_context::<ButtonGroupContext>().and_then(|context| (context.0)())

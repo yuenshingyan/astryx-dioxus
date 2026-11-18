@@ -13,8 +13,11 @@ if (!document[runtimeKey]) {
   let visibleTip = null;
   let lastScroll = -Infinity;
   const enabled = element => element && !element.matches(':disabled,[aria-disabled="true"]');
-  const groupMembers = group => [...group.querySelectorAll('.astryx-button')]
-    .filter(element => element.closest('[data-astryx-button-group]') === group);
+  const groupOwner = element => {
+    const boundary = element?.closest('[role="group"],[popover],dialog');
+    return boundary?.hasAttribute('data-astryx-button-group') ? boundary : null;
+  };
+  const isMenu = element => ['true', 'menu', 'listbox'].includes(element.getAttribute('aria-haspopup'));
   const listen = (target, name, handler, options = {}) => target.addEventListener(name, handler, { ...options, signal });
   const milliseconds = value => value.trim().endsWith('ms') ? parseFloat(value) : parseFloat(value) * 1000;
   const exitDuration = element => milliseconds(getComputedStyle(element).getPropertyValue('--duration-exit') || '175ms');
@@ -63,15 +66,27 @@ if (!document[runtimeKey]) {
     const hit = document.elementFromPoint(x, y);
     const direct = hit?.closest('.astryx-button');
     const layer = hit?.closest('dialog:modal,[popover]:popover-open') || null;
-    if (records.has(direct) && (!group || direct.closest('[data-astryx-button-group]') === group)) {
+    if (records.has(direct)) {
       const box = direct.getBoundingClientRect();
-      if (x >= box.left && x <= box.right && y >= box.top && y <= box.bottom) return records.get(direct);
+      if (x >= box.left && x <= box.right && y >= box.top && y <= box.bottom) {
+        return !group || (groupOwner(direct) === group && !isMenu(direct)) ? records.get(direct) : null;
+      }
     }
+    const foreign = hit?.closest('button,a[href],input,select,textarea');
+    if (foreign && !records.has(foreign)) return null;
     // A touch band grows toward 44px, stopping at the midpoint to neighbours.
     return [...records.values()].find(record => {
       const element = record.element;
-      if (!enabled(element) || (group && element.closest('[data-astryx-button-group]') !== group)) return false;
+      if (!enabled(element) || (group && (groupOwner(element) !== group || isMenu(element)))) return false;
       if (element.closest('[inert]') || (element.closest('dialog:modal,[popover]:popover-open') || null) !== layer) return false;
+      const host = groupOwner(element);
+      if (host && element.dataset.astryxGroupTrack === 'true') {
+        const bounds = host.getBoundingClientRect();
+        const scaleX = bounds.width / host.offsetWidth || 1, scaleY = bounds.height / host.offsetHeight || 1;
+        const growth = side => parseFloat(host.style.getPropertyValue(`--_group-hit-${side}`)) || 0;
+        if (x < bounds.left - growth('left') * scaleX || x > bounds.right + growth('right') * scaleX
+          || y < bounds.top - growth('top') * scaleY || y > bounds.bottom + growth('bottom') * scaleY) return false;
+      }
       const css = getComputedStyle(element);
       if (css.visibility !== 'visible' || css.pointerEvents === 'none') return false;
       const box = element.getBoundingClientRect();
@@ -214,25 +229,6 @@ if (!document[runtimeKey]) {
     if (record) {
       record.pointerFocus = false;
       if (coarse.matches && event.key === ' ' && enabled(record.element) && record.element.tagName === 'BUTTON') press(record, 'on');
-      const group = record.element.closest('[data-astryx-button-group]');
-      if (group) {
-        const members = groupMembers(group).filter(button => records.has(button));
-        const index = members.indexOf(record.element);
-        const horizontal = group.dataset.orientation !== 'vertical';
-        const rtl = getComputedStyle(group).direction === 'rtl';
-        const next = horizontal ? (rtl ? 'ArrowLeft' : 'ArrowRight') : 'ArrowDown';
-        const previous = horizontal ? (rtl ? 'ArrowRight' : 'ArrowLeft') : 'ArrowUp';
-        let destination = null;
-        if (event.key === next) destination = (index + 1) % members.length;
-        if (event.key === previous) destination = (index - 1 + members.length) % members.length;
-        if (event.key === 'Home') destination = 0;
-        if (event.key === 'End') destination = members.length - 1;
-        if (destination !== null) {
-          event.preventDefault();
-          members.forEach((member, i) => member.tabIndex = i === destination ? 0 : -1);
-          members[destination].focus();
-        }
-      }
     }
   }, { capture: true });
   listen(document, 'keyup', event => { if (coarse.matches && event.key === ' ') release(records.get(event.target)); }, { capture: true });
@@ -254,14 +250,14 @@ if (!document[runtimeKey]) {
     }
     if (event.pointerType !== 'touch' && !coarse.matches) return;
     if (gesture) press(gesture.current, null);
-    const group = record.element.closest('[data-astryx-button-group]');
-    const isMenu = ['true', 'menu', 'listbox'].includes(record.element.getAttribute('aria-haspopup'));
-    gesture = { id: event.pointerId, original: record, current: record, nativeTarget: event.target.closest?.('.astryx-button') || event.target, group: isMenu ? null : group, x: event.clientX, y: event.clientY, scrolling: isScrolling(record.element), cancelled: false };
-    if (event.pointerType === 'touch' && gesture.scrolling && performance.now() - lastScroll < 150) {
+    const owner = groupOwner(record.element);
+    const group = coarse.matches && ['touch', 'pen'].includes(event.pointerType) && owner?.getAttribute('aria-disabled') !== 'true' && !isMenu(record.element) ? owner : null;
+    gesture = { id: event.pointerId, original: record, current: record, nativeTarget: event.target.closest?.('.astryx-button') || event.target, group, x: event.clientX, y: event.clientY, scrolling: isScrolling(record.element), cancelled: false };
+    if (event.pointerType === 'touch' && !group && gesture.scrolling && performance.now() - lastScroll < 150) {
       gesture.cancelled = true;
       return;
     }
-    if (event.pointerType === 'touch' && gesture.scrolling) {
+    if (event.pointerType === 'touch' && !group && gesture.scrolling) {
       gesture.timer = later(record, () => { if (gesture?.original === record && !gesture.cancelled) press(gesture.current, 'on'); }, Math.max(0, 150 - (performance.now() - event.timeStamp)));
     } else press(record, 'on');
   }, { capture: true, passive: true });
@@ -286,7 +282,7 @@ if (!document[runtimeKey]) {
     if (!gesture) return;
     cancelTimer(gesture.original, gesture.timer);
     press(gesture.current, null);
-    suppressed = { element: gesture.nativeTarget, pointerId: gesture.id, until: performance.now() + 500 };
+    suppressed = { element: gesture.group || gesture.nativeTarget, pointerId: gesture.id, until: performance.now() + 500 };
     gesture = null;
   };
   listen(document, 'pointercancel', cancelGesture, { capture: true });
@@ -299,12 +295,21 @@ if (!document[runtimeKey]) {
       if (!finished.cancelled) showTip(finished.original, finished.original.tooltip);
       return;
     }
-    if (finished.cancelled || !finished.current) {
+    if (finished.cancelled || (!finished.current && !finished.group)) {
       press(finished.current, null);
-      suppressed = { element: finished.nativeTarget, pointerId: finished.id, until: performance.now() + 500 };
+      suppressed = { element: finished.group || finished.nativeTarget, pointerId: finished.id, until: performance.now() + 500 };
       return;
     }
+    if (finished.group) {
+      const candidate = recordAt(event.clientX, event.clientY, finished.group);
+      if (candidate !== finished.current) { press(finished.current, null); finished.current = candidate; }
+    }
     const current = finished.current;
+    if (!current || !current.element.isConnected || !enabled(current.element)) {
+      press(current, null);
+      suppressed = { element: finished.group || finished.nativeTarget, pointerId: finished.id, until: performance.now() + 500 };
+      return;
+    }
     if (!current.element.hasAttribute('data-astryx-press')) {
       press(current, 'on');
       const epoch = current.pressEpoch;
@@ -314,7 +319,7 @@ if (!document[runtimeKey]) {
       // Native touch click targets the touch-down member. The group activates
       // the release member instead, once, and suppresses only the native tail.
       current.element.click();
-      suppressed = { element: finished.nativeTarget, pointerId: finished.id, until: performance.now() + 500 };
+      suppressed = { element: finished.group, pointerId: finished.id, until: performance.now() + 500 };
     } else if (!finished.original.element.contains(event.target)) {
       current.element.click();
       suppressed = { element: finished.nativeTarget, pointerId: finished.id, until: performance.now() + 500 };
@@ -337,11 +342,6 @@ if (!document[runtimeKey]) {
       synchronizeRotors(record);
       syncDescription(record);
       if (record.isFocused) focusTip(record);
-      const group = element.closest('[data-astryx-button-group]');
-      if (group) {
-        const members = groupMembers(group);
-        element.tabIndex = members.some(member => member !== element && records.has(member) && member.tabIndex === 0) ? -1 : 0;
-      }
       return {
         update(config) {
           Object.assign(record, config);
@@ -356,10 +356,6 @@ if (!document[runtimeKey]) {
           if ((record.isFocused || record.hadFocus) && (!document.activeElement || document.activeElement === document.body || document.activeElement === element)) {
             const replacement = document.querySelector(`[data-astryx-button-id="${record.id}"]`);
             if (replacement && replacement !== element) replacement.focus({ preventScroll: true });
-          }
-          if (group) {
-            const members = groupMembers(group).filter(member => records.has(member));
-            if (!members.some(member => member.tabIndex === 0)) members[0]?.setAttribute('tabindex', '0');
           }
           if (!records.size) { listeners.abort(); delete document[runtimeKey]; }
         },

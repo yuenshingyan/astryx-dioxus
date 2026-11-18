@@ -10,6 +10,7 @@
   --color-on-dark: #fff;
   --color-border: light-dark(#05365919, #f2f4f619);
   --color-track: light-dark(#ccd3db, #5a5e66);
+  --border-width: 1px;
   --color-error: light-dark(#e3193b, #f5394f);
   --color-on-error: light-dark(#fff, #0a1317);
   --color-overlay-hover: light-dark(#0536590c, #ffffff0c);
@@ -17,16 +18,22 @@
   --spacing-1: 0.25rem;
   --spacing-2: 0.5rem;
   --spacing-3: 0.75rem;
+  --spacing-6: 1.5rem;
   --size-element-sm: 28px;
   --size-element-md: 32px;
   --size-element-lg: 36px;
   --radius-element: 8px;
   --radius-container: 12px;
   --radius-full: 9999px;
+  --font-size-sm: 0.75rem;
   --font-size-base: 0.875rem;
+  --font-weight-normal: 400;
   --font-weight-medium: 500;
   --text-label-size: var(--font-size-base);
   --text-label-leading: 1.4286;
+  --text-supporting-size: var(--font-size-sm);
+  --text-supporting-weight: var(--font-weight-normal);
+  --text-supporting-leading: 1.6667;
   --focus-outline-width: 2px;
   --focus-outline-style: solid;
   --focus-outline-color: var(--color-accent);
@@ -343,7 +350,7 @@
   isolation: isolate;
 }
 
-:where(.astryx-button[data-astryx-press])::before {
+:where(.astryx-button[data-astryx-press]:not([aria-disabled="true"]))::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -378,64 +385,118 @@
 
 .astryx-button-group {
   display: inline-flex;
-  max-width: 100%;
+  align-items: stretch;
   isolation: isolate;
-  border-radius: var(--radius-element);
-  touch-action: pan-y;
+  border-radius: 0;
 }
 
 .astryx-button-group--vertical {
   flex-direction: column;
-  touch-action: pan-x;
 }
 
-.astryx-button-group > .astryx-button {
+.astryx-button-group > .astryx-button:where([data-astryx-grouped="true"]) {
   border-radius: 0;
 }
 
-.astryx-button-group--horizontal > .astryx-button:first-child {
-  border-start-start-radius: inherit;
-  border-end-start-radius: inherit;
+.astryx-button-group--horizontal > .astryx-button:where([data-astryx-grouped="true"]):first-child {
+  border-start-start-radius: var(--radius-element);
+  border-end-start-radius: var(--radius-element);
 }
 
-.astryx-button-group--horizontal > .astryx-button:nth-last-child(1 of :not([popover]):not(template):not(dialog)) {
-  border-start-end-radius: inherit;
-  border-end-end-radius: inherit;
+.astryx-button-group--horizontal > .astryx-button:where([data-astryx-grouped="true"]):nth-last-child(1 of :not([popover]):not(template):not(dialog)) {
+  border-start-end-radius: var(--radius-element);
+  border-end-end-radius: var(--radius-element);
 }
 
-.astryx-button-group--horizontal > .astryx-button:not(:first-child) {
-  border-inline-start: 1px solid var(--color-border);
+.astryx-button-group--horizontal > .astryx-button:where([data-astryx-grouped="true"]):not(:first-child) {
+  border-inline-start: var(--border-width) solid var(--color-border);
 }
 
-.astryx-button-group--vertical > .astryx-button:first-child {
-  border-start-start-radius: inherit;
-  border-start-end-radius: inherit;
+.astryx-button-group--vertical > .astryx-button:where([data-astryx-grouped="true"]):first-child {
+  border-start-start-radius: var(--radius-element);
+  border-start-end-radius: var(--radius-element);
 }
 
-.astryx-button-group--vertical > .astryx-button:nth-last-child(1 of :not([popover]):not(template):not(dialog)) {
-  border-end-start-radius: inherit;
-  border-end-end-radius: inherit;
+.astryx-button-group--vertical > .astryx-button:where([data-astryx-grouped="true"]):nth-last-child(1 of :not([popover]):not(template):not(dialog)) {
+  border-end-start-radius: var(--radius-element);
+  border-end-end-radius: var(--radius-element);
 }
 
-.astryx-button-group--vertical > .astryx-button:not(:first-child) {
-  border-block-start: 1px solid var(--color-border);
+.astryx-button-group--vertical > .astryx-button:where([data-astryx-grouped="true"]):not(:first-child) {
+  border-block-start: var(--border-width) solid var(--color-border);
 }
 
-.astryx-button-group--horizontal > :is(.astryx-button--primary, .astryx-button--destructive):not(:first-child) {
+.astryx-button-group--horizontal > :is(.astryx-button--primary, .astryx-button--destructive):where([data-astryx-grouped="true"]):not(:first-child) {
   border-inline-start-color: var(--color-on-accent);
 }
 
-.astryx-button-group--vertical > :is(.astryx-button--primary, .astryx-button--destructive):not(:first-child) {
+.astryx-button-group--vertical > :is(.astryx-button--primary, .astryx-button--destructive):where([data-astryx-grouped="true"]):not(:first-child) {
   border-block-start-color: var(--color-on-accent);
 }
 
-@media (forced-colors: active) {
-  .astryx-button-group--horizontal > .astryx-button { border-inline-end-width: 0; border-inline-start-color: ButtonText; }
-  .astryx-button-group--horizontal > .astryx-button:nth-last-child(1 of :not([popover]):not(template):not(dialog)) { border-inline-end-width: 1px; }
-  .astryx-button-group--vertical > .astryx-button { border-block-end-width: 0; border-block-start-color: ButtonText; }
-  .astryx-button-group--vertical > .astryx-button:nth-last-child(1 of :not([popover]):not(template):not(dialog)) { border-block-end-width: 1px; }
+/* The owned controller also joins display-contents wrappers and ignores layers. */
+.astryx-button[data-astryx-group-orientation="horizontal"] { border-inline-start-color: var(--color-border); }
+.astryx-button[data-astryx-group-orientation="vertical"] { border-block-start-color: var(--color-border); }
+.astryx-button[data-astryx-group-position][data-astryx-group-orientation] {
+  border-radius: 0;
+  border-inline-start-width: 0;
+  border-block-start-width: 0;
+}
+.astryx-button[data-astryx-group-orientation="horizontal"]:is([data-astryx-group-position="first"], [data-astryx-group-position="only"]) {
+  border-start-start-radius: var(--radius-element);
+  border-end-start-radius: var(--radius-element);
+}
+.astryx-button[data-astryx-group-orientation="horizontal"]:is([data-astryx-group-position="last"], [data-astryx-group-position="only"]) {
+  border-start-end-radius: var(--radius-element);
+  border-end-end-radius: var(--radius-element);
+}
+.astryx-button[data-astryx-group-orientation="vertical"]:is([data-astryx-group-position="first"], [data-astryx-group-position="only"]) {
+  border-start-start-radius: var(--radius-element);
+  border-start-end-radius: var(--radius-element);
+}
+.astryx-button[data-astryx-group-orientation="vertical"]:is([data-astryx-group-position="last"], [data-astryx-group-position="only"]) {
+  border-end-start-radius: var(--radius-element);
+  border-end-end-radius: var(--radius-element);
+}
+.astryx-button[data-astryx-group-orientation="horizontal"]:is([data-astryx-group-position="middle"], [data-astryx-group-position="last"]) {
+  border-inline-start: var(--border-width) solid var(--color-border);
+}
+.astryx-button[data-astryx-group-orientation="vertical"]:is([data-astryx-group-position="middle"], [data-astryx-group-position="last"]) {
+  border-block-start: var(--border-width) solid var(--color-border);
+}
+:is(.astryx-button--primary, .astryx-button--destructive)[data-astryx-group-position][data-astryx-group-orientation] {
+  border-inline-start-color: var(--color-on-accent);
+  border-block-start-color: var(--color-on-accent);
+}
+@media (pointer: coarse) {
+  .astryx-button-group:not([data-disabled]) { position: relative; touch-action: pan-y; }
+  .astryx-button-group--vertical:not([data-disabled]) { touch-action: pan-x; }
+  .astryx-button-group[data-astryx-touch-action]::before {
+    content: "";
+    position: absolute;
+    top: calc(-1 * var(--_group-hit-top, 0px));
+    right: calc(-1 * var(--_group-hit-right, 0px));
+    bottom: calc(-1 * var(--_group-hit-bottom, 0px));
+    left: calc(-1 * var(--_group-hit-left, 0px));
+    z-index: -1;
+  }
+  .astryx-button[data-astryx-group-track="true"] > .astryx-button__content::after { content: none; }
 }
 
+@media (forced-colors: active) {
+  .astryx-button-group--horizontal > .astryx-button:where([data-astryx-grouped="true"]) { border-inline-end-width: 0; border-inline-start-color: ButtonText; }
+  .astryx-button-group--horizontal > .astryx-button:where([data-astryx-grouped="true"]):nth-last-child(1 of :not([popover]):not(template):not(dialog)) { border-inline-end-width: 1px; }
+  .astryx-button-group--vertical > .astryx-button:where([data-astryx-grouped="true"]) { border-block-end-width: 0; border-block-start-color: ButtonText; }
+  .astryx-button-group--vertical > .astryx-button:where([data-astryx-grouped="true"]):nth-last-child(1 of :not([popover]):not(template):not(dialog)) { border-block-end-width: 1px; }
+}
+
+@media (forced-colors: active) {
+  .astryx-button[data-astryx-group-position][data-astryx-group-orientation] { border: 1px solid ButtonText; }
+  .astryx-button[data-astryx-group-orientation="horizontal"]:is([data-astryx-group-position="first"], [data-astryx-group-position="middle"]) { border-inline-end-width: 0; }
+  .astryx-button[data-astryx-group-orientation="vertical"]:is([data-astryx-group-position="first"], [data-astryx-group-position="middle"]) { border-block-end-width: 0; }
+}
+
+.astryx-button-group[data-elevation]:not([data-elevation="none"]) { border-radius: var(--radius-element); }
 .astryx-button-group[data-elevation="low"] { box-shadow: var(--shadow-low); }
 .astryx-button-group[data-elevation="med"] { box-shadow: var(--shadow-med); }
 .astryx-button-group[data-elevation="high"] { box-shadow: var(--shadow-high); }

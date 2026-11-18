@@ -73,7 +73,7 @@ pub fn ButtonEnvironmentProvider(environment: ButtonEnvironment, children: Eleme
     let inherited_size = try_consume_context::<SizeContext>().map(|context| (context.0)());
     let size = environment.size.or(inherited_size).unwrap_or_default();
     let connected =
-        try_consume_context::<ConnectedButtonGroupContext>().map(|context| (context.0)());
+        try_consume_context::<ConnectedButtonGroupContext>().and_then(|context| (context.0)());
     let group = connected.or_else(|| {
         environment.is_grouped.then_some(ButtonGroupContextValue {
             orientation: environment.orientation,

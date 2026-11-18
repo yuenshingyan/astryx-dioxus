@@ -2,44 +2,9 @@
 // Palette and variant mappings derive from Meta Astryx; see THIRD_PARTY_NOTICES.md.
 import { readFile } from 'node:fs/promises';
 
+import { createColorResolver, over, contrast } from './contrast/colors.mjs';
+
 const palette = JSON.parse(await readFile(new URL('./fixtures/button-core-palette.json', import.meta.url), 'utf8'));
-function splitTopLevel(value) {
-  let depth = 0;
-  for (let i = 0; i < value.length; i++) {
-    if (value[i] === '(') depth++;
-    else if (value[i] === ')') depth--;
-    else if (value[i] === ',' && depth === 0) return [value.slice(0, i), value.slice(i + 1)];
-  }
-  throw new Error(`Expected a light/dark pair: ${value}`);
-}
-function color(value, mode) {
-  value = value.trim();
-  if (value.startsWith('var(')) return color(palette.tokens[value.slice(4, -1)], mode);
-  if (value.startsWith('light-dark(')) return color(splitTopLevel(value.slice(11, -1))[mode], mode);
-  if (value === 'transparent') return [0, 0, 0, 0];
-  if (value.startsWith('#')) {
-    let hex = value.slice(1);
-    if (hex.length === 3 || hex.length === 4) hex = [...hex].map(character => character + character).join('');
-    if (hex.length === 6) hex += 'ff';
-    return [0, 2, 4, 6].map(index => parseInt(hex.slice(index, index + 2), 16) / 255);
-  }
-  if (/^rgba?\(/.test(value)) {
-    const channels = value.slice(value.indexOf('(') + 1, -1).split(',').map(Number);
-    return [...channels.slice(0, 3).map(channel => channel / 255), channels[3] ?? 1];
-  }
-  throw new Error(`Unsupported source color: ${value}`);
-}
-function over(foreground, background) {
-  return [...foreground.slice(0, 3).map((channel, i) => channel * foreground[3] + background[i] * (1 - foreground[3])), 1];
-}
-function luminance(value) {
-  const channels = value.slice(0, 3).map(channel => channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4);
-  return channels.reduce((total, channel, i) => total + channel * [0.2126, 0.7152, 0.0722][i], 0);
-}
-function contrast(first, second) {
-  const [low, high] = [luminance(first), luminance(second)].sort((a, b) => a - b);
-  return (high + 0.05) / (low + 0.05);
-}
 const buttons = {
   primary: ['--color-accent', '--color-on-accent'],
   secondary: ['--color-neutral', '--color-text-primary'],
@@ -65,7 +30,7 @@ const report = {
   buttonLabelFailures: [],
 };
 ['light', 'dark'].forEach((mode, modeIndex) => {
-  const resolve = name => color(name.startsWith('--') ? palette.tokens[name] : name, modeIndex);
+  const resolve = createColorResolver(palette.tokens, modeIndex);
   ['--color-background-body', '--color-background-surface'].forEach(canvasName => {
     const canvas = resolve(canvasName);
     Object.entries(buttons).forEach(([button, [fill, foreground]]) => {

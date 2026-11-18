@@ -2,12 +2,13 @@
 
 ## Meta Astryx
 
-The implementations under `src/button/`, `src/button_group/`, `src/icon/`, `src/spinner/`, `src/size_context/`, `src/input_group/`, and `src/link/`, together with `assets/button-controller.js` and `assets/astryx.css` adapt Meta Astryx's Button, Spinner, icon sizing, grouping/context contracts, tooltip/press behavior, design tokens, and Button-specific theme values:
+The implementations under `src/button/`, `src/button_group/`, `src/icon/`, `src/icon_button/`, `src/spinner/`, `src/size_context/`, `src/input_group/`, `src/layer/`, and `src/link/`, together with `assets/button-controller.js`, `assets/button-group-controller.js`, and `assets/astryx.css` adapt Meta Astryx's Button, Spinner, icon sizing, grouping/context contracts, tooltip/press behavior, design tokens, and Button-specific theme values:
 
 - Repository: https://github.com/meta/astryx
 - Reference revision: `476a3153417dbf75c565f7df05b0784e94ddd59e`
 - Sources: `packages/core/src/Button/Button.tsx`, `packages/core/src/Badge/Badge.tsx` (contrast-audit mappings), `packages/core/src/Spinner/{Spinner.tsx,spinnerRotor.ts}`, `packages/core/src/Icon/IconSize.stylex.ts`, `packages/core/src/Tooltip/useTooltip.tsx`, `packages/core/src/utils/{pressFeedback.ts,pressGesture.ts}`, `packages/core/src/theme/tokens.stylex.ts`, `packages/themes/neutral/src/{neutralTheme.ts,neutralPaletteRefs.generated.ts}`, and `apps/docsite/src/themes/astryxTheme.ts`.
-- The showcase's named Button patterns are adapted from `packages/cli/assets/templates/blocks/components/Button/` at the same revision.
+- ButtonGroup additionally follows `packages/core/src/ButtonGroup/{ButtonGroup.tsx,ButtonGroupContext.ts}`, `packages/core/src/hooks/{useListFocus.ts,useGroupPressTracking.ts}`, `packages/core/src/IconButton/IconButton.tsx`, and `packages/core/src/Layer/layerScopedContext.tsx` at the same revision.
+- The showcase's named Button and ButtonGroup patterns are adapted from their directories under `packages/cli/assets/templates/blocks/components/` at the same revision.
 
 Upstream license:
 
@@ -34,6 +35,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+## Heroicons (ButtonGroup showcase glyphs only)
+
+- `examples/showcase/button_group.rs` includes the clipboard-document, scissors, clipboard, and chevron-down outline SVG paths used by the original named showcase.
+- Source: https://github.com/tailwindlabs/heroicons/tree/v2.2.0/optimized/24/outline
+- Copyright (c) Tailwind Labs, Inc.
+- MIT license; full text in [assets/licenses/heroicons.txt](assets/licenses/heroicons.txt).
+- This copies licensed SVG data; it adds no Rust/npm dependency or network service.
 
 ## Figtree font (showcase only)
 

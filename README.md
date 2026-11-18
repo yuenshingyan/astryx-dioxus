@@ -10,7 +10,12 @@ integration. The showcase includes the documented Button patterns and a locally
 bundled Figtree font. See [Button implementation and verification](docs/button-port.md)
 for source references, tested behavior, API adapters, and verification boundaries.
 The [component checklist](COMPONENT_CHECKLIST.md) records verification separately;
-Button's implementation does not mark unrelated components or unrun audits complete.
+ButtonGroup now implements connected geometry, inherited sizing/disabled state,
+shared elevation, roving focus, layer isolation, and touch/pen tracking. All three
+named patterns and interactive regression cases are in the showcase; see
+[ButtonGroup verification](docs/button-group-port.md). Supporting IconButton and
+layer-boundary utilities do not automatically complete their separate migration
+checklists. Unrelated components and unrun audits are not marked complete.
 Publishing remains disabled until package metadata and licensing are confirmed.
 See [third-party notices](THIRD_PARTY_NOTICES.md) for the upstream MIT license.
 
@@ -51,7 +56,8 @@ CSS styles target HTML/webview output, not a native renderer.
 
 ## Layout
 
-- `src/button/`, `src/button_group/`, `src/icon/`, `src/spinner/`: upstream-owned component modules, named using Rust conventions.
+- `src/button/`, `src/button_group/`, `src/icon/`, `src/icon_button/`, `src/spinner/`: upstream-owned component modules, named using Rust conventions.
+- `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
 - `src/link/`: shared link types, context, provider, and renderer resolution; not a completed standalone Link component.
 - `src/input_group/`: the input-owned internal state contract used by existing controls; not a completed InputGroup component.
@@ -71,7 +77,11 @@ cargo clippy --all-targets -- -D warnings
 cargo check --example showcase --target wasm32-unknown-unknown
 ```
 
-For browser interaction checks, see [Button browser testing](docs/button-port.md#browser-checks).
+For browser interaction checks, see [Button browser testing](docs/button-port.md#browser-checks)
+and [ButtonGroup testing](docs/button-group-port.md#verification).
+Run both `node tests/button.browser.mjs` and `node tests/button_group.browser.mjs`.
+The Group audit `node tests/button_group.contrast.mjs` also reports unchanged
+source-palette failures and intentionally exits 1.
 The separate [core-palette contrast audit](docs/button-port.md#core-palette-contrast-conflict)
 reports inherited upstream failures under an accepted source-fidelity exception;
 run `node tests/button.contrast.mjs` (it exits 1). Those failures are not a claim

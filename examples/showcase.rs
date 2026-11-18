@@ -6,10 +6,13 @@ use dioxus::prelude::*;
 
 #[path = "showcase/button_contract.rs"]
 mod button_contract;
+#[path = "showcase/button_group.rs"]
+mod button_group;
 #[path = "showcase/button_patterns.rs"]
 mod button_patterns;
 
 use button_contract::ButtonContractExamples;
+use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
 
 const FIGTREE: Asset = asset!("/assets/fonts/Figtree-latin.woff2");
@@ -37,7 +40,7 @@ fn App() -> Element {
     ];
 
     rsx! {
-        document::Title { "Astryx Dioxus — Button" }
+        document::Title { "Astryx Dioxus — Button and ButtonGroup" }
         document::Style { "{STYLES}" }
         document::Style { "@font-face {{font-family:Figtree;src:url('{FIGTREE}') format('woff2');font-style:normal;font-weight:300 900;font-display:swap;}}" }
         document::Style { "
@@ -50,8 +53,9 @@ fn App() -> Element {
             .demo-count--warning {{ background:light-dark(#fae19e,#e2b6233d);color:light-dark(#4b3900,#eec448); }}
         " }
         main { "data-astryx-theme": "astryx",
-            h1 { "Astryx Button" }
-            p { "Documented Button patterns, interaction states, and integration examples. See docs/button-port.md for verification." }
+            h1 { "Astryx Button and ButtonGroup" }
+            p { "Documented patterns, interaction states, and integrations. See docs/button-port.md and docs/button-group-port.md for verification." }
+            nav { "aria-label": "Showcase sections", a { href: "#button-group-examples", "Jump to ButtonGroup examples" } }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
                 h2 { id: "variants-heading", "Variants" }
@@ -142,6 +146,7 @@ fn App() -> Element {
                 p { id: "form-count", "Submissions: {form_count}" }
             }
             ButtonContractExamples {}
+            ButtonGroupExamples {}
         }
     }
 }
