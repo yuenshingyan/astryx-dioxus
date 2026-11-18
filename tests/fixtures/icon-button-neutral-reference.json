@@ -1,0 +1,1593 @@
+{
+  "source": "https://astryx.atmeta.com/components/IconButton",
+  "theme": "neutral",
+  "browser": "Chrome",
+  "measurements": {
+    "light": [
+      {
+        "label": "Settings",
+        "variant": "secondary",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0.06)",
+        "color": "rgb(0, 0, 0)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Search",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "m21 21-4.34-4.34"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "11",
+              "cy": "11",
+              "r": "8"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Copy",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "rect",
+            "geometry": {
+              "x": "8",
+              "y": "8",
+              "width": "14",
+              "height": "14",
+              "rx": "2",
+              "ry": "2"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Info",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "12",
+              "cy": "12",
+              "r": "10"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M12 16v-4"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M12 8h.01"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Menu",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M4 5h16"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M4 12h16"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M4 19h16"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Close",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M18 6 6 18"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "m6 6 12 12"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Primary",
+        "variant": "primary",
+        "size": "md",
+        "elevation": "high",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgb(27, 27, 27)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "oklch(0 0 0 / 0.1) 0px 4px 6px 0px, oklch(0 0 0 / 0.15) 0px 12px 24px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px inset",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M12 4.5v15m7.5-7.5h-15"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "1.5px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Secondary",
+        "variant": "secondary",
+        "size": "md",
+        "elevation": "high",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0.06)",
+        "color": "rgb(0, 0, 0)",
+        "shadow": "oklch(0 0 0 / 0.1) 0px 4px 6px 0px, oklch(0 0 0 / 0.15) 0px 12px 24px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px inset",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M12 4.5v15m7.5-7.5h-15"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "1.5px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Ghost",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "high",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "shadow": "oklch(0 0 0 / 0.1) 0px 4px 6px 0px, oklch(0 0 0 / 0.15) 0px 12px 24px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px inset",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M12 4.5v15m7.5-7.5h-15"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "1.5px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Destructive",
+        "variant": "destructive",
+        "size": "md",
+        "elevation": "high",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgb(255, 196, 190)",
+        "color": "rgb(118, 0, 12)",
+        "shadow": "oklch(0 0 0 / 0.1) 0px 4px 6px 0px, oklch(0 0 0 / 0.15) 0px 12px 24px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px inset",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M12 4.5v15m7.5-7.5h-15"
+            },
+            "fill": "none",
+            "stroke": "rgb(118, 0, 12)",
+            "strokeWidth": "1.5px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Copy",
+        "variant": "primary",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgb(27, 27, 27)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "rect",
+            "geometry": {
+              "x": "8",
+              "y": "8",
+              "width": "14",
+              "height": "14",
+              "rx": "2",
+              "ry": "2"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Search",
+        "variant": "secondary",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0.06)",
+        "color": "rgb(0, 0, 0)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "m21 21-4.34-4.34"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "11",
+              "cy": "11",
+              "r": "8"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Close",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M18 6 6 18"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "m6 6 12 12"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Search",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "m21 21-4.34-4.34"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "11",
+              "cy": "11",
+              "r": "8"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Copy link",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "rect",
+            "geometry": {
+              "x": "8",
+              "y": "8",
+              "width": "14",
+              "height": "14",
+              "rx": "2",
+              "ry": "2"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "More options",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "12",
+              "cy": "12",
+              "r": "1"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "19",
+              "cy": "12",
+              "r": "1"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "5",
+              "cy": "12",
+              "r": "1"
+            },
+            "fill": "none",
+            "stroke": "rgb(0, 0, 0)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      }
+    ],
+    "dark": [
+      {
+        "label": "Settings",
+        "variant": "secondary",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(255, 255, 255, 0.1)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Search",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "m21 21-4.34-4.34"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "11",
+              "cy": "11",
+              "r": "8"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Copy",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "rect",
+            "geometry": {
+              "x": "8",
+              "y": "8",
+              "width": "14",
+              "height": "14",
+              "rx": "2",
+              "ry": "2"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Info",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "12",
+              "cy": "12",
+              "r": "10"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M12 16v-4"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M12 8h.01"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Menu",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M4 5h16"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M4 12h16"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M4 19h16"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Close",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M18 6 6 18"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "m6 6 12 12"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Primary",
+        "variant": "primary",
+        "size": "md",
+        "elevation": "high",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgb(241, 241, 241)",
+        "color": "rgb(17, 17, 17)",
+        "shadow": "oklch(0 0 0 / 0.5) 0px 4px 6px 0px, oklch(0 0 0 / 0.7) 0px 12px 24px 0px, oklch(1 0 0 / 0.15) 0px 0px 0px 1px inset",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M12 4.5v15m7.5-7.5h-15"
+            },
+            "fill": "none",
+            "stroke": "rgb(17, 17, 17)",
+            "strokeWidth": "1.5px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Secondary",
+        "variant": "secondary",
+        "size": "md",
+        "elevation": "high",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(255, 255, 255, 0.1)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "oklch(0 0 0 / 0.5) 0px 4px 6px 0px, oklch(0 0 0 / 0.7) 0px 12px 24px 0px, oklch(1 0 0 / 0.15) 0px 0px 0px 1px inset",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M12 4.5v15m7.5-7.5h-15"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "1.5px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Ghost",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "high",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "oklch(0 0 0 / 0.5) 0px 4px 6px 0px, oklch(0 0 0 / 0.7) 0px 12px 24px 0px, oklch(1 0 0 / 0.15) 0px 0px 0px 1px inset",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M12 4.5v15m7.5-7.5h-15"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "1.5px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Destructive",
+        "variant": "destructive",
+        "size": "md",
+        "elevation": "high",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(255, 152, 144, 0.24)",
+        "color": "rgb(255, 174, 167)",
+        "shadow": "oklch(0 0 0 / 0.5) 0px 4px 6px 0px, oklch(0 0 0 / 0.7) 0px 12px 24px 0px, oklch(1 0 0 / 0.15) 0px 0px 0px 1px inset",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M12 4.5v15m7.5-7.5h-15"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 174, 167)",
+            "strokeWidth": "1.5px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Copy",
+        "variant": "primary",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgb(241, 241, 241)",
+        "color": "rgb(17, 17, 17)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "rect",
+            "geometry": {
+              "x": "8",
+              "y": "8",
+              "width": "14",
+              "height": "14",
+              "rx": "2",
+              "ry": "2"
+            },
+            "fill": "none",
+            "stroke": "rgb(17, 17, 17)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+            },
+            "fill": "none",
+            "stroke": "rgb(17, 17, 17)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Search",
+        "variant": "secondary",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(255, 255, 255, 0.1)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "m21 21-4.34-4.34"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "11",
+              "cy": "11",
+              "r": "8"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Close",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M18 6 6 18"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "m6 6 12 12"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Search",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "m21 21-4.34-4.34"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "11",
+              "cy": "11",
+              "r": "8"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "Copy link",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "rect",
+            "geometry": {
+              "x": "8",
+              "y": "8",
+              "width": "14",
+              "height": "14",
+              "rx": "2",
+              "ry": "2"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "path",
+            "geometry": {
+              "d": "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      },
+      {
+        "label": "More options",
+        "variant": "ghost",
+        "size": "md",
+        "elevation": "none",
+        "width": 32,
+        "height": 32,
+        "padding": [
+          "0px",
+          "0px",
+          "0px",
+          "0px"
+        ],
+        "radius": "10px",
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "shadow": "none",
+        "font": "14px",
+        "fontWeight": "500",
+        "viewBox": "0 0 24 24",
+        "iconWidth": 16,
+        "iconHeight": 16,
+        "centerX": 0,
+        "centerY": 0,
+        "shapes": [
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "12",
+              "cy": "12",
+              "r": "1"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "19",
+              "cy": "12",
+              "r": "1"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          },
+          {
+            "tag": "circle",
+            "geometry": {
+              "cx": "5",
+              "cy": "12",
+              "r": "1"
+            },
+            "fill": "none",
+            "stroke": "rgb(255, 255, 255)",
+            "strokeWidth": "2px",
+            "cap": "round",
+            "join": "round"
+          }
+        ]
+      }
+    ]
+  }
+}

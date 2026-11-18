@@ -9,7 +9,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- Button and [ButtonGroup](docs/button-group-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- Button, [ButtonGroup](docs/button-group-port.md), and [IconButton](docs/icon-button-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
@@ -89,30 +89,30 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [ ] `DropdownMenuWithSections` — **DropdownMenu — Sections**: titled action categories.
     - [ ] `DropdownMenuWithSubmenu` — **DropdownMenu — Submenu**: hover/Right opens; Left/Escape returns.
 
-- [ ] **[Icon Button](https://astryx.atmeta.com/components/IconButton)**
+- [x] **[Icon Button](https://astryx.atmeta.com/components/IconButton)**
 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/IconButton/IconButton.doc.mjs). Templates in `IconButton/` under [pinned root](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components).
 
   - **Finite choices and state**
-    - [ ] `variant`: `primary`, `secondary` (default), `ghost`, `destructive`; `size`: `sm`, `md` (default), `lg`.
-    - [ ] `elevation`: `none` (default), `low`, `med`, `high`; supports floating action button.
-    - [ ] `type`: `button` (default), `submit`, `reset`; optional form/name/value integration.
-    - [ ] `isDisabled`, `isLoading`, `isInterruptible`: each false by default / true.
-    - [ ] Disabled/loading remain focusable with aria-disabled; loading adds aria-busy and blocks reactivation unless interruptible action policy permits it.
-    - [ ] `clickAction` provides automatic async loading; interruptible pending action permits re-click/new invocation rather than deduping, not a guaranteed task-cancellation API.
+    - [x] `variant`: `primary`, `secondary` (default), `ghost`, `destructive`; `size`: `sm`, `md` (default), `lg`.
+    - [x] `elevation`: `none` (default), `low`, `med`, `high`; supports floating action button.
+    - [x] `type`: `button` (default), `submit`, `reset`; optional form/name/value integration.
+    - [x] `isDisabled`, `isLoading`, `isInterruptible`: each false by default / true.
+    - [x] Disabled/loading remain focusable with aria-disabled; loading adds aria-busy and blocks reactivation unless interruptible action policy permits it.
+    - [x] `clickAction` provides automatic async loading; interruptible pending action permits re-click/new invocation rather than deduping, not a guaranteed task-cancellation API.
 
   - **Content, links, and access**
-    - [ ] Required accessible label (not visible) and icon; contextual icon size sm for sm/md buttons, md for lg.
-    - [ ] Optional tooltip on hover/focus describes unless identical to accessible name; default square aspect versus explicit arbitrary width.
-    - [ ] `href` renders anchor/custom `as` link; disabled IconButton still renders button. Target/rel support normal link integration.
-    - [ ] Rest/hover/pressed essential glyph and loading arc contrast 3:1; focus indicator 3:1; boundary 3:1 only when needed; disabled contrast exception.
+    - [x] Required accessible label (not visible) and icon; contextual icon size sm for sm/md buttons, md for lg.
+    - [x] Optional tooltip on hover/focus describes unless identical to accessible name; default square aspect versus explicit arbitrary width.
+    - [x] `href` renders anchor/custom `as` link; disabled IconButton still renders button. Target/rel support normal link integration.
+    - [x] Audit rest/hover/pressed essential glyph and loading arc contrast 3:1; focus indicator 3:1; boundary 3:1 only when needed; disabled contrast exception. **[Results](docs/icon-button-port.md#contrast-results-and-limits): 0/48 essential glyph/arc and 0/16 focus/backdrop failures; 8/16 resting surfaces below the conditional boundary target. Original source paint is retained; strengthen the theme if an edge is needed to identify the control. This is not a blanket compliance claim.**
 
   - **Named templates**
-    - [ ] `IconButtonActionBar` — **IconButton — Action Bar**: ghost toolbar row.
-    - [ ] `IconButtonFloating` — **IconButton — Floating**: high-elevation FAB.
-    - [ ] `IconButtonLoadingToggle` — **IconButton — Loading State**: spinner during async click.
-    - [ ] `IconButtonShowcase` — **IconButton**: wrench icon button.
-    - [ ] `IconButtonTooltipIconButton` — **IconButton — With Tooltips**: hover action explanations.
+    - [x] `IconButtonActionBar` — **IconButton — Action Bar**: ghost toolbar row.
+    - [x] `IconButtonFloating` — **IconButton — Floating**: high-elevation FAB.
+    - [x] `IconButtonLoadingToggle` — **IconButton — Loading State**: spinner during async click.
+    - [x] `IconButtonShowcase` — **IconButton**: wrench icon button.
+    - [x] `IconButtonTooltipIconButton` — **IconButton — With Tooltips**: hover action explanations.
 
 - [ ] **[Link](https://astryx.atmeta.com/components/Link)**
 

@@ -10,7 +10,41 @@ use crate::link::LinkComponentType;
 /// All ordinary Button states, navigation, form props, callbacks, and inherited
 /// group/size behavior are preserved. Visible children and end content are not
 /// accepted. The explicit prop forwarding is Rust's counterpart of upstream's
-/// Omit<ButtonProps, 'isIconOnly' | 'children' | 'endContent'> contract.
+/// Omit<ButtonProps, 'isIconOnly' | 'children' | 'endContent'> contract. This wrapper
+/// adds no DOM element, state, effect, or listener. A label does not automatically
+/// create a tooltip; supply `tooltip` when a visible hint is needed.
+///
+/// Content-mode overrides are intentionally rejected:
+///
+/// ```compile_fail
+/// use astryx_dioxus::IconButton;
+/// use dioxus::prelude::*;
+/// let _ = rsx! { IconButton { label: "Settings", icon: rsx! { svg {} }, is_icon_only: false } };
+/// ```
+///
+/// ```compile_fail
+/// use astryx_dioxus::IconButton;
+/// use dioxus::prelude::*;
+/// let _ = rsx! { IconButton { label: "Settings", icon: rsx! { svg {} }, "Visible text" } };
+/// ```
+///
+/// ```compile_fail
+/// use astryx_dioxus::IconButton;
+/// use dioxus::prelude::*;
+/// let _ = rsx! { IconButton { label: "Settings", icon: rsx! { svg {} }, end_content: rsx! { span {} } } };
+/// ```
+///
+/// ```compile_fail
+/// use astryx_dioxus::IconButton;
+/// use dioxus::prelude::*;
+/// let _ = rsx! { IconButton { label: "Missing required icon" } };
+/// ```
+///
+/// ```compile_fail
+/// use astryx_dioxus::IconButton;
+/// use dioxus::prelude::*;
+/// let _ = rsx! { IconButton { icon: rsx! { svg {} } } };
+/// ```
 #[component]
 pub fn IconButton(
     label: String,

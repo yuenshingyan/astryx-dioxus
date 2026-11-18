@@ -18,6 +18,7 @@
   --spacing-1: 0.25rem;
   --spacing-2: 0.5rem;
   --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
   --spacing-6: 1.5rem;
   --size-element-sm: 28px;
   --size-element-md: 32px;
@@ -201,9 +202,8 @@
 }
 
 .astryx-button[data-icon-only="true"] {
-  --button-icon-only-aspect: 1 / 1;
   height: var(--_button-height);
-  aspect-ratio: var(--button-icon-only-aspect);
+  aspect-ratio: var(--button-icon-only-aspect, 1 / 1);
   padding: 0;
   flex-shrink: 0;
   max-width: none;
