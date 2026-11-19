@@ -4,6 +4,8 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
   let visibleTip = null;
   const hideTip = record => {
     if (!record) return;
+    record.isPinned = false;
+    record.pinAnnouncer?.withdrawPending();
     record.cutResize?.disconnect();
     record.cutMutation?.disconnect();
     cancelTimer(record, record.showTimer);
@@ -20,9 +22,17 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       } else if (record.tip.matches(':popover-open')) {
         record.tip.hidePopover();
       }
+      // A nested status surface lives outside its interactive host while open,
+      // so its visible text does not duplicate the host's hidden name suffix.
+      if (record.tipHome) {
+        if (record.tip.isConnected && record.tipHome.parentNode) record.tipHome.replaceWith(record.tip);
+        else { record.tipHome.remove(); record.tip.remove(); }
+        record.tipHome = null;
+      }
       record.tip = null;
     }
     if (visibleTip === record) visibleTip = null;
+    record.tooltipPolicy?.onHide(record);
   };
   const positionTip = record => {
     if (!record.tip?.isConnected || !record.element.isConnected) return;
@@ -45,6 +55,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     return content?.textContent || '';
   };
   const syncDescription = record => {
+    if (record.tooltipPolicy) return;
     const id = `${record.id}-tooltip`;
     const ids = new Set((record.element.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
     const name = record.tooltip ? accessibleName(record.element) : null;
@@ -57,6 +68,9 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     .some(id => id && document.getElementById(id)?.getAttribute('role') === 'tooltip' && id !== record.tip?.id);
   const showTip = (record, text, automatic = false) => {
     if (!text || !record.element.isConnected || !records.has(record.element)) return;
+    if (record.tooltipPolicy && !record.tooltipPolicy.isEnabled(record)) return;
+    if (record.isPinned && record.tip) return;
+    if (visibleTip?.isPinned && visibleTip !== record) return;
     if (visibleTip && visibleTip !== record) hideTip(visibleTip);
     hideTip(record);
     const existing = !automatic && document.getElementById(`${record.id}-tooltip`);
@@ -75,13 +89,23 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       const host = automatic && record.isTruncation
         ? record.element.closest('a,button,[role="link"],[role="button"]') || record.element
         : record.element;
-      host.after(tip);
+      if (record.tooltipPolicy) (record.element.closest('dialog:modal') || document.body).append(tip);
+      else host.after(tip);
       if (!automatic) record.ownedTip = tip;
+    }
+    if (record.tooltipPolicy) {
+      tip.style.colorScheme = css.colorScheme;
+      if (existing && record.ownedTip !== existing && record.tooltipPolicy.isHoverOnly(record) && !automatic) {
+        // Only a caller/renderer-owned surface needs its original home restored.
+        record.tipHome = document.createComment('astryx-tooltip-home');
+        tip.before(record.tipHome);
+        (record.element.closest('dialog:modal') || document.body).append(tip);
+      }
     }
     record.tip = tip;
     record.isAutomatic = automatic;
     const name = accessibleName(record.element);
-    if (!automatic && (name === null || name.trim() !== text.trim())) {
+    if (!automatic && !record.tooltipPolicy && (name === null || name.trim() !== text.trim())) {
       const ids = new Set((record.element.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
       ids.add(tip.id);
       record.element.setAttribute('aria-describedby', [...ids].join(' '));
@@ -109,9 +133,43 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       record.layerAbort = new AbortController();
       record.boundTip = tip;
       tip.addEventListener('pointerenter', () => cancelTimer(record, record.hideTimer), { signal: record.layerAbort.signal });
-      tip.addEventListener('pointerleave', () => { record.hideTimer = later(record, () => hideTip(record), 100); }, { signal: record.layerAbort.signal });
+      tip.addEventListener('pointerleave', () => { if (!record.isPinned) record.hideTimer = later(record, () => hideTip(record), 100); }, { signal: record.layerAbort.signal });
+      if (record.tooltipPolicy) {
+        // A help surface must not activate a label or clickable container.
+        tip.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); }, { signal: record.layerAbort.signal });
+      }
     }
     visibleTip = record;
+    record.tooltipPolicy?.onShow(record);
+  };
+  const announcePinned = record => {
+    // Announcement routing/lifetime belongs to the original shared hook owner,
+    // including native-modal isolation and withdrawal on owner removal.
+    const announcements = document[Symbol.for('astryx.dioxus.use-announce.polite.v1')];
+    if (announcements) {
+      record.pinAnnouncer ||= announcements.createAnnouncer();
+      record.pinAnnouncer.withdrawPending();
+      record.pinAnnouncer.announce(record.element, record.tip.textContent || '',
+        () => record.isPinned && record.element.isConnected && !!record.tip?.isConnected);
+    }
+  };
+  // A hold shares the preview surface and dismissal owner, not a second manager.
+  const show = record => {
+    if (record.isPinned || record.isDisabled || record.element.closest('[inert],:disabled,[disabled],[aria-disabled="true"]')) return;
+    showTip(record, record.tooltip);
+    if (!record.tip) return;
+    record.isPinned = true;
+    record.tooltipPolicy?.onShow(record);
+    announcePinned(record);
+  };
+  const refreshPolicyTip = record => {
+    if (!record.tip) return;
+    if (!record.tooltip?.trim()) { hideTip(record); return; }
+    if (record.tip.textContent !== record.tooltip) {
+      record.tip.textContent = record.tooltip;
+      if (record.isPinned) announcePinned(record);
+    }
+    positionTip(record);
   };
   const interestRecord = target => {
     let nearest = null;
@@ -135,7 +193,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     }
   };
   const focusTip = record => {
-    if (record.pointerFocus) return;
+    if (record.pointerFocus || record.tooltipPolicy?.isHoverOnly(record)) return;
     if (record.isTruncation && !document.activeElement?.matches(':focus-visible')) return;
     if (record.tooltip) { showTip(record, record.tooltip); return; }
     if (record.isTruncation) { showAutomatic(record); return; }
@@ -160,7 +218,8 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     const record = interestRecord(event.target);
     if (record) {
       record.hadFocus = record.isFocused;
-      record.isFocused = false; record.pointerFocus = false; hideTip(record);
+      record.isFocused = false; record.pointerFocus = false;
+      if (!record.tip?.contains(event.relatedTarget)) hideTip(record);
       queueMicrotask(() => { if (record.element.isConnected) record.hadFocus = false; });
     }
   }, { capture: true });
@@ -175,12 +234,17 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     const record = interestRecord(event.target);
     if (!record || record.element.contains(event.relatedTarget)) return;
     cancelTimer(record, record.showTimer);
-    if (record.tip && !record.isFocused) record.hideTimer = later(record, () => hideTip(record), 100);
+    if (record.tip && !record.isFocused && !record.isPinned) record.hideTimer = later(record, () => hideTip(record), 100);
   }, { capture: true });
   let tap = null;
   listen(document, 'pointerdown', event => {
     const record = interestRecord(event.target);
-    if (record) { record.pointerFocus = true; hideTip(record); }
+    if (record) {
+      record.pointerFocus = true;
+      // A standalone pin trigger's click decides; pressing a preview must not
+      // flash it shut, and pressing a nested image must never open on focus.
+      if (!record.isPinned && (!record.tooltipPolicy || record.tooltipPolicy.isHoverOnly(record))) hideTip(record);
+    }
     tap = event.isPrimary && event.button === 0 && event.pointerType === 'touch' && record?.isTruncation
       ? { record, id: event.pointerId, x: event.clientX, y: event.clientY } : null;
   }, { capture: true, passive: true });
@@ -202,22 +266,41 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
   // A queued scroll event can follow pointerover after scrollIntoView. Do not
   // cancel that new hover; pointerout owns cancellation when the target leaves.
   listen(document, 'scroll', () => { tap = null; }, { capture: true, passive: true });
+  // Components own trigger semantics; Tooltip only supplies shared presentation
+  // and show/hide capabilities. Cache one component policy per manager lifetime.
+  const policies = new Map();
   return {
-    hideTip, focusTip, syncDescription, showTip,
+    hideTip, focusTip, syncDescription, showTip, show, refreshPolicyTip,
+    attach(record) {
+      if (!record.tooltipPolicyFactory) return;
+      let policy = policies.get(record.tooltipPolicyKey);
+      if (!policy) {
+        policy = record.tooltipPolicyFactory({ records, listen, show, hide: hideTip });
+        policies.set(record.tooltipPolicyKey, policy);
+      }
+      record.tooltipPolicy = policy;
+      policy.attach(record);
+    },
+    update(record) { record.tooltipPolicy?.update(record); },
+    command(record, command) { record.tooltipPolicy?.command(record, command); },
     dispose(record) {
       hideTip(record);
+      record.tooltipPolicy?.dispose(record);
       if (tap?.record === record) tap = null;
       record.layerAbort?.abort();
       record.ownedTip?.remove();
-      const ids = (record.element.getAttribute('aria-describedby') || '').split(/\s+/).filter(id => id && id !== `${record.id}-tooltip`);
-      if (ids.length) record.element.setAttribute('aria-describedby', ids.join(' '));
-      else record.element.removeAttribute('aria-describedby');
+      record.pinAnnouncer?.dispose(); record.pinAnnouncer = null;
+      if (!record.tooltipPolicy) {
+        const ids = (record.element.getAttribute('aria-describedby') || '').split(/\s+/).filter(id => id && id !== `${record.id}-tooltip`);
+        if (ids.length) record.element.setAttribute('aria-describedby', ids.join(' '));
+        else record.element.removeAttribute('aria-describedby');
+      }
     },
     dismissOutside(target) {
       if (visibleTip && !visibleTip.element.contains(target) && !visibleTip.tip?.contains(target)) hideTip(visibleTip);
     },
     escape(event) {
-      if (event.key === 'Escape' && visibleTip) { hideTip(visibleTip); event.preventDefault(); event.stopPropagation(); }
+      if (event.key === 'Escape' && !event.isComposing && !event.defaultPrevented && visibleTip) { hideTip(visibleTip); event.preventDefault(); event.stopPropagation(); }
     },
     reposition() { if (visibleTip) positionTip(visibleTip); },
     hide() { if (visibleTip) hideTip(visibleTip); },

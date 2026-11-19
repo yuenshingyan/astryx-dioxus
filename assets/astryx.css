@@ -5,6 +5,13 @@
   --color-neutral: light-dark(rgba(5, 54, 89, 0.1), rgba(223, 226, 229, 0.2));
   --color-text-primary: light-dark(#0a1317, #dfe2e5);
   --color-text-secondary: light-dark(#4e606f, #aaafb5);
+  --color-icon-secondary: light-dark(#4e606f, #aaafb5);
+  --color-text-success: var(--color-text-green);
+  --color-text-warning: var(--color-text-yellow);
+  --color-text-error: var(--color-text-red);
+  --color-icon-success: var(--color-text-success);
+  --color-icon-warning: var(--color-text-warning);
+  --color-icon-error: var(--color-text-error);
   --color-background-inverted: light-dark(#0a1317, #fff);
   --color-background-surface: light-dark(#fff, #1f1f22);
   --color-background-card: light-dark(#fff, #1f1f22);
@@ -145,6 +152,13 @@
   --color-neutral: light-dark(#0000000f, #ffffff1a);
   --color-text-primary: light-dark(#000, #fff);
   --color-text-secondary: light-dark(#474747, #9e9e9e);
+  --color-icon-secondary: light-dark(#6a6a6a, #9e9e9e);
+  --color-text-success: light-dark(#2f7d33, #90ca90);
+  --color-text-warning: light-dark(#836700, #eec448);
+  --color-text-error: light-dark(#c0262c, #ffaea7);
+  --color-icon-success: var(--color-text-success);
+  --color-icon-warning: var(--color-text-warning);
+  --color-icon-error: var(--color-text-error);
   --color-background-surface: light-dark(#fff, #262626);
   --color-background-card: light-dark(#fff, #1b1b1b);
   --color-background-muted: light-dark(#f1f1f1, #1b1b1b);
@@ -988,5 +1002,44 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
   @media (prefers-reduced-motion: reduce) {
     .astryx-skeleton { animation-name: none; }
+  }
+}
+
+@layer astryx-base {
+  .astryx-status-dot {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background-color: var(--color-icon-secondary);
+    color: var(--color-background-surface);
+  }
+  .astryx-status-dot[data-astryx-tooltip-placement="standalone"] { position: relative; cursor: pointer; }
+  .astryx-status-dot[data-variant="success"] { background-color: var(--color-icon-success); }
+  .astryx-status-dot[data-variant="warning"] { background-color: var(--color-icon-warning); }
+  .astryx-status-dot[data-variant="error"] { background-color: var(--color-icon-error); }
+  .astryx-status-dot[data-variant="accent"] { background-color: var(--color-accent); color: var(--color-on-accent); }
+  .astryx-status-dot[data-astryx-pulsing="true"] { animation: astryx-status-dot-pulse 2s ease-in-out infinite; }
+  .astryx-status-dot__icon { display: flex; align-items: center; justify-content: center; width: 8px; height: 8px; line-height: 0; }
+  .astryx-status-dot:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+  @media (pointer: coarse) {
+    .astryx-status-dot[data-astryx-tooltip-placement="standalone"][data-astryx-hit-area="true"]::after {
+      content: "";
+      position: absolute;
+      top: calc((var(--astryx-hit-inset-top, 0px) + var(--_hit-border-top, 0px)) * -1);
+      right: calc((var(--astryx-hit-inset-right, 0px) + var(--_hit-border-right, 0px)) * -1);
+      bottom: calc((var(--astryx-hit-inset-bottom, 0px) + var(--_hit-border-bottom, 0px)) * -1);
+      left: calc((var(--astryx-hit-inset-left, 0px) + var(--_hit-border-left, 0px)) * -1);
+    }
+  }
+  @keyframes astryx-status-dot-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  @media (prefers-reduced-motion: reduce) { .astryx-status-dot[data-astryx-pulsing="true"] { animation-name: none; } }
+  @media (forced-colors: active) {
+    .astryx-status-dot { outline: 1px solid CanvasText; outline-offset: -1px; }
+    .astryx-status-dot:focus-visible { outline-width: var(--focus-outline-width); outline-offset: var(--focus-outline-offset); }
   }
 }
