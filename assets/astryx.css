@@ -10,6 +10,7 @@
   --color-background-card: light-dark(#fff, #1f1f22);
   --color-on-dark: #fff;
   --color-border: light-dark(#05365919, #f2f4f619);
+  --color-border-emphasized: light-dark(#ccd3db, #494d53);
   --color-track: light-dark(#ccd3db, #5a5e66);
   --border-width: 1px;
   --color-error: light-dark(#e3193b, #f5394f);
@@ -175,6 +176,7 @@
   --button-destructive-background: light-dark(#ffc4be, #ff98903d);
   --button-destructive-foreground: light-dark(#76000c, #ffaea7);
   --color-border: light-dark(#00000014, #ffffff1a);
+  --color-border-emphasized: light-dark(#d4d4d4, #525252);
   --radius-element: 0.625rem;
   --radius-container: 0.75rem;
   --_button-radius: var(--radius-element);
@@ -873,5 +875,37 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   [data-astryx-theme="neutral"] .astryx-badge:is([data-variant="neutral"], [data-variant="gray"]) {
     background-color: var(--color-background-gray);
     color: var(--color-text-gray);
+  }
+}
+
+@layer astryx-base {
+  .astryx-divider { box-sizing: border-box; align-items: center; }
+  .astryx-divider[data-orientation="horizontal"] { display: flex; width: 100%; }
+  .astryx-divider[data-orientation="vertical"] { display: inline-flex; flex-direction: column; height: 100%; }
+  .astryx-divider__line { flex-grow: 1; flex-shrink: 1; }
+  .astryx-divider[data-orientation="horizontal"] > .astryx-divider__line { height: var(--border-width); }
+  .astryx-divider[data-orientation="vertical"] > .astryx-divider__line { width: var(--border-width); }
+  .astryx-divider[data-variant="subtle"] > .astryx-divider__line { background-color: var(--color-border); }
+  .astryx-divider[data-variant="strong"] > .astryx-divider__line { background-color: var(--color-border-emphasized); }
+  .astryx-divider__label {
+    flex-shrink: 0;
+    padding-inline: var(--spacing-3);
+    font-size: var(--text-supporting-size);
+    line-height: var(--text-supporting-leading);
+    color: var(--color-text-secondary);
+  }
+  .astryx-divider[data-orientation="vertical"] > .astryx-divider__label {
+    padding-inline: 0;
+    padding-block: var(--spacing-3);
+  }
+  .astryx-divider--full-bleed[data-orientation="horizontal"] {
+    margin-inline-start: calc(-1 * var(--container-padding-inline-start, 0px));
+    margin-inline-end: calc(-1 * var(--container-padding-inline-end, 0px));
+    width: calc(100% + var(--container-padding-inline-start, 0px) + var(--container-padding-inline-end, 0px));
+  }
+  .astryx-divider--full-bleed[data-orientation="vertical"] {
+    margin-block-start: calc(-1 * var(--container-padding-block-start, 0px));
+    margin-block-end: calc(-1 * var(--container-padding-block-end, 0px));
+    height: calc(100% + var(--container-padding-block-start, 0px) + var(--container-padding-block-end, 0px));
   }
 }

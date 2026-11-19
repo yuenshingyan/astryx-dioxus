@@ -12,6 +12,8 @@ mod button_contract;
 mod button_group;
 #[path = "showcase/button_patterns.rs"]
 mod button_patterns;
+#[path = "showcase/divider.rs"]
+mod divider;
 #[path = "showcase/icon_button.rs"]
 mod icon_button;
 #[path = "showcase/link.rs"]
@@ -23,6 +25,7 @@ use badge::BadgeExamples;
 use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
+use divider::DividerExamples;
 use icon_button::IconButtonExamples;
 use link::LinkExamples;
 use spinner::SpinnerExamples;
@@ -81,6 +84,8 @@ fn App() -> Element {
                 a { href: "#spinner-examples", "Spinner examples" }
                 " · "
                 a { href: "#badge-examples", "Badge examples" }
+                " · "
+                a { href: "#divider-examples", "Divider examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -177,6 +182,7 @@ fn App() -> Element {
             LinkExamples {}
             SpinnerExamples {}
             BadgeExamples {}
+            DividerExamples {}
         }
     }
 }
