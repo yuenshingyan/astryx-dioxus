@@ -26,7 +26,9 @@ labels, all four original examples, shared announcements, theme geometry, and
 batched compositor motion; see [Spinner verification](docs/spinner-port.md).
 Badge adds all 14 tones, extensible theme names, static scalar/rich labels,
 truncation, bidirectional isolation and all four original patterns; see
-[Badge verification](docs/badge-port.md). Supporting layer-boundary
+[Badge verification](docs/badge-port.md). Divider adds named separators, both
+axes/weights, logical full bleed and all four original patterns; see
+[Divider verification](docs/divider-port.md). Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
 Publishing remains disabled until package metadata and licensing are confirmed.
@@ -69,7 +71,7 @@ CSS styles target HTML/webview output, not a native renderer.
 
 ## Layout
 
-- `src/badge/`, `src/button/`, `src/button_group/`, `src/icon/`, `src/icon_button/`, `src/spinner/`: upstream-owned component modules, named using Rust conventions.
+- `src/badge/`, `src/button/`, `src/button_group/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/spinner/`: upstream-owned component modules, named using Rust conventions.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
 - `src/link/`: Link, shared renderer/provider types, target/rel handling, and linkification.
@@ -97,10 +99,14 @@ cargo check --example showcase --target wasm32-unknown-unknown
 For browser interaction checks, see [Button browser testing](docs/button-port.md#browser-checks),
 [ButtonGroup testing](docs/button-group-port.md#verification),
 [IconButton testing](docs/icon-button-port.md#verification), [Link testing](docs/link-port.md#verification),
-[Spinner testing](docs/spinner-port.md#examples-and-verification), and [Badge testing](docs/badge-port.md#verification).
-Run all six component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
+[Spinner testing](docs/spinner-port.md#examples-and-verification), [Badge testing](docs/badge-port.md#verification),
+and [Divider testing](docs/divider-port.md#verification).
+Run all seven component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
 `node tests/icon_button.browser.mjs`, `node tests/link.browser.mjs`, `node tests/spinner.browser.mjs`,
-and `node tests/badge.browser.mjs`.
+`node tests/badge.browser.mjs`, and `node tests/divider.browser.mjs`.
+Divider's audit (`node tests/divider.contrast.mjs`) intentionally exits 1 for
+16/16 conditional essential-line findings; secondary labels pass all 16 cases.
+Unmatched custom Divider variants retain the documented upstream paint gap.
 Standalone Badge's audit (`node tests/badge.contrast.mjs`) passes its 112 modeled
 page/surface cases; it does not replace the prior Badge-inside-Button findings.
 Also run `node tests/spinner_rotor.browser.mjs` and `node tests/announcement.browser.mjs`

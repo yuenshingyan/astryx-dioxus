@@ -9,7 +9,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), and [Badge](docs/badge-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), and [Divider](docs/divider-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
@@ -1563,19 +1563,19 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [ ] **AspectRatio — 16:9 Widescreen Image** (`AspectRatioWidescreen.doc.mjs`).
     - [ ] **AspectRatio — Loading Skeleton** (`AspectRatioWithSkeleton.doc.mjs`): reserved media space while loading.
 
-- [ ] **[Divider](https://astryx.atmeta.com/components/Divider)**
+- [x] **[Divider](https://astryx.atmeta.com/components/Divider)**
 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Divider/Divider.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Divider).
 
   - **Choices and content**
-    - [ ] `orientation`: `horizontal` (default), `vertical`; `variant`: `subtle` (default), `strong`.
-    - [ ] `isFullBleed=false` default; true compensates container padding with negative margins.
-    - [ ] Optional centered ReactNode label; zero preserved, null/booleans/empty string omit label. No fixed label vocabulary.
+    - [x] `orientation`: `horizontal` (default), `vertical`; `variant`: `subtle` (default), `strong`. Theme-added names remain open. **[Original custom-paint gap/OQ2](docs/divider-port.md#authoritative-contract-versus-source-gaps) remains explicit: unmatched rules are unpainted, with no invented fallback/part API. [Source audit](docs/divider-port.md#contrast-and-remaining-verification-boundaries): 16/16 lines below conditional essential-boundary 3:1; 0/16 labels below 4.5:1. Original paint retained, not claimed compliant for essential separators.**
+    - [x] `isFullBleed=false` default; true compensates container padding with negative margins. Both logical axes, asymmetric/absent/changed inset, LTR/RTL and narrow native Card frames verified.
+    - [x] Optional centered ReactNode label; zero preserved, null/booleans/empty string omit label. No fixed label vocabulary. Stable named-separator references and explicit caller ARIA/name/role precedence follow authoritative FR2/FR6 rather than the documented source override bug.
   - **Templates**
-    - [ ] **Divider — Full Bleed** (`DividerFullBleed.doc.mjs`): edge-to-edge summary separation.
-    - [ ] **Divider — Variants** (`DividerShowcase.doc.mjs`): subtle/strong/labelled.
-    - [ ] **Divider — Variants** (`DividerVariants.doc.mjs`): separate card comparison, labelled alternative or.
-    - [ ] **Divider — Vertical** (`DividerVertical.doc.mjs`): metrics/toolbar group boundaries.
+    - [x] **Divider — Full Bleed** (`DividerFullBleed.doc.mjs`): edge-to-edge summary separation.
+    - [x] **Divider — Variants** (`DividerShowcase.doc.mjs`): subtle/strong/labelled.
+    - [x] **Divider — Variants** (`DividerVariants.doc.mjs`): separate card comparison, labelled alternative or.
+    - [x] **Divider — Vertical** (`DividerVertical.doc.mjs`): metrics/toolbar group boundaries.
 
 - [ ] **[Form Layout](https://astryx.atmeta.com/components/FormLayout)**
 
