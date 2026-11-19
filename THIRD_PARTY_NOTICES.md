@@ -2,7 +2,7 @@
 
 ## Meta Astryx
 
-The implementations under `src/badge/`, `src/button/`, `src/button_group/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/spinner/`, `src/size_context/`, `src/input_group/`, `src/kbd/`, `src/layer/`, `src/link/`, `src/text/`, `src/theme/`, `src/hooks/`, `src/tooltip/`, `src/interactive_role_context/`, `src/i18n/`, and `src/utils/`, together with `assets/button-group-controller.js` and `assets/astryx.css` adapt Meta Astryx's Button, Link/Text typography and navigation, Spinner, icon sizing/lookup, grouping/context contracts, tooltip/press behavior, design tokens, and implemented theme values:
+The implementations under `src/badge/`, `src/button/`, `src/button_group/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/skeleton/`, `src/spinner/`, `src/size_context/`, `src/input_group/`, `src/kbd/`, `src/layer/`, `src/link/`, `src/text/`, `src/theme/`, `src/hooks/`, `src/tooltip/`, `src/interactive_role_context/`, `src/i18n/`, and `src/utils/`, together with `assets/button-group-controller.js` and `assets/astryx.css` adapt Meta Astryx's Button, Link/Text typography and navigation, Spinner, icon sizing/lookup, grouping/context contracts, tooltip/press behavior, design tokens, and implemented theme values:
 
 - Repository: https://github.com/meta/astryx
 - Reference revision: `476a3153417dbf75c565f7df05b0784e94ddd59e`
@@ -13,7 +13,8 @@ The implementations under `src/badge/`, `src/button/`, `src/button_group/`, `src
 - Badge follows `Badge/{Badge.tsx,index.ts}`, shared color tokens, Neutral's Badge/palette overrides, `utils/textDirection.ts`, and `i18n/firstStrongDirection.ts` at the same revision. The static script-property range table is derived from that original expression and retains its source/engine provenance.
 - Divider follows `Divider/{Divider.tsx,index.ts}` and its authoritative specification. Its showcase-only native Card/Section/Stack framing follows those original owners and the shared container-padding protocol; it does not claim those components are migrated.
 - Kbd follows `Kbd/Kbd.tsx`, `utils/isApplePlatform.ts`, and the Kbd messages in `packages/core/locales/en.json`. Localized text props adapt the catalog boundary without claiming a completed internationalization provider. Keycaps retain the pinned group-only theme target despite the published catalog's additional key class.
-- The showcase's named Badge, Button, ButtonGroup, Divider, IconButton, Kbd, Link, and Spinner patterns are adapted from their directories under `packages/cli/assets/templates/blocks/components/` at the same revision.
+- Skeleton follows `Skeleton/{Skeleton.tsx,index.ts}`, its authoritative specification, shared radius/color/duration tokens and the pre-tempo duration contract. The exact held opacity keyframes retain the source's compositor-friendly linear ramps. Native Card/Stack example framing does not claim independent Card/Layout migrations.
+- The showcase's named Badge, Button, ButtonGroup, Divider, IconButton, Kbd, Link, Skeleton, and Spinner patterns are adapted from their directories under `packages/cli/assets/templates/blocks/components/` at the same revision.
 
 Upstream license:
 

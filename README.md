@@ -30,7 +30,10 @@ truncation, bidirectional isolation and all four original patterns; see
 axes/weights, logical full bleed and all four original patterns; see
 [Divider verification](docs/divider-port.md). Kbd adds platform-aware keycaps,
 spoken/localized shortcut names and all four original display-only patterns;
-see [Kbd verification](docs/kbd-port.md). Supporting layer-boundary
+see [Kbd verification](docs/kbd-port.md). Skeleton adds CSS-only loading shapes,
+all seven radii, staggered compositor-safe opacity pulses, contrast/motion
+preferences and all four original patterns; see [Skeleton verification](docs/skeleton-port.md).
+Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
 Publishing remains disabled until package metadata and licensing are confirmed.
@@ -73,7 +76,7 @@ CSS styles target HTML/webview output, not a native renderer.
 
 ## Layout
 
-- `src/badge/`, `src/button/`, `src/button_group/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/spinner/`: upstream-owned component modules, named using Rust conventions.
+- `src/badge/`, `src/button/`, `src/button_group/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/skeleton/`, `src/spinner/`: upstream-owned component modules, named using Rust conventions.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
 - `src/link/`: Link, shared renderer/provider types, target/rel handling, and linkification.
@@ -102,10 +105,14 @@ For browser interaction checks, see [Button browser testing](docs/button-port.md
 [ButtonGroup testing](docs/button-group-port.md#verification),
 [IconButton testing](docs/icon-button-port.md#verification), [Link testing](docs/link-port.md#verification),
 [Spinner testing](docs/spinner-port.md#examples-and-verification), [Badge testing](docs/badge-port.md#verification),
-[Divider testing](docs/divider-port.md#verification), and [Kbd testing](docs/kbd-port.md#verification).
-Run all eight component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
+[Divider testing](docs/divider-port.md#verification), [Kbd testing](docs/kbd-port.md#verification),
+and [Skeleton testing](docs/skeleton-port.md#verification).
+Run all nine component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
 `node tests/icon_button.browser.mjs`, `node tests/link.browser.mjs`, `node tests/spinner.browser.mjs`,
-`node tests/badge.browser.mjs`, `node tests/divider.browser.mjs`, and `node tests/kbd.browser.mjs`.
+`node tests/badge.browser.mjs`, `node tests/divider.browser.mjs`, `node tests/kbd.browser.mjs`,
+and `node tests/skeleton.browser.mjs`.
+Skeleton is decorative and hidden by default; caller-owned regions supply busy semantics.
+Its pulse and forced-color visibility are verified without inventing an essential-edge contrast requirement.
 Kbd's audit (`node tests/kbd.contrast.mjs`) passes its 12 modeled keycap-text cases;
 Kbd displays shortcuts but never registers them. Its localized text is caller-supplied.
 Divider's audit (`node tests/divider.contrast.mjs`) intentionally exits 1 for

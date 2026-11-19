@@ -17,6 +17,7 @@ mod kbd;
 mod layer;
 mod link;
 mod size_context;
+mod skeleton;
 mod spinner;
 mod text;
 mod theme;
@@ -46,6 +47,7 @@ pub use link::{
     use_link_component, use_linkify,
 };
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
+pub use skeleton::{Skeleton, SkeletonError, SkeletonLength, SkeletonRadius};
 pub use spinner::{Spinner, SpinnerError, SpinnerShade, SpinnerSize};
 pub use text::{Text, TextTag};
 pub use theme::{
