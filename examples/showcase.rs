@@ -20,6 +20,8 @@ mod icon_button;
 mod kbd;
 #[path = "showcase/link.rs"]
 mod link;
+#[path = "showcase/skeleton.rs"]
+mod skeleton;
 #[path = "showcase/spinner.rs"]
 mod spinner;
 
@@ -31,6 +33,7 @@ use divider::DividerExamples;
 use icon_button::IconButtonExamples;
 use kbd::KbdExamples;
 use link::LinkExamples;
+use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
 
 const FIGTREE: Asset = asset!("/assets/fonts/Figtree-latin.woff2");
@@ -91,6 +94,8 @@ fn App() -> Element {
                 a { href: "#divider-examples", "Divider examples" }
                 " · "
                 a { href: "#kbd-examples", "Kbd examples" }
+                " · "
+                a { href: "#skeleton-examples", "Skeleton examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -189,6 +194,7 @@ fn App() -> Element {
             BadgeExamples {}
             DividerExamples {}
             KbdExamples {}
+            SkeletonExamples {}
         }
     }
 }

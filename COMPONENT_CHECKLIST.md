@@ -9,7 +9,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), and [Kbd](docs/kbd-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), and [Skeleton](docs/skeleton-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
@@ -867,20 +867,20 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [ ] `ProgressBarShowcase` — **ProgressBar**: example 60% progress, not fixed style/default.
     - [ ] `ProgressBarWithValueLabel` — **ProgressBar — With Value Label**: percentage text.
 
-- [ ] **[Skeleton](https://astryx.atmeta.com/components/Skeleton)**
+- [x] **[Skeleton](https://astryx.atmeta.com/components/Skeleton)**
 
   - Source: [English API](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Skeleton/Skeleton.doc.mjs).
 
   - **Shape and loading patterns**
-    - [ ] `radius`: `none`, `0`, `1`, `2`, `3` (default), `4`, `rounded` (pill/circle/avatar).
-    - [ ] Width and height: pixel number or CSS string, both default `100%`; match known content geometry rather than invent fixed size variants.
-    - [ ] Animated shimmer; `index` default 0 staggers start by delay + stagger × index; single placeholder versus multi-placeholder wave.
+    - [x] `radius`: `none`, `0`, `1`, `2`, `3` (default), `4`, `rounded` (pill/circle/avatar). Rust SkeletonRadius preserves literal-zero versus zero-token behavior and the shared 3/4 container token; geometry is not a public theme axis.
+    - [x] Width and height: pixel number or CSS string, both default `100%`; match known content geometry rather than invent fixed size variants. Open SkeletonLength CSS, finite/nonnegative pixels, zero/fractional/default/CSS-wide dimensions, native ref/events/ARIA overrides and recoverable declaration-boundary validation are verified.
+    - [x] Animated shimmer; `index` default 0 staggers start by delay + stagger × index; single placeholder versus multi-placeholder wave. Original shimmer is an opacity pulse, not a gradient: ten held levels .25–.925, 0.01% linear ramps, alternating pre-tempo duration, 1000 + 100 × index ms initial delay. Reduced motion, increased contrast, GrayText forced-color precedence, AX exclusion, caller-owned busy state and drop cleanup verified. **[Verification](docs/skeleton-port.md): 66 actual source block comparisons/native frame and backdrop parity; no idle paint/layout, changing compositor pixels during a 700ms JS block. Decorative shape has no invented essential-edge/text contrast threshold.**
 
   - **Named templates**
-    - [ ] [`SkeletonShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Skeleton/SkeletonShowcase.doc.mjs) — “Skeleton”: loading placeholder.
-    - [ ] [`SkeletonCardSkeleton`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Skeleton/SkeletonCardSkeleton.doc.mjs) — “Skeleton — Card Loading”: avatar/name/content lines.
-    - [ ] [`SkeletonStaggeredList`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Skeleton/SkeletonStaggeredList.doc.mjs) — “Skeleton — Staggered List”: varied line widths.
-    - [ ] [`SkeletonTableRowSkeleton`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Skeleton/SkeletonTableRowSkeleton.doc.mjs) — “Skeleton — Table Rows”: column-width placeholders.
+    - [x] [`SkeletonShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Skeleton/SkeletonShowcase.doc.mjs) — “Skeleton”: loading placeholder.
+    - [x] [`SkeletonCardSkeleton`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Skeleton/SkeletonCardSkeleton.doc.mjs) — “Skeleton — Card Loading”: avatar/name/content lines.
+    - [x] [`SkeletonStaggeredList`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Skeleton/SkeletonStaggeredList.doc.mjs) — “Skeleton — Staggered List”: varied line widths.
+    - [x] [`SkeletonTableRowSkeleton`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Skeleton/SkeletonTableRowSkeleton.doc.mjs) — “Skeleton — Table Rows”: column-width placeholders.
 
 - [x] **[Spinner](https://astryx.atmeta.com/components/Spinner)**
 

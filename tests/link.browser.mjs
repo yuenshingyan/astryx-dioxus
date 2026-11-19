@@ -32,7 +32,10 @@ try{
   await evaluate('document.getElementById("link-examples").style.colorScheme="light"');
   assert.deepEqual(await evaluate(`(()=>{const actual=document.querySelector('#ln-github svg'),expected=new DOMParser().parseFromString(${JSON.stringify(reference.externalArtwork)},'image/svg+xml').documentElement;const signature=e=>({viewBox:e.getAttribute('viewBox'),stroke:e.getAttribute('stroke-width'),paths:[...e.querySelectorAll('path')].map(p=>p.getAttribute('d'))});return [signature(actual),signature(expected)]})()` ).then(values=>values[0]),await evaluate(`(()=>{const e=new DOMParser().parseFromString(${JSON.stringify(reference.externalArtwork)},'image/svg+xml').documentElement;return {viewBox:e.getAttribute('viewBox'),stroke:e.getAttribute('stroke-width'),paths:[...e.querySelectorAll('path')].map(p=>p.getAttribute('d'))}})()`),'registered Neutral glyph matches upstream, not the core fallback');
   await evaluate('(()=>{const s=document.createElement("style");s.id="link-text-theme-test";s.textContent=".astryx-text { color: rgb(255, 0, 0); }";document.head.append(s)})()');
-  assert.equal(await evaluate('getComputedStyle(document.querySelector("#ln-documentation .astryx-text")).color'),await evaluate('getComputedStyle(document.getElementById("ln-documentation")).color'),'a Text theme cannot steal builtin Link paint');
+  // Sample both paints in one browser task: dark-to-light color is still
+  // transitioning, so separate CDP calls can legitimately observe different frames.
+  const textThemePaint=await evaluate('(()=>{const root=document.getElementById("ln-documentation");return [getComputedStyle(root.querySelector(".astryx-text")).color,getComputedStyle(root).color]})()');
+  assert.equal(textThemePaint[0],textThemePaint[1],'a Text theme cannot steal builtin Link paint');
   await evaluate('document.getElementById("link-text-theme-test").remove()');
   assert.equal(await evaluate('document[Symbol.for("astryx.dioxus.button.runtime")].records.has(document.getElementById("ln-parent-clamp"))'),false,'disabled truncation tooltip adds no registration');
   assert.equal(await evaluate('document[Symbol.for("astryx.dioxus.button.runtime")].records.has(document.querySelector("#ln-flow .astryx-text"))'),false,'unclamped label adds no tooltip registration');
