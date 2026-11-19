@@ -28,7 +28,9 @@ Badge adds all 14 tones, extensible theme names, static scalar/rich labels,
 truncation, bidirectional isolation and all four original patterns; see
 [Badge verification](docs/badge-port.md). Divider adds named separators, both
 axes/weights, logical full bleed and all four original patterns; see
-[Divider verification](docs/divider-port.md). Supporting layer-boundary
+[Divider verification](docs/divider-port.md). Kbd adds platform-aware keycaps,
+spoken/localized shortcut names and all four original display-only patterns;
+see [Kbd verification](docs/kbd-port.md). Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
 Publishing remains disabled until package metadata and licensing are confirmed.
@@ -71,13 +73,13 @@ CSS styles target HTML/webview output, not a native renderer.
 
 ## Layout
 
-- `src/badge/`, `src/button/`, `src/button_group/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/spinner/`: upstream-owned component modules, named using Rust conventions.
+- `src/badge/`, `src/button/`, `src/button_group/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/spinner/`: upstream-owned component modules, named using Rust conventions.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
 - `src/link/`: Link, shared renderer/provider types, target/rel handling, and linkification.
 - `src/text/`, `src/theme/`: Text typography/clamp support and upstream-owned type definitions; standalone Text/Theme checklists remain independent.
 - `src/hooks/`, `src/tooltip/`: shared press/tooltip renderer bridges under their source owners.
-- `src/interactive_role_context/`, `src/utils/`: inherited role, shared navigation policy and text-direction adapter; no combined control environment.
+- `src/interactive_role_context/`, `src/utils/`: inherited role, shared navigation policy, text-direction and platform-detection adapters; no combined control environment.
 - `src/i18n/`: the required server-safe strong-RTL predicate, not a completed internationalization runtime.
 - `src/input_group/`: the input-owned internal state contract used by existing controls; not a completed InputGroup component.
 - `src/compatibility/`: adapters for provisional public APIs only. Core components resolve independent upstream-owned contexts instead of a combined Button environment.
@@ -100,10 +102,12 @@ For browser interaction checks, see [Button browser testing](docs/button-port.md
 [ButtonGroup testing](docs/button-group-port.md#verification),
 [IconButton testing](docs/icon-button-port.md#verification), [Link testing](docs/link-port.md#verification),
 [Spinner testing](docs/spinner-port.md#examples-and-verification), [Badge testing](docs/badge-port.md#verification),
-and [Divider testing](docs/divider-port.md#verification).
-Run all seven component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
+[Divider testing](docs/divider-port.md#verification), and [Kbd testing](docs/kbd-port.md#verification).
+Run all eight component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
 `node tests/icon_button.browser.mjs`, `node tests/link.browser.mjs`, `node tests/spinner.browser.mjs`,
-`node tests/badge.browser.mjs`, and `node tests/divider.browser.mjs`.
+`node tests/badge.browser.mjs`, `node tests/divider.browser.mjs`, and `node tests/kbd.browser.mjs`.
+Kbd's audit (`node tests/kbd.contrast.mjs`) passes its 12 modeled keycap-text cases;
+Kbd displays shortcuts but never registers them. Its localized text is caller-supplied.
 Divider's audit (`node tests/divider.contrast.mjs`) intentionally exits 1 for
 16/16 conditional essential-line findings; secondary labels pass all 16 cases.
 Unmatched custom Divider variants retain the documented upstream paint gap.

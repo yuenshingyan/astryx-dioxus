@@ -13,6 +13,7 @@ mod icon;
 mod icon_button;
 mod input_group;
 mod interactive_role_context;
+mod kbd;
 mod layer;
 mod link;
 mod size_context;
@@ -37,6 +38,7 @@ pub use icon_button::IconButton;
 pub use interactive_role_context::{
     InteractiveRoleContext, InteractiveRoleProvider, use_interactive_role_context,
 };
+pub use kbd::{Kbd, KbdError, KbdText};
 pub use layer::LayerContentBoundary;
 pub use link::{
     Link, LinkComponentType, LinkDownload, LinkProvider, LinkRenderProps, LinkifyCaptures,

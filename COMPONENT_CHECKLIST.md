@@ -9,7 +9,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), and [Divider](docs/divider-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), and [Kbd](docs/kbd-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
@@ -604,21 +604,21 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [ ] `IconStatusIcons` — **Icon — Status Indicators**: success/warning/error/info rows.
     - [ ] `useIconHookUsage` — **useIcon — Status Row**: current-theme versus overridden success/warning/error glyphs.
 
-- [ ] **[Kbd](https://astryx.atmeta.com/components/Kbd)**
+- [x] **[Kbd](https://astryx.atmeta.com/components/Kbd)**
 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Kbd/Kbd.doc.mjs). Templates in `Kbd/` under [pinned root](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components).
 
   - **Key notation and platform modes**
-    - [ ] No finite size/color/style variants. Required `keys` string splits combinations with `+`; literal plus uses `plus`.
-    - [ ] Special names: `mod`, `ctrl`, `alt`, `shift`, `meta`, `enter`, `backspace`, `escape`, `tab`, `up`, `down`, `left`, `right`, `plus`; aliases `esc` and `return`.
-    - [ ] Apple versus other-platform symbols/text: mod becomes Command/Ctrl; meta Command/Win (Win before hydration); modifiers use Apple symbols versus text.
-    - [ ] Screen readers hear key words; component owns aria-label, caller aria-labelledby may associate visible text. Only displays shortcut, never handles key activation.
+    - [x] No finite size/color/style variants. Required `keys` string splits combinations with `+`; literal plus uses `plus`. Entirely empty shortcuts are rejected as a recoverable Rust boundary error; meaningful combinations retain all internal segments.
+    - [x] Special names: `mod`, `ctrl`, `alt`, `shift`, `meta`, `enter`, `backspace`, `escape`, `tab`, `up`, `down`, `left`, `right`, `plus`; aliases `esc` and `return`.
+    - [x] Apple versus other-platform symbols/text: mod becomes Command/Ctrl; meta Command/Win (Win before hydration); modifiers use Apple symbols versus text. Source `meta` spoken name remains META. Shared preferred Client Hints detector, no server platform reads, first-client non-Apple output and scoped post-render detection verified.
+    - [x] Screen readers hear key words; component owns aria-label, caller aria-labelledby may associate visible text. Only displays shortcut, never handles key activation. Application-owned localized KbdText and pairwise formatting preserve spoken/visible names without claiming a completed locale provider. **[Verification](docs/kbd-port.md): 104 original group comparisons/184 keycap observations across both platforms/modes; 0/12 modeled text-contrast failures.**
 
   - **Named templates**
-    - [ ] `KbdInlineInstructions` — **Kbd — Inline Instructions**: keycaps in instruction prose.
-    - [ ] `KbdMenuShortcuts` — **Kbd — Menu Shortcuts**: action/shortcut pairs.
-    - [ ] `KbdModifierCombos` — **Kbd — Modifier Combinations**: modifiers and special keys.
-    - [ ] `KbdShowcase` — **Kbd**: shortcut-badge showcase.
+    - [x] `KbdInlineInstructions` — **Kbd — Inline Instructions**: keycaps in instruction prose.
+    - [x] `KbdMenuShortcuts` — **Kbd — Menu Shortcuts**: action/shortcut pairs.
+    - [x] `KbdModifierCombos` — **Kbd — Modifier Combinations**: modifiers and special keys.
+    - [x] `KbdShowcase` — **Kbd**: shortcut-badge showcase.
 
 - [ ] **[Markdown](https://astryx.atmeta.com/components/Markdown)**
 
