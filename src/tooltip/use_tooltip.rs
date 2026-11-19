@@ -45,7 +45,6 @@ pub(crate) fn use_truncation_tooltip(
             is_disabled: false,
         },
         true,
-        None,
         is_enabled,
     )
 }

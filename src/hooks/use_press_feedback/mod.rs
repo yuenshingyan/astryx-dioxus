@@ -17,12 +17,11 @@ pub(crate) struct PressFeedbackConfig {
 
 type WireConfig = (String, String, Option<String>, bool, bool, bool, bool);
 
-fn start_controller(config: &WireConfig, compatibility: Option<&'static str>) -> document::Eval {
+fn start_controller(config: &WireConfig) -> document::Eval {
     let controller = document::eval(&format!(
-        "{}\n{}\n{}\n{}",
+        "{}\n{}\n{}",
         TOOLTIP_CONTROLLER,
         include_str!("press_feedback.js"),
-        compatibility.unwrap_or("const pressCompatibility = () => ({});"),
         include_str!("use_press_feedback.js"),
     ));
     let _ = controller.send(config.clone());
@@ -32,15 +31,7 @@ fn start_controller(config: &WireConfig, compatibility: Option<&'static str>) ->
 /// Mount on a pressable root. Link uses data-astryx-feedback-id; Button retains
 /// data-astryx-button-id. This hook neither guards activation nor paints geometry.
 pub(crate) fn use_press_feedback(config: PressFeedbackConfig) -> EventHandler<MountedEvent> {
-    use_feedback_controller(config, false, None, true)
-}
-
-/// Button owns and supplies its loading-rotor adapter.
-pub(crate) fn use_press_feedback_with_compatibility(
-    config: PressFeedbackConfig,
-    compatibility: &'static str,
-) -> EventHandler<MountedEvent> {
-    use_feedback_controller(config, false, Some(compatibility), true)
+    use_feedback_controller(config, false, true)
 }
 
 /// Tooltip-only anchors can remain entirely unregistered while disabled. Changing
@@ -48,7 +39,6 @@ pub(crate) fn use_press_feedback_with_compatibility(
 pub(crate) fn use_feedback_controller(
     config: PressFeedbackConfig,
     is_truncation: bool,
-    compatibility: Option<&'static str>,
     should_attach: bool,
 ) -> EventHandler<MountedEvent> {
     let mut controller = use_signal(|| None::<document::Eval>);
@@ -84,7 +74,7 @@ pub(crate) fn use_feedback_controller(
             if let Some(previous) = previous {
                 let _ = previous.send(config);
             } else {
-                controller.set(Some(start_controller(&config, compatibility)));
+                controller.set(Some(start_controller(&config)));
             }
         },
     ));
@@ -92,7 +82,7 @@ pub(crate) fn use_feedback_controller(
         if let Some(previous) = *controller.peek() {
             let _ = previous.send("dispose");
         }
-        controller.set(should_attach.then(|| start_controller(&config, compatibility)));
+        controller.set(should_attach.then(|| start_controller(&config)));
         is_mounted.set(true);
     })
 }

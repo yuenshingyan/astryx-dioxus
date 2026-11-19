@@ -8,7 +8,6 @@ if (!element) return;
 installPressFeedback();
 const controller = document[runtimeKey].attach(element, {
   id, label, tooltip, isIconOnly, isLoading, isDisabled, isTruncation,
-  ...pressCompatibility(element),
 });
 try {
   while (true) {

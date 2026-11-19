@@ -10,7 +10,7 @@ The port preserves these owners:
 - `src/text/`: typography and stable inherited text-clamp context. `src/theme/types.rs` owns open validated type/color names and closed size/weight/display/wrapping options.
 - `src/interactive_role_context/` and `src/hooks/use_interactive_role.rs`: independent inherited role and precedence, not a new combined control environment.
 - `src/utils/safe_url.rs`: original shared navigation inspection; resource policy remains separate.
-- `src/hooks/use_press_feedback/`: shared press/controller lifetime. Button supplies only its own loading-rotor adapter through `assets/button-controller.js`.
+- `src/hooks/use_press_feedback/`: shared press/controller lifetime. The later [Spinner completion](spinner-port.md) moved rotor synchronization fully under Spinner and removed the old Button-specific adapter; all composed and standalone rings now share its phase batch.
 - `src/tooltip/`: explicit above-tooltip presentation, name/description handling, hover/tap/focus interest, and lazy automatic Text tooltip behavior. This is not a placeholder public Tooltip component.
 - `src/icon/global_icon_registry.rs`: the global icon-extension seam. Link resolves the `externalLink` fallback at its actual extra-small size. The showcase registers Neutral's exact Lucide artwork through that seam, rather than baking a theme glyph into Link.
 

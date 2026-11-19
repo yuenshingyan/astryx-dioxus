@@ -21,7 +21,10 @@ forms, safe optional destinations, external announcements, typography/clamping,
 provider routing, linkification, and all six named patterns; see
 [Link verification](docs/link-port.md). `LinkRenderProps.href` is now `Option<String>`
 (an approved API correction); native attribute forwarding still works, while
-string-specific router logic must handle `None`. Supporting layer-boundary
+string-specific router logic must handle `None`. Spinner now covers standalone
+labels, all four original examples, shared announcements, theme geometry, and
+batched compositor motion; see [Spinner verification](docs/spinner-port.md).
+Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
 Publishing remains disabled until package metadata and licensing are confirmed.
@@ -90,9 +93,14 @@ cargo check --example showcase --target wasm32-unknown-unknown
 
 For browser interaction checks, see [Button browser testing](docs/button-port.md#browser-checks),
 [ButtonGroup testing](docs/button-group-port.md#verification),
-[IconButton testing](docs/icon-button-port.md#verification), and [Link testing](docs/link-port.md#verification).
-Run all four: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
-`node tests/icon_button.browser.mjs`, and `node tests/link.browser.mjs`.
+[IconButton testing](docs/icon-button-port.md#verification), [Link testing](docs/link-port.md#verification),
+and [Spinner testing](docs/spinner-port.md#examples-and-verification).
+Run all five component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
+`node tests/icon_button.browser.mjs`, `node tests/link.browser.mjs`, and `node tests/spinner.browser.mjs`.
+Also run `node tests/spinner_rotor.browser.mjs` and `node tests/announcement.browser.mjs`
+for deterministic renderer-boundary contracts. Spinner's contrast audit
+(`node tests/spinner.contrast.mjs`) intentionally exits 1 for unchanged arc/track
+and on-media string-label findings; see its verification notes.
 The Link audit `node tests/link.contrast.mjs` reports 19/96 active text failures
 and intentionally exits 1; merely using the disabled color does not disable a link.
 The non-text audit `node tests/icon_button.contrast.mjs` reports conditional

@@ -2,14 +2,15 @@
 
 ## Meta Astryx
 
-The implementations under `src/button/`, `src/button_group/`, `src/icon/`, `src/icon_button/`, `src/spinner/`, `src/size_context/`, `src/input_group/`, `src/layer/`, `src/link/`, `src/text/`, `src/theme/`, `src/hooks/`, `src/tooltip/`, `src/interactive_role_context/`, and `src/utils/`, together with `assets/button-controller.js`, `assets/button-group-controller.js`, and `assets/astryx.css` adapt Meta Astryx's Button, Link/Text typography and navigation, Spinner, icon sizing/lookup, grouping/context contracts, tooltip/press behavior, design tokens, and implemented theme values:
+The implementations under `src/button/`, `src/button_group/`, `src/icon/`, `src/icon_button/`, `src/spinner/`, `src/size_context/`, `src/input_group/`, `src/layer/`, `src/link/`, `src/text/`, `src/theme/`, `src/hooks/`, `src/tooltip/`, `src/interactive_role_context/`, and `src/utils/`, together with `assets/button-group-controller.js` and `assets/astryx.css` adapt Meta Astryx's Button, Link/Text typography and navigation, Spinner, icon sizing/lookup, grouping/context contracts, tooltip/press behavior, design tokens, and implemented theme values:
 
 - Repository: https://github.com/meta/astryx
 - Reference revision: `476a3153417dbf75c565f7df05b0784e94ddd59e`
 - Sources: `packages/core/src/Button/Button.tsx`, `packages/core/src/Badge/Badge.tsx` (contrast-audit mappings), `packages/core/src/Spinner/{Spinner.tsx,spinnerRotor.ts}`, `packages/core/src/Icon/IconSize.stylex.ts`, `packages/core/src/Tooltip/useTooltip.tsx`, `packages/core/src/utils/{pressFeedback.ts,pressGesture.ts}`, `packages/core/src/theme/tokens.stylex.ts`, `packages/themes/neutral/src/{neutralTheme.ts,neutralPaletteRefs.generated.ts}`, and `apps/docsite/src/themes/astryxTheme.ts`.
 - ButtonGroup additionally follows `packages/core/src/ButtonGroup/{ButtonGroup.tsx,ButtonGroupContext.ts}`, `packages/core/src/hooks/{useListFocus.ts,useGroupPressTracking.ts}`, `packages/core/src/IconButton/IconButton.tsx`, and `packages/core/src/Layer/layerScopedContext.tsx` at the same revision.
 - Link additionally follows `packages/core/src/Link/`, `Text/`, `InteractiveRoleContext/`, `hooks/{useInteractiveRole.ts,usePressFeedback.ts}`, `Icon/globalIconRegistry.tsx`, `theme/types.ts`, and `utils/safeUrl.ts` at the pinned revision.
-- The showcase's named Button, ButtonGroup, IconButton, and Link patterns are adapted from their directories under `packages/cli/assets/templates/blocks/components/` at the same revision.
+- Spinner's standalone motion and announcement support additionally follows `Spinner/{Spinner.tsx,spinnerRotor.ts}` and `hooks/{useAnnounce.ts,useAnnounceRenderedText.ts}` at the same revision. Shared polite/native-dialog support remains under the hooks owner.
+- The showcase's named Button, ButtonGroup, IconButton, Link, and Spinner patterns are adapted from their directories under `packages/cli/assets/templates/blocks/components/` at the same revision.
 
 Upstream license:
 
