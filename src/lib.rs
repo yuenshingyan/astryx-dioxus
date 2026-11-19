@@ -2,10 +2,12 @@
 //!
 //! Include [`STYLES`] once using `document::Style` in your application root.
 
+mod badge;
 mod button;
 mod button_group;
 mod compatibility;
 mod hooks;
+mod i18n;
 mod icon;
 mod icon_button;
 mod input_group;
@@ -19,6 +21,7 @@ mod theme;
 mod tooltip;
 mod utils;
 
+pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
 pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, ButtonVariant};
 pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation};
 pub use hooks::use_interactive_role::{InteractiveRole, use_interactive_role};

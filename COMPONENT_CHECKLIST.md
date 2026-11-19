@@ -9,7 +9,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), and [Spinner](docs/spinner-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), and [Badge](docs/badge-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
@@ -794,21 +794,21 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 
 ## Feedback & Status
 
-- [ ] **[Badge](https://astryx.atmeta.com/components/Badge)**
+- [x] **[Badge](https://astryx.atmeta.com/components/Badge)**
 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Badge/Badge.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Badge).
 
   - **Variants and content**
-    - [ ] Semantic `variant`: `neutral` (default), `info`, `success`, `warning`, `error` (solid backgrounds).
-    - [ ] Category `variant`: `blue`, `cyan`, `green`, `orange`, `pink`, `purple`, `red`, `teal`, `yellow` (tinted backgrounds/colored text).
-    - [ ] Required ReactNode `label`, optional leading icon; no size or loading enum documented.
-    - [ ] One-line, content-sized, grows with label text height, ellipsis when constrained; string/number label also supplies title for full hover text.
-    - [ ] String/number labels retain RTL character order; caller marks rich mixed-direction content with dir/bdi. Text carries meaning alongside icon/color.
+    - [x] Semantic `variant`: `neutral` (default), `info`, `success`, `warning`, `error` (solid backgrounds). Theme-added names stay open and validated, not collapsed to neutral.
+    - [x] Category `variant`: `blue`, `cyan`, `green`, `orange`, `pink`, `purple`, `red`, `teal`, `yellow` (tinted backgrounds/colored text). **[Standalone audit](docs/badge-port.md#contrast-and-source-limitations): 0/112 text and 0/112 inherited-glyph failures on modeled core/Neutral page/surface backdrops; this does not supersede the prior 267/672 Badge-inside-Button composite findings.**
+    - [x] Required ReactNode `label`, optional leading icon; no size or loading enum documented. Rust BadgeLabel preserves scalar/rich/empty distinctions; supplied icon size and semantics stay caller-owned.
+    - [x] One-line, content-sized, grows with label text height, ellipsis when constrained; string/number label also supplies title for full hover text. **Original AR4/OQ1 limitation retained and documented:** clipped-tail visual recovery is pointer-only; no invented focus stop/tooltip or blanket accessibility-compliance claim.
+    - [x] String/number labels retain RTL character order; caller marks rich mixed-direction content with dir/bdi. Text carries meaning alongside icon/color.
   - **Templates**
-    - [ ] **Badge — Colors** (`BadgeCategoryTags.doc.mjs`): nine non-semantic category colors.
-    - [ ] **Badge — Counts** (`BadgeCountBadges.doc.mjs`): notification/unread/task counts, not fixed count styles.
-    - [ ] **Badge — Variants** (`BadgeShowcase.doc.mjs`): semantic and color variants.
-    - [ ] **Badge — Status** (`BadgeStatusLabels.doc.mjs`): status labels in rows/details.
+    - [x] **Badge — Colors** (`BadgeCategoryTags.doc.mjs`): nine non-semantic category colors.
+    - [x] **Badge — Counts** (`BadgeCountBadges.doc.mjs`): notification/unread/task counts, not fixed count styles.
+    - [x] **Badge — Variants** (`BadgeShowcase.doc.mjs`): semantic and color variants.
+    - [x] **Badge — Status** (`BadgeStatusLabels.doc.mjs`): status labels in rows/details.
 
 - [ ] **[Banner](https://astryx.atmeta.com/components/Banner)**
 
