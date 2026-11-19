@@ -16,6 +16,8 @@ mod button_patterns;
 mod divider;
 #[path = "showcase/icon_button.rs"]
 mod icon_button;
+#[path = "showcase/kbd.rs"]
+mod kbd;
 #[path = "showcase/link.rs"]
 mod link;
 #[path = "showcase/spinner.rs"]
@@ -27,6 +29,7 @@ use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
 use divider::DividerExamples;
 use icon_button::IconButtonExamples;
+use kbd::KbdExamples;
 use link::LinkExamples;
 use spinner::SpinnerExamples;
 
@@ -86,6 +89,8 @@ fn App() -> Element {
                 a { href: "#badge-examples", "Badge examples" }
                 " · "
                 a { href: "#divider-examples", "Divider examples" }
+                " · "
+                a { href: "#kbd-examples", "Kbd examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -183,6 +188,7 @@ fn App() -> Element {
             SpinnerExamples {}
             BadgeExamples {}
             DividerExamples {}
+            KbdExamples {}
         }
     }
 }
