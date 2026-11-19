@@ -24,6 +24,7 @@
   --spacing-2: 0.5rem;
   --spacing-3: 0.75rem;
   --spacing-4: 1rem;
+  --spacing-8: 2rem;
   --spacing-6: 1.5rem;
   --size-element-sm: 28px;
   --size-element-md: 32px;
@@ -563,25 +564,40 @@
   initial-value: 0px;
 }
 
+/* Only Spinner's public defaults enter the base layer. Theme-layer rules can
+   override them without changing the existing shared stylesheet layout. */
+@layer astryx-base, astryx-theme;
+@layer astryx-base {
+  .astryx-spinner {
+    --spinner-diameter: 14px;
+    --spinner-stroke-width: 3px;
+    --spinner-arc-fraction: 0.375;
+    --spinner-color: var(--color-accent);
+    --spinner-track-color: var(--color-track);
+  }
+  .astryx-spinner[data-size="sm"] { --spinner-diameter: 10px; --spinner-stroke-width: 2px; }
+  .astryx-spinner[data-size="lg"] { --spinner-diameter: 18px; --spinner-stroke-width: 3px; }
+  .astryx-spinner[data-size="xl"] { --spinner-diameter: 28px; --spinner-stroke-width: 4px; }
+  .astryx-spinner[data-shade="subtle"] { --spinner-color: var(--color-text-secondary); --spinner-track-color: var(--color-track); }
+  .astryx-spinner[data-shade="onMedia"] { --spinner-color: var(--color-on-dark); --spinner-track-color: var(--color-on-dark); }
+  .astryx-spinner[data-shade="inherit"] { --spinner-color: currentColor; --spinner-track-color: currentColor; }
+}
+
 .astryx-spinner {
-  --spinner-diameter: 14px;
-  --spinner-stroke-width: 3px;
-  --spinner-arc-fraction: 0.375;
-  --spinner-color: var(--color-accent);
-  --spinner-track-color: var(--color-track);
+  display: inline-grid;
+  place-items: center;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.astryx-spinner--labelled {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-2);
-  flex-shrink: 0;
+  vertical-align: baseline;
+  flex-shrink: 1;
 }
-
-.astryx-spinner[data-size="sm"] { --spinner-diameter: 10px; --spinner-stroke-width: 2px; }
-.astryx-spinner[data-size="lg"] { --spinner-diameter: 18px; --spinner-stroke-width: 3px; }
-.astryx-spinner[data-size="xl"] { --spinner-diameter: 28px; --spinner-stroke-width: 4px; }
-.astryx-spinner[data-shade="subtle"] { --spinner-color: var(--color-text-secondary); --spinner-track-color: var(--color-track); }
-.astryx-spinner[data-shade="onMedia"] { --spinner-color: var(--color-on-dark); --spinner-track-color: var(--color-on-dark); }
-.astryx-spinner[data-shade="inherit"] { --spinner-color: currentColor; --spinner-track-color: currentColor; }
 
 .astryx-spinner__ring {
   --_spinner-ring-diameter: var(--spinner-diameter);
@@ -595,6 +611,7 @@
 
 .astryx-spinner__svg,
 .astryx-spinner__rotor {
+  backface-visibility: hidden;
   display: block;
   grid-area: 1 / 1;
   width: var(--_spinner-box-size);
@@ -614,12 +631,6 @@
 .astryx-spinner__rotor {
   will-change: transform;
   animation: astryx-spinner-rotation calc(var(--_astryx-pre-tempo-duration-slow-min, var(--duration-slow-min)) * 100) linear infinite;
-}
-
-.astryx-spinner__label {
-  font-size: var(--text-label-size);
-  line-height: var(--text-label-leading);
-  color: var(--color-text-secondary);
 }
 
 @keyframes astryx-spinner-rotation {

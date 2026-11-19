@@ -9,7 +9,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), and [Link](docs/link-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), and [Spinner](docs/spinner-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
@@ -882,20 +882,20 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [ ] [`SkeletonStaggeredList`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Skeleton/SkeletonStaggeredList.doc.mjs) — “Skeleton — Staggered List”: varied line widths.
     - [ ] [`SkeletonTableRowSkeleton`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Skeleton/SkeletonTableRowSkeleton.doc.mjs) — “Skeleton — Table Rows”: column-width placeholders.
 
-- [ ] **[Spinner](https://astryx.atmeta.com/components/Spinner)**
+- [x] **[Spinner](https://astryx.atmeta.com/components/Spinner)**
 
   - Source: [English API](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Spinner/Spinner.doc.mjs).
 
   - **Choices and labeling**
-    - [ ] `size`: `sm` (10px), `md` (14px, default), `lg` (18px), `xl` (28px).
-    - [ ] `shade`: `default` (default), `onMedia`, `subtle`, `inherit`.
-    - [ ] Optional visible ReactNode label below spinner: string label names indicator via aria-labelledby; explicit aria-label or translated `Loading` fallback supports non-string/no label.
+    - [x] `size`: `sm` (10px), `md` (14px, default), `lg` (18px), `xl` (28px).
+    - [x] `shade`: `default` (default), `onMedia`, `subtle`, `inherit`. **[Source-color audit](docs/spinner-port.md#source-color-findings-and-limits): 0/28 arc/backdrop failures; 6/28 arc/track failures at 3:1 and 2/28 optional string-label failures at 4.5:1. Original colors retained under the existing fidelity decision, not claimed compliant.**
+    - [x] Optional visible ReactNode label below spinner: string label names indicator via aria-labelledby; explicit aria-label or translated `Loading` fallback supports non-string/no label. Rust preserves string `label` and adds mutually exclusive `label_content`; localized fallback comes from `loading_label`. Shared polite announcements, owner silence, CSS theming, non-shrinking geometry, batched phase and reduced-motion behavior are verified in [Spinner notes](docs/spinner-port.md).
 
   - **Named templates**
-    - [ ] [`SpinnerShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Spinner/SpinnerShowcase.doc.mjs) — “Spinner”: large indicator.
-    - [ ] [`SpinnerOnMedia`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Spinner/SpinnerOnMedia.doc.mjs) — “Spinner — On Media Shade”: light/dark surfaces.
-    - [ ] [`SpinnerSizes`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Spinner/SpinnerSizes.doc.mjs) — “Spinner — Sizes”.
-    - [ ] [`SpinnerWithLabel`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Spinner/SpinnerWithLabel.doc.mjs) — “Spinner — With Label”: text and rich multiline labels.
+    - [x] [`SpinnerShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Spinner/SpinnerShowcase.doc.mjs) — “Spinner”: large indicator.
+    - [x] [`SpinnerOnMedia`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Spinner/SpinnerOnMedia.doc.mjs) — “Spinner — On Media Shade”: light/dark surfaces.
+    - [x] [`SpinnerSizes`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Spinner/SpinnerSizes.doc.mjs) — “Spinner — Sizes”.
+    - [x] [`SpinnerWithLabel`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Spinner/SpinnerWithLabel.doc.mjs) — “Spinner — With Label”: text and rich multiline labels.
 
 - [ ] **[Status Dot](https://astryx.atmeta.com/components/StatusDot)**
 

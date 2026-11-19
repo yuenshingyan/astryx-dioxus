@@ -14,12 +14,15 @@ mod button_patterns;
 mod icon_button;
 #[path = "showcase/link.rs"]
 mod link;
+#[path = "showcase/spinner.rs"]
+mod spinner;
 
 use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
 use icon_button::IconButtonExamples;
 use link::LinkExamples;
+use spinner::SpinnerExamples;
 
 const FIGTREE: Asset = asset!("/assets/fonts/Figtree-latin.woff2");
 
@@ -71,6 +74,8 @@ fn App() -> Element {
                 a { href: "#icon-button-examples", "IconButton examples" }
                 " · "
                 a { href: "#link-examples", "Link examples" }
+                " · "
+                a { href: "#spinner-examples", "Spinner examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -165,6 +170,7 @@ fn App() -> Element {
             ButtonGroupExamples {}
             IconButtonExamples {}
             LinkExamples {}
+            SpinnerExamples {}
         }
     }
 }

@@ -37,7 +37,7 @@ pub use link::{
     use_link_component, use_linkify,
 };
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
-pub use spinner::{Spinner, SpinnerShade, SpinnerSize};
+pub use spinner::{Spinner, SpinnerError, SpinnerShade, SpinnerSize};
 pub use text::{Text, TextTag};
 pub use theme::{
     InvalidTextName, TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap,
