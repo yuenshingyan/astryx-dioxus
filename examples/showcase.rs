@@ -4,6 +4,8 @@ use std::pin::Pin;
 use astryx_dioxus::{Button, ButtonElevation, ButtonSize, ButtonType, ButtonVariant, STYLES};
 use dioxus::prelude::*;
 
+#[path = "showcase/badge.rs"]
+mod badge;
 #[path = "showcase/button_contract.rs"]
 mod button_contract;
 #[path = "showcase/button_group.rs"]
@@ -17,6 +19,7 @@ mod link;
 #[path = "showcase/spinner.rs"]
 mod spinner;
 
+use badge::BadgeExamples;
 use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
@@ -76,6 +79,8 @@ fn App() -> Element {
                 a { href: "#link-examples", "Link examples" }
                 " · "
                 a { href: "#spinner-examples", "Spinner examples" }
+                " · "
+                a { href: "#badge-examples", "Badge examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -171,6 +176,7 @@ fn App() -> Element {
             IconButtonExamples {}
             LinkExamples {}
             SpinnerExamples {}
+            BadgeExamples {}
         }
     }
 }
