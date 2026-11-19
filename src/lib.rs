@@ -19,6 +19,7 @@ mod link;
 mod size_context;
 mod skeleton;
 mod spinner;
+mod status_dot;
 mod text;
 mod theme;
 mod tooltip;
@@ -49,6 +50,9 @@ pub use link::{
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
 pub use skeleton::{Skeleton, SkeletonError, SkeletonLength, SkeletonRadius};
 pub use spinner::{Spinner, SpinnerError, SpinnerShade, SpinnerSize};
+pub use status_dot::{
+    InvalidStatusDotVariant, StatusDot, StatusDotError, StatusDotIcon, StatusDotVariant,
+};
 pub use text::{Text, TextTag};
 pub use theme::{
     InvalidTextName, TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap,

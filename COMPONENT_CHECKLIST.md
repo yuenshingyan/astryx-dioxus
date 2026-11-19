@@ -9,7 +9,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), and [Skeleton](docs/skeleton-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), [Skeleton](docs/skeleton-port.md), and [StatusDot](docs/status-dot-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
@@ -897,20 +897,20 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [x] [`SpinnerSizes`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Spinner/SpinnerSizes.doc.mjs) — “Spinner — Sizes”.
     - [x] [`SpinnerWithLabel`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Spinner/SpinnerWithLabel.doc.mjs) — “Spinner — With Label”: text and rich multiline labels.
 
-- [ ] **[Status Dot](https://astryx.atmeta.com/components/StatusDot)**
+- [x] **[Status Dot](https://astryx.atmeta.com/components/StatusDot)**
 
   - Source: [English API](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/StatusDot/StatusDot.doc.mjs).
 
   - **Choices and accessibility**
-    - [ ] `variant`: `success`, `warning`, `error`, `accent`, `neutral`; no default specified in prop table.
-    - [ ] `isPulsing`: false (default), true; honors reduced motion.
-    - [ ] Accessible `label`, optional explanatory tooltip and centered currentColor icon; boolean/empty-string icons ignored. Pair visible text or distinct status shapes, not color alone.
+    - [x] `variant`: `success`, `warning`, `error`, `accent`, `neutral`; required with no default. Validated open StatusDotVariant names preserve theme extensions. **Approved source-gap corrections:** neutral plate/ink for otherwise-unpainted custom variants and 1px CanvasText outline for every variant in forced colors; built-in status plates use icon roles, not strong fills.
+    - [x] `isPulsing`: false (default), true; honors reduced motion. Exact 2s 1→.5→1 ease-in-out pulse and all source easing samples verified. **[Contrast findings](docs/status-dot-port.md#contrast-and-verification-limits): resting 0/60 plate and 0/60 glyph cases below 3:1; unchanged pulse minimum 33/60 conditional plate and 33/60 optional-glyph findings.**
+    - [x] Accessible `label`, optional explanatory tooltip and centered currentColor icon; boolean/empty-string icons ignored, zero/rich content preserved. Pair visible text or distinct status shapes, not color alone. **[Verification](docs/status-dot-port.md):** 38 actual source controls/native frames, caller semantics/ref/events, AX hidden icons, spec-led standalone keyboard/mouse/touch tooltip pinning and nested hover-only/host naming, bounded 44px/midpoint hit bands, dynamic updates/removal/cleanup. Role/name policy stays StatusDot-owned; Tooltip, announcement and geometry/holder utilities retain their source owners. Supporting public migrations remain independent.
 
   - **Named templates**
-    - [ ] [`StatusDotShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StatusDot/StatusDotShowcase.doc.mjs) — “StatusDot” / “Status Dot”: positive status.
-    - [ ] [`StatusDotPulsing`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StatusDot/StatusDotPulsing.doc.mjs) — “StatusDot — Pulsing”: live/processing/error signals.
-    - [ ] [`StatusDotStatusIndicators`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StatusDot/StatusDotStatusIndicators.doc.mjs) — “StatusDot — Status Indicators”: labeled presence list.
-    - [ ] [`StatusDotVariants`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StatusDot/StatusDotVariants.doc.mjs) — “StatusDot — Variants”: all five colors.
+    - [x] [`StatusDotShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StatusDot/StatusDotShowcase.doc.mjs) — “StatusDot” / “Status Dot”: positive status.
+    - [x] [`StatusDotPulsing`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StatusDot/StatusDotPulsing.doc.mjs) — “StatusDot — Pulsing”: live/processing/error signals.
+    - [x] [`StatusDotStatusIndicators`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StatusDot/StatusDotStatusIndicators.doc.mjs) — “StatusDot — Status Indicators”: labeled presence list.
+    - [x] [`StatusDotVariants`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StatusDot/StatusDotVariants.doc.mjs) — “StatusDot — Variants”: all five colors.
 
 ## Form Controls
 

@@ -24,6 +24,8 @@ mod link;
 mod skeleton;
 #[path = "showcase/spinner.rs"]
 mod spinner;
+#[path = "showcase/status_dot.rs"]
+mod status_dot;
 
 use badge::BadgeExamples;
 use button_contract::ButtonContractExamples;
@@ -35,6 +37,7 @@ use kbd::KbdExamples;
 use link::LinkExamples;
 use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
+use status_dot::StatusDotExamples;
 
 const FIGTREE: Asset = asset!("/assets/fonts/Figtree-latin.woff2");
 
@@ -96,6 +99,8 @@ fn App() -> Element {
                 a { href: "#kbd-examples", "Kbd examples" }
                 " · "
                 a { href: "#skeleton-examples", "Skeleton examples" }
+                " · "
+                a { href: "#status-dot-examples", "StatusDot examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -195,6 +200,7 @@ fn App() -> Element {
             DividerExamples {}
             KbdExamples {}
             SkeletonExamples {}
+            StatusDotExamples {}
         }
     }
 }

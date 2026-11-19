@@ -68,8 +68,14 @@ if (!document[runtimeKey]) {
         return !group || (isTracked(direct) && groupOwner(direct) === group && !isMenu(direct)) ? records.get(direct) : null;
       }
     }
-    const foreign = hit?.closest('button,a[href],input,select,textarea');
-    if (foreign && !records.has(foreign)) return null;
+    // A Tooltip-owned span/band is already a native target, not a candidate
+    // for Button's legacy geometric growth. Nested dots reached the host above.
+    const statusDot = hit?.closest('[data-astryx-status-tooltip-id]');
+    if (records.get(statusDot)?.isStatusDot) return null;
+    const foreign = hit?.closest('button,a[href],input,select,textarea,[role="button"],[role="link"],[role="menuitem"],[role="option"]');
+    // Tooltip-only toggles can share this record map without belonging to the
+    // press router. Their native hit must never be redirected to a nearby Button.
+    if (foreign && (!records.has(foreign) || !foreign.matches(pressRoot))) return null;
     // A touch band grows toward 44px, stopping at the midpoint to neighbours.
     return [...records.values()].find(record => {
       const element = record.element;
@@ -119,7 +125,7 @@ if (!document[runtimeKey]) {
       : records.get(event.target.closest?.(pressRoot));
     if (!record) return;
     record.pointerFocus = true;
-    hideTip(record);
+    if (!record.isPinned) hideTip(record);
     if (!enabled(record.element)) {
       if (event.pointerType === 'touch' && record.tooltip) {
         gesture = { id: event.pointerId, original: record, current: record, nativeTarget: event.target.closest?.(pressRoot) || event.target, x: event.clientX, y: event.clientY, isHintOnly: true, cancelled: false };
@@ -217,16 +223,20 @@ if (!document[runtimeKey]) {
     attach(element, config) {
       const record = { element, timers: new Set(), isFocused: document.activeElement === element || (config.isTruncation && document.activeElement?.contains(element)), ...config };
       records.set(element, record);
-      record.onUpdate?.(record);
+      tips.attach(record);
       syncDescription(record);
       if (record.isFocused) focusTip(record);
       return {
+        show() { tips.show(record); },
+        hide() { tips.hideTip(record); },
+        command(command) { tips.command(record, command); },
         update(config) {
           Object.assign(record, config);
-          record.onUpdate?.(record);
+          tips.update(record);
           syncDescription(record);
           if (!enabled(element)) { press(record, null); if (gesture?.current === record) cancelGesture(); }
-          if (record.tip) { hideTip(record); if (record.isFocused) focusTip(record); }
+          if (record.tip && record.tooltipPolicy) tips.refreshPolicyTip(record);
+          else if (record.tip) { hideTip(record); if (record.isFocused) focusTip(record); }
         },
         dispose() {
           if (gesture?.original === record || gesture?.current === record) cancelGesture();
