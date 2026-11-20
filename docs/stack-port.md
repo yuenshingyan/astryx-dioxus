@@ -108,15 +108,20 @@ All originals and their `.doc.mjs` metadata are embedded with Git blob SHA1 in
 - **Stack — Directions / StackDirections**: horizontal outer gap 10, centered;
   a horizontal gap-2, cross-centered triple and vertical gap-2 triple. Original
   HStack/VStack lower to explicit Stack directions. Original **Token**, not Badge,
-  is unavailable: labeled native outlined spans supply demo-only content. No
-  Token fidelity or completed HStack/VStack migration is asserted.
+  is not publicly ported. Demo-local static spans now use the hash-verified
+  Token.tsx base/md/default/label declarations, including nested isolated label,
+  filled neutral paint, token radius and height (not the old outlined pill).
+  No interactive Token or completed HStack/VStack migration is asserted.
 - **Stack — Fill Item / StackFillItem**: max 300px, 100% width, vertical gap 3;
   three horizontal gap-3 cross-centered user rows (Olivia Chen / Engineering Lead,
   Marcus Rivera / Product Designer, Aisha Patel / Marketing Manager), static
   Avatar, filling gap-0 name/role column, static small secondary View Button.
-  Native static/fill wrappers and initial circles explicitly replace unavailable
-  StackItem and Avatar **only in this demo**. No AR2 scrolling-item behavior or
-  faithful Avatar geometry/paint is claimed. View remains caller-owned/inert.
+  Native static/fill wrappers now use the exact static/fill/reset declarations
+  from stackItem.stylex.ts. Demo-only Avatar wrapper/content/fallback declarations
+  follow verified Avatar.tsx: 36px md diameter, .4 initials ratio, neutral fill,
+  primary ink, medium body font and full radius. Unlike the real Avatar, this
+  decorative framing has no tooltip/tabstop; it is not a public Avatar port or
+  AR2 scrolling-item implementation. View remains caller-owned/inert.
 
 The demo also covers defaults, every axis pair and spacing step, edge precedence,
 RTL, wrap, scroll, explicit/invalid alias precedence, nested local padding,
@@ -124,9 +129,10 @@ CSS precedence, dynamic updates, native navigation root/events/ref and media.
 `examples/stack.rs` serves the focused offline fixture; `examples/showcase.rs`
 registers the same section. Existing older examples' native Stack framing is not
 silently rewritten. Later Token/Avatar/StackItem/typography swaps should be explicit,
-separately coordinated owner migrations. The overall checklist stays open until
-these original-pattern dependencies and a true upstream-runtime visual comparison
-are resolved; the implemented Stack contracts are checked individually.
+separately coordinated owner migrations. Static framing is now source-derived rather than arbitrary approximation.
+The overall checklist stays open for independent public owners, intrinsic/full-image
+comparison and interactive supporting behavior; isolated layout evidence below must
+not be read as certifying those missing pieces.
 
 ## Verification and evidence limits
 
@@ -138,7 +144,7 @@ python3 tests/stack_source.py --check
 ```
 
 An optional final argument selects another cache root containing `tree.json`,
-original files, and `stack/dependencies/`. It verifies **23 Git blobs** against the
+original files, and `stack/dependencies/`. It verifies **25 Git blobs** (including Token.tsx and Avatar.tsx) against the
 full pinned tree, extracts original direction/main/cross/wrap/gap/padding declaration
 maps and spacing defaults, and checks resolution/precedence invariants in Stack.tsx.
 The fixture retains full source/spec/test/doc/template texts and copyright headers;
@@ -164,8 +170,10 @@ all wrap modes, overflow independent of height, exact native NAV ref identity,
 composed callbacks, real mouse/Enter events, AX name/role, stable updates/removal and
 reduced-motion/forced-color inertness. The suite closes only its own CDP target.
 
-These are **source-derived fixtures**, not measurements from the published site,
-not executed upstream React/StyleX, and not a full-image visual parity certificate.
+The source fixture and `stack.browser.mjs` are **source-derived**, not published
+measurements or executed upstream React/StyleX. The separate captured published
+fixture below supplies actual observations, with narrower isolation boundaries;
+neither is a full-image visual parity certificate.
 Supporting Card/Text/Button output is held constant in pattern comparisons; its
 independent fidelity/contrast findings remain governed by those owners. No catalog
 network, external font/image or live service is needed. Stack supplies no ink or
@@ -185,8 +193,86 @@ seven focused SSR tests, source-fixture verification, and serialized offline bro
 suite also passed. Ordinary Cargo checks used `CARGO_INCREMENTAL=0` and the assigned
 shared absolute target; dx used only this worktree's target. Initial direct-mounted
 prop compilation, module-inception lint and CDP Enter text failures were fixed, not
-suppressed or retried. Existing unrelated browser/contrast suites and executed upstream
-React/StyleX/published-site comparisons were **not run**; no pre-existing failure was
-observed in the checks run. Exact commits are recorded in the task handoff; CI must
+suppressed or retried. Existing unrelated browser/contrast suites and a pinned upstream React/StyleX
+build were **not run**. Published capture and isolated replay were subsequently run
+as recorded below; no full-image parity is claimed. Exact commits are recorded in the task handoff; CI must
 still run the full existing suite. This task's browser suite is additional to,
 not a replacement for, the fourteen existing component/browser/contrast suites.
+
+## Published evidence follow-up
+
+Captured **2026-11-20T09:00:49.775Z** from
+<https://astryx.atmeta.com/components/Stack>, title `Stack · Astryx`, displayed
+`@astryxdesign/core v0.7.16`, Chrome 157.0.8103.80, 1200×1600 viewport, DPR 1,
+16px root, LTR, observed Neutral dark examples. `tests/fixtures/stack-published.json`
+retains original target-node boxes/computed styles, displayed Alignment/Fill code,
+static computed DOM replay, resource URLs/ETags/SHA256 and capture environment.
+`tests/fixtures/stack-published/{directions,alignment,fill}.png` are actual clipped
+published screenshots, with digests in the JSON. The rendered DOM, screenshots and
+displayed code establish pattern identity; **the deployment commit is unknown**.
+Resource hashes are independent HTTP retrievals immediately after DOM capture,
+not an assertion that a displayed version proves equivalence to the source pin.
+Captured PNG backgrounds include their original composited catalog surface; a
+transparent Stack is not credited with that background. Font readiness was awaited,
+but font binaries are not captured; frozen used dimensions avoid relying on live fonts.
+
+Exact observed CSS-pixel geometry (not rounded to whole pixels):
+
+| Pattern | Observed geometry |
+| --- | --- |
+| Directions | 329.859375×88; horizontal group 232.234375×88; vertical group x=272.234375, 57.625×88; outer gap 40; inner gap 8 |
+| Tokens | Horizontal 72.078125×24; Vertical 57.625×24; radius 6; padding-inline 8; supporting 12px, medium 500, line-height 20.0004px |
+| Alignment | 158.234375×312; three 158.234375×96 Cards at y=0/108/216; padding 16; row 126.234375×28; Cancel 67.640625×28, Save 54.59375×28, gap 4 |
+| Fill | 219.125×144; three 219.125×40 rows at y=0/52/104; gap 12; Avatar 36×36 at y=2 within row; text x=48, 103.3125×40; View x=163.3125, y=6, 55.8125×28 |
+
+Observed paint: Stack itself transparent; primary white `rgb(255,255,255)`;
+secondary `rgb(158,158,158)`; neutral Token/Avatar/secondary Button fill
+`rgba(255,255,255,0.1)`; Card `rgb(27,27,27)`, radius 12; primary Save fill
+`rgb(241,241,241)`, ink `rgb(17,17,17)`; Buttons radius 10. Avatar circle radius
+9999px, fallback 14.4px medium Figtree (line-height 20.5718px). Body 14px Figtree,
+line-height 20.0004px. Full per-node observations remain in the fixture.
+
+**Deployment difference:** published Directions reflects `data-wrap="wrap"`;
+the pinned StackDirections.tsx has no wrap prop. The test applies that observed
+value only to the published replay, not to the pinned showcase or public defaults.
+No consequential API/dependency change is required or silently made. The local
+focused example uses the existing Astryx theme (e.g. radius-inner **4px**, not
+Neutral's 6px); source-derived framing consumes the existing tokens instead of
+copying this deployment's palette. A public Token/Avatar migration, Avatar tooltip,
+StackItem scroll-region implementation, or theme policy change remains separate.
+
+Reproduce capture (network opt-in) and offline comparison, **always under lock**:
+
+```sh
+python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack_published.capture.mjs
+python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack_published.browser.mjs
+python3 tests/stack_published.py
+```
+
+The stdlib integrity check verifies screenshot digests, identity and explicit observed
+geometry/paint metadata without network. Source-fixture generation also extracts the
+flat Token/Avatar/item declaration subsets directly from hash-verified originals.
+The browser independently lowers those rules in the inherited local token environment
+and compares demo framing geometry, typography, sizing, flex behavior and paint.
+
+The offline test uses only the owned 8093 preview and blocks HTTPS before loading,
+then goes offline. First it checks that the frozen original reproduces observed
+visible target-node geometry and background/ink/radius. Then it transplants the
+**actual rendered Dioxus Stack classes/local variables** into those nodes, removes
+original Stack layout declarations, and checks the same measurements again within
+1/64px. Supporting used dimensions and computed paint stay fixed, intentionally
+isolating layout from unavailable public owners. CSSOM six-significant-digit used
+size serialization is corrected to Chrome's 1/64px grid with a documented sub-grid
+bias; no failing geometry tolerance was widened. This is not an intrinsic sizing,
+full-image, pseudo-element, interactive Avatar/Token/Toast, light-mode, mobile,
+other-browser, or pinned React-build parity proof. The original screenshot is not
+presented as a screenshot of the Rust port. Frozen paint equality controls paint;
+it does **not** independently validate the Rust Card/Text/Button implementations.
+
+Follow-up checks passed: formatting, focused seven Stack SSR tests, source hashes
+(25 blobs), both locked offline browser suites and showcase/focused wasm checks.
+The full Rust suite/Clippy were passed in the implementation checkpoint above,
+not rerun for this demo/evidence-only follow-up; CI must run them. Capture initially
+failed on serializing an element-valued wait predicate (fixed to boolean); replay
+exposed CSSOM used-size truncation and the Astryx-vs-Neutral radius distinction,
+both resolved explicitly rather than suppressed or hidden with retries.

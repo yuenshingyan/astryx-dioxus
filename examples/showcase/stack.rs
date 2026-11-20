@@ -6,18 +6,23 @@ use astryx_dioxus::{
 use dioxus::events::{onclick, onkeydown, onmounted};
 use dioxus::prelude::*;
 
+// Static subset of pinned Token.tsx, Avatar.tsx and Stack/stackItem.stylex.ts.
+// Keep these declarations demo-local; the independent owners are not public ports.
 const DEMO_CSS: &str = "
 .stack-frame { max-width:600px; padding:16px; }
 .stack-probe > span { display:block; flex:none; width:30px; height:20px; background:currentColor; }
-.stack-demo-token { padding:4px 8px; border:1px solid currentColor; border-radius:999px; }
-.stack-demo-avatar { border:1px solid currentColor; border-radius:50%; width:32px; height:32px; display:grid; place-items:center; }
-.stack-demo-static { flex:0 0 auto; min-width:0; min-height:0; }
-.stack-demo-fill { flex:1 1 auto; min-width:0; min-height:0; }
+.stack-demo-token { display:inline-flex; align-items:center; gap:var(--spacing-1); padding-block:0; padding-inline:var(--spacing-2); border:0 none; border-radius:var(--radius-inner); font-family:inherit; font-size:var(--text-supporting-size); line-height:var(--text-supporting-leading); font-weight:var(--font-weight-medium); white-space:nowrap; text-decoration:none; max-width:100%; overflow:hidden; height:calc(var(--size-element-md) - 8px); background:var(--color-neutral); color:var(--color-text-primary); }
+.stack-demo-token > span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; unicode-bidi:isolate; }
+.stack-demo-avatar { position:relative; display:inline-flex; flex-shrink:0; border-radius:var(--radius-full); width:36px; height:36px; }
+.stack-demo-avatar-content { display:flex; align-items:center; justify-content:center; width:100%; height:100%; overflow:hidden; user-select:none; border-radius:var(--radius-full); }
+.stack-demo-avatar-fallback { display:flex; align-items:center; justify-content:center; width:100%; height:100%; background:var(--color-neutral); color:var(--color-text-primary); font-family:var(--font-family-body); font-weight:var(--font-weight-medium); text-transform:uppercase; font-size:14.4px; }
+.stack-demo-static { flex-grow:0; flex-shrink:0; min-width:0; min-height:0; }
+.stack-demo-fill { flex-grow:1; min-width:0; min-height:0; }
 .stack-class-override { gap:13px; padding-inline-start:17px; }
 ";
 
-/// Standalone Stack patterns. Missing sibling components use labeled native demo
-/// framing, never reusable substitutes or claims of those components' migration.
+/// Standalone Stack patterns. Static Token/Avatar/item declarations are derived
+/// from the pinned owners for this demo only; no supporting public port is claimed.
 #[component]
 pub fn StackExamples() -> Element {
     let mut event_count = use_signal(|| 0);
@@ -30,7 +35,7 @@ pub fn StackExamples() -> Element {
         document::Style { "{DEMO_CSS}" }
         section { id: "stack-examples", class: "stack-frame",
             h2 { "Stack" }
-            p { "One-dimensional layout; StackItem, Token and Avatar framing below is native demo-only. No new typography dependency." }
+            p { "One-dimensional layout; Token, Avatar and StackItem static framing uses pinned source declarations, demo-only. Avatar tooltip/focus behavior is not implemented. No supporting public ports are claimed." }
             h3 { "Stack — Alignment" }
             Stack { id: "st-alignment", gap: SpacingStep::Three, width: SizeValue::from("100%"), style: "max-width:500px",
                 for (label, value) in [("Start (left)", StackAlignment::Start), ("Center", StackAlignment::Center), ("End (right)", StackAlignment::End)] {
@@ -45,20 +50,26 @@ pub fn StackExamples() -> Element {
                     }
                 }
             }
-            h3 { "Stack — Directions (native Token framing)" }
+            h3 { "Stack — Directions (source-derived static Token framing)" }
             Stack { id: "st-directions", direction: StackDirection::Horizontal, gap: SpacingStep::Ten, h_align: StackAlignment::Center,
                 Stack { direction: StackDirection::Horizontal, gap: SpacingStep::Two, v_align: StackAlignment::Center,
-                    for _ in 0..3 { span { class: "stack-demo-token", "Horizontal" } }
+                    for _ in 0..3 { span { class: "stack-demo-token", span { dir: "ltr", "Horizontal" } } }
                 }
                 Stack { gap: SpacingStep::Two,
-                    for _ in 0..3 { span { class: "stack-demo-token", "Vertical" } }
+                    for _ in 0..3 { span { class: "stack-demo-token", span { dir: "ltr", "Vertical" } } }
                 }
             }
-            h3 { "Stack — Fill Item (native item/avatar framing)" }
+            h3 { "Stack — Fill Item (source-derived static item/avatar framing)" }
             Stack { id: "st-fill", gap: SpacingStep::Three, width: SizeValue::from("100%"), style: "max-width:300px",
                 for (name, role, initials) in [("Olivia Chen", "Engineering Lead", "OC"), ("Marcus Rivera", "Product Designer", "MR"), ("Aisha Patel", "Marketing Manager", "AP")] {
                     Stack { direction: StackDirection::Horizontal, gap: SpacingStep::Three, v_align: StackAlignment::Center,
-                        div { class: "stack-demo-static", span { class: "stack-demo-avatar", "aria-hidden": "true", "{initials}" } }
+                        div { class: "stack-demo-static",
+                            div { class: "stack-demo-avatar", "aria-hidden": "true",
+                                div { class: "stack-demo-avatar-content",
+                                    div { class: "stack-demo-avatar-fallback", "{initials}" }
+                                }
+                            }
+                        }
                         div { class: "stack-demo-fill",
                             Stack { gap: SpacingStep::Zero,
                                 Text { text_type: TextType::BODY, weight: TextWeight::Bold, "{name}" }

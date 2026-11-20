@@ -17,6 +17,7 @@ entries = {entry['path']: entry['sha'] for entry in tree['tree'] if entry['type'
 paths = [path for path in entries if path.startswith('packages/core/src/Stack/') and '/__' not in path]
 paths += [path for path in entries if path.startswith('packages/cli/assets/templates/blocks/components/Stack/')]
 paths += ['docs/specs/components/Stack/Stack.spec.md']
+paths += ['packages/core/src/Token/Token.tsx', 'packages/core/src/Avatar/Avatar.tsx']
 paths += ['packages/core/src/' + path for path in ['Layout/padding.stylex.ts', 'utils/types.ts', 'theme/tokens.stylex.ts', 'utils/themeProps.ts', 'utils/mergeProps.ts', 'BaseProps.ts', 'HStack/HStack.tsx', 'VStack/VStack.tsx']]
 sources = {}
 for path in sorted(paths):
@@ -56,6 +57,39 @@ source = text('/Stack.tsx')
 for invariant in ["hAlign ?? (direction === 'horizontal' ? justify : align)", "vAlign ?? (direction === 'horizontal' ? align : justify)", 'paddingInlineStart ?? paddingInline ?? padding', 'paddingInlineEnd ?? paddingInline ?? padding', 'paddingBlockStart ?? paddingBlock ?? padding', 'paddingBlockEnd ?? paddingBlock ?? padding', '{...style, ...sizingStyle}', "themeProps('stack', {direction, gap, wrap})"]:
     assert invariant in source, invariant
 assert 'containerPadding' not in source
+def static_rule(suffix, key):
+    """Lower only flat static rules; fail rather than ignore unknown expressions."""
+    body = re.search(r'\b' + key + r': \{(.*?)\n  \}', text(suffix), re.S)[1]
+    body = re.sub(r'//[^\n]*', '', body)
+    declarations = {}
+    for prop, value in re.findall(r'([\w-]+):\s*([^\n]+)', body):
+        value = value.rstrip().removesuffix(',').removesuffix(' as const')
+        value = re.sub(r"\w+Vars\['([^']+)'\]", r'var(\1)', value)
+        value = re.sub(r'\$\{(var\([^)]+\))\}', r'\1', value)
+        if value[0] in "'\"`":
+            value = value[1:-1]
+        else:
+            assert re.fullmatch(r'\d+(?:\.\d+)?|var\([^)]+\)', value), (prop, value)
+        prop = re.sub(r'[A-Z]', lambda match: '-' + match[0].lower(), prop)
+        declarations[prop] = value
+    assert declarations, (suffix, key)
+    return declarations
+
+
+demo_styles = {
+    'tokenBase': static_rule('/Token.tsx', 'base'),
+    'tokenLabel': static_rule('/Token.tsx', 'label'),
+    'tokenMd': static_rule('/Token.tsx', 'md'),
+    'tokenDefault': static_rule('/Token.tsx', 'default'),
+    'avatarWrapper': static_rule('/Avatar.tsx', 'wrapper'),
+    'avatarContent': static_rule('/Avatar.tsx', 'content'),
+    'avatarFallback': static_rule('/Avatar.tsx', 'fallback'),
+    'itemReset': static_rule('/stackItem.stylex.ts', 'reset'),
+    'itemStatic': static_rule('/stackItem.stylex.ts', 'static'),
+    'itemFill': static_rule('/stackItem.stylex.ts', 'fill'),
+}
+assert "case 'md':\n      return 36;" in text('/Avatar.tsx')
+assert 'const INITIALS_FONT_SIZE_RATIO = 0.4;' in text('/Avatar.tsx')
 fixture = {
     'kind': 'source-derived declarations and verified originals; NOT published or React/StyleX browser measurements',
     'pin': PIN,
@@ -63,6 +97,7 @@ fixture = {
     'sources': sources,
     'styles': styles,
     'spacing': spacing,
+    'demoStyles': demo_styles,
 }
 output = Path('tests/fixtures/stack-source-reference.json')
 serialized = json.dumps(fixture, indent=2, ensure_ascii=False) + '\n'
