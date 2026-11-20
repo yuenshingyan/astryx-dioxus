@@ -1,7 +1,7 @@
-// StackItemScrollRegion uses the observeMainOverflow contract: measure only
+// Adapted from useScrollRegionProps and observeMainOverflow: measure only
 // scroll-capable axes, retain the last result while hidden, and coalesce work.
-const id = await dioxus.recv();
-const root = document.querySelector(`[data-astryx-item-scroll="${CSS.escape(id)}"]`);
+const [marker, id] = await dioxus.recv();
+const root = document.querySelector(`[${CSS.escape(marker)}="${CSS.escape(id)}"]`);
 if (!root) return;
 let frame;
 let previous;
