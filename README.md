@@ -58,6 +58,11 @@ AspectRatio adds required numeric ratios, both clipping shapes, optional child f
 responsive CSS overrides and all six original patterns using offline replacement
 artwork; see [AspectRatio verification](docs/aspect-ratio-port.md) for pinned-source
 comparisons and remaining release/asset boundaries.
+Stack implements axis/alias resolution, shared token gaps, local logical padding,
+sizing precedence, wrapping, scrolling and caller-rendered native roots. Its SSR and
+offline source-derived comparisons are recorded in [Stack verification](docs/stack-port.md);
+Token/Avatar/StackItem demo framing and upstream-runtime visual verification remain
+explicitly open. This does not complete HStack, VStack, StackItem, Grid or Layout.
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
@@ -105,6 +110,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/badge/`, `src/button/`, `src/button_group/`, `src/card/`, `src/clickable_card/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
 - `src/blockquote/`: semantic quote and bare attribution; no layout/typography dependency.
 - `src/selectable_card/`: controlled Card selection and its private native input context; not a completed Lab group migration.
+- `src/stack/`: standalone Stack and its axis/wrap types; convenience wrappers and StackItem remain separate migrations.
 - `src/layout/`: shared spacing-step lowering for container publishers, not a completed Layout migration.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
@@ -146,7 +152,11 @@ For browser interaction checks, see [Button browser testing](docs/button-port.md
 and [SelectableCard testing](docs/selectable-card-port.md#verification-and-integration-boundary).
 Blockquote's offline suite is `node tests/blockquote.browser.mjs` (preview port 8091),
 with `node tests/blockquote_source.mjs` and `node tests/blockquote.contrast.mjs`;
-see its verification notes. Run the fourteen existing component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
+see its verification notes. For Stack, serve `dx serve --example stack --web --port 8093` and run
+`python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack.browser.mjs`;
+`python3 tests/stack_source.py --check` verifies the offline source-derived fixture.
+See its verification notes for the cache input, evidence limits and remaining gaps.
+Run all fourteen existing component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
 `node tests/icon_button.browser.mjs`, `node tests/link.browser.mjs`, `node tests/spinner.browser.mjs`,
 `node tests/badge.browser.mjs`, `node tests/divider.browser.mjs`, `node tests/kbd.browser.mjs`,
 `node tests/skeleton.browser.mjs`, `node tests/status_dot.browser.mjs`, `node tests/progress_bar.browser.mjs`,

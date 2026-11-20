@@ -27,6 +27,7 @@ mod selectable_card;
 mod size_context;
 mod skeleton;
 mod spinner;
+mod stack;
 mod status_dot;
 mod text;
 mod theme;
@@ -68,6 +69,10 @@ pub use selectable_card::{SelectableCard, SelectableCardError, SelectableCardPro
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
 pub use skeleton::{Skeleton, SkeletonError, SkeletonLength, SkeletonRadius};
 pub use spinner::{Spinner, SpinnerError, SpinnerShade, SpinnerSize};
+pub use stack::{
+    Stack, StackAlignment, StackCrossAlignment, StackDirection, StackElement, StackMainAlignment,
+    StackProps, StackRenderProps, StackWrap,
+};
 pub use status_dot::{
     InvalidStatusDotVariant, StatusDot, StatusDotError, StatusDotIcon, StatusDotVariant,
 };

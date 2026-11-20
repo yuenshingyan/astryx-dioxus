@@ -36,6 +36,8 @@ mod selectable_card;
 mod skeleton;
 #[path = "showcase/spinner.rs"]
 mod spinner;
+#[path = "showcase/stack.rs"]
+mod stack;
 #[path = "showcase/status_dot.rs"]
 mod status_dot;
 
@@ -55,6 +57,7 @@ use progress_bar::ProgressBarExamples;
 use selectable_card::SelectableCardExamples;
 use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
+use stack::StackExamples;
 use status_dot::StatusDotExamples;
 
 const FIGTREE: Asset = asset!("/assets/fonts/Figtree-latin.woff2");
@@ -102,6 +105,8 @@ fn App() -> Element {
             AspectRatioExamples {}
             h1 { "Astryx Buttons and Link" }
             p { "Documented patterns, interaction states, and integrations. See docs/ for each component's verification notes." }
+            a { href: "#stack-examples", "Stack examples" }
+            StackExamples {}
             nav { "aria-label": "Showcase sections",
                 a { href: "#button-group-examples", "ButtonGroup examples" }
                 " · "
