@@ -33,6 +33,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - CheckboxIndicator follows `Indicator/CheckboxIndicator.tsx` and the Indicator family contract at the same pin. See `docs/checkbox-indicator-port.md`.
 - RadioIndicator follows `Indicator/RadioIndicator.tsx` and `Indicator/indicator.markers.stylex.ts` at the same pin. See `docs/radio-indicator-port.md`.
 - VisuallyHidden follows `VisuallyHidden/VisuallyHidden.tsx`, its specification, and all four original templates at the same pin. See `docs/visually-hidden-port.md`.
+- LayoutHeader follows `Layout/LayoutHeader.tsx`, `Layout/LayoutDividerContext.ts`, the shared container padding and block-bleed contracts, and both LayoutHeader CLI templates at the same pin. See `docs/layout-header-port.md`.
 - Section follows `Section/Section.tsx`, the shared Layout padding contract, its specification, and all three Section CLI templates. See `docs/section-port.md`.
 - Center follows `Center/Center.tsx`, its specification, and all three Center CLI templates at the same pin. See `docs/center-port.md`.
 - Grid follows `Grid/Grid.tsx`, its authoritative specification and five CLI templates at the same pin. GridSpan follows `Grid/GridSpan.tsx`, its specification, and both GridSpan CLI templates. The Grid resize example uses a native range input; no public ResizeHandle port is claimed. See `docs/grid-port.md`.
