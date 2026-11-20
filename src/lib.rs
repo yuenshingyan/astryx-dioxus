@@ -83,7 +83,7 @@ pub use kbd::{Kbd, KbdError, KbdText};
 pub use layer::{LayerContentBoundary, LayerPlacement};
 pub use layout::{
     LayoutContent, LayoutContentProps, LayoutFooter, LayoutFooterProps, LayoutHeader,
-    LayoutHeaderProps,
+    LayoutHeaderProps, LayoutPanel, LayoutPanelProps,
 };
 pub use link::{
     Link, LinkComponentType, LinkDownload, LinkProvider, LinkRenderProps, LinkifyCaptures,
