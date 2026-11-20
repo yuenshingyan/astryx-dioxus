@@ -53,7 +53,12 @@ for callback adaptations, source-palette findings and verification boundaries.
 Blockquote adds semantic quotes with shallow author/source attribution, logical
 RTL rules, and all three original patterns including existing Card testimonials;
 see [Blockquote verification](docs/blockquote-port.md) for source-derived offline
-comparisons and evidence boundaries. Supporting layer-boundary
+comparisons and evidence boundaries.
+AspectRatio adds required numeric ratios, both clipping shapes, optional child fit,
+responsive CSS overrides and all six original patterns using offline replacement
+artwork; see [AspectRatio verification](docs/aspect-ratio-port.md) for pinned-source
+comparisons and remaining release/asset boundaries.
+Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
 Publishing remains disabled until package metadata and licensing are confirmed.
@@ -96,6 +101,7 @@ CSS styles target HTML/webview output, not a native renderer.
 
 ## Layout
 
+- `src/aspect_ratio/`: CSS-only ratio box and fit slot; child semantics and operations stay caller-owned.
 - `src/badge/`, `src/button/`, `src/button_group/`, `src/card/`, `src/clickable_card/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
 - `src/blockquote/`: semantic quote and bare attribution; no layout/typography dependency.
 - `src/selectable_card/`: controlled Card selection and its private native input context; not a completed Lab group migration.
@@ -124,6 +130,10 @@ cargo test
 cargo clippy --all-targets -- -D warnings
 cargo check --example showcase --target wasm32-unknown-unknown
 ```
+
+AspectRatio's offline suite: `python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/aspect_ratio.browser.mjs`
+against its own `aspect_ratio` example on port 8092; provenance-only check:
+`node tests/aspect_ratio_source.mjs`. See [verification boundaries](docs/aspect-ratio-port.md).
 
 For browser interaction checks, see [Button browser testing](docs/button-port.md#browser-checks),
 [ButtonGroup testing](docs/button-group-port.md#verification),

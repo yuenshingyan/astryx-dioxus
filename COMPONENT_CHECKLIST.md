@@ -9,7 +9,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), [Skeleton](docs/skeleton-port.md), [StatusDot](docs/status-dot-port.md), [ProgressBar](docs/progress-bar-port.md), [Card](docs/card-port.md), [SelectableCard](docs/selectable-card-port.md), and [Blockquote](docs/blockquote-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- [AspectRatio](docs/aspect-ratio-port.md), Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), [Skeleton](docs/skeleton-port.md), [StatusDot](docs/status-dot-port.md), [ProgressBar](docs/progress-bar-port.md), [Card](docs/card-port.md), [SelectableCard](docs/selectable-card-port.md), [ClickableCard](docs/clickable-card-port.md), and [Blockquote](docs/blockquote-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
@@ -1552,23 +1552,25 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [ ] **AppShell — Top Nav with Side Nav** (`AppShellTopNavWithSideNav.doc.mjs`): identity plus page navigation.
     - [ ] **AppShell — With Banner** (`AppShellWithBanner.doc.mjs`): full navigation and dismissable info banner.
 
-- [ ] **[Aspect Ratio](https://astryx.atmeta.com/components/AspectRatio)**
+- [x] **[Aspect Ratio](https://astryx.atmeta.com/components/AspectRatio)**
 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/AspectRatio/AspectRatio.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/AspectRatio).
 
+  - Verified source-faithful baseline: [inventory, offline comparisons and remaining release/artwork boundaries](docs/aspect-ratio-port.md). Native demo framing does not complete Center/Grid/Layout/Text migrations.
+
   - **Shape, fitting, and content**
-    - [ ] `shape`: `rectangle` (default), `ellipse`; ratio 1 makes ellipse circular.
-    - [ ] `fit`: `cover` (crop), `contain` (letterbox), `center` (natural-size centered); omitted means child owns sizing.
-    - [ ] Required numeric `ratio` is open-ended, not a preset enum; documented examples use 1:1, 4:3, 16:9.
-    - [ ] One child for fitted media; single wrapper for overlays/captions. Definite ancestor width required; shrink-to-fit parents collapse; height-only limits break ratio unless paired with auto width.
-    - [ ] Responsive ratio via StyleX/default branch or unlayered CSS; child owns alt text and semantics, no role/name added by container.
+    - [x] `shape`: `rectangle` (default), `ellipse`; ratio 1 makes ellipse circular.
+    - [x] `fit`: `cover` (crop), `contain` (letterbox), `center` (natural-size centered); omitted means child owns sizing.
+    - [x] Required numeric `ratio` is open-ended, not a preset enum; documented examples use 1:1, 4:3, 16:9.
+    - [x] One child for fitted media; single wrapper for overlays/captions. Definite ancestor width required; shrink-to-fit parents collapse; height-only limits break ratio unless paired with auto width.
+    - [x] Responsive ratio via StyleX/default branch or unlayered CSS; child owns alt text and semantics, no role/name added by container.
   - **Templates**
-    - [ ] **AspectRatio — Circle Image** (`AspectRatioCircleImage.doc.mjs`): ellipse, ratio 1.
-    - [ ] **AspectRatio — Image Gallery** (`AspectRatioImageGallery.doc.mjs`): 4:3 image grid.
-    - [ ] **AspectRatio** / **Aspect Ratio** (`AspectRatioShowcase.doc.mjs`): equal-height 1:1, 4:3, 16:9 image containers.
-    - [ ] **AspectRatio — Square Image** (`AspectRatioSquareImage.doc.mjs`): square media.
-    - [ ] **AspectRatio — 16:9 Widescreen Image** (`AspectRatioWidescreen.doc.mjs`).
-    - [ ] **AspectRatio — Loading Skeleton** (`AspectRatioWithSkeleton.doc.mjs`): reserved media space while loading.
+    - [x] **AspectRatio — Circle Image** (`AspectRatioCircleImage.doc.mjs`): ellipse, ratio 1.
+    - [x] **AspectRatio — Image Gallery** (`AspectRatioImageGallery.doc.mjs`): 4:3 image grid.
+    - [x] **AspectRatio** / **Aspect Ratio** (`AspectRatioShowcase.doc.mjs`): equal-height 1:1, 4:3, 16:9 image containers.
+    - [x] **AspectRatio — Square Image** (`AspectRatioSquareImage.doc.mjs`): square media.
+    - [x] **AspectRatio — 16:9 Widescreen Image** (`AspectRatioWidescreen.doc.mjs`).
+    - [x] **AspectRatio — Loading Skeleton** (`AspectRatioWithSkeleton.doc.mjs`): reserved media space while loading.
 
 - [x] **[Divider](https://astryx.atmeta.com/components/Divider)**
 
