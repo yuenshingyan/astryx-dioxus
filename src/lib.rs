@@ -50,7 +50,7 @@ pub use interactive_role_context::{
     InteractiveRoleContext, InteractiveRoleProvider, use_interactive_role_context,
 };
 pub use kbd::{Kbd, KbdError, KbdText};
-pub use layer::LayerContentBoundary;
+pub use layer::{LayerContentBoundary, LayerPlacement};
 pub use link::{
     Link, LinkComponentType, LinkDownload, LinkProvider, LinkRenderProps, LinkifyCaptures,
     LinkifyError, LinkifyMatch, LinkifyNode, LinkifyPattern, UseLinkifyOptions, linkify,

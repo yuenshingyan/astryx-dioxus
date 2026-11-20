@@ -46,8 +46,22 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     const width = viewport?.width || innerWidth;
     const height = viewport?.height || innerHeight;
     const above = box.top - tipBox.height - 8;
-    record.tip.style.left = `${Math.max(left + 4, Math.min(box.left + (box.width - tipBox.width) / 2, left + width - tipBox.width - 4))}px`;
-    record.tip.style.top = `${Math.max(top + 4, Math.min(above >= top + 4 ? above : box.bottom + 8, top + height - tipBox.height - 4))}px`;
+    const below = box.bottom + 8;
+    const placement = record.isTruncation ? record.element.getAttribute('data-astryx-truncation-placement') || 'above' : 'above';
+    let x = box.left + (box.width - tipBox.width) / 2;
+    let y = above >= top + 4 ? above : below;
+    if (placement === 'below') y = below + tipBox.height <= top + height - 4 ? below : above;
+    if (placement === 'start' || placement === 'end') {
+      const isRtl = getComputedStyle(record.element).direction === 'rtl';
+      const isLeft = (placement === 'start') !== isRtl;
+      const before = box.left - tipBox.width - 8;
+      const after = box.right + 8;
+      x = isLeft ? (before >= left + 4 ? before : after)
+        : (after + tipBox.width <= left + width - 4 ? after : before);
+      y = box.top + (box.height - tipBox.height) / 2;
+    }
+    record.tip.style.left = `${Math.max(left + 4, Math.min(x, left + width - tipBox.width - 4))}px`;
+    record.tip.style.top = `${Math.max(top + 4, Math.min(y, top + height - tipBox.height - 4))}px`;
   };
   const accessibleName = element => {
     if (element.hasAttribute('aria-labelledby')) return null;
@@ -261,7 +275,9 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       // flash it shut, and pressing a nested image must never open on focus.
       if (!record.isPinned && (!record.tooltipPolicy || record.tooltipPolicy.isHoverOnly(record))) hideTip(record);
     }
-    tap = event.isPrimary && event.button === 0 && event.pointerType === 'touch' && record?.isTruncation
+    // Text entry only focuses; it must not reveal the enclosing clipped copy.
+    const isTextEntry = event.target.closest?.('input,textarea,[contenteditable]:not([contenteditable="false"]),[role="textbox"],[role="searchbox"],[role="spinbutton"]');
+    tap = event.isPrimary && event.button === 0 && (event.pointerType === 'touch' || event.pointerType === 'pen') && record?.isTruncation && !isTextEntry
       ? { record, id: event.pointerId, x: event.clientX, y: event.clientY } : null;
   }, { capture: true, passive: true });
   listen(document, 'pointermove', event => {

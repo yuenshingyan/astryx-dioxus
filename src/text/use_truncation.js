@@ -44,15 +44,18 @@ const createTruncation = (notify) => {
     }
   };
   const attach = (next, lines, expanded) => {
+    if (next === element && lines === maxLines && expanded === isExpanded) return;
     stop();
     const previous = element;
+    if (expanded && !isExpanded) keptFor = previous;
+    if (!expanded && previous !== next) answer = { isTruncated: false, fullText: '' };
     if (previous && previous !== next) delete previous[truncationKey];
     element = next;
     maxLines = lines;
     isExpanded = expanded;
     if (isExpanded) {
       if (element) publish();
-      else keptFor = previous;
+      else keptFor = previous || keptFor;
     } else {
       if (keptFor && keptFor !== element) answer = { isTruncated: false, fullText: '' };
       keptFor = null;
@@ -65,7 +68,7 @@ const createTruncation = (notify) => {
         unobserveContent = observeContent(element, check);
       }
     }
-    if (element) {
+    if (element && (maxLines > 0 || isExpanded)) {
       unobserveRemoval = observeContent(element.ownerDocument, () => {
         if (!element?.isConnected) attach(null, maxLines, isExpanded);
       });
