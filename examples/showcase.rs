@@ -18,6 +18,8 @@ mod button_group;
 mod button_patterns;
 #[path = "showcase/card.rs"]
 mod card;
+#[path = "showcase/center.rs"]
+mod center;
 #[path = "showcase/clickable_card.rs"]
 mod clickable_card;
 #[path = "showcase/divider.rs"]
@@ -56,6 +58,7 @@ use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
 use card::CardExamples;
+use center::CenterExamples;
 use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
 use grid::{GridExamples, GridSpanExamples};
@@ -150,6 +153,8 @@ fn App() -> Element {
                 a { href: "#grid-examples", "Grid examples" }
                 " · "
                 a { href: "#grid-span-examples", "GridSpan examples" }
+                " · "
+                a { href: "#center-examples", "Center examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -261,6 +266,7 @@ fn App() -> Element {
             StackExamples {}
             GridExamples {}
             GridSpanExamples {}
+            CenterExamples {}
         }
     }
 }
