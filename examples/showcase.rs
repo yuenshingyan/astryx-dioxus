@@ -40,6 +40,8 @@ mod kbd;
 mod link;
 #[path = "showcase/progress_bar.rs"]
 mod progress_bar;
+#[path = "showcase/radio_indicator.rs"]
+mod radio_indicator;
 #[path = "showcase/section.rs"]
 mod section;
 #[path = "showcase/selectable_card.rs"]
@@ -79,6 +81,7 @@ use icon_button::IconButtonExamples;
 use kbd::KbdExamples;
 use link::LinkExamples;
 use progress_bar::ProgressBarExamples;
+use radio_indicator::RadioIndicatorExamples;
 use section::SectionExamples;
 use selectable_card::SelectableCardExamples;
 use skeleton::SkeletonExamples;
@@ -180,6 +183,8 @@ fn App() -> Element {
                 a { href: "#center-examples", "Center examples" }
                 " · "
                 a { href: "#check-indicator-examples", "CheckIndicator examples" }
+                " · "
+                a { href: "#radio-indicator-examples", "RadioIndicator examples" }
                 " · "
                 a { href: "#section-examples", "Section examples" }
             }
@@ -299,6 +304,7 @@ fn App() -> Element {
             VisuallyHiddenExamples {}
             CenterExamples {}
             CheckIndicatorExamples {}
+            RadioIndicatorExamples {}
             SectionExamples {}
         }
     }
