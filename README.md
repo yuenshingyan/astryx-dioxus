@@ -36,7 +36,10 @@ preferences and all four original patterns; see [Skeleton verification](docs/ske
 StatusDot adds five extensible tones, caller icons, all four original patterns,
 and spec-led standalone/nested explanatory tooltips; its approved custom fallback,
 forced-color treatment and preserved pulse-contrast findings are recorded in
-[StatusDot verification](docs/status-dot-port.md).
+[StatusDot verification](docs/status-dot-port.md). ProgressBar adds determinate/unknown
+progress, localized values, explanatory marks, theme-timed retargeting and all five
+original patterns. Approved graphic boundaries/custom fallback and retained disabled-marker
+findings are recorded in [ProgressBar verification](docs/progress-bar-port.md).
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
@@ -80,12 +83,13 @@ CSS styles target HTML/webview output, not a native renderer.
 
 ## Layout
 
-- `src/badge/`, `src/button/`, `src/button_group/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
+- `src/badge/`, `src/button/`, `src/button_group/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
 - `src/link/`: Link, shared renderer/provider types, target/rel handling, and linkification.
 - `src/text/`, `src/theme/`: Text typography/clamp support and upstream-owned type definitions; standalone Text/Theme checklists remain independent.
 - `src/hooks/`, `src/tooltip/`: shared press/tooltip renderer bridges under their source owners.
+- `src/motion/`, `src/visually_hidden/`: required internal timing tables and fixed-span accessibility support; not completed public Motion/VisuallyHidden migrations.
 - `src/interactive_role_context/`, `src/utils/`: inherited role, shared navigation policy, text-direction and platform-detection adapters; no combined control environment.
 - `src/i18n/`: the required server-safe strong-RTL predicate, not a completed internationalization runtime.
 - `src/input_group/`: the input-owned internal state contract used by existing controls; not a completed InputGroup component.
@@ -110,11 +114,16 @@ For browser interaction checks, see [Button browser testing](docs/button-port.md
 [IconButton testing](docs/icon-button-port.md#verification), [Link testing](docs/link-port.md#verification),
 [Spinner testing](docs/spinner-port.md#examples-and-verification), [Badge testing](docs/badge-port.md#verification),
 [Divider testing](docs/divider-port.md#verification), [Kbd testing](docs/kbd-port.md#verification),
-[Skeleton testing](docs/skeleton-port.md#verification), and [StatusDot testing](docs/status-dot-port.md#verification).
-Run all ten component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
+[Skeleton testing](docs/skeleton-port.md#verification), [StatusDot testing](docs/status-dot-port.md#verification),
+and [ProgressBar testing](docs/progress-bar-port.md#verification).
+Run all eleven component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
 `node tests/icon_button.browser.mjs`, `node tests/link.browser.mjs`, `node tests/spinner.browser.mjs`,
 `node tests/badge.browser.mjs`, `node tests/divider.browser.mjs`, `node tests/kbd.browser.mjs`,
-`node tests/skeleton.browser.mjs`, and `node tests/status_dot.browser.mjs`.
+`node tests/skeleton.browser.mjs`, `node tests/status_dot.browser.mjs`, and `node tests/progress_bar.browser.mjs`.
+Also run `node tests/progress_bar_motion.browser.mjs` for native timing/resize/media/cleanup contracts.
+ProgressBar's contrast audit (`node tests/progress_bar.contrast.mjs`) intentionally exits 1:
+approved track/fill boundaries pass all modeled cases, but 15/168 conditional disabled-marker
+findings retain the source ink palette.
 Also run `node tests/status_dot_tooltip.browser.mjs` for native placement/pin/name/hit-area ownership.
 StatusDot's contrast audit (`node tests/status_dot.contrast.mjs`) intentionally exits 1:
 resting cases pass, but the preserved pulse minimum has 33/60 conditional essential-plate

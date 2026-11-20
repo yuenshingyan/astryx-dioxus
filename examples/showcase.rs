@@ -20,6 +20,8 @@ mod icon_button;
 mod kbd;
 #[path = "showcase/link.rs"]
 mod link;
+#[path = "showcase/progress_bar.rs"]
+mod progress_bar;
 #[path = "showcase/skeleton.rs"]
 mod skeleton;
 #[path = "showcase/spinner.rs"]
@@ -35,6 +37,7 @@ use divider::DividerExamples;
 use icon_button::IconButtonExamples;
 use kbd::KbdExamples;
 use link::LinkExamples;
+use progress_bar::ProgressBarExamples;
 use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
 use status_dot::StatusDotExamples;
@@ -101,6 +104,8 @@ fn App() -> Element {
                 a { href: "#skeleton-examples", "Skeleton examples" }
                 " · "
                 a { href: "#status-dot-examples", "StatusDot examples" }
+                " · "
+                a { href: "#progress-bar-examples", "ProgressBar examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -201,6 +206,7 @@ fn App() -> Element {
             KbdExamples {}
             SkeletonExamples {}
             StatusDotExamples {}
+            ProgressBarExamples {}
         }
     }
 }
