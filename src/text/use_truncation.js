@@ -7,6 +7,7 @@ const createTruncation = (notify) => {
   let maxLines = 0;
   let isExpanded = false;
   let answer = { isTruncated: false, fullText: '' };
+  let isPlainText = false;
   let unobserveResize = null;
   let unobserveContent = null;
   let unobserveRemoval = null;
@@ -15,7 +16,7 @@ const createTruncation = (notify) => {
       element[truncationKey] = answer;
       element.dispatchEvent(new Event('astryxtruncationchange'));
     }
-    notify(answer.isTruncated, answer.fullText);
+    notify(answer.isTruncated, answer.fullText, isPlainText);
   };
   const stop = () => {
     unobserveResize?.(); unobserveResize = null;
@@ -38,8 +39,13 @@ const createTruncation = (notify) => {
       } catch { /* Non-layout renderers retain the source scrollHeight fallback. */ }
       isTruncated = contentHeight > element.offsetHeight;
     }
-    if (answer.isTruncated !== isTruncated || answer.fullText !== fullText) {
+    // A plain text root must not introduce a stop inside a control or editable region.
+    const plain = isTruncated && !element.childElementCount && !element.closest(
+      'a[href],button,input,select,textarea,label,summary,[contenteditable],[inert],[aria-hidden="true"],[role]'
+    ) && !element.parentElement?.closest('[tabindex]');
+    if (answer.isTruncated !== isTruncated || answer.fullText !== fullText || isPlainText !== plain) {
       answer = { isTruncated, fullText };
+      isPlainText = plain;
       publish();
     }
   };
@@ -48,7 +54,10 @@ const createTruncation = (notify) => {
     stop();
     const previous = element;
     if (expanded && !isExpanded) keptFor = previous;
-    if (!expanded && previous !== next) answer = { isTruncated: false, fullText: '' };
+    if (!expanded && previous !== next) {
+      answer = { isTruncated: false, fullText: '' };
+      isPlainText = false;
+    }
     if (previous && previous !== next) delete previous[truncationKey];
     element = next;
     maxLines = lines;

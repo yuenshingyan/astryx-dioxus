@@ -1,5 +1,5 @@
 // Dioxus renderer lifetime; measurement remains with Text/useTruncation.
-const controller = createTruncation((isTruncated, fullText) => dioxus.send([isTruncated, fullText]));
+const controller = createTruncation((isTruncated, fullText, isPlainText) => dioxus.send([isTruncated, fullText, isTruncated && isPlainText]));
 try {
   while (true) {
     const config = await dioxus.recv();

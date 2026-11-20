@@ -47,7 +47,7 @@ try {
   await waitFor('!!document[Symbol.for("astryx.dioxus.truncation-presentation.v1")]?.loaded');
   assert.equal(await evaluate('performance.getEntriesByType("resource").filter(entry=>/\\/assets\\/truncation_presentation-.*\\.js$/.test(new URL(entry.name).pathname)).length'),2,'Dioxus requests separate Tooltip and Layer asset modules');
   assert.deepEqual(await evaluate('["tx-hook-build","tx-hook-bundle","tx-hook-readme"].map(id=>document.getElementById(id).nextElementSibling.dataset.hookState)'), ['true','true','false']);
-  assert.equal(await evaluate('document.querySelectorAll("#text-examples [title],#text-examples [role=tooltip],#text-examples .astryx-text[tabindex],#text-examples .astryx-text[aria-describedby]").length'),0,'no eager layers/title/tabstop/duplicate descriptions');
+  assert.equal(await evaluate('document.querySelectorAll("#text-examples [title],#text-examples [role=tooltip],#text-examples .astryx-text[aria-describedby]").length'),0,'no eager layers/title/duplicate descriptions');
   for (const direction of ['ltr','rtl']) {
     await evaluate(`document.getElementById('text-examples').dir=${JSON.stringify(direction)}`);
     for (const placement of ['above','below','start','end']) {
@@ -89,6 +89,8 @@ try {
   await evaluate(`(()=>{const e=document.getElementById('tx-native');e.dispatchEvent(new WheelEvent('wheel',{bubbles:true}));e.dispatchEvent(new ClipboardEvent('copy',{bubbles:true}));e.dispatchEvent(new AnimationEvent('animationstart',{bubbles:true}));e.dispatchEvent(new TransitionEvent('transitionend',{bubbles:true}));e.dispatchEvent(new DragEvent('dragstart',{bubbles:true}));return true})()`);
   await waitFor(`+document.getElementById('tx-events').textContent===${beforeEvents+111110}`);
   assert.deepEqual(await evaluate('(()=>{const e=document.getElementById("tx-native");return [e.tagName,e.htmlFor,e.lang,e.dataset.testid,e.style.marginInline,e.classList.contains("caller-text")]})()'),['LABEL','tx-field','en','native-text','7px',true]);
+  await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:1190,y:10});
+  await waitFor('!document.querySelector("[role=tooltip]:popover-open")');
   await evaluate('document.getElementById("tx-focus-host").scrollIntoView({block:"center"});document.getElementById("tx-focus-host").focus()');
   await wait(250);
   assert.equal(await evaluate('!!document.querySelector("[role=tooltip]:popover-open")'),false,'focus on an enclosing link is not focus inside Text');
@@ -107,7 +109,6 @@ try {
     await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape'});
     await waitFor('!document.querySelector("[role=tooltip]:popover-open")');
   }
-  // A standalone Text remains unfocusable: the authority documents this gap.
   await send('Accessibility.enable'); const ax = await send('Accessibility.getFullAXTree');
   assert.ok(ax.nodes.some(n=>n.name?.value?.includes('Keyboard focus can reach this clipped text')));
   await send('Emulation.setDeviceMetricsOverride',{width:320,height:714,deviceScaleFactor:1,mobile:false});
@@ -115,6 +116,38 @@ try {
   assert.equal(await evaluate('(()=>{const e=document.getElementById("tx-unbroken");return e.scrollWidth<=e.clientWidth})()'),true,'unbroken ordinary flow rewraps at 320px');
   await evaluate('document.documentElement.style.fontSize="32px"');
   assert.equal(await evaluate('getComputedStyle(document.querySelector("#tx-showcase .astryx-text")).fontSize'),'28px');
+  // Isolate keyboard modality from the pointer and touch checks above.
+  await send('Emulation.setDeviceMetricsOverride',{width:1200,height:1000,deviceScaleFactor:1,mobile:false});
+  await send('Page.navigate',{url:process.env.TEXT_URL ?? 'http://127.0.0.1:8085'});
+  await waitFor('document.getElementById("kb-cut")?.getAttribute("tabindex")==="0"');
+  const tabStops = `['kb-fit','kb-disabled','kb-rich','kb-in-link'].map(id=>document.getElementById(id).getAttribute('tabindex'))`;
+  assert.deepEqual(await evaluate(tabStops), [null,null,null,null], 'fitting, disabled, rich and nested Text add no stops');
+  const key = async (key) => {
+    await send('Input.dispatchKeyEvent',{type:'keyDown',key,code:key});
+    await send('Input.dispatchKeyEvent',{type:'keyUp',key,code:key});
+  };
+  await evaluate('document.getElementById("kb-before").focus()');
+  await key('Tab');
+  await waitFor('document.activeElement.id === "kb-cut"');
+  await waitFor('document.querySelector("[role=tooltip]:popover-open")?.textContent === "Full truncated text available to keyboard users"');
+  assert.equal(await evaluate('getComputedStyle(document.activeElement).outlineStyle !== "none"'),true,'keyboard focus is visible');
+  await key('Escape');
+  await waitFor('!document.querySelector("[role=tooltip]:popover-open")');
+  assert.equal(await evaluate('document.activeElement.id'),'kb-cut','Escape retains focus');
+  await key('Tab');
+  await waitFor('document.activeElement.id === "kb-link"');
+  await key('Tab');
+  await waitFor('document.activeElement.id === "kb-parent"');
+  await click('kb-caller');
+  await waitFor('document.getElementById("kb-cut").getAttribute("tabindex")==="-1"');
+  await click('kb-resize');
+  assert.equal(await evaluate('document.getElementById("kb-cut").getAttribute("tabindex")'),'-1','caller tabindex survives fitting content');
+  await click('kb-caller');
+  await waitFor('!document.getElementById("kb-cut").hasAttribute("tabindex")');
+  await click('kb-resize');
+  await waitFor('document.getElementById("kb-cut").getAttribute("tabindex")==="0"');
+  await click('kb-resize');
+  await waitFor('!document.getElementById("kb-cut").hasAttribute("tabindex")');
   assert.deepEqual(page.errors, []);
-  console.log('Text browser checks passed: 31 original-pattern source-derived offline fixtures/light-dark paint and line geometry; logical placements; reactive content/clamp/tooltips/drop; native attributes/events/ref; nested clamp, leading/size override, AX/no tabstop and narrow/root-text reflow.');
+  console.log('Text browser checks passed: 31 original-pattern source-derived offline fixtures; placement, reactive and native behavior; AX and narrow/root-text reflow; conditional keyboard tab stop and Escape focus retention.');
 } finally { await page.close(); }

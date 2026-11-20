@@ -25,6 +25,7 @@ fn start_controller(
     config: &Config,
     mut is_truncated: Signal<bool>,
     mut full_text: Signal<String>,
+    mut is_plain_overflow: Signal<bool>,
 ) -> document::Eval {
     let mut controller = document::eval(concat!(
         include_str!("../utils/shared_resize_observer.js"),
@@ -37,7 +38,11 @@ fn start_controller(
     ));
     let _ = controller.send(config.clone());
     spawn(async move {
-        while let Ok((is_cut, text)) = controller.recv::<(bool, String)>().await {
+        while let Ok((is_cut, text, is_plain_cut)) = controller.recv::<(bool, String, bool)>().await
+        {
+            if *is_plain_overflow.peek() != is_plain_cut {
+                is_plain_overflow.set(is_plain_cut);
+            }
             if *is_truncated.peek() != is_cut {
                 is_truncated.set(is_cut);
             }
@@ -57,10 +62,19 @@ fn start_controller(
 /// clamped again. This hook never changes styles, adds a tab stop, or creates
 /// a tooltip. The browser channel and shared subscriptions are released on drop.
 pub fn use_truncation(id: String, max_lines: u32, is_expanded: bool) -> Truncation {
+    use_truncation_measurement(id, max_lines, is_expanded).0
+}
+
+pub(super) fn use_truncation_measurement(
+    id: String,
+    max_lines: u32,
+    is_expanded: bool,
+) -> (Truncation, ReadSignal<bool>) {
     let mut controller = use_signal(|| None::<document::Eval>);
     let mut is_mounted = use_signal(|| false);
     let mut is_truncated = use_signal(|| false);
     let mut full_text = use_signal(String::new);
+    let mut is_plain_overflow = use_signal(|| false);
     let config = (id, max_lines, is_expanded);
     use_drop(move || {
         if let Some(controller) = *controller.peek() {
@@ -74,22 +88,36 @@ pub fn use_truncation(id: String, max_lines: u32, is_expanded: bool) -> Truncati
         if let Some(previous) = *controller.peek() {
             let _ = previous.send(config);
         } else if config.1 > 0 {
-            controller.set(Some(start_controller(&config, is_truncated, full_text)));
+            controller.set(Some(start_controller(
+                &config,
+                is_truncated,
+                full_text,
+                is_plain_overflow,
+            )));
         } else {
             is_truncated.set(false);
             full_text.set(String::new());
+            is_plain_overflow.set(false);
         }
     }));
-    Truncation {
-        onmounted: EventHandler::new(move |_| {
-            if let Some(previous) = *controller.peek() {
-                let _ = previous.send(config.clone());
-            } else if max_lines > 0 {
-                controller.set(Some(start_controller(&config, is_truncated, full_text)));
-            }
-            is_mounted.set(true);
-        }),
-        is_truncated: is_truncated.into(),
-        full_text: full_text.into(),
-    }
+    (
+        Truncation {
+            onmounted: EventHandler::new(move |_| {
+                if let Some(previous) = *controller.peek() {
+                    let _ = previous.send(config.clone());
+                } else if max_lines > 0 {
+                    controller.set(Some(start_controller(
+                        &config,
+                        is_truncated,
+                        full_text,
+                        is_plain_overflow,
+                    )));
+                }
+                is_mounted.set(true);
+            }),
+            is_truncated: is_truncated.into(),
+            full_text: full_text.into(),
+        },
+        is_plain_overflow.into(),
+    )
 }

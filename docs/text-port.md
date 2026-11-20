@@ -137,8 +137,11 @@ regression scope. Implemented contracts:
 - First keyboard focus inside unfocusable Text mounts closed but does not open.
   Auto focus is judged on arrival against the actual trigger, not a focusable
   ancestor; counted focus still closes after its trigger leaves the tab order.
-  Standalone Text's source-documented keyboard reachability gap is not fixed by
-  inventing a tab stop.
+  To close the upstream keyboard reachability gap, this port adds a native tab
+  stop only to measured, overflowing plain Text with its tooltip enabled. It
+  removes the generated stop when the text fits. Explicit caller `tabindex`
+  wins, including `-1`; rich content and Text inside interactive regions do not
+  get a generated stop.
 - Touch/pen down and up alone open nothing. The completed click toggles; a
   keyboard/new press, movement, scroll or cancellation invalidates stale taps.
   A pen press cancels its pending hover. Outside release/cancel dismisses a
@@ -194,7 +197,8 @@ observer scheduling/content/resize/removal/expanded state/fallback/peer cleanup,
 31 original-pattern fixture comparisons, logical placement in LTR/RTL, live
 content and tooltip toggles, stable clamp root, native mounted/click/attributes,
 nested Link clamp behavior, size/leading override, AX presence, no eager
-layer/title/tabstop, narrow ordinary-flow wrapping and root-font scaling.
+layer/title, conditional tab order and Escape focus retention, narrow ordinary-flow
+wrapping and root-font scaling.
 Touch/pen are synthetic browser sequences, **not** real-device evidence.
 
 The source-palette audit intentionally exits 1: **26/160 conditional active-text

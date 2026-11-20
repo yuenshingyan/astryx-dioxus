@@ -1,7 +1,7 @@
 // Adapted from Meta Astryx Text/Text.tsx, baseline
 // 476a3153417dbf75c565f7df05b0784e94ddd59e. See THIRD_PARTY_NOTICES.md.
 
-use dioxus::core::current_scope_id;
+use dioxus::core::{AttributeValue, current_scope_id};
 use dioxus::html::events::{
     onanimationend as onanimationend_attribute,
     onanimationiteration as onanimationiteration_attribute,
@@ -9,8 +9,9 @@ use dioxus::html::events::{
 };
 use dioxus::prelude::*;
 
+use super::resolve_style_color;
 use super::text_clamp_context::{TextClampProvider, use_text_clamp_context};
-use super::{resolve_style_color, use_truncation};
+use super::use_truncation::use_truncation_measurement;
 use crate::layer::LayerPlacement;
 use crate::theme::{
     TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap, WordBreak,
@@ -165,7 +166,7 @@ pub fn Text(
         String::new(),
         has_truncate_tooltip && max_lines > 0,
     );
-    let truncation = use_truncation(
+    let (truncation, is_plain_overflow) = use_truncation_measurement(
         tooltip_id.clone(),
         if has_truncate_tooltip { max_lines } else { 0 },
         false,
@@ -205,6 +206,18 @@ pub fn Text(
             )
         })
         .collect();
+    // Keep caller tabindex (including -1) authoritative; the generated stop
+    // belongs to the same spread so ownership can change without duplicate attrs.
+    if has_truncate_tooltip
+        && is_clamped
+        && is_plain_overflow()
+        && !attributes.iter().any(|attribute| {
+            attribute.name == "tabindex" && !matches!(attribute.value, AttributeValue::None)
+        })
+    {
+        attributes.retain(|attribute| attribute.name != "tabindex");
+        attributes.push(Attribute::new("tabindex", 0, None, false));
+    }
     // Dioxus diffs each spread as a name-sorted attribute list.
     attributes.sort_by_key(|attribute| attribute.name);
     let color = color.unwrap_or_else(|| text_type.default_color());
