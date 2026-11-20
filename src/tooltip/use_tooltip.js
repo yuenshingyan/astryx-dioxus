@@ -110,6 +110,8 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       ids.add(tip.id);
       record.element.setAttribute('aria-describedby', [...ids].join(' '));
     }
+    markLayerRoot(tip);
+    registerLayerSurface(tip);
     tip.showPopover?.();
     positionTip(record);
     if (automatic && record.isTruncation) {

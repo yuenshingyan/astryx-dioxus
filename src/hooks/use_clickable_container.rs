@@ -21,6 +21,8 @@ pub(crate) mod native {
     };
 
     use super::INTERACTIVE_SELECTORS;
+    pub(crate) use crate::layer::layer_surface_press::is_layer_surface;
+    use crate::private_attributes::layer_root::closest_layer_root;
     use crate::utils::safe_url::is_safe_url;
 
     /// The original event remains downcastable, including during capture.
@@ -179,17 +181,13 @@ pub(crate) mod native {
             if (element.matches(INTERACTIVE_SELECTORS).unwrap_or(false)
                 && element.get_attribute("aria-readonly").as_deref() != Some("true"))
                 || is_layer_surface(&element)
+                || closest_layer_root(&element).is_some_and(|layer| layer == element)
             {
                 return true;
             }
             current = element.parent_element();
         }
         false
-    }
-
-    /// Open surfaces belong to their layer, not the surrounding card.
-    pub fn is_layer_surface(element: &Element) -> bool {
-        element.matches("[data-astryx-layer-root],[data-astryx-tooltip-surface], [role=tooltip],dialog[open],[popover]:popover-open").unwrap_or(false)
     }
 
     /// A selection outside this surface does not suppress its action.
@@ -209,6 +207,23 @@ pub(crate) mod native {
                 .target()
                 .and_then(|target| target.dyn_into::<Element>().ok())
                 .is_some_and(|target| !has_interactive_ancestor(&target, root))
+    }
+
+    /// Source-prescribed no-callback delegation to the owning native button.
+    /// This is a native activation, not transport for a reconstructed Rust callback.
+    pub fn delegate_action(event: &DomMouseEvent, interactive: &HtmlElement) {
+        let options = web_sys::MouseEventInit::new();
+        options.set_bubbles(event.bubbles());
+        options.set_cancelable(event.cancelable());
+        options.set_ctrl_key(event.ctrl_key());
+        options.set_meta_key(event.meta_key());
+        options.set_shift_key(event.shift_key());
+        options.set_alt_key(event.alt_key());
+        options.set_button(event.button());
+        if let Ok(delegated) = DomMouseEvent::new_with_mouse_event_init_dict("click", &options) {
+            let _ = interactive.dispatch_event(&delegated);
+            event.stop_propagation();
+        }
     }
 
     /// Select the source-prescribed navigation sink only after shared URL acceptance.

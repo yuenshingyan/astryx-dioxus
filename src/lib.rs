@@ -21,6 +21,7 @@ mod link;
 mod progress_bar;
 mod size_context;
 mod skeleton;
+mod private_attributes;
 mod spinner;
 mod status_dot;
 mod text;

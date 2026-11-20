@@ -26,7 +26,7 @@ if (!document[runtimeKey]) {
     if (ownAction?.contains(target)) return false;
     for (let node = target; node && node !== root && node !== document.body; node = node.parentElement) {
       if ((node.matches?.(interactiveSelectors) && node.getAttribute('aria-readonly') !== 'true')
-        || node.matches?.('[data-astryx-layer-root],[role="tooltip"],dialog[open],[popover]:popover-open')) return true;
+        || isLayerSurface(node) || isLayerRoot(node)) return true;
     }
     return false;
   };
@@ -56,7 +56,11 @@ if (!document[runtimeKey]) {
       if (state && enabled(record.element)) record.element.dataset.astryxPress = state;
       else delete record.element.dataset.astryxPress;
       if (isContainer(record.element)) {
-        if (state === 'on') record.element.style.setProperty('--_astryx-press-strength', '1');
+        if (state === 'on') {
+          record.pressAnimation?.cancel();
+          record.pressAnimation = null;
+          record.element.style.setProperty('--_astryx-press-strength', '1');
+        }
         if (!state) {
           record.element.style.removeProperty('--_astryx-press-strength');
           record.pressAnimation?.cancel();
@@ -69,7 +73,8 @@ if (!document[runtimeKey]) {
     if (!record) return;
     const epoch = record.pressEpoch;
     press(record, 'fading');
-    const duration = reduced.matches ? (coarse.matches ? Math.min(200, exitDuration(record.element)) : 0) : exitDuration(record.element);
+    const isTouchRelease = record.pressPointerType === 'touch' || coarse.matches;
+    const duration = reduced.matches ? (isTouchRelease ? Math.min(200, exitDuration(record.element)) : 0) : exitDuration(record.element);
     if (isContainer(record.element)) {
       const ease = getComputedStyle(record.element).getPropertyValue('--ease-exit').trim() || 'ease-out';
       record.pressAnimation?.cancel();
@@ -77,7 +82,14 @@ if (!document[runtimeKey]) {
         { '--_astryx-press-strength': '1' }, { '--_astryx-press-strength': '0' },
       ], { duration, easing: ease, fill: 'forwards' });
     }
-    later(record, () => { if (record.pressEpoch === epoch) press(record, null); }, duration);
+    later(record, () => {
+      const finish = () => { if (record.pressEpoch === epoch) press(record, null); };
+      const animation = record.pressAnimation;
+      // Native animation start can lag the release clock by a frame. Preserve
+      // its final paint until that running animation completes, as upstream.
+      if (animation && (animation.playState === 'running' || animation.pending)) animation.finished.then(finish, () => {});
+      else finish();
+    }, duration);
   };
   const isScrolling = element => {
     for (let parent = element.parentElement; parent; parent = parent.parentElement) {
@@ -167,6 +179,7 @@ if (!document[runtimeKey]) {
     }
     if (isContainer(record.element)) delete record.element.dataset.astryxNestedPress;
     record.pointerFocus = true;
+    record.pressPointerType = event.pointerType;
     if (!record.isPinned) hideTip(record);
     if (!enabled(record.element)) {
       if (event.pointerType === 'touch' && record.tooltip) {
