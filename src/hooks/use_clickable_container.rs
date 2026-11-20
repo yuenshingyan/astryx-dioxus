@@ -48,6 +48,7 @@ pub(crate) fn use_native_owner() -> (NativeOwner, EventHandler<MountedEvent>) {
 pub(crate) mod native {
     use std::any::Any;
     use std::cell::RefCell;
+    use std::cmp::Ordering;
     use std::rc::Rc;
 
     use dioxus::html::geometry::{ClientPoint, ElementPoint, PagePoint, ScreenPoint};
@@ -56,7 +57,7 @@ pub(crate) mod native {
     use dioxus::prelude::*;
     use wasm_bindgen::{JsCast, JsValue, closure::Closure, prelude::wasm_bindgen};
     use web_sys::{
-        Element, Event as DomEvent, EventTarget, HtmlElement, MouseEvent as DomMouseEvent,
+        Document, Element, Event as DomEvent, EventTarget, HtmlElement, MouseEvent as DomMouseEvent,
     };
 
     use super::INTERACTIVE_SELECTORS;
@@ -304,7 +305,7 @@ pub(crate) mod native {
         target: Option<&str>,
         interactive: Option<&HtmlElement>,
     ) {
-        if !is_safe_url(href) || event.default_prevented() {
+        if !is_safe_url(href) || (event.button() != 1 && event.default_prevented()) {
             return;
         }
         if event.button() == 1 || target == Some("_blank") || event.ctrl_key() || event.meta_key() {
@@ -414,6 +415,155 @@ pub(crate) mod native {
                 if let Ok(installed) = installed {
                     listener.set(Some(installed));
                 }
+            }
+        })
+    }
+
+    type NativeCallbackSlot = Rc<RefCell<Rc<dyn Fn(DomEvent)>>>;
+
+    #[derive(Clone)]
+    struct DocumentRegistration {
+        token: Rc<()>,
+        root: Element,
+        callback: NativeCallbackSlot,
+    }
+    struct DocumentListenerGroup {
+        document: Document,
+        name: &'static str,
+        is_capture: bool,
+        registrations: Rc<RefCell<Vec<DocumentRegistration>>>,
+        listener: NativeListener,
+    }
+    thread_local! {
+        static DOCUMENT_LISTENERS: RefCell<Vec<DocumentListenerGroup>> = const { RefCell::new(Vec::new()) };
+    }
+    struct DocumentSubscription {
+        document: Document,
+        name: &'static str,
+        is_capture: bool,
+        token: Rc<()>,
+    }
+    impl Drop for DocumentSubscription {
+        fn drop(&mut self) {
+            DOCUMENT_LISTENERS.with(|groups| {
+                let mut groups = groups.borrow_mut();
+                let Some(index) = groups.iter().position(|group| {
+                    group.document == self.document
+                        && group.name == self.name
+                        && group.is_capture == self.is_capture
+                }) else {
+                    return;
+                };
+                let is_empty = {
+                    let mut registrations = groups[index].registrations.borrow_mut();
+                    registrations
+                        .retain(|registration| !Rc::ptr_eq(&registration.token, &self.token));
+                    registrations.is_empty()
+                };
+                if is_empty {
+                    let DocumentListenerGroup { listener, .. } = groups.remove(index);
+                    drop(listener);
+                }
+            });
+        }
+    }
+    fn subscribe_document(
+        root: Element,
+        name: &'static str,
+        is_capture: bool,
+        callback: NativeCallbackSlot,
+    ) -> Result<DocumentSubscription, JsValue> {
+        let document = root
+            .owner_document()
+            .ok_or_else(|| JsValue::from_str("Native event owner has no document"))?;
+        let token = Rc::new(());
+        DOCUMENT_LISTENERS.with(|groups| {
+            let mut groups = groups.borrow_mut();
+            let index = if let Some(index) = groups.iter().position(|group| {
+                group.document == document && group.name == name && group.is_capture == is_capture
+            }) {
+                index
+            } else {
+                let registrations = Rc::new(RefCell::new(Vec::<DocumentRegistration>::new()));
+                let routed = registrations.clone();
+                let listener =
+                    NativeListener::new(document.as_ref(), name, is_capture, move |event| {
+                        let mut ordered = routed.borrow().clone();
+                        ordered.sort_by(|a, b| {
+                            if a.root == b.root {
+                                return Ordering::Equal;
+                            }
+                            let order = if a.root.contains(Some(&b.root)) {
+                                Ordering::Less
+                            } else if b.root.contains(Some(&a.root)) {
+                                Ordering::Greater
+                            } else {
+                                Ordering::Equal
+                            };
+                            if is_capture { order } else { order.reverse() }
+                        });
+                        for registration in ordered {
+                            let is_active = routed
+                                .borrow()
+                                .iter()
+                                .any(|active| Rc::ptr_eq(&active.token, &registration.token));
+                            if is_active {
+                                let callback = registration.callback.borrow().clone();
+                                callback(event.clone());
+                            }
+                        }
+                    })?;
+                let index = groups.len();
+                groups.push(DocumentListenerGroup {
+                    document: document.clone(),
+                    name,
+                    is_capture,
+                    registrations,
+                    listener,
+                });
+                index
+            };
+            groups[index]
+                .registrations
+                .borrow_mut()
+                .push(DocumentRegistration {
+                    token: token.clone(),
+                    root,
+                    callback,
+                });
+            Ok(DocumentSubscription {
+                document,
+                name,
+                is_capture,
+                token,
+            })
+        })
+    }
+
+    /// A shared owner-document boundary using the REAL mounted element's document.
+    /// Attach the returned handler to the owning root's onmounted. Capture routes
+    /// parent-before-child (bubble routes child-before-parent), independently of
+    /// mount order. Every callback decides its own event/policy applicability.
+    /// No borrow survives application code; dropped subscriptions are skipped
+    /// even within an in-flight dispatch. Last drop removes the native listener.
+    pub fn use_native_document_listener(
+        name: &'static str,
+        is_capture: bool,
+        callback: EventHandler<DomEvent>,
+    ) -> EventHandler<MountedEvent> {
+        let callback: Rc<dyn Fn(DomEvent)> = Rc::new(move |event| callback.call(event));
+        let slot = use_hook(|| Rc::new(RefCell::new(callback.clone())));
+        *slot.borrow_mut() = callback;
+        let mut subscription = use_signal(|| None::<DocumentSubscription>);
+        use_drop(move || {
+            subscription.write().take();
+        });
+        EventHandler::new(move |event: MountedEvent| {
+            subscription.write().take();
+            if let Some(root) = event.data().downcast::<Element>().cloned()
+                && let Ok(installed) = subscribe_document(root, name, is_capture, slot.clone())
+            {
+                subscription.set(Some(installed));
             }
         })
     }
