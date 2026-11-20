@@ -1,5 +1,6 @@
 //! Semantic headings; shared typography and truncation remain owned by Text.
 
-mod heading;
+#[path = "heading.rs"]
+mod component;
 
-pub use heading::{Heading, HeadingLevel, HeadingProps, HeadingType, InvalidHeadingLevel};
+pub use component::{Heading, HeadingLevel, HeadingProps, HeadingType, InvalidHeadingLevel};

@@ -102,6 +102,10 @@ impl HeadingType {
 /// the dynamic line clamp wins over it. `onmounted` provides the native root handle
 /// in place of React ref; supported attributes and events reach that same root.
 /// No tab stop or native title is added for truncation.
+/// `truncate_tooltip_placement` is the additive adapter for the source's
+/// boolean-or-placement prop; `has_truncate_tooltip: false` always disables
+/// measurement and presentation. Shared Tooltip fidelity limits are recorded in
+/// `docs/heading-port.md`; this checkpoint does not claim a complete Tooltip port.
 #[component]
 pub fn Heading(
     level: HeadingLevel,
@@ -150,6 +154,56 @@ pub fn Heading(
     #[props(default)] ontouchmove: EventHandler<TouchEvent>,
     #[props(default)] ontouchend: EventHandler<TouchEvent>,
     #[props(default)] ontouchcancel: EventHandler<TouchEvent>,
+    #[props(default)] oncopy: EventHandler<ClipboardEvent>,
+    #[props(default)] oncut: EventHandler<ClipboardEvent>,
+    #[props(default)] onpaste: EventHandler<ClipboardEvent>,
+    #[props(default)] oncompositionstart: EventHandler<CompositionEvent>,
+    #[props(default)] oncompositionupdate: EventHandler<CompositionEvent>,
+    #[props(default)] oncompositionend: EventHandler<CompositionEvent>,
+    #[props(default)] ondrag: EventHandler<DragEvent>,
+    #[props(default)] ondragstart: EventHandler<DragEvent>,
+    #[props(default)] ondragend: EventHandler<DragEvent>,
+    #[props(default)] ondragenter: EventHandler<DragEvent>,
+    #[props(default)] ondragleave: EventHandler<DragEvent>,
+    #[props(default)] ondragover: EventHandler<DragEvent>,
+    #[props(default)] ondrop: EventHandler<DragEvent>,
+    #[props(default)] oninput: EventHandler<FormEvent>,
+    #[props(default)] onchange: EventHandler<FormEvent>,
+    #[props(default)] oninvalid: EventHandler<FormEvent>,
+    #[props(default)] onreset: EventHandler<FormEvent>,
+    #[props(default)] onsubmit: EventHandler<FormEvent>,
+    #[props(default)] onselect: EventHandler<SelectionEvent>,
+    #[props(default)] onscroll: EventHandler<ScrollEvent>,
+    #[props(default)] onwheel: EventHandler<WheelEvent>,
+    #[props(default)] onanimationstart: EventHandler<AnimationEvent>,
+    #[props(default)] onanimationiteration: EventHandler<AnimationEvent>,
+    #[props(default)] onanimationend: EventHandler<AnimationEvent>,
+    #[props(default)] ontransitionend: EventHandler<TransitionEvent>,
+    #[props(default)] ontoggle: EventHandler<ToggleEvent>,
+    #[props(default)] onload: EventHandler<ImageEvent>,
+    #[props(default)] onerror: EventHandler<ImageEvent>,
+    #[props(default)] onabort: EventHandler<MediaEvent>,
+    #[props(default)] oncanplay: EventHandler<MediaEvent>,
+    #[props(default)] oncanplaythrough: EventHandler<MediaEvent>,
+    #[props(default)] ondurationchange: EventHandler<MediaEvent>,
+    #[props(default)] onemptied: EventHandler<MediaEvent>,
+    #[props(default)] onencrypted: EventHandler<MediaEvent>,
+    #[props(default)] onended: EventHandler<MediaEvent>,
+    #[props(default)] onloadeddata: EventHandler<MediaEvent>,
+    #[props(default)] onloadedmetadata: EventHandler<MediaEvent>,
+    #[props(default)] onloadstart: EventHandler<MediaEvent>,
+    #[props(default)] onpause: EventHandler<MediaEvent>,
+    #[props(default)] onplay: EventHandler<MediaEvent>,
+    #[props(default)] onplaying: EventHandler<MediaEvent>,
+    #[props(default)] onprogress: EventHandler<MediaEvent>,
+    #[props(default)] onratechange: EventHandler<MediaEvent>,
+    #[props(default)] onseeked: EventHandler<MediaEvent>,
+    #[props(default)] onseeking: EventHandler<MediaEvent>,
+    #[props(default)] onstalled: EventHandler<MediaEvent>,
+    #[props(default)] onsuspend: EventHandler<MediaEvent>,
+    #[props(default)] ontimeupdate: EventHandler<MediaEvent>,
+    #[props(default)] onvolumechange: EventHandler<MediaEvent>,
+    #[props(default)] onwaiting: EventHandler<MediaEvent>,
     #[props(default)] onmounted: EventHandler<MountedEvent>,
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
@@ -216,8 +270,15 @@ pub fn Heading(
     } else {
         style
     };
+    // Dioxus SSR preserves duplicate attributes rather than merging them. Omit
+    // the derived value when the caller supplies one so native parsing agrees.
     let aria_level = accessibility_level
-        .filter(|value| *value != level)
+        .filter(|value| {
+            *value != level
+                && !attributes
+                    .iter()
+                    .any(|attribute| attribute.name == "aria-level")
+        })
         .map(HeadingLevel::number);
     let attributes: Vec<_> = attributes
         .into_iter()
@@ -260,7 +321,27 @@ pub fn Heading(
                     onfocus: onfocus, onblur: onblur, onkeydown: onkeydown,
                     onkeyup: onkeyup, onkeypress: onkeypress,
                     ontouchstart: ontouchstart, ontouchmove: ontouchmove,
-                    ontouchend: ontouchend, ontouchcancel: ontouchcancel, onmounted: handle_mounted,
+                    ontouchend: ontouchend, ontouchcancel: ontouchcancel,
+                    oncopy: oncopy, oncut: oncut, onpaste: onpaste,
+                    oncompositionstart: oncompositionstart, oncompositionupdate: oncompositionupdate,
+                    oncompositionend: oncompositionend,
+                    ondrag: ondrag, ondragstart: ondragstart, ondragend: ondragend,
+                    ondragenter: ondragenter, ondragleave: ondragleave,
+                    ondragover: ondragover, ondrop: ondrop,
+                    oninput: oninput, onchange: onchange, oninvalid: oninvalid,
+                    onreset: onreset, onsubmit: onsubmit, onselect: onselect,
+                    onscroll: onscroll, onwheel: onwheel,
+                    onanimationstart: onanimationstart, onanimationiteration: onanimationiteration,
+                    onanimationend: onanimationend, ontransitionend: ontransitionend,
+                    ontoggle: ontoggle, onload: onload, onerror: onerror,
+                    onabort: onabort, oncanplay: oncanplay, oncanplaythrough: oncanplaythrough,
+                    ondurationchange: ondurationchange, onemptied: onemptied, onencrypted: onencrypted,
+                    onended: onended, onloadeddata: onloadeddata, onloadedmetadata: onloadedmetadata,
+                    onloadstart: onloadstart, onpause: onpause, onplay: onplay, onplaying: onplaying,
+                    onprogress: onprogress, onratechange: onratechange, onseeked: onseeked,
+                    onseeking: onseeking, onstalled: onstalled, onsuspend: onsuspend,
+                    ontimeupdate: ontimeupdate, onvolumechange: onvolumechange, onwaiting: onwaiting,
+                    onmounted: handle_mounted,
                     ..attributes,
                     {children}
                 }

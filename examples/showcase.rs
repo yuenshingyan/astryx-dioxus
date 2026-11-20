@@ -18,6 +18,8 @@ mod card;
 mod clickable_card;
 #[path = "showcase/divider.rs"]
 mod divider;
+#[path = "showcase/heading.rs"]
+mod heading;
 #[path = "showcase/icon_button.rs"]
 mod icon_button;
 #[path = "showcase/kbd.rs"]
@@ -44,6 +46,7 @@ use button_patterns::DocumentedButtonPatterns;
 use card::CardExamples;
 use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
+use heading::HeadingExamples;
 use icon_button::IconButtonExamples;
 use kbd::KbdExamples;
 use link::LinkExamples;
@@ -221,6 +224,7 @@ fn App() -> Element {
             SkeletonExamples {}
             StatusDotExamples {}
             TextExamples {}
+            HeadingExamples {}
             ProgressBarExamples {}
             CardExamples {}
             ClickableCardExamples {}

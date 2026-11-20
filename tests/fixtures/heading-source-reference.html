@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+/* Source-derived offline reconstruction, not an executed React build/catalog.
+   Heading.tsx de84c5ad; text.stylex.ts 392fa2ad; tokens.stylex.ts ec6ecd40
+   at 476a3153417dbf75c565f7df05b0784e94ddd59e. Native Stack/Layout adapters. */
+:root {--primary:light-dark(#0a1317,#dfe2e5);--secondary:light-dark(#4e606f,#aaafb5);--border:light-dark(#05365919,#f2f4f619)}
+body {margin:0;font-family:Figtree,sans-serif}
+* {box-sizing:border-box}
+h1,h2,h3,h4,h5,h6 {margin:0;color:var(--primary);font-weight:600;display:block;overflow-wrap:break-word}
+h1 {font-size:1.5rem;line-height:1.3333} h2 {font-size:1.25rem;line-height:1.4}
+h3 {font-size:1.0625rem;line-height:1.4118} h4 {font-size:.875rem;line-height:1.4286}
+h5 {font-size:.75rem;line-height:1.6667} h6 {font-size:.625rem;line-height:1.6}
+.stack {display:flex;flex-direction:column;gap:.5rem}
+.text {display:block;font-size:.875rem;line-height:1.4286;font-weight:400;color:var(--primary);overflow-wrap:break-word}
+.supporting {font-size:.75rem;line-height:1.6667;color:var(--secondary)}
+.single {overflow:hidden;text-overflow:ellipsis;white-space:nowrap;word-break:break-all;overflow-wrap:normal}
+.multi {overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;overflow-wrap:break-word;word-break:normal;-webkit-line-clamp:2}
+</style></head><body><main style="display:flex;flex-direction:column;gap:32px;padding:24px">
+<section id="heading-showcase" class="stack" style="align-items:flex-start">
+<h1>Heading Level 1</h1><h2>Heading Level 2</h2><h3>Heading Level 3</h3><h4>Heading Level 4</h4><h5>Heading Level 5</h5><h6>Heading Level 6</h6>
+</section>
+<section id="heading-page" class="stack" style="gap:1.5rem;width:100%;max-width:400px">
+<div><h1>Dashboard Overview</h1><span class="text supporting">Last updated 5 minutes ago</span></div>
+<div><h2>Recent Activity</h2><span class="text">Here's what's been happening in your workspace.</span></div>
+<div><h3>Today</h3><span class="text">• Project Alpha updated<br>• 3 new comments<br>• Task completed</span></div>
+</section>
+<section id="heading-card"><div style="width:300px;padding:16px"><div class="stack">
+<h3>Card Title</h3><span class="text multi">This is a card description that might be quite long and needs to be truncated after two lines to keep the card compact and uniform.</span><span class="text supporting">Updated 1 hour ago</span>
+</div></div></section>
+<section id="heading-truncation" class="stack" style="gap:24px">
+<div style="width:300px;border:1px solid var(--border);padding:12px"><h2 class="single">Very Long Heading That Will Be Truncated To One Line With Ellipsis</h2></div>
+<div style="width:300px;border:1px solid var(--border);padding:12px"><h2 class="multi">Very Long Heading That Will Be Truncated To Two Lines To Keep Card Layout Compact</h2></div>
+</section>
+<section id="text-heading-levels" class="stack" style="gap:.75rem">
+<h1>Heading 1</h1><h2>Heading 2</h2><h3>Heading 3</h3><h4>Heading 4</h4><h5>Heading 5</h5><h6>Heading 6</h6>
+</section>
+</main></body></html>
