@@ -4,6 +4,10 @@ use dioxus::prelude::*;
 
 use crate::hooks::use_press_feedback::{PressFeedbackConfig, use_feedback_controller};
 
+pub(crate) const TRUNCATION_PRESENTATION: Asset = asset!("/src/tooltip/truncation_presentation.js");
+pub(crate) const TRUNCATION_LAYER_PRESENTATION: Asset =
+    asset!("/src/layer/truncation_presentation.js");
+
 pub(crate) const TOOLTIP_CONTROLLER: &str = concat!(
     include_str!("../private_attributes/layer_root.js"),
     "\n",

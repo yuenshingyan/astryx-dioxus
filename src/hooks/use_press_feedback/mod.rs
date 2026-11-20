@@ -2,7 +2,9 @@
 
 use dioxus::prelude::*;
 
-use crate::tooltip::use_tooltip::TOOLTIP_CONTROLLER;
+use crate::tooltip::use_tooltip::{
+    TOOLTIP_CONTROLLER, TRUNCATION_LAYER_PRESENTATION, TRUNCATION_PRESENTATION,
+};
 
 pub(crate) const PRESS_FEEDBACK_CONTROLLER: &str = concat!(
     include_str!("../../motion/theme_timing.js"),
@@ -25,7 +27,9 @@ type WireConfig = (String, String, Option<String>, bool, bool, bool, bool);
 
 fn start_controller(config: &WireConfig) -> document::Eval {
     let controller = document::eval(&format!(
-        "{}\n{}\n{}",
+        "const truncationPresentationUrls = ['{}', '{}'];\n{}\n{}\n{}",
+        TRUNCATION_PRESENTATION,
+        TRUNCATION_LAYER_PRESENTATION,
         TOOLTIP_CONTROLLER,
         PRESS_FEEDBACK_CONTROLLER,
         include_str!("use_press_feedback.js"),

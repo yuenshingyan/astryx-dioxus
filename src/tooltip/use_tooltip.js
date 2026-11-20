@@ -2,10 +2,35 @@
 // Tooltip owns presentation, descriptions and trigger decisions; Text owns first interest.
 // Press only notifies dismissal.
 const createTooltipController = ({ records, listen, later, cancelTimer }) => {
+  const moduleKey = Symbol.for('astryx.dioxus.truncation-presentation.v1');
+  const modules = document[moduleKey] ||= { loaded: null, pending: null, attempt: 0 };
+  const preload = record => {
+    if (modules.loaded) return Promise.resolve(modules.loaded);
+    if (!modules.pending) {
+      const suffix = modules.attempt++ ? `?recovery=${modules.attempt}` : '';
+      modules.pending = Promise.all(truncationPresentationUrls.map(url => import(url + suffix)))
+        .then(([tooltip, layer]) => (modules.loaded = {...tooltip, ...layer}))
+        .finally(() => { modules.pending = null; });
+    }
+    return modules.pending;
+  };
+  const whenReady = (record, operation, kind) => {
+    if (modules.loaded) { operation(); return; }
+    record.pendingPresentation ||= new Map();
+    record.pendingPresentation.set(kind, operation);
+    const pending = record.pendingPresentation;
+    preload(record).then(() => {
+      if (record.pendingPresentation !== pending || !record.element.isConnected || records.get(record.element) !== record) return;
+      record.pendingPresentation = null;
+      for (const action of pending.values()) action();
+    }, () => { if (record.pendingPresentation === pending) record.pendingPresentation = null; });
+  };
+  const forgetPending = record => record.pendingPresentation?.delete('interest');
   let visibleTip = null;
   let isKeyboardModality = true;
   const hideTip = record => {
     if (!record) return;
+    forgetPending(record);
     record.isPinned = false;
     record.isTapOpen = false;
     record.pinAnnouncer?.withdrawPending();
@@ -22,7 +47,8 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
         if (ids.length) record.element.setAttribute('aria-describedby', ids.join(' '));
         else record.element.removeAttribute('aria-describedby');
       } else if (record.tip.matches(':popover-open')) {
-        record.tip.hidePopover();
+        if (record.truncationPresentation) record.truncationPresentation.hide();
+        else record.tip.hidePopover();
       }
       // A nested status surface lives outside its interactive host while open,
       // so its visible text does not duplicate the host's hidden name suffix.
@@ -37,7 +63,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     record.tooltipPolicy?.onHide(record);
   };
   const positionTip = record => {
-    if (!record.tip?.isConnected || !record.element.isConnected) return;
+    if (record.truncationPresentation || !record.tip?.isConnected || !record.element.isConnected) return;
     const box = record.element.getBoundingClientRect();
     const tipBox = record.tip.getBoundingClientRect();
     const viewport = visualViewport;
@@ -84,6 +110,10 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     .some(id => id && document.getElementById(id)?.getAttribute('role') === 'tooltip' && id !== record.tip?.id && id !== record.retainedTip?.id);
   const showTip = (record, text, automatic = false, isClosed = false) => {
     if (!text || !record.element.isConnected || !records.has(record.element)) return;
+    if (record.isTruncation && !modules.loaded) {
+      whenReady(record, () => showTip(record, text, automatic, isClosed), isClosed ? 'mount' : 'interest');
+      return;
+    }
     if (record.tooltipPolicy && !record.tooltipPolicy.isEnabled(record)) return;
     if (record.isPinned && record.tip) return;
     if (!isClosed && visibleTip?.isPinned && visibleTip !== record) return;
@@ -95,7 +125,8 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     tip.className = 'astryx-tooltip astryx-button-tooltip';
     tip.setAttribute('role', 'tooltip');
     tip.setAttribute('popover', 'manual');
-    tip.textContent = text;
+    if (record.truncationPresentation) record.truncationPresentation.update(text);
+    else tip.textContent = text;
     // Copy inherited theme/typography onto the top-layer surface, not body defaults.
     const css = getComputedStyle(record.element);
     ['--color-background-inverted', '--color-background-surface', '--radius-container', '--text-label-size', '--text-label-leading'].forEach(name => tip.style.setProperty(name, css.getPropertyValue(name)));
@@ -125,6 +156,9 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       if (!ids.has(tip.id)) { ids.add(tip.id); record.ownsTruncationDescription = true; }
       record.element.setAttribute('aria-describedby', [...ids].join(' '));
     }
+    if (record.isTruncation && !record.truncationPresentation) {
+      record.truncationPresentation = modules.loaded.createTooltipPresentation({record, tip, createLayerPresentation: modules.loaded.createLayerPresentation});
+    }
     if (record.tip && isClosed) positionTip(record);
     if (!isClosed) record.tip = tip;
     record.isAutomatic = automatic;
@@ -137,7 +171,8 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     markLayerRoot(tip);
     if (!isClosed) {
       registerLayerSurface(tip, record.element);
-      tip.showPopover?.();
+      if (record.truncationPresentation) record.truncationPresentation.show();
+      else tip.showPopover?.();
       positionTip(record);
     }
     if (record.boundTip !== tip) {
@@ -257,27 +292,32 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       else record.element.removeAttribute('aria-describedby');
     }
     record.ownsTruncationDescription = false;
+    record.pendingPresentation = null;
+    record.truncationPresentation?.dispose(); record.truncationPresentation = null;
     record.retainedTip?.remove(); record.retainedTip = null; record.ownedTip = null;
   };
   listenForTruncationOutsideDismiss({ records, listen, hide: hideTip });
   const truncationInterest = createTruncationInterest({ records, listen,
+    preload(record) { preload(record).catch(() => {}); },
     mount(record, text) {
       if (callerTooltip(record)) return false;
       for (let parent = record.element.parentElement; parent; parent = parent.parentElement) {
         if (records.get(parent)?.tooltip || callerTooltip({ element: parent })) return false;
       }
       showTip(record, text, true, true);
-      return !!record.retainedTip;
+      return !!record.retainedTip || !!record.pendingPresentation;
     },
     hover(record, readText) {
       cancelTimer(record, record.hideTimer); cancelTimer(record, record.showTimer);
-      record.showTimer = later(record, () => showTip(record, readText(), true), 200);
+      whenReady(record, () => { record.showTimer = later(record, () => showTip(record, readText(), true), 200); }, 'interest');
     },
     leave(record, next) {
+      forgetPending(record);
       cancelTimer(record, record.showTimer);
       if (!record.isTapOpen && !record.retainedTip?.contains(next)) record.hideTimer = later(record, () => hideTip(record), 100);
     },
     press(record, isTouch) {
+      forgetPending(record);
       cancelTimer(record, record.showTimer); cancelTimer(record, record.hideTimer);
       if (!isTouch) hideTip(record);
     },
@@ -288,20 +328,25 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       showTip(record, text, true);
     },
     blur(record, target) {
+      forgetPending(record);
       if (!record.isFocusCounted && !isFocusOnTrigger(target, record.element)) return;
       record.isFocusCounted = false;
       record.hideTimer = later(record, () => hideTip(record), 100);
     },
     answerTap(record, target, text) {
+      if (!modules.loaded) { whenReady(record, () => truncationTap(record, target, text), 'interest'); return; }
+      truncationTap(record, target, text);
+    },
+    remove: removeTruncation,
+  });
+  function truncationTap(record, target, text) {
       const field = target.closest?.('input,textarea,select,[contenteditable]:not([contenteditable="false"]),[role="textbox"],[role="searchbox"],[role="spinbutton"],[role="combobox"],[role="listbox"],[role="slider"]');
       const disabled = target.closest?.(':disabled,[aria-disabled="true"]');
       if (field && field !== record.element && !disabled) return;
       if ((!disabled && isActionTrigger(record.element)) || record.isTapOpen || record.tip) { hideTip(record); return; }
       showTip(record, text, true);
       record.isTapOpen = !!record.tip;
-    },
-    remove: removeTruncation,
-  });
+  }
   // Components own trigger semantics; Tooltip only supplies shared presentation
   // and show/hide capabilities. Cache one component policy per manager lifetime.
   const policies = new Map();
@@ -338,6 +383,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       if (visibleTip && !visibleTip.isTapOpen && !visibleTip.element.contains(target) && !visibleTip.tip?.contains(target)) hideTip(visibleTip);
     },
     escape(event) {
+      if (event.key === 'Escape') for (const record of records.values()) forgetPending(record);
       if (event.key === 'Escape' && !event.isComposing && !event.defaultPrevented && visibleTip) { hideTip(visibleTip); event.preventDefault(); event.stopPropagation(); }
     },
     reposition() { if (visibleTip) positionTip(visibleTip); },

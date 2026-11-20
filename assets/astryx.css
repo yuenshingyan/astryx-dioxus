@@ -432,6 +432,128 @@
   display: none;
 }
 
+/* Private truncation subset of Tooltip/useTooltip and Layer's centered rules. */
+.astryx-truncation-tooltip {
+  --_astryx-layer-clearance: var(--spacing-1);
+  --_astryx-gutter-inline: calc(max(var(--spacing-4), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)) + max(var(--astryx-layer-inset-inline-start, 0px), var(--astryx-layer-inset-inline-end, 0px)));
+  --_astryx-gutter-block: calc(max(var(--spacing-4), env(safe-area-inset-top, 0px), env(safe-area-inset-bottom, 0px)) + max(var(--astryx-layer-inset-block-start, 0px), var(--astryx-layer-inset-block-end, 0px)));
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  max-inline-size: calc(100vi - 2 * var(--_astryx-gutter-inline));
+  max-block-size: calc(100dvb - 2 * var(--_astryx-gutter-block));
+  overflow: auto;
+  background: var(--color-background-inverted);
+  color: var(--color-background-surface);
+  border-radius: var(--radius-container);
+  font-family: var(--font-family-body);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+  font-weight: normal;
+  text-align: start;
+  white-space: normal;
+}
+.astryx-truncation-tooltip:not(:popover-open) { display: none; }
+.astryx-truncation-tooltip__content {
+  box-sizing: content-box;
+  padding: var(--spacing-1) var(--spacing-2);
+  max-width: 300px;
+  word-break: break-word;
+}
+.astryx-truncation-tooltip[data-placement="above"] {
+  position-area: self-block-start span-all;
+  align-self: unsafe self-end;
+  margin-block: var(--_astryx-gutter-block) var(--spacing-1);
+  margin-inline: var(--_astryx-gutter-inline);
+  inset-inline: 0;
+  position-try-fallbacks: flip-block, --astryx-truncation-beside-end, --astryx-truncation-beside-start, --astryx-truncation-fit-above, --astryx-truncation-fit-below;
+}
+.astryx-truncation-tooltip[data-placement="below"] {
+  position-area: self-block-end span-all;
+  align-self: unsafe self-start;
+  margin-block: var(--spacing-1) var(--_astryx-gutter-block);
+  margin-inline: var(--_astryx-gutter-inline);
+  inset-inline: 0;
+  position-try-fallbacks: flip-block, --astryx-truncation-beside-end, --astryx-truncation-beside-start, --astryx-truncation-fit-below, --astryx-truncation-fit-above;
+}
+.astryx-truncation-tooltip[data-placement="start"],
+.astryx-truncation-tooltip[data-placement="end"] {
+  margin-block: var(--_astryx-gutter-block);
+  position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline, --astryx-truncation-slide-start, --astryx-truncation-slide-end;
+}
+.astryx-truncation-tooltip[data-placement="start"] {
+  position-area: self-inline-start;
+  margin-inline: var(--_astryx-gutter-inline) var(--spacing-1);
+}
+.astryx-truncation-tooltip[data-placement="end"] {
+  position-area: self-inline-end;
+  margin-inline: var(--spacing-1) var(--_astryx-gutter-inline);
+}
+@position-try --astryx-truncation-beside-end {
+  position-area: self-inline-end span-all;
+  margin-block: var(--_astryx-gutter-block);
+  margin-inline: var(--spacing-1) var(--_astryx-gutter-inline);
+  inset-block: 0;
+  inline-size: max-content;
+  align-self: normal;
+  justify-self: unsafe self-start;
+}
+@position-try --astryx-truncation-beside-start {
+  position-area: self-inline-start span-all;
+  margin-block: var(--_astryx-gutter-block);
+  margin-inline: var(--_astryx-gutter-inline) var(--spacing-1);
+  inset-block: 0;
+  inline-size: max-content;
+  align-self: normal;
+  justify-self: unsafe self-end;
+}
+@position-try --astryx-truncation-fit-above {
+  position-area: self-block-start span-all;
+  margin-block: var(--_astryx-gutter-block) var(--spacing-1);
+  margin-inline: var(--_astryx-gutter-inline);
+  inset-inline: 0;
+  block-size: max(calc(100% - var(--spacing-1) - var(--_astryx-gutter-block)), calc((100dvb - anchor-size(block)) / 2 - var(--spacing-1) - var(--_astryx-gutter-block) - 1px));
+  align-self: unsafe self-end;
+}
+@position-try --astryx-truncation-fit-below {
+  position-area: self-block-end span-all;
+  margin-block: var(--spacing-1) var(--_astryx-gutter-block);
+  margin-inline: var(--_astryx-gutter-inline);
+  inset-inline: 0;
+  block-size: max(calc(100% - var(--spacing-1) - var(--_astryx-gutter-block)), calc((100dvb - anchor-size(block)) / 2 - var(--spacing-1) - var(--_astryx-gutter-block) - 1px));
+  align-self: unsafe self-start;
+}
+@position-try --astryx-truncation-slide-start {
+  position-area: self-inline-start span-all;
+  margin-block: var(--_astryx-gutter-block);
+  margin-inline: var(--_astryx-gutter-inline) var(--spacing-1);
+  inset-block: 0;
+}
+@position-try --astryx-truncation-slide-end {
+  position-area: self-inline-end span-all;
+  margin-block: var(--_astryx-gutter-block);
+  margin-inline: var(--spacing-1) var(--_astryx-gutter-inline);
+  inset-block: 0;
+}
+@keyframes astryx-truncation-enter {
+  from { opacity: 0; transform: translate(calc(var(--_astryx-layer-enter-x, 0) * min(var(--spacing-2), var(--_astryx-layer-enter-gap, var(--spacing-2)))), calc(var(--_astryx-layer-enter-y, 1) * min(var(--spacing-2), var(--_astryx-layer-enter-gap, var(--spacing-2))))) scale(0.95); }
+  to { opacity: 1; transform: translate(0, 0) scale(1); }
+}
+@keyframes astryx-truncation-fade { from { opacity: 0; } to { opacity: 1; } }
+.astryx-truncation-tooltip:popover-open {
+  animation: astryx-truncation-enter var(--duration-fast-max, 200ms) var(--ease-standard) backwards;
+  transform-origin: var(--_astryx-layer-enter-origin, 50% 50%);
+}
+@media (prefers-reduced-motion: reduce) and (not (pointer: coarse)) {
+  .astryx-truncation-tooltip:popover-open { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) and (pointer: coarse) {
+  .astryx-truncation-tooltip:popover-open { animation: astryx-truncation-fade 200ms cubic-bezier(0.42, 0, 0.58, 1) backwards; }
+}
+
 .astryx-button[data-loading="true"] > .astryx-button__content {
   visibility: hidden;
 }

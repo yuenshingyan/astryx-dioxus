@@ -1,5 +1,5 @@
 // Adapted from Text/TruncationTooltip.tsx. Text owns first interest, not presentation.
-const createTruncationInterest = ({ records, listen, mount, hover, leave, press, focus, blur, answerTap, remove }) => {
+const createTruncationInterest = ({ records, listen, mount, hover, leave, press, focus, blur, answerTap, remove, preload }) => {
   const wantedKey = Symbol.for('astryx.dioxus.truncation-interest');
   let isTouchInteraction = false;
   const answer = element => element[Symbol.for('astryx.dioxus.truncation')];
@@ -15,6 +15,7 @@ const createTruncationInterest = ({ records, listen, mount, hover, leave, press,
   };
   const refresh = record => {
     if (!isCut(record)) { remove(record); return; }
+    preload(record);
     if (record.isTruncationWanted) mount(record, text(record));
   };
   listen(document, 'pointerover', event => {
@@ -62,7 +63,7 @@ const createTruncationInterest = ({ records, listen, mount, hover, leave, press,
       record.isTruncationWanted = record.element[wantedKey] === true;
       record.truncationAbort = new AbortController();
       record.element.addEventListener('astryxtruncationchange', () => refresh(record), { signal: record.truncationAbort.signal });
-      if (record.isTruncationWanted) refresh(record);
+      refresh(record);
     },
     dispose(record) {
       tapRecognizer.dispose(record);
