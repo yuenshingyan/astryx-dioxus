@@ -354,3 +354,78 @@ actual raster comparison, actual/source-derived/historical frozen browser suites
 and SSR tests passed. No pre-existing check failure found. Unrelated component
 browser/contrast suites, pinned upstream React build, Toast presentation parity and
 new original light/mobile captures were **not run**. CI must still run the full suite.
+
+## Raster residual isolation (static visual follow-up)
+
+The historical `stack-actual/` and `stack-published/` captures above are **unchanged**.
+The corrected browser suite writes additive `tests/fixtures/stack-raster/` evidence.
+`tests/stack_raster.browser.mjs` also retains same-node controls in
+`tests/fixtures/stack-raster-controls/`. No component CSS, static supporting source,
+action/Toast implementation, palette, public API, ownership or dependency changed.
+`python3 tests/stack_source.py --check` again verified all 25 Git blobs against
+pin `476a3153417dbf75c565f7df05b0784e94ddd59e` in the existing offline reference tree.
+No reproducible source-paint discrepancy was found that would justify a CSS change.
+
+**Causal finding:** the previous suite matched the root's final fractional rectangle
+using a CSS transform on its host. Child paint had already been pixel-snapped before
+that transform. Equal final rectangles therefore did not mean equal raster origins.
+The new control uses the **same actual Rust nodes**, in one owned offline target,
+with identical rectangles for every descendant: first the historical fractional
+transform, then relative layout offsets instead, then an unchanged repeat capture.
+The transform arm reproduces all three historical actual PNGs **pixel-for-pixel**;
+the layout arm matches the corrected original-coordinate captures **pixel-for-pixel**;
+the unchanged repeat is byte-identical. Those are strict zero-error assertions, not
+increased tolerances or a recapture of the published baseline. They identify the
+large errors as capture-induced rasterization, not source paint differences.
+
+The primary suite now positions the hosts at the captured original coordinates
+through layout without transforms. Its isolated stage has explicit stacking order so
+unrelated demo content cannot paint above the fixture. It still checks all 59 owner
+nodes' intrinsic boxes within 1/64px, exact paint/visible borders/font size/weight,
+and additionally exact line-height. Child sizing and paint are never overridden.
+Chrome **157.0.8103.80**, viewport **1200×1600**, DPR **1**, Neutral dark, LTR,
+root16px, antialiased bundled Figtree match the recorded environment. Local font SHA256:
+`8330490a01c60c196eae00b823de8102275aaa5862e7b76a7af21b8745338928`.
+The original font binary was not retained, so binary font identity is not asserted.
+
+| Pattern | New mean absolute channel error /255 | Max channel error | Different pixels |
+| --- | ---: | ---: | ---: |
+| Directions | 0 | 0 | 0% |
+| Alignment | .0042599805 | 1 | .425998% |
+| Fill | .0093226788 | 1 | .932268% |
+
+The historical comparator formula/PNG decoder is unchanged; it remains runnable on
+`stack-actual` and reports the original nonzero values. The new controls separately
+require zero differences for the causal comparisons and at most one channel level
+against published screenshots. The remaining one-level differences are retained,
+**unclassified quantization-scale residuals**; their precise cause is not proven.
+They are not silently called source defects or certified environment noise. No
+palette/alpha adjustment is justified from these measurements. The proven
+transform-induced noise is distinct from this small unresolved remainder.
+
+Reproduction from the project root (own preview **8097**, never user8080):
+
+```sh
+CARGO_INCREMENTAL=0 CARGO_PROFILE_DEV_DEBUG=0 dx serve --example stack --web \
+  --addr 127.0.0.1 --port 8097 --open false --interactive false --watch false --locked
+STACK_URL=http://127.0.0.1:8097 python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack_patterns.browser.mjs
+python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack_raster.browser.mjs
+python3 tests/stack_raster.py
+```
+
+This follow-up actually passed: isolated `dx` wasm build, formatting, seven Stack SSR
+tests, one static-pattern SSR test, 25 source hashes, original PNG integrity,
+actual-pattern browser (including its existing native interaction cases), same-node
+raster controls, source-derived Stack browser matrix and frozen published-layout
+browser suite. Browser sessions were serialized and closed only their owned targets;
+HTTPS was blocked and tests went offline after local font loading. No network capture
+or changes to a shared server were used. An initial new-stage shrink-to-fit failure
+was fixed by giving the host stage the viewport's available width, without freezing
+pattern sizes, weakening assertions or retrying failures.
+
+The full Cargo test suite, library check, Clippy, showcase wasm check, unrelated
+browser/contrast suites, pinned React build, original font binary comparison and new
+original light/mobile/other-browser captures were **not run in this follow-up**.
+Toast/action implementation and presentation remain outside this static visual task.
+Directions alone is pixel-identical in this captured environment; this is not a
+full catalog, public supporting-owner or cross-environment parity certificate.

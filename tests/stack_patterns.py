@@ -3,6 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 import struct
+import sys
 import zlib
 
 ROOT = Path(__file__).parent / "fixtures"
@@ -46,18 +47,28 @@ def png(path):
     return width, height, result
 
 
-actual = json.loads((ROOT / "stack-actual/measurements.json").read_text())
-original = json.loads((ROOT / "stack-published.json").read_text())
-report = {}
-for name in ("directions", "alignment", "fill"):
-    paths = [ROOT / original["cases"][name]["screenshot"]["path"], ROOT / "stack-actual" / actual["cases"][name]["screenshot"]["path"]]
-    for path, expected in zip(paths, [original["cases"][name]["screenshot"], actual["cases"][name]["screenshot"]]):
-        assert hashlib.sha256(path.read_bytes()).hexdigest() == expected["sha256"]
-    a, b = [png(path) for path in paths]
-    assert a[:2] == b[:2], (name, a[:2], b[:2])
+def difference(first, second):
+    a, b = png(first), png(second)
+    assert a[:2] == b[:2], (first, second, a[:2], b[:2])
     errors = [abs(x - y) for x, y in zip(a[2], b[2])]
-    report[name] = {"size": a[:2], "meanAbsoluteChannelError": sum(errors) / len(errors), "maxChannelError": max(errors), "differentPixelFraction": sum(a[2][i:i + 3] != b[2][i:i + 3] for i in range(0, len(errors), 3)) / (a[0] * a[1])}
-    # This is a measured raster comparison, not a zero-difference certificate.
-    print(name, json.dumps(report[name]))
-output = ROOT / "stack-actual/pixel-comparison.json"
-output.write_text(json.dumps(report, indent=2) + "\n")
+    return {"size": a[:2], "meanAbsoluteChannelError": sum(errors) / len(errors), "maxChannelError": max(errors), "differentPixelFraction": sum(a[2][i:i + 3] != b[2][i:i + 3] for i in range(0, len(errors), 3)) / (a[0] * a[1])}
+
+
+def compare(actual_dir):
+    actual = json.loads((ROOT / actual_dir / "measurements.json").read_text())
+    original = json.loads((ROOT / "stack-published.json").read_text())
+    report = {}
+    for name in ("directions", "alignment", "fill"):
+        paths = [ROOT / original["cases"][name]["screenshot"]["path"], ROOT / actual_dir / actual["cases"][name]["screenshot"]["path"]]
+        for path, expected in zip(paths, [original["cases"][name]["screenshot"], actual["cases"][name]["screenshot"]]):
+            assert hashlib.sha256(path.read_bytes()).hexdigest() == expected["sha256"]
+        report[name] = difference(*paths)
+        # This is a measured raster comparison, not a zero-difference certificate.
+        print(name, json.dumps(report[name]))
+    (ROOT / actual_dir / "pixel-comparison.json").write_text(json.dumps(report, indent=2) + "\n")
+
+
+if __name__ == "__main__":
+    actual_dir = sys.argv[1] if len(sys.argv) > 1 else "stack-actual"
+    assert actual_dir in ("stack-actual", "stack-raster")
+    compare(actual_dir)

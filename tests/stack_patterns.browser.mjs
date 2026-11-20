@@ -4,28 +4,30 @@ import {readFile, mkdir, writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {withTarget} from './card_metrics.mjs';
 const published=JSON.parse(await readFile(new URL('./fixtures/stack-published.json',import.meta.url),'utf8'));
-const evidenceDir=new URL('./fixtures/stack-actual/',import.meta.url);
+// Preserve stack-actual as the historical transformed capture; corrected captures are additive.
+const evidenceDir=new URL('./fixtures/stack-raster/',import.meta.url);
 const near=(a,b,label)=>assert.ok(Math.abs(a-b)<=1/64+1e-6,`${label}: ${a} != ${b}`);
 await withTarget(async({send,evaluate,waitFor,pause,exceptions,browser})=>{
  await send('Network.enable');await send('Network.setBlockedURLs',{urls:['https://*']});
- await send('Page.navigate',{url:process.env.STACK_URL??'http://127.0.0.1:8096'});
+ await send('Page.navigate',{url:process.env.STACK_URL??'http://127.0.0.1:8097'});
  await waitFor(`document.querySelectorAll('#st-fill .astryx-avatar').length===3`);
  await evaluate(`document.fonts.load('500 12px Figtree').then(()=>document.fonts.load('700 14px Figtree')).then(()=>document.fonts.ready).then(()=>true)`);
  await send('Network.emulateNetworkConditions',{offline:true,latency:0,downloadThroughput:0,uploadThroughput:0});
  await evaluate(`(()=>{
   document.documentElement.style.cssText='font-size:16px;color-scheme:dark';
   const main=document.querySelector('main');main.dataset.astryxTheme='neutral';
-  const stage=document.createElement('div');stage.id='actual-stage';stage.style.cssText='position:absolute;left:40px;top:40px;display:flex;flex-direction:column;align-items:center;background:var(--color-background-card);color:var(--color-text-primary);font-family:var(--font-family-body);font-size:14px;line-height:1.4286;-webkit-font-smoothing:antialiased';main.prepend(stage);
-  for(const id of ['st-directions','st-alignment','st-fill']){const e=document.getElementById(id);const host=document.createElement('div');host.style.cssText='display:inline-flex;margin-bottom:32px';stage.append(host);host.append(e)}
+  const stage=document.createElement('div');stage.id='actual-stage';stage.style.cssText='position:absolute;z-index:1;left:0;top:0;width:100%;display:flex;flex-direction:column;align-items:center;background:var(--color-background-card);color:var(--color-text-primary);font-family:var(--font-family-body);font-size:14px;line-height:1.4286;-webkit-font-smoothing:antialiased';main.prepend(stage);
+  for(const id of ['st-directions','st-alignment','st-fill']){const e=document.getElementById(id);const host=document.createElement('div');host.style.cssText='display:inline-flex;background:var(--color-background-card)';stage.append(host);host.append(e)}
  })()`);
  await evaluate(`document.fonts.load('500 12px Figtree').then(()=>document.fonts.load('700 14px Figtree')).then(()=>document.fonts.ready).then(()=>true)`);
- const report={kind:'Actual rendered Rust nodes; intrinsic supporting sizing and paint',browser:browser.Browser,viewport:[1200,1600,1],mode:'Neutral dark, LTR, root16',sourceCapture:published.capturedAt,cases:{}};
+ const report={kind:'Actual rendered Rust nodes; intrinsic supporting sizing and paint; layout-positioned at original capture coordinates without transforms',browser:browser.Browser,viewport:[1200,1600,1],mode:'Neutral dark, LTR, root16',sourceCapture:published.capturedAt,cases:{}};
  await mkdir(evidenceDir,{recursive:true});
  for(const [name,id]of [['directions','st-directions'],['alignment','st-alignment'],['fill','st-fill']]){
-  // Match only the original root's fractional pixel phase for raster comparison.
-  // Child widths, heights, fonts, paint and layout remain actual Rust output.
+  // Match original coordinates through layout, not transform: transforms preserve
+  // geometry but rasterize already pixel-snapped child paint at a different phase.
+  // The host surface is the original composited catalog background, not Stack ink.
   const origin=published.cases[name].clip;
-  await evaluate(`(()=>{const root=document.getElementById('${id}'),r=root.getBoundingClientRect();root.parentElement.style.transform='translate('+(${origin.x % 1}-(r.x%1))+'px,'+(${origin.y % 1}-(r.y%1))+'px)'})()`);
+  await evaluate(`(()=>{const host=document.getElementById('${id}').parentElement;host.style.position='absolute';host.style.left='${origin.x}px';host.style.top='${origin.y}px'})()`);
   const metrics=await evaluate(`(()=>{const root=document.getElementById('${id}'),rb=root.getBoundingClientRect();return {clip:{x:rb.x+scrollX,y:rb.y+scrollY,width:rb.width,height:rb.height,scale:1},nodes:[root,...root.querySelectorAll('*')].filter(e=>!e.matches('[role=tooltip]')).map(e=>{const b=e.getBoundingClientRect(),s=getComputedStyle(e);return{targets:[...e.classList].filter(c=>c.startsWith('astryx-')),box:[b.x-rb.x,b.y-rb.y,b.width,b.height],paint:[s.backgroundColor,s.color,s.borderRadius],border:[s.borderWidth,s.borderStyle,s.borderColor],font:[s.fontFamily,s.fontSize,s.fontWeight,s.lineHeight],role:e.getAttribute('role'),name:e.getAttribute('aria-label'),tabIndex:e.getAttribute('tabindex'),before:getComputedStyle(e,'::before').content}})}})()`);
   report.cases[name]=metrics;
   const owners=['astryx-stack','astryx-token','astryx-stack-item','astryx-avatar','astryx-avatar-fallback','astryx-card','astryx-button','astryx-text'];
@@ -38,6 +40,7 @@ await withTarget(async({send,evaluate,waitFor,pause,exceptions,browser})=>{
    if(parseFloat(o.style.borderWidth)>0)assert.deepEqual(n.border,[o.style.borderWidth,o.style.borderStyle,o.style.borderColor],`${name}/${i} visible border`);
    assert.equal(n.font[1],o.style.fontSize,`${name}/${i} font size`);
    assert.equal(n.font[2],o.style.fontWeight,`${name}/${i} font weight`);
+   assert.equal(n.font[3],o.style.lineHeight,`${name}/${i} line height`);
   });
   console.log(name,actual.length,'actual owner nodes match captured geometry/paint within 1/64px');
   const shot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip:metrics.clip});const bytes=Buffer.from(shot.data,'base64');
