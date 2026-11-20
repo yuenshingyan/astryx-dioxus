@@ -9,6 +9,7 @@ mod card;
 mod clickable_card;
 mod compatibility;
 mod divider;
+mod heading;
 mod hooks;
 mod i18n;
 mod icon;
@@ -40,6 +41,7 @@ pub use clickable_card::{ClickableCard, ClickableCardError};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };
+pub use heading::{Heading, HeadingLevel, HeadingProps, HeadingType, InvalidHeadingLevel};
 pub use hooks::use_interactive_role::{InteractiveRole, use_interactive_role};
 pub use icon::{
     Icon, IconDefaultSizeContext, IconDefaultSizeProvider, IconEntry, IconRequest, IconSize,
