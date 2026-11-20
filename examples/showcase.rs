@@ -22,6 +22,8 @@ mod card;
 mod clickable_card;
 #[path = "showcase/divider.rs"]
 mod divider;
+#[path = "showcase/grid.rs"]
+mod grid;
 #[path = "showcase/heading.rs"]
 mod heading;
 #[path = "showcase/icon_button.rs"]
@@ -56,6 +58,7 @@ use button_patterns::DocumentedButtonPatterns;
 use card::CardExamples;
 use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
+use grid::GridExamples;
 use heading::HeadingExamples;
 use icon_button::IconButtonExamples;
 use kbd::KbdExamples;
@@ -143,6 +146,8 @@ fn App() -> Element {
                 a { href: "#aspect-ratio-examples", "AspectRatio examples" }
                 " · "
                 a { href: "#stack-examples", "Stack examples" }
+                " · "
+                a { href: "#grid-examples", "Grid examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -252,6 +257,7 @@ fn App() -> Element {
             SelectableCardExamples {}
             AspectRatioExamples {}
             StackExamples {}
+            GridExamples {}
         }
     }
 }
