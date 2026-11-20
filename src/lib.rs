@@ -68,7 +68,8 @@ pub use icon::{
 };
 pub use icon_button::IconButton;
 pub use indicator::{
-    CheckIndicator, CheckIndicatorProps, CheckIndicatorState, IndicatorSize, RadioIndicator,
+    CheckIndicator, CheckIndicatorProps, CheckIndicatorState, CheckboxIndicator,
+    CheckboxIndicatorProps, CheckboxIndicatorState, IndicatorSize, RadioIndicator,
     RadioIndicatorProps, RadioIndicatorState,
 };
 pub use interactive_role_context::{

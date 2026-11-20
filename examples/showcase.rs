@@ -22,6 +22,8 @@ mod card;
 mod center;
 #[path = "showcase/check_indicator.rs"]
 mod check_indicator;
+#[path = "showcase/checkbox_indicator.rs"]
+mod checkbox_indicator;
 #[path = "showcase/clickable_card.rs"]
 mod clickable_card;
 #[path = "showcase/divider.rs"]
@@ -72,6 +74,7 @@ use button_patterns::DocumentedButtonPatterns;
 use card::CardExamples;
 use center::CenterExamples;
 use check_indicator::CheckIndicatorExamples;
+use checkbox_indicator::CheckboxIndicatorExamples;
 use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
 use grid::{GridExamples, GridSpanExamples};
@@ -185,6 +188,8 @@ fn App() -> Element {
                 a { href: "#check-indicator-examples", "CheckIndicator examples" }
                 " · "
                 a { href: "#radio-indicator-examples", "RadioIndicator examples" }
+                " · "
+                a { href: "#checkbox-indicator-examples", "CheckboxIndicator examples" }
                 " · "
                 a { href: "#section-examples", "Section examples" }
             }
@@ -305,6 +310,7 @@ fn App() -> Element {
             CenterExamples {}
             CheckIndicatorExamples {}
             RadioIndicatorExamples {}
+            CheckboxIndicatorExamples {}
             SectionExamples {}
         }
     }
