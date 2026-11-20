@@ -58,7 +58,7 @@ use button_patterns::DocumentedButtonPatterns;
 use card::CardExamples;
 use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
-use grid::GridExamples;
+use grid::{GridExamples, GridSpanExamples};
 use heading::HeadingExamples;
 use icon_button::IconButtonExamples;
 use kbd::KbdExamples;
@@ -148,6 +148,8 @@ fn App() -> Element {
                 a { href: "#stack-examples", "Stack examples" }
                 " · "
                 a { href: "#grid-examples", "Grid examples" }
+                " · "
+                a { href: "#grid-span-examples", "GridSpan examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -258,6 +260,7 @@ fn App() -> Element {
             AspectRatioExamples {}
             StackExamples {}
             GridExamples {}
+            GridSpanExamples {}
         }
     }
 }
