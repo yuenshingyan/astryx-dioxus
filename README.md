@@ -42,7 +42,10 @@ original patterns. Approved graphic boundaries/custom fallback and retained disa
 findings are recorded in [ProgressBar verification](docs/progress-bar-port.md).
 Card adds the static surface, all thirteen tones/four elevations, shared sizing/spacing,
 corrected applied-padding publication and six static patterns plus the phone-row example;
-see [Card verification](docs/card-port.md). ClickableCard/SelectableCard remain separate pending ports.
+see [Card verification](docs/card-port.md). ClickableCard adds native action/navigation,
+independent nested controls, disabled focusability and all three original patterns;
+see [ClickableCard verification](docs/clickable-card-port.md) for callback adaptations,
+spec-led press corrections and retained contrast findings. SelectableCard remains a separate pending port.
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
@@ -86,7 +89,7 @@ CSS styles target HTML/webview output, not a native renderer.
 
 ## Layout
 
-- `src/badge/`, `src/button/`, `src/button_group/`, `src/card/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
+- `src/badge/`, `src/button/`, `src/button_group/`, `src/card/`, `src/clickable_card/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
 - `src/layout/`: shared spacing-step lowering for container publishers, not a completed Layout migration.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
@@ -119,11 +122,18 @@ For browser interaction checks, see [Button browser testing](docs/button-port.md
 [Spinner testing](docs/spinner-port.md#examples-and-verification), [Badge testing](docs/badge-port.md#verification),
 [Divider testing](docs/divider-port.md#verification), [Kbd testing](docs/kbd-port.md#verification),
 [Skeleton testing](docs/skeleton-port.md#verification), [StatusDot testing](docs/status-dot-port.md#verification),
-[ProgressBar testing](docs/progress-bar-port.md#verification), and [Card testing](docs/card-port.md#verification).
-Run all twelve component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
+[ProgressBar testing](docs/progress-bar-port.md#verification), [Card testing](docs/card-port.md#verification),
+and [ClickableCard testing](docs/clickable-card-port.md#verification).
+Run all thirteen component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
 `node tests/icon_button.browser.mjs`, `node tests/link.browser.mjs`, `node tests/spinner.browser.mjs`,
 `node tests/badge.browser.mjs`, `node tests/divider.browser.mjs`, `node tests/kbd.browser.mjs`,
-`node tests/skeleton.browser.mjs`, `node tests/status_dot.browser.mjs`, `node tests/progress_bar.browser.mjs`, and `node tests/card.browser.mjs`.
+`node tests/skeleton.browser.mjs`, `node tests/status_dot.browser.mjs`, `node tests/progress_bar.browser.mjs`,
+`node tests/card.browser.mjs`, and `node tests/clickable_card.browser.mjs`.
+Also run `node tests/container_press.browser.mjs` for the shared card press profile.
+The internal `tests/native_event_boundary.browser.mjs` proof requires serving the
+`native_event_boundary` example separately. ClickableCard's contrast audit
+(`node tests/clickable_card.contrast.mjs`) intentionally exits 1 for preserved
+conditional active-text and focus findings; see its verification notes.
 Card's contrast audit (`node tests/card.contrast.mjs`) intentionally exits 1 for
 4/336 inherited core secondary-text findings; decorative edges get no invented graphic threshold.
 Also run `node tests/progress_bar_motion.browser.mjs` for native timing/resize/media/cleanup contracts.

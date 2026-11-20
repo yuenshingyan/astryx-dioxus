@@ -364,10 +364,10 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [x] **Card — Layout** (`CardWithInnerLayout.doc.mjs`): header/body/footer dividers and actions.
     - [x] **Card — Simple** (`CardWithSimpleContent.doc.mjs`).
 
-  - **Related interactive templates — deferred, not part of static Card completion**
-    - [ ] **ClickableCard — Elevated** (`ClickableCardElevated.doc.mjs`): med shadow on action surface.
-    - [ ] **ClickableCard** (`ClickableCardShowcase.doc.mjs`): navigation and independent nested controls.
-    - [ ] **ClickableCardWithNestedButton** (`ClickableCardWithNestedButton.doc.mjs`): product navigation plus Add to cart.
+  - **Related interactive templates — verified separately from static Card completion**
+    - [x] **ClickableCard — Elevated** (`ClickableCardElevated.doc.mjs`): med shadow on action surface.
+    - [x] **ClickableCard** (`ClickableCardShowcase.doc.mjs`): navigation and independent nested controls.
+    - [x] **ClickableCardWithNestedButton** (`ClickableCardWithNestedButton.doc.mjs`): product navigation plus Add to cart.
     - [ ] **SelectableCard — Elevated** (`SelectableCardElevated.doc.mjs`): low shadow plus inset selection ring.
     - [ ] **SelectableCardMulti** (`SelectableCardMulti.doc.mjs`): multi-select tags, matching colored borders.
     - [ ] **SelectableCard** (`SelectableCardShowcase.doc.mjs`): single-select plan/radio behavior.
@@ -390,20 +390,21 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [ ] **Carousel — Snap** (`CarouselSnap.doc.mjs`): team cards land at start.
     - [ ] **useSnapPaging — Onboarding Pages** (`CarouselSnapPaging.doc.mjs`): switch one view/one card per flick.
 
-- [ ] **[Clickable Card](https://astryx.atmeta.com/components/ClickableCard)**
+- [x] **[Clickable Card](https://astryx.atmeta.com/components/ClickableCard)**
 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/ClickableCard/ClickableCard.doc.mjs), [associated Card templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Card). No own template directory supplied; related patterns live in Card metadata.
 
   - **Choices and activation**
-    - [ ] `variant`: `default` (default), `transparent`, `muted`, `blue`, `cyan`, `gray`, `green`, `orange`, `pink`, `purple`, `red`, `teal`, `yellow`.
-    - [ ] `elevation`: `none` (default), `low`, `med`, `high`; `padding`: `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4` (default), `5`, `6`, `8`, `10`.
-    - [ ] Surface action onClick versus href navigation, target default _self (open-ended target string, not fixed enum); plain/new-tab/Cmd/Ctrl/middle-click preserve shared navigation behavior.
-    - [ ] `isDisabled=false` default; disabled removes destination but keeps Tab stop/disabled announcement.
-    - [ ] Accessible label, arbitrary children/dimensions; nested interactive controls act independently, card handler only surface. Transparent/no-padding press-only recipe is better composed with useClickableContainer when no Card chrome is wanted.
+    - [x] Card-owned thirteen variants and validated open custom names; custom base remains transparent/borderless, not a fallback palette.
+    - [x] Shared four-value Elevation, eleven spacing steps and optional dimensions. Padding omission reads the Card theme (Neutral spacing 3; unthemed fallback spacing 4); no duplicate surface implementation.
+    - [x] Surface action versus href navigation (href wins), optional open target, native/provider/new-tab/Cmd/Ctrl/middle sinks share destination acceptance; hidden button/link retain distinct callback ownership. Released focusable no-op retained without deciding OQ1.
+    - [x] Disabled removes destination/click/mouseup, keeps named pointerdown/nonreserved native events, Tab stop/name/disabled AX state, half opacity and no hover/press paint. Provider disabled flips retain focus without scrolling.
+    - [x] Required nonblank accessible label, independent nested controls/selected text/layers, original ordinary child-before-root event metadata and scoped owner currentTarget. Named owned callbacks reserve raw onclick/onmouseup/onpointerdown/onmounted; nonreserved builders survive removal/readd without starving retained callbacks. Headless adapter remains internal, not a separately completed public hook.
+    - [x] Spec-led single own-action focus outline, owning-root disabled reflection, shared every-pointer press/nested veto/10px pan, theme exit clock and reduced fine-touch bound. **[Verification and limits](docs/clickable-card-port.md):** six original observations, nine SSR tests, native/browser proofs; preserved conditional contrast findings (58/1008 active text, 84/336 focus; disabled text advisory), no blanket AA/physical-screen-reader claim. Combined WASM Clippy/CI remain parent-integration checks.
   - **Associated named templates**
-    - [ ] **ClickableCard — Elevated** (`Card/ClickableCardElevated.doc.mjs`): elevation med.
-    - [ ] **ClickableCard** (`Card/ClickableCardShowcase.doc.mjs`): navigation with independent nested control.
-    - [ ] **ClickableCardWithNestedButton** (`Card/ClickableCardWithNestedButton.doc.mjs`): product link plus Add to cart action.
+    - [x] **ClickableCard — Elevated** (`Card/ClickableCardElevated.doc.mjs`): elevation med.
+    - [x] **ClickableCard** (`Card/ClickableCardShowcase.doc.mjs`): navigation with independent nested control.
+    - [x] **ClickableCardWithNestedButton** (`Card/ClickableCardWithNestedButton.doc.mjs`): product link plus Add to cart action.
 
 - [ ] **[Collapsible](https://astryx.atmeta.com/components/Collapsible)**
 
