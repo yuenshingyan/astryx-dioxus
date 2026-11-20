@@ -20,6 +20,7 @@ mod layout;
 mod link;
 mod private_attributes;
 mod progress_bar;
+mod selectable_card;
 mod size_context;
 mod skeleton;
 mod spinner;
@@ -57,6 +58,7 @@ pub use progress_bar::{
     InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,
     ProgressBarVariant,
 };
+pub use selectable_card::{SelectableCard, SelectableCardError, SelectableCardProps};
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
 pub use skeleton::{Skeleton, SkeletonError, SkeletonLength, SkeletonRadius};
 pub use spinner::{Spinner, SpinnerError, SpinnerShade, SpinnerSize};

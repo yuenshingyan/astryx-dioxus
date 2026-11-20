@@ -24,6 +24,8 @@ mod kbd;
 mod link;
 #[path = "showcase/progress_bar.rs"]
 mod progress_bar;
+#[path = "showcase/selectable_card.rs"]
+mod selectable_card;
 #[path = "showcase/skeleton.rs"]
 mod skeleton;
 #[path = "showcase/spinner.rs"]
@@ -41,6 +43,7 @@ use icon_button::IconButtonExamples;
 use kbd::KbdExamples;
 use link::LinkExamples;
 use progress_bar::ProgressBarExamples;
+use selectable_card::SelectableCardExamples;
 use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
 use status_dot::StatusDotExamples;
@@ -213,6 +216,7 @@ fn App() -> Element {
             StatusDotExamples {}
             ProgressBarExamples {}
             CardExamples {}
+            SelectableCardExamples {}
         }
     }
 }
