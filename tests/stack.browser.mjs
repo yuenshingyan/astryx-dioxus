@@ -47,7 +47,7 @@ await withTarget(async({send,evaluate,waitFor,pause,exceptions})=>{
  }
  await evaluate(`document.documentElement.style.fontSize='16px';document.getElementById('stack-examples').dir='ltr';document.documentElement.style.colorScheme='light'`);
  // Original named-pattern Stack topology. Supporting content deliberately remains
- // main's existing components or demo-local source-derived static framing.
+ // main's existing components and private upstream-owned pattern slices.
  for(const [id,overrides]of [['st-alignment',{2:{hAlign:'start'},4:{hAlign:'center'},6:{hAlign:'end'}}],['st-directions',{0:{hAlign:'center'},1:{vAlign:'center'}}],['st-fill',{1:{vAlign:'center'},3:{vAlign:'center'},5:{vAlign:'center'}}]]){
   const result=await evaluate(`(()=>{const live=document.getElementById(${JSON.stringify(id)}),ref=live.cloneNode(true);ref.removeAttribute('id');live.after(ref);
    const actual=[live,...live.querySelectorAll('.astryx-stack')],original=[ref,...ref.querySelectorAll('.astryx-stack')];
@@ -100,5 +100,5 @@ await withTarget(async({send,evaluate,waitFor,pause,exceptions})=>{
   assert.equal(await evaluate(`document.getElementById('st-default').getAnimations().length`),0);
  }
  assert.equal(exceptions.length,0,JSON.stringify(exceptions));
- console.log('Stack passed: offline source-derived 48-axis matrix × 8 environments, 11 gap/padding steps, three pattern Stack topologies (demo-only static framing; supporting interaction gaps disclosed), logical padding, invalid/explicit aliases, sizing/CSS precedence, wrap/scroll, native root/ref/events/AX and updates/media. Not published measurements.');
+ console.log('Stack passed: offline source-derived 48-axis matrix × 8 environments, 11 gap/padding steps, three pattern Stack topologies (private supporting slices; actual interactions tested separately), logical padding, invalid/explicit aliases, sizing/CSS precedence, wrap/scroll, native root/ref/events/AX and updates/media. Not published measurements.');
 });

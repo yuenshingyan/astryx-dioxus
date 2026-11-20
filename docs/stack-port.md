@@ -108,31 +108,33 @@ All originals and their `.doc.mjs` metadata are embedded with Git blob SHA1 in
 - **Stack — Directions / StackDirections**: horizontal outer gap 10, centered;
   a horizontal gap-2, cross-centered triple and vertical gap-2 triple. Original
   HStack/VStack lower to explicit Stack directions. Original **Token**, not Badge,
-  is not publicly ported. Demo-local static spans now use the hash-verified
-  Token.tsx base/md/default/label declarations, including nested isolated label,
-  filled neutral paint, token radius and height (not the old outlined pill).
-  No interactive Token or completed HStack/VStack migration is asserted.
+  is not publicly ported. The private `src/token/pattern.rs` exact label-only
+  md/default slice uses hash-verified Token declarations and stable theme targets,
+  including the nested isolated label. Original usage is noninteractive: no invented
+  button, tab stop or tooltip. No completed HStack/VStack migration is asserted.
 - **Stack — Fill Item / StackFillItem**: max 300px, 100% width, vertical gap 3;
   three horizontal gap-3 cross-centered user rows (Olivia Chen / Engineering Lead,
-  Marcus Rivera / Product Designer, Aisha Patel / Marketing Manager), static
-  Avatar, filling gap-0 name/role column, static small secondary View Button.
-  Native static/fill wrappers now use the exact static/fill/reset declarations
-  from stackItem.stylex.ts. Demo-only Avatar wrapper/content/fallback declarations
-  follow verified Avatar.tsx: 36px md diameter, .4 initials ratio, neutral fill,
-  primary ink, medium body font and full radius. Unlike the real Avatar, this
-  decorative framing has no tooltip/tabstop; it is not a public Avatar port or
-  AR2 scrolling-item implementation. View remains caller-owned/inert.
+  Marcus Rivera / Product Designer, Aisha Patel / Marketing Manager), named
+  Avatar, filling gap-0 name/role column, small secondary View Button.
+  Private `src/stack_item/pattern.rs` wrappers use exact static/fill/reset rules.
+  `src/avatar/pattern.rs` supplies the name-only md structure: 36px circle,
+  pseudo-element initials at .4 ratio, role=img/name, tab stop, focus-visible outline
+  and above-name hover/focus tooltip. Shared Tooltip owns presentation/interest;
+  `src/tooltip/pattern_tooltip.rs` is only its private renderer-channel adapter.
+  No public Avatar/image-loading API or AR2 scrolling-item API is exposed.
+  Published callbacks emit their exact messages via caller-owned polite status.
 
 The demo also covers defaults, every axis pair and spacing step, edge precedence,
 RTL, wrap, scroll, explicit/invalid alias precedence, nested local padding,
 CSS precedence, dynamic updates, native navigation root/events/ref and media.
 `examples/stack.rs` serves the focused offline fixture; `examples/showcase.rs`
 registers the same section. Existing older examples' native Stack framing is not
-silently rewritten. Later Token/Avatar/StackItem/typography swaps should be explicit,
-separately coordinated owner migrations. Static framing is now source-derived rather than arbitrary approximation.
-The overall checklist stays open for independent public owners, intrinsic/full-image
-comparison and interactive supporting behavior; isolated layout evidence below must
-not be read as certifying those missing pieces.
+silently rewritten. Supporting slices compile privately into the demo and SSR fixture
+via module paths; `src/lib.rs` exports no incomplete supporting APIs. Standalone owner
+migrations remain separate. Pinned templates have inert Buttons; later captured public
+code adds Toast callbacks. Exact messages are observable here, but a polite status is
+not a Toast overlay/timing/queue migration. The actual-node follow-up below supersedes
+the earlier static-framing/isolated-layout limits for these exact patterns and mode.
 
 ## Verification and evidence limits
 
@@ -199,7 +201,7 @@ as recorded below; no full-image parity is claimed. Exact commits are recorded i
 still run the full existing suite. This task's browser suite is additional to,
 not a replacement for, the fourteen existing component/browser/contrast suites.
 
-## Published evidence follow-up
+## Published evidence follow-up (historical isolated-layout checkpoint)
 
 Captured **2026-11-20T09:00:49.775Z** from
 <https://astryx.atmeta.com/components/Stack>, title `Stack · Astryx`, displayed
@@ -272,7 +274,83 @@ it does **not** independently validate the Rust Card/Text/Button implementations
 Follow-up checks passed: formatting, focused seven Stack SSR tests, source hashes
 (25 blobs), both locked offline browser suites and showcase/focused wasm checks.
 The full Rust suite/Clippy were passed in the implementation checkpoint above,
-not rerun for this demo/evidence-only follow-up; CI must run them. Capture initially
+not rerun for that historical demo/evidence-only follow-up. Capture initially
 failed on serializing an element-valued wait predicate (fixed to boolean); replay
 exposed CSSOM used-size truncation and the Astryx-vs-Neutral radius distinction,
 both resolved explicitly rather than suppressed or hidden with retries.
+
+## Actual supporting-pattern follow-up
+
+Base `838b371`, branch `fix/stack-original-patterns`; compiling implementation
+checkpoint `3d1f298`. No public Stack API, dependency, suppression or palette changes.
+Private slices remain under Token, Avatar, StackItem and Tooltip owners; none is
+inside production Stack or a catch-all support module. The example alone compiles
+them; they do not add unrelated standalone public component migrations.
+
+`tests/stack_patterns.browser.mjs` measures **actual rendered Dioxus nodes** (no
+reference clone, transplant or frozen supporting width/paint). The measurement stage
+matches the captured catalog's intrinsic inline-flex host, existing Neutral dark theme,
+LTR, root16px, Figtree and observed antialiased font smoothing. The original root's
+fractional pixel phase is reproduced for screenshots only; child dimensions and paint
+are never overridden. The owned target blocks HTTPS before local load, explicitly
+loads the already bundled OFL Figtree before going offline, and closes only itself.
+
+All **59 owner nodes** (9 Directions, 19 Alignment, 31 Fill) match captured relative
+boxes within 1/64px, with exact background/ink/radius and font size/weight equality.
+Intrinsic pattern sizes match: 329.859375×88, 158.234375×312, 219.125×144. This check
+caught and fixed an actual defect: Save had inherited the Rust Button's default
+secondary variant instead of the original explicit primary variant. An initial
+font-loading order failure was fixed by loading the local font before offline mode,
+not by freezing widths or increasing tolerance.
+
+Actual Rust screenshots and node measurements are in `tests/fixtures/stack-actual/`,
+separate from original captures. `tests/stack_patterns.py` decodes both PNGs with
+stdlib and records the **nonzero** raster residuals in `pixel-comparison.json`:
+Directions mean absolute channel error .082/255; Alignment .954/255; Fill 1.104/255.
+Different-pixel fractions are 3.13%, 6.54%, 4.38%; maximum channel errors are 6, 203,
+204 respectively. Geometry/paint equality is not pixel identity. These residuals
+include raster/edge/text differences; their complete cause has not been established.
+No full-image zero-difference certificate or light/mobile/other-browser original
+comparison is claimed. The approved Astryx and Neutral palettes were not redesigned.
+
+`stack_patterns.capture.mjs` separately observed the live original (2026-11-20,
+Chrome157) and saved `stack-published-interactions.json`: named img/tabstop, default
+no-describedby, keyboard focus/name tooltip, Escape preserving focus, published View
+message, antialiased smoothing and **zero profile images**. Displayed deployment
+commit remains unknown. Exact pinned Fill also has no src/fallbackSrc: initials are
+the actual source content, not image substitutes. No profile asset was copied,
+no unverified image license is assumed, and offline tests require no remote images,
+font services or catalog. Existing bundled Figtree remains covered by its OFL notice;
+original Meta screenshots/source remain covered by the upstream notice.
+
+Actual native-browser checks cover each Avatar's Tab/focus-visible/default tooltip,
+no duplicate description, Escape, AX image/name, real pointer hover, hoverable
+persistence and dismissal, Enter/Space/real pointer activation of demo messages,
+and disposal while a tooltip is visible. Pattern Tokens correctly have no actions
+or tab stops. SSR checks cover stable targets, named image/tabstop semantics, tooltip
+siblings, no duplicate aria-describedby and absence of remote image elements.
+The current shared tooltip controller is reused, not forked. Requirements and exact
+adapter ownership are coordinated in the cache `stack/patterns-handoff.md`; tooltip
+presentation refinements remain the independent Tooltip follow-up. The original's
+host-derived focus color and Toast overlay/timing are not certified by these tests.
+
+Reproduce on this worktree's owned preview (never user8080):
+
+```sh
+CARGO_INCREMENTAL=0 CARGO_TARGET_DIR=/tmp/astryx-stack-patterns-worktree/target \
+  dx serve --example stack --web --port 8096 --open false
+python3 tests/stack_source.py --check
+python3 tests/stack_published.py
+python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack_patterns.browser.mjs
+python3 tests/stack_patterns.py
+STACK_URL=http://127.0.0.1:8096 python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack.browser.mjs
+STACK_URL=http://127.0.0.1:8096 python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack_published.browser.mjs
+```
+
+Follow-up results: all five standard checks passed with `CARGO_INCREMENTAL=0` and
+isolated absolute target `/tmp/astryx-stack-patterns-worktree/target`; focused Stack
+wasm check, source hash verification (25 blobs), original screenshot integrity,
+actual raster comparison, actual/source-derived/historical frozen browser suites
+and SSR tests passed. No pre-existing check failure found. Unrelated component
+browser/contrast suites, pinned upstream React build, Toast presentation parity and
+new original light/mobile captures were **not run**. CI must still run the full suite.

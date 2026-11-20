@@ -61,9 +61,12 @@ comparisons and remaining release/asset boundaries.
 Stack implements axis/alias resolution, shared token gaps, local logical padding,
 sizing precedence, wrapping, scrolling and caller-rendered native roots. Its SSR and
 offline source-derived comparisons plus actual published captures/isolated layout
-replay are recorded in [Stack verification](docs/stack-port.md). Token/Avatar/StackItem
-static framing now follows pinned source declarations, demo-only; public supporting
-ports and intrinsic/full-image parity remain explicitly open. This does not complete HStack, VStack, StackItem, Grid or Layout.
+replay are recorded in [Stack verification](docs/stack-port.md). Private upstream-owned
+Token/Avatar/StackItem slices now render the original patterns, including named Avatar
+keyboard/hover tooltips and observable published action messages. Actual Rust screenshots,
+intrinsic geometry and paint are compared against captured Neutral-dark originals;
+nonzero raster differences and Toast presentation limits remain explicit. This does not
+complete public Token, Avatar, HStack, VStack, StackItem, Grid or Layout migrations.
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
@@ -157,7 +160,10 @@ see its verification notes. For Stack, serve `dx serve --example stack --web --p
 `python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack.browser.mjs`;
 `python3 tests/stack_source.py --check` verifies the offline source-derived fixture.
 Run `python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack_published.browser.mjs`
-for the frozen published-pattern layout comparison on the same owned 8093 preview.
+for the older frozen published-pattern layout comparison on the same owned 8093 preview.
+For actual rendered patterns, serve the focused `stack` example on owned port 8096, then run
+`python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack_patterns.browser.mjs`
+and `python3 tests/stack_patterns.py`. Neither command needs catalog access.
 `tests/stack_published.capture.mjs` is a separate opt-in network capture, also requiring the lock.
 See its verification notes for the cache input, evidence limits and remaining gaps.
 Run all fourteen existing component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,

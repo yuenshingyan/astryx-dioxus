@@ -14,10 +14,14 @@ fn main() {
 
 #[component]
 fn App() -> Element {
+    let mut is_visible = use_signal(|| true);
     rsx! {
         document::Title { "Stack offline verification" }
         document::Style { "{STYLES}" }
         document::Style { "@font-face {{font-family:Figtree;src:url('{FIGTREE}') format('woff2');font-style:normal;font-weight:300 900;font-display:swap;}}" }
-        main { "data-astryx-theme": "astryx", StackExamples {} }
+        main { "data-astryx-theme": "astryx",
+            button { id: "st-remove-patterns", onclick: move |_| is_visible.toggle(), "Toggle pattern mount" }
+            if is_visible() { StackExamples {} }
+        }
     }
 }
