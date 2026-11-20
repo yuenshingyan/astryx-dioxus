@@ -14,6 +14,8 @@ mod button_group;
 mod button_patterns;
 #[path = "showcase/card.rs"]
 mod card;
+#[path = "showcase/clickable_card.rs"]
+mod clickable_card;
 #[path = "showcase/divider.rs"]
 mod divider;
 #[path = "showcase/icon_button.rs"]
@@ -36,6 +38,7 @@ use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
 use card::CardExamples;
+use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
 use icon_button::IconButtonExamples;
 use kbd::KbdExamples;
@@ -213,6 +216,7 @@ fn App() -> Element {
             StatusDotExamples {}
             ProgressBarExamples {}
             CardExamples {}
+            ClickableCardExamples {}
         }
     }
 }
