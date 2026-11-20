@@ -8,6 +8,10 @@ publish = false
 [dependencies]
 dioxus = { version = "0.7.3", default-features = false, features = ["lib"] }
 
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "0.2.130"
+web-sys = { version = "0.3.107", features = ["Window", "Document", "Element", "HtmlElement", "HtmlInputElement", "Node", "Event", "EventTarget", "MouseEvent", "PointerEvent", "KeyboardEvent", "Selection", "Location"] }
+
 [dev-dependencies]
 dioxus = { version = "0.7.3", features = ["web"] }
 dioxus-ssr = "0.7.3"

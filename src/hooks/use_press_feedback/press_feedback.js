@@ -4,6 +4,11 @@
 const runtimeKey = Symbol.for('astryx.dioxus.button.runtime');
 const installPressFeedback = () => {
 if (!document[runtimeKey]) {
+  // The shared release animates a numeric strength, never the card's layout.
+  if (CSS.registerProperty) {
+    try { CSS.registerProperty({ name: '--_astryx-press-strength', syntax: '<number>', inherits: true, initialValue: '0' }); }
+    catch { /* A previous controller lifetime already registered the property. */ }
+  }
   const records = new Map();
   const listeners = new AbortController();
   const signal = listeners.signal;
@@ -12,8 +17,19 @@ if (!document[runtimeKey]) {
   let gesture = null;
   let suppressed = null;
   let lastScroll = -Infinity;
-  const enabled = element => element && !element.matches(':disabled,[aria-disabled="true"]');
-  const pressRoot = '.astryx-button,.astryx-link[data-astryx-feedback-id]';
+  const enabled = element => element && !element.matches(':disabled,[aria-disabled="true"],[data-disabled="true"]');
+  const pressRoot = '.astryx-button,.astryx-link[data-astryx-feedback-id],[data-astryx-container-press="true"]';
+  const interactiveSelectors = 'button,a,input,select,textarea,[role="button"],[role="link"],[role="checkbox"],[role="radio"],[role="switch"],[role="tab"],[role="menuitem"],[role="option"],[role="combobox"],[role="listbox"],[role="slider"],[role="spinbutton"],[data-pressable-container]';
+  const isContainer = element => element?.hasAttribute('data-astryx-container-press');
+  const nestedContainerTarget = (target, root) => {
+    const ownAction = root.querySelector('[data-astryx-container-action]');
+    if (ownAction?.contains(target)) return false;
+    for (let node = target; node && node !== root && node !== document.body; node = node.parentElement) {
+      if ((node.matches?.(interactiveSelectors) && node.getAttribute('aria-readonly') !== 'true')
+        || node.matches?.('[data-astryx-layer-root],[role="tooltip"],dialog[open],[popover]:popover-open')) return true;
+    }
+    return false;
+  };
   const isButton = element => element.matches('.astryx-button[data-astryx-button-id]');
   const isTracked = element => isButton(element) && element.dataset.astryxGroupTrack === 'true';
   const groupOwner = element => {
@@ -39,13 +55,29 @@ if (!document[runtimeKey]) {
       if (state === 'on' || !state) record.pressEpoch = (record.pressEpoch || 0) + 1;
       if (state && enabled(record.element)) record.element.dataset.astryxPress = state;
       else delete record.element.dataset.astryxPress;
+      if (isContainer(record.element)) {
+        if (state === 'on') record.element.style.setProperty('--_astryx-press-strength', '1');
+        if (!state) {
+          record.element.style.removeProperty('--_astryx-press-strength');
+          record.pressAnimation?.cancel();
+          record.pressAnimation = null;
+        }
+      }
     }
   };
   const release = record => {
     if (!record) return;
     const epoch = record.pressEpoch;
     press(record, 'fading');
-    later(record, () => { if (record.pressEpoch === epoch) press(record, null); }, reduced.matches ? (coarse.matches ? 200 : 0) : exitDuration(record.element));
+    const duration = reduced.matches ? (coarse.matches ? Math.min(200, exitDuration(record.element)) : 0) : exitDuration(record.element);
+    if (isContainer(record.element)) {
+      const ease = getComputedStyle(record.element).getPropertyValue('--ease-exit').trim() || 'ease-out';
+      record.pressAnimation?.cancel();
+      record.pressAnimation = record.element.animate([
+        { '--_astryx-press-strength': '1' }, { '--_astryx-press-strength': '0' },
+      ], { duration, easing: ease, fill: 'forwards' });
+    }
+    later(record, () => { if (record.pressEpoch === epoch) press(record, null); }, duration);
   };
   const isScrolling = element => {
     for (let parent = element.parentElement; parent; parent = parent.parentElement) {
@@ -62,7 +94,7 @@ if (!document[runtimeKey]) {
     if (records.has(direct)) {
       // Text links use the browser's actual hit only, never Button hit growth
       // or per-link geometry measurement.
-      if (!isButton(direct)) return group ? null : records.get(direct);
+      if (!isButton(direct)) return group || (isContainer(direct) && nestedContainerTarget(hit, direct)) ? null : records.get(direct);
       const box = direct.getBoundingClientRect();
       if (x >= box.left && x <= box.right && y >= box.top && y <= box.bottom) {
         return !group || (isTracked(direct) && groupOwner(direct) === group && !isMenu(direct)) ? records.get(direct) : null;
@@ -124,6 +156,12 @@ if (!document[runtimeKey]) {
       ? recordAt(event.clientX, event.clientY)
       : records.get(event.target.closest?.(pressRoot));
     if (!record) return;
+    if (isContainer(record.element) && nestedContainerTarget(event.target, record.element)) {
+      press(record, null);
+      record.element.dataset.astryxNestedPress = 'true';
+      return;
+    }
+    if (isContainer(record.element)) delete record.element.dataset.astryxNestedPress;
     record.pointerFocus = true;
     if (!record.isPinned) hideTip(record);
     if (!enabled(record.element)) {
@@ -169,8 +207,12 @@ if (!document[runtimeKey]) {
     suppressed = { element: gesture.group || gesture.nativeTarget, pointerId: gesture.id, until: performance.now() + 500 };
     gesture = null;
   };
-  listen(document, 'pointercancel', cancelGesture, { capture: true });
+  const clearNestedPress = () => {
+    for (const record of records.values()) if (isContainer(record.element)) delete record.element.dataset.astryxNestedPress;
+  };
+  listen(document, 'pointercancel', () => { clearNestedPress(); cancelGesture(); }, { capture: true });
   listen(document, 'pointerup', event => {
+    clearNestedPress();
     if (!gesture || gesture.id !== event.pointerId) return;
     const finished = gesture;
     gesture = null;
@@ -220,6 +262,7 @@ if (!document[runtimeKey]) {
   listen(window, 'blur', () => { cancelGesture(); tips.hide(); });
   document[runtimeKey] = {
     records,
+    cancelPress(element) { press(records.get(element), null); },
     attach(element, config) {
       const record = { element, timers: new Set(), isFocused: document.activeElement === element || (config.isTruncation && document.activeElement?.contains(element)), ...config };
       records.set(element, record);
