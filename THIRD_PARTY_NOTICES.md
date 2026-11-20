@@ -47,6 +47,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
+Inline Code (`src/code/`, its CSS, example and source-projection fixture) additionally
+follows `packages/core/src/Code/` and the four CLI `components/Code/` templates
+at the same pinned revision. Shared typography tokens remain theme-owned.
+
 ## Heroicons (ButtonGroup and IconButton showcase glyphs only)
 
 - `examples/showcase/button_group.rs` includes the clipboard-document, scissors, clipboard, and chevron-down outline SVG paths used by the original named showcase.

@@ -1,6 +1,9 @@
 //! Offline Code patterns; prose frames belong to Text/Heading, not Code.
 use astryx_dioxus::{Code, CodeColor, CodeSize, STYLES, Text, TextType};
+use dioxus::events::onkeydown;
 use dioxus::prelude::*;
+
+const FIGTREE: Asset = asset!("/assets/fonts/Figtree-latin.woff2");
 
 fn main() {
     dioxus::launch(App);
@@ -11,16 +14,17 @@ fn App() -> Element {
     let mut is_dark = use_signal(|| false);
     let mut count = use_signal(|| 0);
     let mut is_mounted = use_signal(|| false);
+    let mut key_count = use_signal(|| 0);
     let fixture_style = r#"
-          @font-face { font-family:Figtree; src:url('/assets/fonts/Figtree-latin.woff2') format('woff2'); }
-          body { margin:0; background:var(--color-background-page); color:var(--color-text-primary); font-family:var(--font-family-body); }
+          body { margin:0; background:var(--color-background-surface); color:var(--color-text-primary); font-family:var(--font-family-body); }
           main { padding:24px; max-width:680px; color-scheme:inherit; }
           section { margin-block:24px; } p,h3 { margin-block:12px; } .stack { display:flex; flex-direction:column; gap:12px; }
         "#;
     rsx! {
         document::Style { "{STYLES}" }
+        document::Style { "@font-face {{font-family:Figtree;src:url('{FIGTREE}') format('woff2');font-weight:300 900;}}" }
         document::Style { "{fixture_style}" }
-        main { id:"code-patterns", style: if is_dark() { "color-scheme:dark;background:var(--color-background-page)" } else { "color-scheme:light;background:var(--color-background-page)" },
+        main { id:"code-patterns", style: if is_dark() { "color-scheme:dark;background:var(--color-background-surface)" } else { "color-scheme:light;background:var(--color-background-surface)" },
             button { id:"code-theme", onclick:move |_| is_dark.toggle(), "Toggle theme" }
             section { id:"code-showcase", class:"stack",
                 Text { "Run " Code { "npm install @astryxdesign/core" } " to add the package." }
@@ -36,7 +40,7 @@ fn App() -> Element {
             }
             section { id:"code-sizes", class:"stack",
                 // Native heading frame until the independently owned Heading port integrates.
-                h3 { style:"font-size:var(--text-heading-3-size);line-height:var(--text-heading-3-line-height);font-weight:var(--text-heading-3-weight)", "Heading with " Code { "inline code" } }
+                h3 { style:"font-size:var(--text-heading-3-size);line-height:var(--text-heading-3-leading);font-weight:var(--text-heading-3-weight)", "Heading with " Code { "inline code" } }
                 Text { "Body text with " Code { "inline code" } }
                 Text { text_type:TextType::SUPPORTING, "Supporting text with " Code { "inline code" } }
                 Text { text_type:TextType::LABEL, "Label text with " Code { "inline code" } }
@@ -53,11 +57,13 @@ fn App() -> Element {
                 p { id:"code-long", style:"width:180px", Code { "very_long_unbroken_identifier_that_must_wrap_without_widening_the_parent_or_document_0123456789" } }
                 p { dir:"rtl", "טקסט " Code { id:"code-rtl", "const x = foo(1);" } " טקסט " Code { id:"code-dir", dir:"rtl", "אבג" } }
                 Code { id:"code-native", class:"consumer-class", style:"opacity:0.75;margin-top:1px", "data-testid":"native-code",
+                    attributes:vec![onkeydown(move |_| key_count += 1)],
                     onclick:move |_| count += 1,
                     onmounted:move |event:MountedEvent| { spawn(async move { if event.get_client_rect().await.is_ok() { is_mounted.set(true); } }); },
                     "const count = " strong { "0" }
                 }
                 output { id:"code-events", "{count}:{is_mounted}" }
+                output { id:"code-key-events", "{key_count}" }
             }
         }
     }

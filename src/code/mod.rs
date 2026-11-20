@@ -1,5 +1,6 @@
 //! Semantic inline code; block-code presentation belongs to CodeBlock.
 
-mod code;
+#[path = "code.rs"]
+mod component;
 
-pub use code::{Code, CodeColor, CodeProps, CodeSize};
+pub use component::{Code, CodeColor, CodeProps, CodeSize};

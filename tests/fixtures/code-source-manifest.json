@@ -1,0 +1,25 @@
+{
+  "pin": "476a3153417dbf75c565f7df05b0784e94ddd59e",
+  "source_git_blob_sha1": {
+    "docs/specs/components/Code/Code.spec.md": "dac97b7aa7957b9f68ed518a55e9b2c4a4b29535",
+    "packages/cli/assets/templates/blocks/components/Code/CodeAcrossTextSizes.doc.mjs": "f89df407b8294d9fed5dbc73f11c7cc2b7e6d4be",
+    "packages/cli/assets/templates/blocks/components/Code/CodeAcrossTextSizes.tsx": "f19d13f9834cc3cf45ae9a4ea75e55dc1ba37815",
+    "packages/cli/assets/templates/blocks/components/Code/CodeInlineInParagraph.doc.mjs": "16c92dec52459db866290f9ad253606f37dd4302",
+    "packages/cli/assets/templates/blocks/components/Code/CodeInlineInParagraph.tsx": "4f64d6bc2468be694f1d35289301eb7596f18baa",
+    "packages/cli/assets/templates/blocks/components/Code/CodeShowcase.doc.mjs": "62a68d1c84011766609cc057f7ca5e1d16df7dba",
+    "packages/cli/assets/templates/blocks/components/Code/CodeShowcase.tsx": "7c25b4b22b71526a99ce95efe105ea924ec846f7",
+    "packages/cli/assets/templates/blocks/components/Code/CodeVariousContent.doc.mjs": "26d5decce7e6603d69aa56d3e04e539a9ec48862",
+    "packages/cli/assets/templates/blocks/components/Code/CodeVariousContent.tsx": "c733411d403a254e29ec0b170543d773ea5a9ca3",
+    "packages/core/src/CodeBlock/index.ts": "152bc4e46e870f1b54cd94a161d919176c568c14",
+    "packages/core/src/BaseProps.ts": "02db07241593be3d04da6a394dcfd8c352dd7e6d",
+    "packages/core/src/Code/Code.doc.mjs": "52f01c09d9bda273fe03089c9e596c41d1e66737",
+    "packages/core/src/Code/Code.test.tsx": "900ceb33115512616c40c8b4e759bf10d05e50e0",
+    "packages/core/src/Code/Code.tsx": "021abc8cc60267cf16a84fd624959fd7184e57c6",
+    "packages/core/src/Code/index.ts": "08e425a8e02bbae81d4e883e08e8d162e7fbe0b9",
+    "packages/core/src/theme/tokens.stylex.ts": "ec6ecd40da08501602ad730274d028d79640a1c9",
+    "packages/core/src/utils/themeProps.ts": "b93fb205c539242dfb18982521175005cfc0653a"
+  },
+  "fixture": "code-source-reference.html",
+  "kind": "manual offline source projection, not a catalog or React capture",
+  "projection_sha256": "4870a8281172538ae435ae55f38d0c43389a4b20b7ef3c2362363d164f34710a"
+}

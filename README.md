@@ -50,6 +50,10 @@ native input behavior, released layer capture and all three original patterns; s
 press/event integration, the private native-radio proof and the approved forced-color
 selection cue are verified. See [SelectableCard verification](docs/selectable-card-port.md)
 for callback adaptations, source-palette findings and verification boundaries.
+Semantic inline Code now has closed color/inherited-size props, native root events,
+shared typography tokens and an offline four-pattern example; see
+[Code verification](docs/code-port.md). Shared Text/Heading frame integration and
+unrun engine/device/screen-reader checks remain explicitly separate.
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
@@ -66,6 +70,9 @@ cargo install dioxus-cli --version '~0.7' --locked
 
 dx serve --example showcase --web
 ```
+
+For the isolated inline Code patterns (not CodeBlock), run
+`dx serve --example code_patterns --web --port 8087`.
 
 ## Use the library locally
 
