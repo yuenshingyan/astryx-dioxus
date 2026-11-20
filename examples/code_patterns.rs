@@ -11,14 +11,15 @@ fn App() -> Element {
     let mut is_dark = use_signal(|| false);
     let mut count = use_signal(|| 0);
     let mut is_mounted = use_signal(|| false);
-    rsx! {
-        document::Style { "{STYLES}" }
-        document::Style { r#"
+    let fixture_style = r#"
           @font-face { font-family:Figtree; src:url('/assets/fonts/Figtree-latin.woff2') format('woff2'); }
           body { margin:0; background:var(--color-background-page); color:var(--color-text-primary); font-family:var(--font-family-body); }
           main { padding:24px; max-width:680px; color-scheme:inherit; }
           section { margin-block:24px; } p,h3 { margin-block:12px; } .stack { display:flex; flex-direction:column; gap:12px; }
-        "# }
+        "#;
+    rsx! {
+        document::Style { "{STYLES}" }
+        document::Style { "{fixture_style}" }
         main { id:"code-patterns", style: if is_dark() { "color-scheme:dark;background:var(--color-background-page)" } else { "color-scheme:light;background:var(--color-background-page)" },
             button { id:"code-theme", onclick:move |_| is_dark.toggle(), "Toggle theme" }
             section { id:"code-showcase", class:"stack",
@@ -37,8 +38,8 @@ fn App() -> Element {
                 // Native heading frame until the independently owned Heading port integrates.
                 h3 { style:"font-size:var(--text-heading-3-size);line-height:var(--text-heading-3-line-height);font-weight:var(--text-heading-3-weight)", "Heading with " Code { "inline code" } }
                 Text { "Body text with " Code { "inline code" } }
-                Text { text_type:TextType::Supporting, "Supporting text with " Code { "inline code" } }
-                Text { text_type:TextType::Label, "Label text with " Code { "inline code" } }
+                Text { text_type:TextType::SUPPORTING, "Supporting text with " Code { "inline code" } }
+                Text { text_type:TextType::LABEL, "Label text with " Code { "inline code" } }
             }
             section { id:"code-extra",
                 p { id:"code-color-parent", style:"color:rgb(120,40,90);font-size:24px;line-height:36px",
