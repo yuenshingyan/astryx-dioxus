@@ -2,6 +2,7 @@
 //!
 //! Include [`STYLES`] once using `document::Style` in your application root.
 
+mod aspect_ratio;
 mod badge;
 mod button;
 mod button_group;
@@ -32,6 +33,7 @@ mod tooltip;
 mod utils;
 mod visually_hidden;
 
+pub use aspect_ratio::{AspectRatio, AspectRatioFit, AspectRatioShape};
 pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
 pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, ButtonVariant};
 pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation};
