@@ -35,9 +35,7 @@ pub fn LayoutFooter(
     attributes: Vec<Attribute>,
 ) -> Element {
     let has_divider = has_divider.unwrap_or_else(|| {
-        try_consume_context::<LayoutDividerContext>()
-            .unwrap_or_default()
-            .0
+        try_consume_context::<LayoutDividerContext>().is_some_and(|ctx| (ctx.0)())
     });
     let mut outer_style = match height {
         Some(height) => format!("--_layout-footer-height:{};", height.as_css()?),
@@ -79,7 +77,7 @@ mod tests {
     fn divider_default_is_overridable_and_stops_at_a_layer_boundary() {
         #[component]
         fn Parent(children: Element) -> Element {
-            use_context_provider(|| LayoutDividerContext(true));
+            use_context_provider(|| LayoutDividerContext(Signal::new(true)));
             children
         }
         let html = render_element(rsx! {

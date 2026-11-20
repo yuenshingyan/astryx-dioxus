@@ -1,4 +1,6 @@
 //! Layer-scoped default shared by Layout's header and footer.
 
-#[derive(Clone, Copy, Default)]
-pub(crate) struct LayoutDividerContext(pub bool);
+use dioxus::prelude::*;
+
+#[derive(Clone, Copy)]
+pub(crate) struct LayoutDividerContext(pub Signal<bool>);

@@ -3,7 +3,7 @@
 use dioxus::core::{AttributeValue, current_scope_id};
 use dioxus::prelude::*;
 
-use super::layout_slots_context::LayoutSlotsContext;
+use super::layout_slots_context::layout_slots;
 use super::padding::spacing_step_css;
 use crate::hooks::use_scroll_region_props::use_scroll_region;
 use crate::utils::types::SpacingStep;
@@ -37,7 +37,7 @@ pub fn LayoutContent(
     attributes: Vec<Attribute>,
 ) -> Element {
     const MARKER: &str = "data-astryx-content-scroll";
-    let slots = try_consume_context::<LayoutSlotsContext>().unwrap_or_default();
+    let slots = layout_slots();
     let has_attribute = |name| {
         attributes
             .iter()
