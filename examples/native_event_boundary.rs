@@ -25,16 +25,18 @@ mod probe {
     use std::cell::Cell;
     use std::rc::Rc;
 
+    use dioxus::events::oncontextmenu;
     use dioxus::prelude::*;
     use wasm_bindgen::{JsCast, prelude::wasm_bindgen};
     use web_sys::{Element as DomElement, HtmlElement, MouseEvent as DomMouseEvent};
 
     use super::use_clickable_container::native::{
-        allows_activation, delegate_action, mouse_event, navigate, use_native_document_listener,
-        use_native_event_listener, use_native_listener, with_current_target,
+        allows_activation, apply_cancellation, delegate_action, mouse_event, navigate,
+        use_native_document_listener, use_native_event_listener, use_native_listener,
+        with_current_target,
     };
 
-    use super::use_clickable_container::use_native_owner;
+    use super::use_clickable_container::{use_native_owner, use_retained_event_attributes};
 
     #[wasm_bindgen(
         inline_js = "export function throwForOwnerProbe() { throw new Error('native owner probe'); }"
@@ -58,6 +60,13 @@ mod probe {
         let mut is_new_label = use_signal(|| false);
         let capture_owner = owner.clone();
         let label = if is_new_label() { "outer2|" } else { "outer|" };
+        let attributes = use_retained_event_attributes(if is_new_label() {
+            vec![]
+        } else {
+            vec![oncontextmenu(move |event: MouseEvent| {
+                event.prevent_default()
+            })]
+        });
         let routed_capture = use_native_document_listener(
             "route-probe",
             true,
@@ -218,10 +227,11 @@ mod probe {
                     .unwrap();
                 event.prevent_default();
                 event.stop_propagation();
+                apply_cancellation(&event, check_native.as_ref());
             })
             .unwrap();
         };
-        rsx! {div{id:"native-probe","data-pressable-container":"true",onmounted:move |event:MountedEvent|{owner_ref.call(event.clone());owner_scope.call(event.clone());click.call(event.clone());capture.call(event.clone());saved_mount.set(Some(event));},
+        rsx! {div{id:"native-probe","data-pressable-container":"true",onmounted:move |event:MountedEvent|{owner_ref.call(event.clone());owner_scope.call(event.clone());click.call(event.clone());capture.call(event.clone());saved_mount.set(Some(event));},..attributes,
             span{id:"probe-surface",onpointerdown:pointer,"Surface"}
             button{id:"probe-own",r#type:"button","data-astryx-container-action":"","Own action"}
             button{id:"probe-child",r#type:"button","Child"}
