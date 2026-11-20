@@ -108,6 +108,11 @@ const installAnnounce = () => {
         for (const share of [...shares]) withdraw(share);
       };
       return {
+        prepare(element) {
+          if (isDisposed) return;
+          const container = route(element);
+          if (container) stateFor(container);
+        },
         announce(element, text, isEligible) {
           if (isDisposed || !text || !isEligible()) return;
           const container = route(element);

@@ -311,3 +311,22 @@ pub enum SpacingStep {
     /// Step 10: `--spacing-10` (40px).
     Ten,
 }
+
+impl SpacingStep {
+    /// Original numeric spelling, for component theme reflection.
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::Zero => "0",
+            Self::Half => "0.5",
+            Self::One => "1",
+            Self::OneAndHalf => "1.5",
+            Self::Two => "2",
+            Self::Three => "3",
+            Self::Four => "4",
+            Self::Five => "5",
+            Self::Six => "6",
+            Self::Eight => "8",
+            Self::Ten => "10",
+        }
+    }
+}

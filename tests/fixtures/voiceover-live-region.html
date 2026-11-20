@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>VoiceOver polite announcement check</title>
+</head>
+<body>
+  <h1>VoiceOver polite announcement check</h1>
+  <p>Activate the button once. Focus should remain on the button.</p>
+  <button type="button" id="announce">Send test message</button>
+  <p id="message" role="status" aria-live="polite" aria-atomic="true"></p>
+  <button type="button" id="announce-clipped">Test hidden announcement</button>
+  <p id="clipped-result"></p>
+  <p id="clipped" role="status" aria-live="polite" aria-atomic="true"
+    style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;inset-block-start:0;inset-inline-start:0;pointer-events:none;user-select:none;"></p>
+  <button type="button" id="announce-popover">Test announcement with popover</button>
+  <div id="sample-popover" popover="manual" role="region" aria-label="Notifications" tabindex="-1">
+    <p>Popover opened.</p>
+    <button type="button" id="close-popover">Dismiss</button>
+  </div>
+  <button type="button" id="announce-shared">Test Stack announcement writer</button>
+  <p id="shared-result"></p>
+  <script src="/use_announce.js"></script>
+  <script>
+    const sharedButton = document.getElementById('announce-shared');
+    if (typeof installAnnounce === 'function') {
+      const writer = installAnnounce().createAnnouncer();
+      writer.prepare(sharedButton);
+      sharedButton.addEventListener('click', () => {
+        writer.announce(sharedButton, 'Stack writer test message received.', () => true);
+        document.getElementById('shared-result').textContent = 'Stack writer test message sent.';
+      });
+    } else {
+      sharedButton.disabled = true;
+      document.getElementById('shared-result').textContent = 'Serve use_announce.js alongside this page to run the Stack writer check.';
+    }
+    document.getElementById('announce').addEventListener('click', () => {
+      document.getElementById('message').textContent = 'Live region test message received.';
+    });
+    document.getElementById('announce-clipped').addEventListener('click', () => {
+      document.getElementById('clipped').textContent = 'Hidden announcement received.';
+      document.getElementById('clipped-result').textContent = 'Hidden announcement sent.';
+    });
+    const popover = document.getElementById('sample-popover');
+    document.getElementById('announce-popover').addEventListener('click', () => {
+      popover.showPopover();
+      const status = document.getElementById('clipped');
+      status.textContent = '';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        status.textContent = 'Popover announcement received.';
+      }));
+    });
+    document.getElementById('close-popover').addEventListener('click', () => popover.hidePopover());
+  </script>
+</body>
+</html>

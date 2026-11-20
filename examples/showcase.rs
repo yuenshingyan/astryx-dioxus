@@ -4,8 +4,12 @@ use std::pin::Pin;
 use astryx_dioxus::{Button, ButtonElevation, ButtonSize, ButtonType, ButtonVariant, STYLES};
 use dioxus::prelude::*;
 
+#[path = "showcase/aspect_ratio.rs"]
+mod aspect_ratio;
 #[path = "showcase/badge.rs"]
 mod badge;
+#[path = "showcase/blockquote.rs"]
+mod blockquote;
 #[path = "showcase/button_contract.rs"]
 mod button_contract;
 #[path = "showcase/button_group.rs"]
@@ -18,6 +22,8 @@ mod card;
 mod clickable_card;
 #[path = "showcase/divider.rs"]
 mod divider;
+#[path = "showcase/heading.rs"]
+mod heading;
 #[path = "showcase/icon_button.rs"]
 mod icon_button;
 #[path = "showcase/kbd.rs"]
@@ -32,16 +38,25 @@ mod selectable_card;
 mod skeleton;
 #[path = "showcase/spinner.rs"]
 mod spinner;
+#[path = "showcase/stack.rs"]
+mod stack;
 #[path = "showcase/status_dot.rs"]
 mod status_dot;
+#[path = "showcase/text.rs"]
+mod text;
+#[path = "showcase/typography_animation.rs"]
+mod typography_animation;
 
+use aspect_ratio::AspectRatioExamples;
 use badge::BadgeExamples;
+use blockquote::BlockquoteExamples;
 use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
 use card::CardExamples;
 use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
+use heading::HeadingExamples;
 use icon_button::IconButtonExamples;
 use kbd::KbdExamples;
 use link::LinkExamples;
@@ -49,7 +64,9 @@ use progress_bar::ProgressBarExamples;
 use selectable_card::SelectableCardExamples;
 use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
+use stack::StackExamples;
 use status_dot::StatusDotExamples;
+use text::TextExamples;
 
 const FIGTREE: Asset = asset!("/assets/fonts/Figtree-latin.woff2");
 
@@ -63,6 +80,9 @@ fn main() {
 
 #[component]
 fn App() -> Element {
+    if typography_animation::is_requested() {
+        return rsx! { typography_animation::TypographyAnimation {} };
+    }
     let mut count = use_signal(|| 0);
     let mut ancestor_count = use_signal(|| 0);
     let mut form_count = use_signal(|| 0);
@@ -80,7 +100,7 @@ fn App() -> Element {
     ];
 
     rsx! {
-        document::Title { "Astryx Dioxus — Buttons and Link" }
+        document::Title { "Astryx Dioxus Showcase" }
         document::Style { "{STYLES}" }
         document::Style { "@font-face {{font-family:Figtree;src:url('{FIGTREE}') format('woff2');font-style:normal;font-weight:300 900;font-display:swap;}}" }
         document::Style { "
@@ -93,7 +113,7 @@ fn App() -> Element {
             .demo-count--warning {{ background:light-dark(#fae19e,#e2b6233d);color:light-dark(#4b3900,#eec448); }}
         " }
         main { "data-astryx-theme": "astryx",
-            h1 { "Astryx Buttons and Link" }
+            h1 { "Astryx Dioxus Showcase" }
             p { "Documented patterns, interaction states, and integrations. See docs/ for each component's verification notes." }
             nav { "aria-label": "Showcase sections",
                 a { href: "#button-group-examples", "ButtonGroup examples" }
@@ -116,7 +136,13 @@ fn App() -> Element {
                 " · "
                 a { href: "#progress-bar-examples", "ProgressBar examples" }
                 " · "
+                a { href: "#blockquote-examples", "Blockquote examples" }
+                " · "
                 a { href: "#card-examples", "Card examples" }
+                " · "
+                a { href: "#aspect-ratio-examples", "AspectRatio examples" }
+                " · "
+                a { href: "#stack-examples", "Stack examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -217,10 +243,15 @@ fn App() -> Element {
             KbdExamples {}
             SkeletonExamples {}
             StatusDotExamples {}
+            TextExamples {}
+            HeadingExamples {}
             ProgressBarExamples {}
+            BlockquoteExamples {}
             CardExamples {}
             ClickableCardExamples {}
             SelectableCardExamples {}
+            AspectRatioExamples {}
+            StackExamples {}
         }
     }
 }

@@ -1,0 +1,76 @@
+// Required centered-anchor subset of Layer/useLayer and layerSlideRules at the pinned source.
+// Native anchor layout, not a JS approximation, owns scrolling, flipping and clipping.
+const closeTransitionKeepsShown = tip => {
+  const style = getComputedStyle(tip);
+  const list = name => style.getPropertyValue(name).split(',').map(value => value.trim());
+  const behaviors = list('transition-behavior');
+  const durations = list('transition-duration').map(parseFloat);
+  const delays = list('transition-delay').map(parseFloat);
+  return list('transition-property').some((name, index) =>
+    (name === 'all' || name === 'display') &&
+    behaviors[index % behaviors.length] === 'allow-discrete' &&
+    (durations[index % durations.length] || 0) + (delays[index % delays.length] || 0) > 0);
+};
+export const createLayerPresentation = (element, tip, placement) => {
+  const name = `--astryx-truncation-${tip.id.replace(/[^a-zA-Z0-9_-]/g, '-')}`;
+  const names = () => (element.style.getPropertyValue('anchor-name') || '').split(',').map(x => x.trim()).filter(x => x && x !== 'none');
+  const add = () => element.style.setProperty('anchor-name', [...new Set([...names(), name])].join(', '));
+  const remove = () => {
+    const remaining = names().filter(x => x !== name);
+    if (remaining.length) element.style.setProperty('anchor-name', remaining.join(', '));
+    else element.style.removeProperty('anchor-name');
+  };
+  tip.style.positionAnchor = name;
+  tip.dataset.placement = placement;
+  let generation = 0;
+  let keepsShown = false;
+  return {
+    show() {
+      generation++;
+      // The closed state's transition owns the exit, not an entrance or an
+      // unrelated animation still running in hidden content (Layer/useLayer).
+      keepsShown = closeTransitionKeepsShown(tip);
+      add();
+      // Read the settled box, not the entrance's translated first frame. Otherwise
+      // the measured gap can itself include the travel and let the tip cross its anchor.
+      const animation = tip.style.getPropertyValue('animation');
+      const priority = tip.style.getPropertyPriority('animation');
+      tip.style.setProperty('animation', 'none', 'important');
+      tip.showPopover();
+      const a = element.getBoundingClientRect(), b = tip.getBoundingClientRect();
+      const x = b.right <= a.left ? 1 : b.left >= a.right ? -1 : 0;
+      const y = b.bottom <= a.top ? 1 : b.top >= a.bottom ? -1 : 0;
+      tip.style.setProperty('--_astryx-layer-enter-x', x);
+      tip.style.setProperty('--_astryx-layer-enter-y', y);
+      tip.style.setProperty('--_astryx-layer-enter-origin', `${x === 1 ? '100%' : x === -1 ? '0%' : '50%'} ${y === 1 ? '100%' : y === -1 ? '0%' : '50%'}`);
+      const gap = x === 1 ? a.left - b.right : x === -1 ? b.left - a.right : y === 1 ? a.top - b.bottom : b.top - a.bottom;
+      tip.style.setProperty('--_astryx-layer-enter-gap', `${Math.max(0, gap)}px`);
+      if (animation) tip.style.setProperty('animation', animation, priority);
+      else tip.style.removeProperty('animation');
+    },
+    hide() {
+      const current = ++generation;
+      if (keepsShown && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const property = tip.style.getPropertyValue('transition-property');
+        const priority = tip.style.getPropertyPriority('transition-property');
+        tip.style.setProperty('transition-property', 'none', 'important');
+        tip.hidePopover();
+        // Commit the hidden state before restoring consumer transitions.
+        void getComputedStyle(tip).display;
+        if (property) tip.style.setProperty('transition-property', property, priority);
+        else tip.style.removeProperty('transition-property');
+        remove();
+        return;
+      }
+      tip.hidePopover();
+      // Parsing allow-discrete does not mean this engine paints a closed popover.
+      // Never keep the anchor alive for unrelated animations or fake a top layer.
+      const exit = keepsShown && getComputedStyle(tip).display !== 'none' && tip.getAnimations().find(a =>
+        a.transitionProperty === 'display' && a.playState === 'running');
+      if (!exit) { remove(); return; }
+      const finish = () => { if (generation === current) remove(); };
+      exit.finished.then(finish, finish);
+    },
+    dispose() { generation++; remove(); tip.remove(); },
+  };
+};

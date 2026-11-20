@@ -1,0 +1,56 @@
+{
+  "url": "https://astryx.atmeta.com/components/Stack",
+  "capturedAt": "2026-11-20T09:31:33.434Z",
+  "browser": "Chrome/157.0.8103.80",
+  "deploymentCommit": "unknown",
+  "sourcePin": "476a3153417dbf75c565f7df05b0784e94ddd59e",
+  "viewport": [
+    1200,
+    1600,
+    1
+  ],
+  "observations": {
+    "avatarAttributes": {
+      "role": "img",
+      "aria-label": "Olivia Chen",
+      "tabindex": "0",
+      "data-size": "md",
+      "data-shape": "circle"
+    },
+    "fontSmoothing": "antialiased",
+    "bodyFontSmoothing": "antialiased",
+    "images": [],
+    "tokenActions": 0
+  },
+  "keyboard": {
+    "isAvatar": true,
+    "focusVisible": true,
+    "outline": "rgb(223, 226, 229) solid 2px",
+    "describedBy": null,
+    "tips": [
+      {
+        "text": "Olivia Chen",
+        "rect": {
+          "x": 594.59375,
+          "y": 1027.75,
+          "width": 87.671875,
+          "height": 28,
+          "top": 1027.75,
+          "right": 682.265625,
+          "bottom": 1055.75,
+          "left": 594.59375
+        }
+      }
+    ]
+  },
+  "escape": {
+    "active": true,
+    "visibleTips": 0
+  },
+  "action": {
+    "text": [
+      "Demo: this profile would open here"
+    ],
+    "messagePresent": true
+  }
+}

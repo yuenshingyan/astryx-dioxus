@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+/* Offline, source-derived reconstruction, NOT a catalog capture or proof that
+   the published catalog equals the pin. Text/text.stylex.ts blob
+   and theme/tokens.stylex.ts at 476a3153417dbf75c565f7df05b0784e94ddd59e.
+   Frames/content reproduce the eight Text-only CLI templates at the same pin.
+   Native Stack adapters: vertical gap 2=8px, 3=12px. Font supplied by test. */
+:root { --primary:light-dark(#0a1317,#dfe2e5);--secondary:light-dark(#4e606f,#aaafb5);--disabled:light-dark(#a4b0bc,#6f747c);--accent:light-dark(#0064e0,#3e9efb);--border:light-dark(#05365919,#f2f4f619) }
+body {margin:0;font-family:Figtree,sans-serif}
+.stack {display:flex;flex-direction:column;gap:.75rem}
+.text {font-size:.875rem;line-height:1.4286;font-weight:400;color:var(--primary);display:inline;overflow-wrap:break-word}
+.large {font-size:1.0625rem;line-height:1.4118;font-weight:600}
+.label {font-weight:500}
+.supporting {font-size:.75rem;line-height:1.6667;color:var(--secondary)}
+.code {font-family:"SF Mono",Monaco,Consolas,monospace}
+.block {display:block}
+.single {display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;word-break:break-all;overflow-wrap:normal}
+.multi {overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;word-break:normal;overflow-wrap:break-word}
+</style></head><body><script>
+const longText='The design system provides a consistent set of typography tokens, spacing scales, and color palettes that ensure every surface in the product feels cohesive regardless of which team built it.';
+const text=(type,content,style='',pattern='')=>`<span class="text ${type}" style="${style}" ${pattern?`data-text-pattern="${pattern}"`:''}>${content}</span>`;
+const stack=(id,content,style='')=>`<div id="${id}" class="stack" style="${style}">${content}</div>`;
+const frame=(content,style='')=>`<div style="border:1px solid var(--border);padding:8px;${style}">${content}</div>`;
+const types=[['','Body text','Body text for paragraphs and general content'],['large','Large text','Large text for introductions and callouts'],['label','Label text','Label text for form fields and section titles'],['supporting','Supporting text','Supporting text for captions and metadata'],['code','Code text','const theme = defineTheme({})'],['','Strikethrough','Body text with strikethrough decoration','text-decoration:line-through'],['','Tabular numbers','1,234.56  78.90  100,000.00','font-variant-numeric:tabular-nums']];
+document.body.insertAdjacentHTML('beforeend',
+stack('showcase',[['','Body: The bulk of content'],['large','Large: Emphasized content'],['label','Label: Form and chart labels'],['supporting','Supporting: Helper text'],['code','Code: const x = 42;']].map(([t,c])=>text(t,c,'','showcase')).join(''),'gap:.5rem')+
+stack('types',types.map(([t,l,c,s=''])=>`<div style="display:flex;flex-direction:column;gap:0">${text('supporting',l,'color:var(--secondary)')}${text(t+' block',c,s,'types')}</div>`).join(''))+
+stack('colors',[['primary','Primary — Default for headings and body text'],['secondary','Secondary — Supporting details and metadata'],['accent','Accent — Links, emphasis, and accent-colored text'],['disabled','Disabled — Unavailable or inactive content'],['secondary','Placeholder — Empty field hints']].map(([v,c])=>text('',c,`color:var(--${v})`,'colors')).join(''))+
+stack('weight',[['400','Normal'],['500','Medium'],['600','Semibold'],['700','Bold']].map(([v,c])=>text('block',c,`font-weight:${v}`,'weight')).join(''))+
+`<div id="inline">${text('block','Design tokens are '+text('code','themeable')+' and shared across every surface.','','inline')}</div>`+
+stack('truncation',[1,2,3].map(n=>`<div>${text('supporting block',n+' '+(n===1?'line':'lines'),'color:var(--secondary)')}${frame(text(n===1?'single':'multi',longText,n>1?`-webkit-line-clamp:${n}`:'','truncation'))}</div>`).join(''),'gap:16px;max-width:300px')+
+stack('wrap',[
+['wrap','Wrap (default)','This text wraps normally at word boundaries when it reaches the edge.'],['nowrap','Nowrap','This text does not wrap and will overflow its container.'],['balance','Balance','This text is balanced for better visual appearance across lines.'],['pretty','Pretty','This text uses pretty wrap to avoid orphans at the end of paragraphs.']
+].map(([v,l,c])=>`<div>${text('label block',l)}${frame(text('',c,`text-wrap:${v}`,'wrap'),`width:200px;${v==='nowrap'?'overflow:hidden':''}`)}</div>`).join(''),'gap:16px;max-width:400px')+
+stack('word-break',[
+['normal','Break-word (default for multi-line)','This is a verylongunbreakableword for a break-word example'],['break-all','Break-all (default for single-line)','Breaks anywhere: abcdefghijklmnopqrstuvwxyz0123456789']
+].map(([v,l,c])=>`<div>${text('label block',l)}${frame(text('multi',c,`-webkit-line-clamp:2;word-break:${v};${v==='break-all'?'overflow-wrap:normal':''}`,'word-break'),'width:200px')}</div>`).join(''),'gap:16px;max-width:400px'));
+</script></body></html>

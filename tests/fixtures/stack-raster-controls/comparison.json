@@ -1,0 +1,147 @@
+{
+  "localFontSha256": "8330490a01c60c196eae00b823de8102275aaa5862e7b76a7af21b8745338928",
+  "limits": "No original font binary or deployed commit was captured. Remaining <=1 channel-level differences are unclassified quantization-scale residuals, not proven pixel identity or a source paint defect.",
+  "cases": {
+    "directions": {
+      "historicalVsTransform": {
+        "size": [
+          330,
+          88
+        ],
+        "meanAbsoluteChannelError": 0.0,
+        "maxChannelError": 0,
+        "differentPixelFraction": 0.0
+      },
+      "canonicalVsLayout": {
+        "size": [
+          330,
+          88
+        ],
+        "meanAbsoluteChannelError": 0.0,
+        "maxChannelError": 0,
+        "differentPixelFraction": 0.0
+      },
+      "layoutVsRepeat": {
+        "size": [
+          330,
+          88
+        ],
+        "meanAbsoluteChannelError": 0.0,
+        "maxChannelError": 0,
+        "differentPixelFraction": 0.0
+      },
+      "transformVsLayout": {
+        "size": [
+          330,
+          88
+        ],
+        "meanAbsoluteChannelError": 0.0818526170798898,
+        "maxChannelError": 6,
+        "differentPixelFraction": 0.03130165289256198
+      },
+      "publishedVsLayout": {
+        "size": [
+          330,
+          88
+        ],
+        "meanAbsoluteChannelError": 0.0,
+        "maxChannelError": 0,
+        "differentPixelFraction": 0.0
+      }
+    },
+    "alignment": {
+      "historicalVsTransform": {
+        "size": [
+          158,
+          312
+        ],
+        "meanAbsoluteChannelError": 0.0,
+        "maxChannelError": 0,
+        "differentPixelFraction": 0.0
+      },
+      "canonicalVsLayout": {
+        "size": [
+          158,
+          312
+        ],
+        "meanAbsoluteChannelError": 0.0,
+        "maxChannelError": 0,
+        "differentPixelFraction": 0.0
+      },
+      "layoutVsRepeat": {
+        "size": [
+          158,
+          312
+        ],
+        "meanAbsoluteChannelError": 0.0,
+        "maxChannelError": 0,
+        "differentPixelFraction": 0.0
+      },
+      "transformVsLayout": {
+        "size": [
+          158,
+          312
+        ],
+        "meanAbsoluteChannelError": 0.9513753651411879,
+        "maxChannelError": 203,
+        "differentPixelFraction": 0.06274342745861733
+      },
+      "publishedVsLayout": {
+        "size": [
+          158,
+          312
+        ],
+        "meanAbsoluteChannelError": 0.004259980525803311,
+        "maxChannelError": 1,
+        "differentPixelFraction": 0.004259980525803311
+      }
+    },
+    "fill": {
+      "historicalVsTransform": {
+        "size": [
+          219,
+          144
+        ],
+        "meanAbsoluteChannelError": 0.0,
+        "maxChannelError": 0,
+        "differentPixelFraction": 0.0
+      },
+      "canonicalVsLayout": {
+        "size": [
+          219,
+          144
+        ],
+        "meanAbsoluteChannelError": 0.0,
+        "maxChannelError": 0,
+        "differentPixelFraction": 0.0
+      },
+      "layoutVsRepeat": {
+        "size": [
+          219,
+          144
+        ],
+        "meanAbsoluteChannelError": 0.0,
+        "maxChannelError": 0,
+        "differentPixelFraction": 0.0
+      },
+      "transformVsLayout": {
+        "size": [
+          219,
+          144
+        ],
+        "meanAbsoluteChannelError": 1.0986174530695079,
+        "maxChannelError": 204,
+        "differentPixelFraction": 0.038495687468290206
+      },
+      "publishedVsLayout": {
+        "size": [
+          219,
+          144
+        ],
+        "meanAbsoluteChannelError": 0.009322678843226788,
+        "maxChannelError": 1,
+        "differentPixelFraction": 0.009322678843226788
+      }
+    }
+  }
+}

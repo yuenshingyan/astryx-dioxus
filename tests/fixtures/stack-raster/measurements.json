@@ -1,0 +1,3087 @@
+{
+  "kind": "Actual rendered Rust nodes; intrinsic supporting sizing and paint; layout-positioned at original capture coordinates without transforms",
+  "browser": "Chrome/157.0.8103.80",
+  "viewport": [
+    1200,
+    1600,
+    1
+  ],
+  "mode": "Neutral dark, LTR, root16",
+  "sourceCapture": "2026-11-20T09:00:49.775Z",
+  "cases": {
+    "directions": {
+      "clip": {
+        "x": 565.0625,
+        "y": 475.875,
+        "width": 329.859375,
+        "height": 88,
+        "scale": 1
+      },
+      "nodes": [
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--horizontal",
+            "astryx-stack--justify-center",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            0,
+            0,
+            329.859375,
+            88
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--horizontal",
+            "astryx-stack--align-center",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            0,
+            0,
+            232.234375,
+            88
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-token"
+          ],
+          "box": [
+            0,
+            32,
+            72.078125,
+            24
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "6px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-token__label"
+          ],
+          "box": [
+            8,
+            34,
+            56.078125,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-token"
+          ],
+          "box": [
+            80.078125,
+            32,
+            72.078125,
+            24
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "6px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-token__label"
+          ],
+          "box": [
+            88.078125,
+            34,
+            56.078125,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-token"
+          ],
+          "box": [
+            160.15625,
+            32,
+            72.078125,
+            24
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "6px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-token__label"
+          ],
+          "box": [
+            168.15625,
+            34,
+            56.078125,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--vertical",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            272.234375,
+            0,
+            57.625,
+            88
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-token"
+          ],
+          "box": [
+            272.234375,
+            0,
+            57.625,
+            24
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "6px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-token__label"
+          ],
+          "box": [
+            280.234375,
+            2,
+            41.625,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-token"
+          ],
+          "box": [
+            272.234375,
+            32,
+            57.625,
+            24
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "6px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-token__label"
+          ],
+          "box": [
+            280.234375,
+            34,
+            41.625,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-token"
+          ],
+          "box": [
+            272.234375,
+            64,
+            57.625,
+            24
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "6px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-token__label"
+          ],
+          "box": [
+            280.234375,
+            66,
+            41.625,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        }
+      ],
+      "screenshot": {
+        "path": "directions.png",
+        "sha256": "3334cbc0f6debc79d3a171addab7706e77cbcb4188018eb5cf66c2651c482057"
+      }
+    },
+    "alignment": {
+      "clip": {
+        "x": 650.875,
+        "y": 1850.75,
+        "width": 158.234375,
+        "height": 312,
+        "scale": 1
+      },
+      "nodes": [
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--vertical",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            0,
+            0,
+            158.234375,
+            312
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-card",
+            "astryx-card--elevation-none"
+          ],
+          "box": [
+            0,
+            0,
+            158.234375,
+            96
+          ],
+          "paint": [
+            "rgb(27, 27, 27)",
+            "rgb(255, 255, 255)",
+            "12px"
+          ],
+          "border": [
+            "1px",
+            "solid",
+            "rgba(255, 255, 255, 0.1)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--vertical",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            16,
+            16,
+            126.234375,
+            64
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-text",
+            "astryx-text--type-supporting",
+            "astryx-text--color-secondary",
+            "astryx-text--inline"
+          ],
+          "box": [
+            16,
+            16,
+            126.234375,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(158, 158, 158)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(158, 158, 158)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--horizontal",
+            "astryx-stack--justify-start",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            16,
+            52,
+            126.234375,
+            28
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button",
+            "astryx-button--secondary"
+          ],
+          "box": [
+            16,
+            52,
+            67.640625,
+            28
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "10px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__content"
+          ],
+          "box": [
+            28,
+            60,
+            43.640625,
+            12
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__label"
+          ],
+          "box": [
+            28,
+            56,
+            43.640625,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__status"
+          ],
+          "box": [
+            49.3125,
+            65.5,
+            1,
+            1
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": "status",
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button",
+            "astryx-button--primary"
+          ],
+          "box": [
+            87.640625,
+            52,
+            54.59375,
+            28
+          ],
+          "paint": [
+            "rgb(241, 241, 241)",
+            "rgb(17, 17, 17)",
+            "10px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(17, 17, 17)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__content"
+          ],
+          "box": [
+            99.640625,
+            60,
+            30.59375,
+            12
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(17, 17, 17)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(17, 17, 17)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__label"
+          ],
+          "box": [
+            99.640625,
+            56,
+            30.59375,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(17, 17, 17)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(17, 17, 17)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__status"
+          ],
+          "box": [
+            114.4375,
+            65.5,
+            1,
+            1
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(17, 17, 17)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(17, 17, 17)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": "status",
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-card",
+            "astryx-card--elevation-none"
+          ],
+          "box": [
+            0,
+            108,
+            158.234375,
+            96
+          ],
+          "paint": [
+            "rgb(27, 27, 27)",
+            "rgb(255, 255, 255)",
+            "12px"
+          ],
+          "border": [
+            "1px",
+            "solid",
+            "rgba(255, 255, 255, 0.1)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--vertical",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            16,
+            124,
+            126.234375,
+            64
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-text",
+            "astryx-text--type-supporting",
+            "astryx-text--color-secondary",
+            "astryx-text--inline"
+          ],
+          "box": [
+            16,
+            124,
+            126.234375,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(158, 158, 158)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(158, 158, 158)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--horizontal",
+            "astryx-stack--justify-center",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            16,
+            160,
+            126.234375,
+            28
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button",
+            "astryx-button--secondary"
+          ],
+          "box": [
+            16,
+            160,
+            67.640625,
+            28
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "10px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__content"
+          ],
+          "box": [
+            28,
+            168,
+            43.640625,
+            12
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__label"
+          ],
+          "box": [
+            28,
+            164,
+            43.640625,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__status"
+          ],
+          "box": [
+            49.3125,
+            173.5,
+            1,
+            1
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": "status",
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button",
+            "astryx-button--primary"
+          ],
+          "box": [
+            87.640625,
+            160,
+            54.59375,
+            28
+          ],
+          "paint": [
+            "rgb(241, 241, 241)",
+            "rgb(17, 17, 17)",
+            "10px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(17, 17, 17)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__content"
+          ],
+          "box": [
+            99.640625,
+            168,
+            30.59375,
+            12
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(17, 17, 17)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(17, 17, 17)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__label"
+          ],
+          "box": [
+            99.640625,
+            164,
+            30.59375,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(17, 17, 17)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(17, 17, 17)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__status"
+          ],
+          "box": [
+            114.4375,
+            173.5,
+            1,
+            1
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(17, 17, 17)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(17, 17, 17)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": "status",
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-card",
+            "astryx-card--elevation-none"
+          ],
+          "box": [
+            0,
+            216,
+            158.234375,
+            96
+          ],
+          "paint": [
+            "rgb(27, 27, 27)",
+            "rgb(255, 255, 255)",
+            "12px"
+          ],
+          "border": [
+            "1px",
+            "solid",
+            "rgba(255, 255, 255, 0.1)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--vertical",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            16,
+            232,
+            126.234375,
+            64
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-text",
+            "astryx-text--type-supporting",
+            "astryx-text--color-secondary",
+            "astryx-text--inline"
+          ],
+          "box": [
+            16,
+            232,
+            126.234375,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(158, 158, 158)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(158, 158, 158)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--horizontal",
+            "astryx-stack--justify-end",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            16,
+            268,
+            126.234375,
+            28
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button",
+            "astryx-button--secondary"
+          ],
+          "box": [
+            16,
+            268,
+            67.640625,
+            28
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "10px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__content"
+          ],
+          "box": [
+            28,
+            276,
+            43.640625,
+            12
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__label"
+          ],
+          "box": [
+            28,
+            272,
+            43.640625,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__status"
+          ],
+          "box": [
+            49.3125,
+            281.5,
+            1,
+            1
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": "status",
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button",
+            "astryx-button--primary"
+          ],
+          "box": [
+            87.640625,
+            268,
+            54.59375,
+            28
+          ],
+          "paint": [
+            "rgb(241, 241, 241)",
+            "rgb(17, 17, 17)",
+            "10px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(17, 17, 17)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__content"
+          ],
+          "box": [
+            99.640625,
+            276,
+            30.59375,
+            12
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(17, 17, 17)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(17, 17, 17)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__label"
+          ],
+          "box": [
+            99.640625,
+            272,
+            30.59375,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(17, 17, 17)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(17, 17, 17)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__status"
+          ],
+          "box": [
+            114.4375,
+            281.5,
+            1,
+            1
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(17, 17, 17)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(17, 17, 17)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": "status",
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        }
+      ],
+      "screenshot": {
+        "path": "alignment.png",
+        "sha256": "8b9a1521a917c8267b62558fc269606c3b0334c9a4ad758ed52c6cf81951be5c"
+      }
+    },
+    "fill": {
+      "clip": {
+        "x": 620.4375,
+        "y": 2363.75,
+        "width": 219.125,
+        "height": 144,
+        "scale": 1
+      },
+      "nodes": [
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--vertical",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            0,
+            0,
+            219.125,
+            144
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--horizontal",
+            "astryx-stack--align-center",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            0,
+            0,
+            219.125,
+            40
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack-item"
+          ],
+          "box": [
+            0,
+            2,
+            36,
+            36
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-avatar"
+          ],
+          "box": [
+            0,
+            2,
+            36,
+            36
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "9999px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": "img",
+          "name": "Olivia Chen",
+          "tabIndex": "0",
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-avatar__content"
+          ],
+          "box": [
+            0,
+            2,
+            36,
+            36
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "9999px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-avatar-fallback"
+          ],
+          "box": [
+            0,
+            2,
+            36,
+            36
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14.4px",
+            "500",
+            "20.5718px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "\"OC\" / \"\""
+        },
+        {
+          "targets": [
+            "astryx-stack-item"
+          ],
+          "box": [
+            48,
+            0,
+            103.3125,
+            40
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--vertical",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            48,
+            0,
+            103.3125,
+            40
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-text",
+            "astryx-text--type-body",
+            "astryx-text--color-primary",
+            "astryx-text--weight-bold",
+            "astryx-text--inline"
+          ],
+          "box": [
+            48,
+            0,
+            103.3125,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "700",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-text",
+            "astryx-text--type-supporting",
+            "astryx-text--color-secondary",
+            "astryx-text--inline"
+          ],
+          "box": [
+            48,
+            20,
+            103.3125,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(158, 158, 158)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(158, 158, 158)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack-item"
+          ],
+          "box": [
+            163.3125,
+            6,
+            55.8125,
+            28
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button",
+            "astryx-button--secondary"
+          ],
+          "box": [
+            163.3125,
+            6,
+            55.8125,
+            28
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "10px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__content"
+          ],
+          "box": [
+            175.3125,
+            14,
+            31.8125,
+            12
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__label"
+          ],
+          "box": [
+            175.3125,
+            10,
+            31.8125,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__status"
+          ],
+          "box": [
+            190.71875,
+            19.5,
+            1,
+            1
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": "status",
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--horizontal",
+            "astryx-stack--align-center",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            0,
+            52,
+            219.125,
+            40
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack-item"
+          ],
+          "box": [
+            0,
+            54,
+            36,
+            36
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-avatar"
+          ],
+          "box": [
+            0,
+            54,
+            36,
+            36
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "9999px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": "img",
+          "name": "Marcus Rivera",
+          "tabIndex": "0",
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-avatar__content"
+          ],
+          "box": [
+            0,
+            54,
+            36,
+            36
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "9999px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-avatar-fallback"
+          ],
+          "box": [
+            0,
+            54,
+            36,
+            36
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14.4px",
+            "500",
+            "20.5718px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "\"MR\" / \"\""
+        },
+        {
+          "targets": [
+            "astryx-stack-item"
+          ],
+          "box": [
+            48,
+            52,
+            103.3125,
+            40
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--vertical",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            48,
+            52,
+            103.3125,
+            40
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-text",
+            "astryx-text--type-body",
+            "astryx-text--color-primary",
+            "astryx-text--weight-bold",
+            "astryx-text--inline"
+          ],
+          "box": [
+            48,
+            52,
+            103.3125,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "700",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-text",
+            "astryx-text--type-supporting",
+            "astryx-text--color-secondary",
+            "astryx-text--inline"
+          ],
+          "box": [
+            48,
+            72,
+            103.3125,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(158, 158, 158)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(158, 158, 158)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack-item"
+          ],
+          "box": [
+            163.3125,
+            58,
+            55.8125,
+            28
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button",
+            "astryx-button--secondary"
+          ],
+          "box": [
+            163.3125,
+            58,
+            55.8125,
+            28
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "10px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__content"
+          ],
+          "box": [
+            175.3125,
+            66,
+            31.8125,
+            12
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__label"
+          ],
+          "box": [
+            175.3125,
+            62,
+            31.8125,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__status"
+          ],
+          "box": [
+            190.71875,
+            71.5,
+            1,
+            1
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": "status",
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--horizontal",
+            "astryx-stack--align-center",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            0,
+            104,
+            219.125,
+            40
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack-item"
+          ],
+          "box": [
+            0,
+            106,
+            36,
+            36
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-avatar"
+          ],
+          "box": [
+            0,
+            106,
+            36,
+            36
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "9999px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": "img",
+          "name": "Aisha Patel",
+          "tabIndex": "0",
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-avatar__content"
+          ],
+          "box": [
+            0,
+            106,
+            36,
+            36
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "9999px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-avatar-fallback"
+          ],
+          "box": [
+            0,
+            106,
+            36,
+            36
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14.4px",
+            "500",
+            "20.5718px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "\"AP\" / \"\""
+        },
+        {
+          "targets": [
+            "astryx-stack-item"
+          ],
+          "box": [
+            48,
+            104,
+            103.3125,
+            40
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack",
+            "astryx-stack--vertical",
+            "astryx-stack--gap"
+          ],
+          "box": [
+            48,
+            104,
+            103.3125,
+            40
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-text",
+            "astryx-text--type-body",
+            "astryx-text--color-primary",
+            "astryx-text--weight-bold",
+            "astryx-text--inline"
+          ],
+          "box": [
+            48,
+            104,
+            103.3125,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "700",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-text",
+            "astryx-text--type-supporting",
+            "astryx-text--color-secondary",
+            "astryx-text--inline"
+          ],
+          "box": [
+            48,
+            124,
+            103.3125,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(158, 158, 158)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(158, 158, 158)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "12px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-stack-item"
+          ],
+          "box": [
+            163.3125,
+            110,
+            55.8125,
+            28
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "400",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button",
+            "astryx-button--secondary"
+          ],
+          "box": [
+            163.3125,
+            110,
+            55.8125,
+            28
+          ],
+          "paint": [
+            "rgba(255, 255, 255, 0.1)",
+            "rgb(255, 255, 255)",
+            "10px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__content"
+          ],
+          "box": [
+            175.3125,
+            118,
+            31.8125,
+            12
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__label"
+          ],
+          "box": [
+            175.3125,
+            114,
+            31.8125,
+            20
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": null,
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        },
+        {
+          "targets": [
+            "astryx-button__status"
+          ],
+          "box": [
+            190.71875,
+            123.5,
+            1,
+            1
+          ],
+          "paint": [
+            "rgba(0, 0, 0, 0)",
+            "rgb(255, 255, 255)",
+            "0px"
+          ],
+          "border": [
+            "0px",
+            "none",
+            "rgb(255, 255, 255)"
+          ],
+          "font": [
+            "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+            "14px",
+            "500",
+            "20.0004px"
+          ],
+          "role": "status",
+          "name": null,
+          "tabIndex": null,
+          "before": "none"
+        }
+      ],
+      "screenshot": {
+        "path": "fill.png",
+        "sha256": "73bbc6baee1dbf7414dcdc0e1b2d4d2a4812e8dbbbdaeb97ceb8e679000aa520"
+      }
+    }
+  }
+}

@@ -50,9 +50,48 @@ native input behavior, released layer capture and all three original patterns; s
 press/event integration, the private native-radio proof and the approved forced-color
 selection cue are verified. See [SelectableCard verification](docs/selectable-card-port.md)
 for callback adaptations, source-palette findings and verification boundaries.
+Semantic inline Code now has closed color/inherited-size props, native root events,
+shared typography tokens and an offline four-pattern example; see
+[Code verification](docs/code-port.md). Shared Text/Heading frame integration and
+unrun engine/device/screen-reader checks remain explicitly separate.
+Text adds shared post-layout/content truncation measurement, placement and offline
+source-derived Text-only examples. The approved shared follow-up adds retained
+first-interest tooltips, owned descriptions, actual-trigger focus gating and
+completed touch/pen toggling while preserving Button's undescribed cut-label path.
+Private truncation presentation uses independently downloaded Dioxus assets,
+native CSS anchors, source body typography and reduced-motion/exit semantics;
+see [presentation verification](docs/tooltip-presentation.md) for the tested internal
+subset and remaining full Tooltip/Layer limits. Text is not marked complete.
+See [Text verification](docs/text-port.md).
+Blockquote adds semantic quotes with shallow author/source attribution, logical
+RTL rules, and all three original patterns including existing Card testimonials;
+see [Blockquote verification](docs/blockquote-port.md) for source-derived offline
+comparisons and evidence boundaries.
+AspectRatio adds required numeric ratios, both clipping shapes, optional child fit,
+responsive CSS overrides and all six original patterns using offline replacement
+artwork; see [AspectRatio verification](docs/aspect-ratio-port.md) for pinned-source
+comparisons and remaining release/asset boundaries.
+Stack implements axis/alias resolution, shared token gaps, local logical padding,
+sizing precedence, wrapping, scrolling and caller-rendered native roots. Its SSR and
+offline source-derived comparisons plus actual published captures/isolated layout
+replay are recorded in [Stack verification](docs/stack-port.md). Private upstream-owned
+Token/Avatar/StackItem slices now render the original patterns, including named Avatar
+keyboard/hover tooltips and observable published action messages. Actual Rust screenshots,
+intrinsic geometry and paint are compared against captured Neutral-dark originals;
+a same-node raster control isolates the historical transform-induced differences.
+Layout-positioned screenshots are identical for Directions and differ by at most one
+channel level for Alignment/Fill. The [private Stack Toast slice](docs/stack-toast-port.md)
+presents the published action messages; its open geometry, paint and selected interactions
+are checked in Chrome. This does not complete public Toast, Token, Avatar, HStack, VStack,
+StackItem, Grid or Layout migrations.
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
+Heading now has native h1–h6, independent display types/weight/outline controls,
+all four original Heading patterns plus TextHeadingLevels, and focused SSR/offline
+Chromium evidence. It shares Text’s retained tooltip lifecycle and opt-in animation
+callbacks and demand-loaded private presentation; remaining verification limits
+are documented in [Heading verification](docs/heading-port.md).
 Publishing remains disabled until package metadata and licensing are confirmed.
 See [third-party notices](THIRD_PARTY_NOTICES.md) for the upstream MIT license.
 
@@ -66,6 +105,9 @@ cargo install dioxus-cli --version '~0.7' --locked
 
 dx serve --example showcase --web
 ```
+
+For the isolated inline Code patterns (not CodeBlock), run
+`dx serve --example code_patterns --web --port 8087`.
 
 ## Use the library locally
 
@@ -93,8 +135,11 @@ CSS styles target HTML/webview output, not a native renderer.
 
 ## Layout
 
+- `src/aspect_ratio/`: CSS-only ratio box and fit slot; child semantics and operations stay caller-owned.
 - `src/badge/`, `src/button/`, `src/button_group/`, `src/card/`, `src/clickable_card/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
+- `src/blockquote/`: semantic quote and bare attribution; no layout/typography dependency.
 - `src/selectable_card/`: controlled Card selection and its private native input context; not a completed Lab group migration.
+- `src/stack/`: standalone Stack and its axis/wrap types; convenience wrappers and StackItem remain separate migrations.
 - `src/layout/`: shared spacing-step lowering for container publishers, not a completed Layout migration.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
@@ -121,6 +166,10 @@ cargo clippy --all-targets -- -D warnings
 cargo check --example showcase --target wasm32-unknown-unknown
 ```
 
+AspectRatio's offline suite: `python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/aspect_ratio.browser.mjs`
+against its own `aspect_ratio` example on port 8092; provenance-only check:
+`node tests/aspect_ratio_source.mjs`. See [verification boundaries](docs/aspect-ratio-port.md).
+
 For browser interaction checks, see [Button browser testing](docs/button-port.md#browser-checks),
 [ButtonGroup testing](docs/button-group-port.md#verification),
 [IconButton testing](docs/icon-button-port.md#verification), [Link testing](docs/link-port.md#verification),
@@ -130,7 +179,21 @@ For browser interaction checks, see [Button browser testing](docs/button-port.md
 [ProgressBar testing](docs/progress-bar-port.md#verification), [Card testing](docs/card-port.md#verification),
 [ClickableCard testing](docs/clickable-card-port.md#verification),
 and [SelectableCard testing](docs/selectable-card-port.md#verification-and-integration-boundary).
-Run all fourteen component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
+Blockquote's offline suite is `node tests/blockquote.browser.mjs` (preview port 8091),
+with `node tests/blockquote_source.mjs` and `node tests/blockquote.contrast.mjs`;
+see its verification notes. For Stack, serve `dx serve --example stack --web --port 8093` and run
+`python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack.browser.mjs`;
+`python3 tests/stack_source.py --check` verifies the offline source-derived fixture.
+Run `python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack_published.browser.mjs`
+for the older frozen published-pattern layout comparison on the same owned 8093 preview.
+For actual rendered patterns, serve the focused `stack` example on owned port 8097, then run
+`STACK_URL=http://127.0.0.1:8097 python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack_patterns.browser.mjs`,
+`python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack_raster.browser.mjs`,
+and `python3 tests/stack_raster.py`. These write additive corrected/control fixtures;
+the historical actual/published captures remain intact. None needs catalog access.
+`tests/stack_published.capture.mjs` is a separate opt-in network capture, also requiring the lock.
+See its verification notes for the cache input, evidence limits and remaining gaps.
+Run all fourteen existing component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
 `node tests/icon_button.browser.mjs`, `node tests/link.browser.mjs`, `node tests/spinner.browser.mjs`,
 `node tests/badge.browser.mjs`, `node tests/divider.browser.mjs`, `node tests/kbd.browser.mjs`,
 `node tests/skeleton.browser.mjs`, `node tests/status_dot.browser.mjs`, `node tests/progress_bar.browser.mjs`,

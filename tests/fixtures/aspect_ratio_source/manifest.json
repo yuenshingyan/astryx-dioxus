@@ -1,0 +1,32 @@
+{
+  "repository": "https://github.com/meta/astryx",
+  "pin": "476a3153417dbf75c565f7df05b0784e94ddd59e",
+  "kind": "verified pinned source, not published measurements or release verification",
+  "files": {
+    "apps/storybook/stories/AspectRatio.stories.tsx": "1da9f9ecab523d57f9e416d8c5f00bfc2d4d2b32",
+    "docs/specs/components/AspectRatio/AspectRatio.spec.md": "8403948807f991525c6e3908e66655327516976e",
+    "packages/cli/assets/templates/blocks/components/AspectRatio/AspectRatioCircleImage.doc.mjs": "0a95cdc38b5529c04463b130f6e45e8adf6f450c",
+    "packages/cli/assets/templates/blocks/components/AspectRatio/AspectRatioCircleImage.tsx": "7ed0c148809579275183bf156831197fc5389d25",
+    "packages/cli/assets/templates/blocks/components/AspectRatio/AspectRatioImageGallery.doc.mjs": "96d4d84cf023a43f3c02270a7f60b0dbe7ff346d",
+    "packages/cli/assets/templates/blocks/components/AspectRatio/AspectRatioImageGallery.tsx": "2f5b687e5e1c9e484a66e9b70700bc766bc9e082",
+    "packages/cli/assets/templates/blocks/components/AspectRatio/AspectRatioShowcase.doc.mjs": "43c410b8a311bbc0282b673146d1d1a56206a2e0",
+    "packages/cli/assets/templates/blocks/components/AspectRatio/AspectRatioShowcase.tsx": "a51fac74c2b376d59be0a0fa0ebbcae6e04d4f18",
+    "packages/cli/assets/templates/blocks/components/AspectRatio/AspectRatioSquareImage.doc.mjs": "e97b094b7c0052b196c7821a541104307df60d13",
+    "packages/cli/assets/templates/blocks/components/AspectRatio/AspectRatioSquareImage.tsx": "70fc394144dbc35e55015ee875b494581e755b1b",
+    "packages/cli/assets/templates/blocks/components/AspectRatio/AspectRatioWidescreen.doc.mjs": "3ea773323992cf9638366e5ed1c8761153e6c7d4",
+    "packages/cli/assets/templates/blocks/components/AspectRatio/AspectRatioWidescreen.tsx": "b1bbb4066bcf62a9f1ff0b8a8eb654102110af87",
+    "packages/cli/assets/templates/blocks/components/AspectRatio/AspectRatioWithSkeleton.doc.mjs": "d19685e399b7134cf3db52a84609dc0f867a3ff5",
+    "packages/cli/assets/templates/blocks/components/AspectRatio/AspectRatioWithSkeleton.tsx": "c7c0088ea3d698f0ec9ab0ee6d6b2ad5a5298dae",
+    "packages/core/src/AspectRatio/AspectRatio.doc.mjs": "860acbed0c3d199e975e22e337cee1f98c3327e4",
+    "packages/core/src/AspectRatio/AspectRatio.test.tsx": "ee0e35ad7a8fcd611586788f6b7574328ebb2390",
+    "packages/core/src/AspectRatio/AspectRatio.tsx": "3e14cb37a39ed478355d30b280b3293f3f4d56a3",
+    "packages/core/src/AspectRatio/__tests__/AspectRatioFitLayers.a11y.browser.spec.ts": "70930834b7b3d771d2d0599e97e1b697765f2093",
+    "packages/core/src/AspectRatio/index.ts": "9d2fcc851394c35f6fb1eb315f8eb7bc3646a7cb",
+    "packages/core/src/BaseProps.ts": "02db07241593be3d04da6a394dcfd8c352dd7e6d",
+    "packages/core/src/Center/Center.tsx": "4e2c74dac91ee1e66e6edfd540936f0b5da35358",
+    "packages/core/src/Grid/Grid.tsx": "b9ec203c718fbee3868a5d164574b694989e0785",
+    "packages/core/src/theme/tokens.stylex.ts": "ec6ecd40da08501602ad730274d028d79640a1c9",
+    "packages/core/src/utils/mergeProps.ts": "3750bb89d2ab097a2021a263983558e663814270",
+    "packages/core/src/utils/themeProps.ts": "b93fb205c539242dfb18982521175005cfc0653a"
+  }
+}

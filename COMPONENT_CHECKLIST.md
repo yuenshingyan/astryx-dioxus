@@ -9,7 +9,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), [Skeleton](docs/skeleton-port.md), [StatusDot](docs/status-dot-port.md), [ProgressBar](docs/progress-bar-port.md), [Card](docs/card-port.md), and [SelectableCard](docs/selectable-card-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- [AspectRatio](docs/aspect-ratio-port.md), Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), [Skeleton](docs/skeleton-port.md), [StatusDot](docs/status-dot-port.md), [ProgressBar](docs/progress-bar-port.md), [Card](docs/card-port.md), [SelectableCard](docs/selectable-card-port.md), [ClickableCard](docs/clickable-card-port.md), and [Blockquote](docs/blockquote-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
@@ -480,17 +480,18 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [ ] **AvatarGroup — Interactive** (`AvatarGroupInteractive.doc.mjs`): profile links, overflow opens full member list.
     - [ ] **AvatarGroup** (`AvatarGroupShowcase.doc.mjs`): sliced facepile and server-side overflow count.
 
-- [ ] **[Blockquote](https://astryx.atmeta.com/components/Blockquote)**
+- [x] **[Blockquote](https://astryx.atmeta.com/components/Blockquote)**
 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Blockquote/Blockquote.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Blockquote).
 
   - **Content and behavior**
-    - [ ] No finite visual variant/size enum documented; quote children with or without `cite` attribution rendered in a cite element.
-    - [ ] Secondary text and logical inline-start rule/padding, mirrored to right in RTL.
+    - [x] No finite visual variant/size enum documented; quote children with or without `cite` attribution rendered in a cite element.
+    - [x] Secondary text and logical inline-start rule/padding, mirrored to right in RTL.
   - **Templates**
-    - [ ] **Blockquote — Showcase** (`BlockquoteShowcase.doc.mjs`): with/without citation.
-    - [ ] **Blockquote — Testimonials** (`BlockquoteTestimonials.doc.mjs`): quotes in Card/Grid social-proof layout.
-    - [ ] **Blockquote — With Attribution** (`BlockquoteWithCite.doc.mjs`): plain quote and credited quote.
+    - [x] **Blockquote — Showcase** (`BlockquoteShowcase.doc.mjs`): with/without citation.
+    - [x] **Blockquote — Testimonials** (`BlockquoteTestimonials.doc.mjs`): quotes in Card/Grid social-proof layout.
+    - [x] **Blockquote — With Attribution** (`BlockquoteWithCite.doc.mjs`): plain quote and credited quote.
+  - [Verification](docs/blockquote-port.md): six SSR tests, 48 offline source-derived pattern comparisons including existing Card framing, root refs/native events/AX/no-landmark/RTL/media, and 12/12 modeled text-contrast cases. Fixtures are pinned-source derivations, not published measurements; native demo-only Stack/Grid framing does not complete those independent migrations. Authoritative upstream gaps remain documented.
 
 - [ ] **[Citation](https://astryx.atmeta.com/components/Citation)**
 
@@ -1551,23 +1552,25 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [ ] **AppShell — Top Nav with Side Nav** (`AppShellTopNavWithSideNav.doc.mjs`): identity plus page navigation.
     - [ ] **AppShell — With Banner** (`AppShellWithBanner.doc.mjs`): full navigation and dismissable info banner.
 
-- [ ] **[Aspect Ratio](https://astryx.atmeta.com/components/AspectRatio)**
+- [x] **[Aspect Ratio](https://astryx.atmeta.com/components/AspectRatio)**
 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/AspectRatio/AspectRatio.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/AspectRatio).
 
+  - Verified source-faithful baseline: [inventory, offline comparisons and remaining release/artwork boundaries](docs/aspect-ratio-port.md). Native demo framing does not complete Center/Grid/Layout/Text migrations.
+
   - **Shape, fitting, and content**
-    - [ ] `shape`: `rectangle` (default), `ellipse`; ratio 1 makes ellipse circular.
-    - [ ] `fit`: `cover` (crop), `contain` (letterbox), `center` (natural-size centered); omitted means child owns sizing.
-    - [ ] Required numeric `ratio` is open-ended, not a preset enum; documented examples use 1:1, 4:3, 16:9.
-    - [ ] One child for fitted media; single wrapper for overlays/captions. Definite ancestor width required; shrink-to-fit parents collapse; height-only limits break ratio unless paired with auto width.
-    - [ ] Responsive ratio via StyleX/default branch or unlayered CSS; child owns alt text and semantics, no role/name added by container.
+    - [x] `shape`: `rectangle` (default), `ellipse`; ratio 1 makes ellipse circular.
+    - [x] `fit`: `cover` (crop), `contain` (letterbox), `center` (natural-size centered); omitted means child owns sizing.
+    - [x] Required numeric `ratio` is open-ended, not a preset enum; documented examples use 1:1, 4:3, 16:9.
+    - [x] One child for fitted media; single wrapper for overlays/captions. Definite ancestor width required; shrink-to-fit parents collapse; height-only limits break ratio unless paired with auto width.
+    - [x] Responsive ratio via StyleX/default branch or unlayered CSS; child owns alt text and semantics, no role/name added by container.
   - **Templates**
-    - [ ] **AspectRatio — Circle Image** (`AspectRatioCircleImage.doc.mjs`): ellipse, ratio 1.
-    - [ ] **AspectRatio — Image Gallery** (`AspectRatioImageGallery.doc.mjs`): 4:3 image grid.
-    - [ ] **AspectRatio** / **Aspect Ratio** (`AspectRatioShowcase.doc.mjs`): equal-height 1:1, 4:3, 16:9 image containers.
-    - [ ] **AspectRatio — Square Image** (`AspectRatioSquareImage.doc.mjs`): square media.
-    - [ ] **AspectRatio — 16:9 Widescreen Image** (`AspectRatioWidescreen.doc.mjs`).
-    - [ ] **AspectRatio — Loading Skeleton** (`AspectRatioWithSkeleton.doc.mjs`): reserved media space while loading.
+    - [x] **AspectRatio — Circle Image** (`AspectRatioCircleImage.doc.mjs`): ellipse, ratio 1.
+    - [x] **AspectRatio — Image Gallery** (`AspectRatioImageGallery.doc.mjs`): 4:3 image grid.
+    - [x] **AspectRatio** / **Aspect Ratio** (`AspectRatioShowcase.doc.mjs`): equal-height 1:1, 4:3, 16:9 image containers.
+    - [x] **AspectRatio — Square Image** (`AspectRatioSquareImage.doc.mjs`): square media.
+    - [x] **AspectRatio — 16:9 Widescreen Image** (`AspectRatioWidescreen.doc.mjs`).
+    - [x] **AspectRatio — Loading Skeleton** (`AspectRatioWithSkeleton.doc.mjs`): reserved media space while loading.
 
 - [x] **[Divider](https://astryx.atmeta.com/components/Divider)**
 
@@ -1717,24 +1720,26 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 
 - [ ] **[Stack](https://astryx.atmeta.com/components/Stack)**
 
+  - Standalone implementation and verified contracts: [Stack port notes](docs/stack-port.md). Seven SSR tests, source-derived comparisons, and isolated layout replay against actual published v0.7.16 captures pass. Private upstream-owned Token/Avatar/StackItem slices now render the exact supporting patterns with named Avatar focus/hover tooltips. Actual Rust intrinsic geometry/paint matches 59 captured Neutral-dark owner nodes, with separate actual screenshots and measured nonzero raster residuals. Published messages are observable via caller-owned status, not a Toast overlay port. Overall remains open for zero-difference images and independent public owners; published deployment commit is unknown. No HStack/VStack/StackItem/Grid/Layout completion is claimed.
+
   - Sources: [English family API](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Stack/Stack.doc.mjs), [original TSX](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Stack/Stack.tsx).
 
   - **Layout choices**
-    - [ ] `direction`: `horizontal`, `vertical` (default); horizontal follows inline direction in LTR/RTL. HStack/VStack are configured wrappers, not additional direction strings.
-    - [ ] Each of `gap`, `padding`, `paddingInline`, `paddingInlineStart`, `paddingInlineEnd`, `paddingBlock`, `paddingBlockStart`, `paddingBlockEnd`: numeric steps `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10` (not strings). Edge overrides axis, axis overrides all-side padding.
-    - [ ] Main-axis alignment (`hAlign` horizontal, `vAlign` vertical, or `justify`): `start`, `center`, `end`, `between`, `around`, `evenly`.
-    - [ ] Cross-axis alignment (`vAlign` horizontal, `hAlign` vertical, or `align`): `start`, `center`, `end`, `stretch`. Family docs expose combined hAlign/vAlign union; TSX documents these axis-specific valid choices. Explicit axis alignment wins its alias.
-    - [ ] `wrap`: `nowrap` (default), `wrap`, `wrap-reverse`; `isScrollable`: false (default), true.
+    - [x] `direction`: `horizontal`, `vertical` (default); horizontal follows inline direction in LTR/RTL. HStack/VStack are configured wrappers, not additional direction strings.
+    - [x] Each of `gap`, `padding`, `paddingInline`, `paddingInlineStart`, `paddingInlineEnd`, `paddingBlock`, `paddingBlockStart`, `paddingBlockEnd`: numeric steps `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10` (not strings). Edge overrides axis, axis overrides all-side padding.
+    - [x] Main-axis alignment (`hAlign` horizontal, `vAlign` vertical, or `justify`): `start`, `center`, `end`, `between`, `around`, `evenly`.
+    - [x] Cross-axis alignment (`vAlign` horizontal, `hAlign` vertical, or `align`): `start`, `center`, `end`, `stretch`. Family docs expose combined hAlign/vAlign union; TSX documents these axis-specific valid choices. Explicit axis alignment wins its alias.
+    - [x] `wrap`: `nowrap` (browser default when omitted; reflection only when supplied), `wrap`, `wrap-reverse`; `isScrollable`: false (default), true.
 
   - **Content patterns**
-    - [ ] Polymorphic `as` (default div); arbitrary children with or without StackItem wrappers. Width/height/maxWidth/minHeight accept open-ended measurements and beat matching inline style fields.
+    - [x] Polymorphic `as` (Dioxus `as_element` caller root renderer, default div); arbitrary children with or without StackItem wrappers. Width/height/maxWidth/minHeight accept open-ended measurements and beat matching inline style fields.
     - [ ] HStack cross-axis vAlign and VStack cross-axis hAlign default stretch; no spacing default is asserted by the doc.
     - [ ] Use gap rather than child margins; fill item consumes leftover space; wrapping may avoid nested stacks.
 
   - **Named templates**
-    - [ ] [`StackAlignment`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackAlignment.doc.mjs) — “Stack — Alignment”: start/center/end buttons.
-    - [ ] [`StackDirections`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackDirections.doc.mjs) — “Stack — Directions”: horizontal/vertical badges (showcase).
-    - [ ] [`StackFillItem`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackFillItem.doc.mjs) — “Stack — Fill Item”: avatar, expanding text, button.
+    - [x] [`StackAlignment`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackAlignment.doc.mjs) — “Stack — Alignment”: start/center/end buttons. Existing main Card/Text/Button; Stack topology checked against source-derived declarations, not an upstream-runtime image.
+    - [ ] [`StackDirections`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackDirections.doc.mjs) — “Stack — Directions”: horizontal/vertical **Tokens**, not Badges. Private label-only Token slice and actual Rust screenshot/geometry/paint compared with the captured original; the original usage is correctly noninteractive. Public Token and pixel identity are not claimed. Published wrap=wrap differs from pinned template; see port notes.
+    - [ ] [`StackFillItem`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackFillItem.doc.mjs) — “Stack — Fill Item”: private 36px named Avatar and static/fill StackItem slices; actual Rust intrinsic layout/paint and screenshots compared to captured original. Avatar keyboard/hover tooltip, AX name, Escape, focus outline and unmount cleanup verified. Public owners, StackItem AR2, Toast presentation and pixel identity remain open.
 
 ## Navigation
 
