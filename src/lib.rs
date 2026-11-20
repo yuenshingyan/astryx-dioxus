@@ -7,6 +7,7 @@ mod button;
 mod button_group;
 mod card;
 mod clickable_card;
+mod code;
 mod compatibility;
 mod divider;
 mod hooks;
@@ -37,6 +38,7 @@ pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, 
 pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation};
 pub use card::{Card, CardVariant, InvalidCardVariant};
 pub use clickable_card::{ClickableCard, ClickableCardError};
+pub use code::{Code, CodeColor, CodeProps, CodeSize};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };
