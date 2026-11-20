@@ -30,9 +30,8 @@ mod probe {
     use web_sys::{Element as DomElement, HtmlElement, MouseEvent as DomMouseEvent};
 
     use super::use_clickable_container::native::{
-        allows_activation, apply_cancellation, delegate_action, mouse_event, navigate,
-        pointer_event, use_clickable_container, use_native_document_listener, use_native_listener,
-        with_current_target,
+        allows_activation, delegate_action, mouse_event, navigate, use_native_document_listener,
+        use_native_event_listener, use_native_listener, with_current_target,
     };
 
     use super::use_clickable_container::use_native_owner;
@@ -62,8 +61,33 @@ mod probe {
         let routed_capture = use_native_document_listener(
             "route-probe",
             true,
-            EventHandler::new(move |_| {
+            Rc::new(move |event: web_sys::Event| {
                 let root = capture_owner.element().unwrap();
+                if !event
+                    .target()
+                    .and_then(|target| target.dyn_into::<DomElement>().ok())
+                    .is_some_and(|target| root.contains(Some(&target)))
+                {
+                    return;
+                }
+                if root.get_attribute("data-reenter").as_deref() == Some("armed") {
+                    root.set_attribute("data-reenter", "done").unwrap();
+                    let unrelated = root
+                        .owner_document()
+                        .unwrap()
+                        .get_element_by_id("native-unrelated")
+                        .unwrap();
+                    unrelated
+                        .dispatch_event(
+                            &DomMouseEvent::new_with_mouse_event_init_dict("route-probe", &{
+                                let init = web_sys::MouseEventInit::new();
+                                init.set_bubbles(true);
+                                init
+                            })
+                            .unwrap(),
+                        )
+                        .unwrap();
+                }
                 root.set_attribute(
                     "data-route",
                     &(root.get_attribute("data-route").unwrap_or_default() + label),
@@ -75,7 +99,7 @@ mod probe {
         let routed_bubble = use_native_document_listener(
             "route-bubble",
             false,
-            EventHandler::new(move |_| {
+            Rc::new(move |_| {
                 let root = bubble_owner.element().unwrap();
                 root.set_attribute(
                     "data-route",
@@ -84,6 +108,7 @@ mod probe {
                 .unwrap();
             }),
         );
+        let pointer_owner = owner.clone();
         let owner_scope = use_native_listener(
             "#native-probe".into(),
             "owner-probe",
@@ -124,8 +149,10 @@ mod probe {
                 .unwrap();
             }),
         );
-        let click = use_clickable_container(
+        let click = use_native_event_listener(
             "#native-probe".into(),
+            "click",
+            false,
             Rc::new(move |event| {
                 let root: DomElement = event.current_target().unwrap().unchecked_into();
                 let native: &DomMouseEvent = event.unchecked_ref();
@@ -170,59 +197,73 @@ mod probe {
                 // part of this transport; a layer child must still see its own click.
             }),
         );
-        let pointer = use_native_listener(
-            "#native-probe".into(),
-            "pointerdown",
-            false,
-            EventHandler::new(move |event: web_sys::Event| {
-                let root: DomElement = event.current_target().unwrap().unchecked_into();
-                let native: &web_sys::PointerEvent = event.unchecked_ref();
-                let wrapped = pointer_event(native);
-                let is_original =
-                    wrapped.data().downcast::<web_sys::PointerEvent>() == Some(native);
-                wrapped.prevent_default();
-                wrapped.stop_propagation();
-                apply_cancellation(&wrapped, &event);
-                root.set_attribute(
-                    "data-pointer",
-                    &format!(
-                        "{is_original}:{}:{}",
-                        native.default_prevented(),
-                        wrapped.pointer_id()
-                    ),
-                )
-                .unwrap();
-            }),
-        );
-        rsx! {div{id:"native-probe","data-pressable-container":"true",onmounted:move |event:MountedEvent|{owner_ref.call(event.clone());owner_scope.call(event.clone());click.call(event.clone());capture.call(event.clone());pointer.call(event.clone());saved_mount.set(Some(event));},
-            span{id:"probe-surface","Surface"}
+        // Ordinary pointer callbacks use the renderer's original metadata, not
+        // the obsolete constructed native-pointer adapter.
+        let pointer = move |event: PointerEvent| {
+            let root = pointer_owner.element().unwrap();
+            let native = event
+                .data()
+                .downcast::<web_sys::PointerEvent>()
+                .unwrap()
+                .clone();
+            let check_native = native.clone();
+            let check_root = root.clone();
+            with_current_target(native.as_ref(), &root, move || {
+                assert_eq!(
+                    check_native.current_target(),
+                    Some(check_root.clone().into())
+                );
+                check_root
+                    .set_attribute("data-pointer", &format!("true:true:{}", event.pointer_id()))
+                    .unwrap();
+                event.prevent_default();
+                event.stop_propagation();
+            })
+            .unwrap();
+        };
+        rsx! {div{id:"native-probe","data-pressable-container":"true",onmounted:move |event:MountedEvent|{owner_ref.call(event.clone());owner_scope.call(event.clone());click.call(event.clone());capture.call(event.clone());saved_mount.set(Some(event));},
+            span{id:"probe-surface",onpointerdown:pointer,"Surface"}
             button{id:"probe-own",r#type:"button","data-astryx-container-action":"","Own action"}
             button{id:"probe-child",r#type:"button","Child"}
             span{id:"probe-readonly",role:"button","aria-readonly":"true","Read-only"}
             button{id:"probe-register-outer",onclick:move |_|{if let Some(event)=saved_mount(){routed_capture.call(event.clone());routed_bubble.call(event);}},"Register outer after inner"}
             button{id:"probe-label",onclick:move |_|is_new_label.toggle(),"Update callback label"}
             InnerProbe{}
-        }}
+        } UnrelatedProbe{} }
     }
 
     #[component]
     fn InnerProbe() -> Element {
-        let route = |_: web_sys::Event| {
+        let route = |event: web_sys::Event| {
             let root = web_sys::window()
                 .unwrap()
                 .document()
                 .unwrap()
                 .get_element_by_id("native-probe")
                 .unwrap();
+            if !event
+                .target()
+                .and_then(|target| target.dyn_into::<DomElement>().ok())
+                .is_some_and(|target| root.contains(Some(&target)))
+            {
+                return;
+            }
             root.set_attribute(
                 "data-route",
                 &(root.get_attribute("data-route").unwrap_or_default() + "inner|"),
             )
             .unwrap();
         };
-        let capture = use_native_document_listener("route-probe", true, EventHandler::new(route));
-        let bubble = use_native_document_listener("route-bubble", false, EventHandler::new(route));
+        let capture = use_native_document_listener("route-probe", true, Rc::new(route));
+        let bubble = use_native_document_listener("route-bubble", false, Rc::new(route));
         rsx! {div{id:"native-inner",onmounted:move |event:MountedEvent|{capture.call(event.clone());bubble.call(event);},span{id:"probe-inner-surface","Inner surface"}}}
+    }
+
+    #[component]
+    fn UnrelatedProbe() -> Element {
+        let capture = use_native_document_listener("route-probe", true, Rc::new(|_| {}));
+        let bubble = use_native_document_listener("route-bubble", false, Rc::new(|_| {}));
+        rsx! {div{id:"native-unrelated",onmounted:move |event:MountedEvent|{capture.call(event.clone());bubble.call(event);},"Unrelated registration between inner and outer"}}
     }
 }
 

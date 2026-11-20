@@ -1,9 +1,9 @@
 // Adapted from Astryx hooks/useClickableContainer.ts. See THIRD_PARTY_NOTICES.md.
-#[cfg(target_arch = "wasm32")]
 use std::cell::RefCell;
-#[cfg(target_arch = "wasm32")]
 use std::rc::Rc;
 
+use dioxus::core::AttributeValue;
+use dioxus::html::PlatformEventData;
 use dioxus::prelude::*;
 #[cfg(target_arch = "wasm32")]
 use web_sys::Element;
@@ -43,17 +43,58 @@ pub(crate) fn use_native_owner() -> (NativeOwner, EventHandler<MountedEvent>) {
     (owner, mounted)
 }
 
+/// Keep previously installed declarative event slots until the root unmounts.
+/// Active caller payloads are unchanged; removed callbacks are dropped, leaving
+/// only an inert listener so the renderer cannot remove retained event ownership.
+pub(crate) fn use_retained_event_attributes(mut attributes: Vec<Attribute>) -> Vec<Attribute> {
+    let names = use_hook(|| Rc::new(RefCell::new(Vec::<&'static str>::new())));
+    let mut names = names.borrow_mut();
+    for attribute in &attributes {
+        if matches!(attribute.value, AttributeValue::Listener(_))
+            && !names.contains(&attribute.name)
+        {
+            names.push(attribute.name);
+        }
+    }
+    for name in names.iter().copied() {
+        if let Some(attribute) = attributes
+            .iter_mut()
+            .find(|attribute| attribute.name == name)
+        {
+            if matches!(attribute.value, AttributeValue::None) {
+                attribute.value = AttributeValue::listener(|_: Event<PlatformEventData>| {});
+            }
+        } else {
+            attributes.push(Attribute::new(
+                name,
+                AttributeValue::listener(|_: Event<PlatformEventData>| {}),
+                None,
+                false,
+            ));
+        }
+    }
+    // Dynamic spreads are diffed positionally. Keep all remembered event names
+    // in stable trailing slots, including when a caller removes and restores one.
+    attributes.sort_by_key(|attribute| {
+        names
+            .iter()
+            .position(|name| *name == attribute.name)
+            .map_or(0, |index| index + 1)
+    });
+    attributes
+}
+
 /// Native event boundary. No renderer or DOM is required for host rendering.
 #[cfg(target_arch = "wasm32")]
 pub(crate) mod native {
     use std::any::Any;
     use std::cell::RefCell;
-    use std::cmp::Ordering;
+    use std::iter::successors;
     use std::rc::Rc;
 
     use dioxus::html::geometry::{ClientPoint, ElementPoint, PagePoint, ScreenPoint};
     use dioxus::html::input_data::{MouseButton, MouseButtonSet, decode_mouse_button_set};
-    use dioxus::html::{HasMouseData, HasPointerData, Modifiers};
+    use dioxus::html::{HasMouseData, Modifiers};
     use dioxus::prelude::*;
     use wasm_bindgen::{JsCast, JsValue, closure::Closure, prelude::wasm_bindgen};
     use web_sys::{
@@ -137,85 +178,6 @@ pub(crate) mod native {
         fn held_buttons(&self) -> MouseButtonSet {
             decode_mouse_button_set(self.0.buttons())
         }
-    }
-
-    /// Native pointer data with the same downcast contract as native mouse data.
-    pub struct NativePointerData(pub web_sys::PointerEvent);
-    impl InteractionLocation for NativePointerData {
-        fn client_coordinates(&self) -> ClientPoint {
-            ClientPoint::new(self.0.client_x().into(), self.0.client_y().into())
-        }
-        fn page_coordinates(&self) -> PagePoint {
-            PagePoint::new(self.0.page_x().into(), self.0.page_y().into())
-        }
-        fn screen_coordinates(&self) -> ScreenPoint {
-            ScreenPoint::new(self.0.screen_x().into(), self.0.screen_y().into())
-        }
-    }
-    impl InteractionElementOffset for NativePointerData {
-        fn element_coordinates(&self) -> ElementPoint {
-            ElementPoint::new(self.0.offset_x().into(), self.0.offset_y().into())
-        }
-    }
-    impl ModifiersInteraction for NativePointerData {
-        fn modifiers(&self) -> Modifiers {
-            NativeMouseData(self.0.clone().unchecked_into()).modifiers()
-        }
-    }
-    impl PointerInteraction for NativePointerData {
-        fn trigger_button(&self) -> Option<MouseButton> {
-            Some(MouseButton::from_web_code(self.0.button()))
-        }
-        fn held_buttons(&self) -> MouseButtonSet {
-            decode_mouse_button_set(self.0.buttons())
-        }
-    }
-    impl HasPointerData for NativePointerData {
-        fn pointer_id(&self) -> i32 {
-            self.0.pointer_id()
-        }
-        fn width(&self) -> f64 {
-            self.0.width().into()
-        }
-        fn height(&self) -> f64 {
-            self.0.height().into()
-        }
-        fn pressure(&self) -> f32 {
-            self.0.pressure()
-        }
-        fn tangential_pressure(&self) -> f32 {
-            self.0.tangential_pressure()
-        }
-        fn tilt_x(&self) -> i32 {
-            self.0.tilt_x()
-        }
-        fn tilt_y(&self) -> i32 {
-            self.0.tilt_y()
-        }
-        fn twist(&self) -> i32 {
-            self.0.twist()
-        }
-        fn pointer_type(&self) -> String {
-            self.0.pointer_type()
-        }
-        fn is_primary(&self) -> bool {
-            self.0.is_primary()
-        }
-        fn as_any(&self) -> &dyn Any {
-            &self.0
-        }
-    }
-
-    /// Build separate metadata while preserving the original native pointer event.
-    pub fn pointer_event(event: &web_sys::PointerEvent) -> PointerEvent {
-        let wrapped = Event::new(
-            Rc::new(PointerData::new(NativePointerData(event.clone()))),
-            event.bubbles(),
-        );
-        if event.default_prevented() {
-            wrapped.prevent_default();
-        }
-        wrapped
     }
 
     /// New Dioxus metadata isolates capture caller cancellation from child handlers.
@@ -359,15 +321,6 @@ pub(crate) mod native {
         }
     }
 
-    /// Shared clickable-container click boundary. Policy and callback ordering are
-    /// supplied by the owning component; the shared hook owns listener disposal.
-    pub fn use_clickable_container(
-        selector: String,
-        callback: Rc<dyn Fn(DomEvent)>,
-    ) -> EventHandler<MountedEvent> {
-        use_native_event_listener(selector, "click", false, callback)
-    }
-
     /// Mount-time listener resource; callbacks update without listener churn.
     /// Call once per event kind in a stable hook order and put the returned handler
     /// on the root's onmounted. Drop removes the listener, including capture listeners.
@@ -489,19 +442,18 @@ pub(crate) mod native {
                 let listener =
                     NativeListener::new(document.as_ref(), name, is_capture, move |event| {
                         let mut ordered = routed.borrow().clone();
-                        ordered.sort_by(|a, b| {
-                            if a.root == b.root {
-                                return Ordering::Equal;
-                            }
-                            let order = if a.root.contains(Some(&b.root)) {
-                                Ordering::Less
-                            } else if b.root.contains(Some(&a.root)) {
-                                Ordering::Greater
-                            } else {
-                                Ordering::Equal
-                            };
-                            if is_capture { order } else { order.reverse() }
+                        // A containment-only comparator has non-transitive ties
+                        // for unrelated roots. Depth orders every ancestor before
+                        // its descendants, even with interleaved registrations.
+                        ordered.sort_by_cached_key(|registration| {
+                            successors(registration.root.parent_element(), |element| {
+                                element.parent_element()
+                            })
+                            .count()
                         });
+                        if !is_capture {
+                            ordered.reverse();
+                        }
                         for registration in ordered {
                             let is_active = routed
                                 .borrow()
@@ -549,9 +501,8 @@ pub(crate) mod native {
     pub fn use_native_document_listener(
         name: &'static str,
         is_capture: bool,
-        callback: EventHandler<DomEvent>,
+        callback: Rc<dyn Fn(DomEvent)>,
     ) -> EventHandler<MountedEvent> {
-        let callback: Rc<dyn Fn(DomEvent)> = Rc::new(move |event| callback.call(event));
         let slot = use_hook(|| Rc::new(RefCell::new(callback.clone())));
         *slot.borrow_mut() = callback;
         let mut subscription = use_signal(|| None::<DocumentSubscription>);
