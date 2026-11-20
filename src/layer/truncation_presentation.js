@@ -1,5 +1,16 @@
 // Required centered-anchor subset of Layer/useLayer and layerSlideRules at the pinned source.
 // Native anchor layout, not a JS approximation, owns scrolling, flipping and clipping.
+const closeTransitionKeepsShown = tip => {
+  const style = getComputedStyle(tip);
+  const list = name => style.getPropertyValue(name).split(',').map(value => value.trim());
+  const behaviors = list('transition-behavior');
+  const durations = list('transition-duration').map(parseFloat);
+  const delays = list('transition-delay').map(parseFloat);
+  return list('transition-property').some((name, index) =>
+    (name === 'all' || name === 'display') &&
+    behaviors[index % behaviors.length] === 'allow-discrete' &&
+    (durations[index % durations.length] || 0) + Math.max(0, delays[index % delays.length] || 0) > 0);
+};
 export const createLayerPresentation = (element, tip, placement) => {
   const name = `--astryx-truncation-${tip.id.replace(/[^a-zA-Z0-9_-]/g, '-')}`;
   const names = () => (element.style.getPropertyValue('anchor-name') || '').split(',').map(x => x.trim()).filter(x => x && x !== 'none');
@@ -12,9 +23,13 @@ export const createLayerPresentation = (element, tip, placement) => {
   tip.style.positionAnchor = name;
   tip.dataset.placement = placement;
   let generation = 0;
+  let keepsShown = false;
   return {
     show() {
       generation++;
+      // The closed state's transition owns the exit, not an entrance or an
+      // unrelated animation still running in hidden content (Layer/useLayer).
+      keepsShown = closeTransitionKeepsShown(tip);
       add();
       // Read the settled box, not the entrance's translated first frame. Otherwise
       // the measured gap can itself include the travel and let the tip cross its anchor.
@@ -38,7 +53,9 @@ export const createLayerPresentation = (element, tip, placement) => {
       // Source has no default exit animation. A consumer's discrete display exit
       // can keep painting; keep its anchor until its finite animations finish.
       tip.hidePopover();
-      const animations = tip.getAnimations({subtree: true}).filter(a => a.playState === 'running' && a.effect?.getComputedTiming().endTime !== Infinity);
+      const animations = keepsShown
+        ? tip.getAnimations({subtree: true}).filter(a => a.playState === 'running' && a.effect?.getComputedTiming().endTime !== Infinity)
+        : [];
       if (!animations.length) { remove(); return; }
       Promise.allSettled(animations.map(a => a.finished)).then(() => { if (generation === current) remove(); });
     },

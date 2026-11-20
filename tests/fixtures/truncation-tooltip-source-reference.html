@@ -17,5 +17,6 @@ body { margin:0; font-family:Arial; }
 <script>
 const params = new URLSearchParams(location.search);
 for (const property of ['left', 'top']) if (params.has(property)) anchor.style[property] = `${Number(params.get(property))}px`;
+if (params.has('repeat')) tip.firstElementChild.textContent = tip.firstElementChild.textContent.repeat(Number(params.get('repeat')));
 tip.showPopover();
 </script>

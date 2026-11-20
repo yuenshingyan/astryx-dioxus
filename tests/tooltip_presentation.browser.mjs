@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import {createServer} from 'node:http';
 import {readFile} from 'node:fs/promises';
-import {openTextPage} from './internal/text_cdp.mjs';
+import {openTooltipPage} from './internal/tooltip_engine.mjs';
 const files = ['src/private_attributes/layer_root.js','src/layer/layer_surface_press.js','src/utils/trigger_focus.js','src/layer/gesture_counter.js','src/layer/use_touch_trigger.js','src/text/truncation_tooltip.js','src/tooltip/use_tooltip.js','src/motion/theme_timing.js','src/hooks/use_press_feedback/press_feedback.js'];
 const scripts = (await Promise.all(files.map(p => readFile(p,'utf8')))).join('\n');
 const css = await readFile('assets/astryx.css','utf8');
@@ -34,9 +34,9 @@ const server = createServer(async (req,res) => {
     window.loaded=()=>!!document[Symbol.for('astryx.dioxus.truncation-presentation.v1')]?.loaded;
   </script>`);
 });
-await new Promise(resolve => server.listen(0,'127.0.0.1',resolve));
+await new Promise(resolve => server.listen(Number(process.env.TOOLTIP_PORT || 8099),'127.0.0.1',resolve));
 const origin = `http://127.0.0.1:${server.address().port}`;
-const page = await openTextPage();
+const page = await openTooltipPage();
 const {send,evaluate,waitFor} = page;
 const wait = ms => new Promise(resolve => setTimeout(resolve,ms));
 const navigate = async path => { await send('Page.navigate',{url:origin+path}); await waitFor('typeof window.cut === "function"'); };
@@ -75,6 +75,16 @@ try {
     const observed=await evaluate(rect('tip()'));
     for (const key of ['x','y','w','h']) assert.ok(Math.abs(observed[key]-expected[key])<0.6,`source fallback ${JSON.stringify(sample)} ${key}: ${JSON.stringify({observed,expected})}`);
   }
+  // Content taller than both block rooms exercises beside/fit, not just flip.
+  await send('Page.navigate',{url:origin+'/reference?repeat=100'});
+  await waitFor('document.getElementById("tip")?.matches(":popover-open")');
+  const tallReference = await evaluate(rect('document.getElementById("tip")'));
+  await navigate('/?tall');
+  await evaluate('handle.dispose();e.textContent=e.textContent.repeat(100);attach(true);pointer("pointerover")');
+  await waitFor('open()'); await wait(300);
+  const tallActual = await evaluate(rect('tip()'));
+  for (const key of ['x','y','w','h']) assert.ok(Math.abs(tallActual[key]-tallReference[key])<0.6,`tall source ${key}: ${JSON.stringify({tallActual,tallReference})}`);
+  assert.equal(await evaluate('(()=>{const a=e.getBoundingClientRect(),b=tip().getBoundingClientRect();return (b.right<=a.left || b.left>=a.right || b.bottom<=a.top || b.top>=a.bottom) && b.top>=0 && b.bottom<=innerHeight && tip().scrollHeight>tip().clientHeight})()'),true,'tall content stays clear and scrolls within viewport');
   mode='ok'; requests=[]; await navigate('/?stale-build'); await evaluate('cut(true);pointer("pointerover")'); await waitFor('open()');
   assert.equal(requests.length,2,'stale cached code from different asset URLs is not reused');
   // Leave/Escape while loading retains first-interest DOM, but never opens stale hover.
@@ -91,6 +101,14 @@ try {
   while (requests.length<2) await wait(10);
   await release(); await waitFor('open()');
   assert.equal(await evaluate('document.activeElement === e'),true,'held focus opens after resolution without replacing trigger');
+  assert.equal(await evaluate('e.getAttribute("aria-describedby")'),'probe-tooltip','loaded focus attaches description');
+  mode='hold'; requests=[]; await navigate('/?blur-during-load');
+  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Tab',code:'Tab'});
+  await evaluate('cut(true);e.tabIndex=0;e.focus();document.getElementById("outside").focus()');
+  while (requests.length<2) await wait(10);
+  await release(); await waitFor('loaded() && !!tip()'); await wait(250);
+  assert.equal(await evaluate('open()'),false,'blur invalidates unresolved focus');
+  assert.equal(await evaluate('e.getAttribute("aria-describedby")'),'probe-tooltip','blur retains first-interest description');
   mode='hold'; requests=[]; await navigate('/?tap');
   await evaluate('cut(true);e.dispatchEvent(new PointerEvent("pointerdown",{bubbles:true,isPrimary:true,pointerType:"touch",pointerId:7,button:0}));e.dispatchEvent(new PointerEvent("pointerup",{bubbles:true,isPrimary:true,pointerType:"touch",pointerId:7,button:0}));e.click()');
   while (requests.length<2) await wait(10);
@@ -140,22 +158,42 @@ try {
   assert.equal(await evaluate('tip().parentElement === dialog'),true,'modal-local portal');
   await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'},{name:'pointer',value:'fine'}]});
   assert.equal(await evaluate('getComputedStyle(tip()).animationName'),'none','fine-pointer reduced motion appears immediately');
-  await send('Emulation.setTouchEmulationEnabled',{enabled:true});
-  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
-  assert.equal(await evaluate('matchMedia("(pointer: coarse)").matches'),true);
-  assert.equal(await evaluate('getComputedStyle(tip()).animationName'),'astryx-truncation-fade');
-  assert.equal(await evaluate('getComputedStyle(tip()).animationDuration'),'0.2s');
-  await send('Emulation.setTouchEmulationEnabled',{enabled:false});
+  if (!process.env.TOOLTIP_ENGINE) {
+    await send('Emulation.setTouchEmulationEnabled',{enabled:true});
+    await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
+    assert.equal(await evaluate('matchMedia("(pointer: coarse)").matches'),true);
+    assert.equal(await evaluate('getComputedStyle(tip()).animationName'),'astryx-truncation-fade');
+    assert.equal(await evaluate('getComputedStyle(tip()).animationDuration'),'0.2s');
+    await send('Emulation.setTouchEmulationEnabled',{enabled:false});
+  } else console.log('UNRUN: coarse-pointer media emulation (CDP-only); synthetic completed taps above are not device evidence.');
   await send('Emulation.setEmulatedMedia',{features:[]});
   await evaluate('document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}))');
   assert.equal(await evaluate('!!tip() && !open()'),true,'source default exit is immediate with retained DOM');
   assert.equal(await evaluate('e.style.getPropertyValue("anchor-name")'),'','default close releases anchor');
-  // Consumer-authored CSS exit, not an invented default fade.
-  await evaluate('window.style=document.createElement("style");style.textContent=".astryx-truncation-tooltip{transition:display 150ms allow-discrete,overlay 150ms allow-discrete,opacity 150ms}.astryx-truncation-tooltip:not(:popover-open){opacity:0}";document.head.append(style);pointer("pointerover")');
+  // Hidden WAAPI content may keep running without a display exit. It must
+  // not keep the trigger registered as an anchor (source closed-style gate).
+  await evaluate('pointer("pointerover")'); await waitFor('open()'); await wait(300);
+  await evaluate('window.unrelated=tip().firstElementChild.animate([{opacity:1},{opacity:0.5}],{duration:2000});document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}))');
+  assert.equal(await evaluate('unrelated.playState'),'running','unrelated finite animation really survives hide');
+  assert.equal(await evaluate('e.style.getPropertyValue("anchor-name")'),'','non-display animation cannot retain hidden anchor');
+  await evaluate('unrelated.cancel()');
+  // Calibrate an actual native popover, not CSS.supports(): Firefox/WebKit
+  // can parse allow-discrete without keeping a hidden popover painting.
+  await evaluate('window.style=document.createElement("style");style.textContent=".astryx-truncation-tooltip{transition:display 600ms allow-discrete,overlay 600ms allow-discrete,opacity 600ms}.astryx-truncation-tooltip:not(:popover-open){opacity:0}";document.head.append(style);window.nativeExit=tip().cloneNode(true);nativeExit.id="native-exit";dialog.append(nativeExit);nativeExit.showPopover()');
+  await wait(300);
+  const nativeExitPaints = await evaluate('nativeExit.hidePopover();getComputedStyle(nativeExit).display !== "none" && nativeExit.getAnimations().some(a=>a.playState === "running")');
+  await evaluate('nativeExit.remove();pointer("pointerover")');
   await waitFor('open()'); await wait(300);
   await evaluate('document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}))');
-  assert.equal(await evaluate('!!e.style.getPropertyValue("anchor-name")'),true,'anchor retained for discrete CSS exit');
-  await wait(250); assert.equal(await evaluate('e.style.getPropertyValue("anchor-name")'),'','exit completion releases anchor');
+  assert.equal(await evaluate('!!e.style.getPropertyValue("anchor-name")'),nativeExitPaints,'retain anchor exactly when native discrete exit paints');
+  console.log(`Native discrete popover exit paints: ${nativeExitPaints} (false means immediate native hide, not an animated-exit pass)`);
+  if (nativeExitPaints) {
+    await evaluate('pointer("pointerover")'); await waitFor('open()');
+    await wait(750);
+    assert.equal(await evaluate('!!e.style.getPropertyValue("anchor-name")'),true,'old exit completion cannot detach reopened anchor');
+    await evaluate('document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}))');
+  }
+  await wait(750); assert.equal(await evaluate('e.style.getPropertyValue("anchor-name")'),'','exit completion releases anchor');
   assert.deepEqual(page.errors,[],'no unhandled asynchronous module or presentation exceptions');
   console.log('Tooltip separate-module network hold/failure/recovery/stale resolution, source geometry/typography, native layout/modal and reduced/exit: PASS');
 } finally { await page.close(); await new Promise(resolve=>server.close(resolve)); }

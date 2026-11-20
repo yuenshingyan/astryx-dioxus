@@ -1,8 +1,8 @@
 // Offline owner-boundary tests against production JS; renderer coverage: text.browser.mjs.
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {openTextPage} from './internal/text_cdp.mjs';
-const page = await openTextPage();
+import {openTooltipPage} from './internal/tooltip_engine.mjs';
+const page = await openTooltipPage();
 const {evaluate, waitFor, send} = page;
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 const moduleUrls = await Promise.all(['src/tooltip/truncation_presentation.js', 'src/layer/truncation_presentation.js'].map(async path => `data:text/javascript;base64,${Buffer.from(await readFile(path)).toString('base64')}`));
@@ -87,5 +87,6 @@ try {
   assert.equal(await evaluate('document.getElementById("button-tooltip").textContent'),'Save and continue to the next step','hidden duplicate omitted');
   await evaluate('outside.focus()'); assert.equal(await evaluate('document.getElementById("button-tooltip")'),null,'Button cut tip unmounts on blur');
   await evaluate('bh.dispose()');
+  assert.deepEqual(page.errors,[],'no unhandled owner/module exceptions');
   console.log('Text tooltip ownership/lifecycle/focus/touch/pen/cancellation and private Button adapter: PASS');
 } finally { await page.close(); }

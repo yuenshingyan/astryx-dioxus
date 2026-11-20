@@ -64,7 +64,9 @@ was also downloaded/verified (`69b053e64622468f34212b9b3b7dc274c8f38947`).
   retaining the layer/description but releasing its anchor. Consumer-authored
   discrete display exits retain the anchor through finite running animations;
   generation guards prevent old completion from detaching a reopened layer.
-  Disposal removes it immediately and releases resources.
+  As in pinned `useLayer`, the closed state's display/allow-discrete transition
+  gates that wait: unrelated finite animations in hidden content cannot retain
+  an anchor. Disposal removes it immediately and releases resources.
 
 No public API, new dependency, diagnostic suppression or ownership relocation.
 This does not implement unrelated Layer alignment/custom-positioning APIs,
@@ -123,8 +125,89 @@ no private module URL binding; controller initialization now permits that unrela
 path without loading private code, while an actual private load requires its URLs.
 No thresholds or idle-trace assertions were relaxed.
 
-Unrun: remaining unaffected browser suites and separate interactive-card-boundary
-preview; independent upstream React/StyleX build, Firefox/WebKit, physical touch/pen,
+Unrun in the original presentation checkpoint: remaining unaffected browser suites
+and separate interactive-card-boundary preview; independent upstream React/StyleX
+build, Firefox/WebKit (focused follow-up below), physical touch/pen,
 manual screen-reader/keyboard audits, Windows High Contrast and mobile software
 keyboard behavior. Existing contrast findings and unrelated port completion
 status are unchanged.
+
+## Focused engine follow-up
+
+This follow-up uses the production owner scripts and separate HTTP modules on
+**127.0.0.1:8099**, not a Dioxus-renderer or independently built React app.
+Cached authority files were reverified against the same pin/tree using Git blob
+SHA-1. No CSS palette, public API, dependency or ownership boundary changed.
+
+`tests/internal/tooltip_engine.mjs` optionally imports an **external temporary**
+Playwright installation; the default remains the existing isolated CDP target.
+It creates and closes its own browser/context. Every browser command, including
+the Safari WebDriver probe, ran under `browser_lock.py`; no shared server or user
+8080 was changed. Example, after separately provisioning a temporary harness:
+
+```sh
+TOOLTIP_ENGINE=firefox \
+PLAYWRIGHT_MODULE=/absolute/temp/node_modules/playwright/index.mjs \
+PLAYWRIGHT_BROWSERS_PATH=/absolute/temp/browsers \
+python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/tooltip_presentation.browser.mjs
+# Same environment: tests/text_tooltip.browser.mjs; repeat with TOOLTIP_ENGINE=webkit.
+# Chromium uses neither TOOLTIP_ENGINE nor PLAYWRIGHT_MODULE.
+```
+
+Actual passing focused runs: Chrome **157.0.8103.80**, Playwright Firefox
+**159.0** (build 1572), and Playwright WebKit **27.2** (build 2388), with temporary
+Playwright **1.65.1** on macOS **26.6.2**. Both suites pass in all three engines.
+They cover real module holds/failure/recovery, stale callbacks/build cache,
+focus retained/lost during loading, description attachment/cleanup, actual-trigger
+focus gating, retained first-interest DOM, synthetic completed touch/pen and
+cancellation, Button's undescribed adapter, numeric centered/top/left/right and
+tall-content source-fixture geometry, viewport fit/scrolling, RTL inline-end,
+native clipped scrolling/modal hosting and fine-pointer reduced motion.
+Tall content additionally must stay off the anchor and scroll inside the viewport.
+These are real browser-engine layout/DOM/event tests, not mocks of CSS support.
+They do not cover every placement/viewport/writing mode or physical input.
+
+The new finite-WAAPI regression fails without the closed-style exit gate and
+passes with it: hidden content may keep animating, but cannot keep an anchor
+when no discrete display exit was authored. A separate native-popover probe
+measures whether a custom exit actually paints rather than trusting
+`CSS.supports`. Chromium paints it and tests retention, reopened-generation safety
+and completion. Firefox/WebKit parse the CSS but immediately hide the popover
+(no running exit); their immediate anchor release is verified. **Animated custom
+popover exits are not certified in Firefox/WebKit**; no JS exit polyfill is added.
+The earlier unconditional animated-exit assertions failed in both engines; this
+native limitation is recorded rather than relabeled an animated-exit success.
+The WebKit polling helper now uses bounded 25ms polling rather than animation-frame
+polling, which had sampled after the 200ms hover window. The new Chromium
+blur-during-load test explicitly establishes keyboard modality after navigation.
+
+Installed Safari is **26.6.2 (21624.5.1.11.3)**. `safaridriver` starts, but a new
+isolated session returns `session not created`: enable “Allow remote automation”
+in Safari's Developer settings. **No permission/settings change was made; Safari
+itself remains unrun.** Temporary WebKit is genuine engine evidence, not evidence
+for that installed Safari version. Coarse-pointer reduced-media checks remain
+Chromium-only; Firefox/WebKit runs explicitly log that case as unrun.
+
+Focused local checks: `cargo fmt --check`,
+`CARGO_INCREMENTAL=0 cargo check --locked --lib --no-default-features`, JS syntax,
+and the two browser suites above. Full Rust tests, all-target Clippy, wasm/showcase
+and other browser/renderer suites were not rerun for this JS-only follow-up;
+require the full existing suite in CI. Exact commands/results, initial failures
+and local commit hashes are in `/tmp/astryx-parity/engines-handoff.md`.
+
+### Real assistive-technology prerequisites (not executed)
+
+No VoiceOver, NVDA or JAWS speech/navigation check was performed. Neither ARIA
+DOM assertions nor an AX tree is screen-reader evidence. A real VoiceOver audit
+requires an unlocked interactive macOS GUI session, VoiceOver running, an
+operator able to hear/record speech, the actual Safari/Chrome version, and a
+local test page with a focusable trigger plus nested and plain unfocusable Text.
+Record the existing browser/system keyboard-navigation settings; enabling
+WebDriver or changing Accessibility/Automation permissions requires approval.
+Check spoken name/description before interest, after lazy-load focus, after
+Escape/blur/re-focus, after content/overflow changes and removal, including
+caller-owned descriptions and modal content; record exact speech and keys.
+Plain unfocusable Text's documented keyboard-reachability gap remains.
+NVDA/JAWS additionally require a Windows interactive session with the named
+screen reader installed/licensed as applicable, recorded browser/SR versions,
+and a human speech/navigation run. None of those Windows checks ran here.
