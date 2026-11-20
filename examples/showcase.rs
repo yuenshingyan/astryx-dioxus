@@ -30,6 +30,8 @@ mod checkbox_indicator;
 mod clickable_card;
 #[path = "showcase/divider.rs"]
 mod divider;
+#[path = "showcase/field_status.rs"]
+mod field_status;
 #[path = "showcase/grid.rs"]
 mod grid;
 #[path = "showcase/h_stack.rs"]
@@ -90,6 +92,7 @@ use check_indicator::CheckIndicatorExamples;
 use checkbox_indicator::CheckboxIndicatorExamples;
 use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
+use field_status::FieldStatusExamples;
 use grid::{GridExamples, GridSpanExamples};
 use h_stack::HStackExamples;
 use heading::HeadingExamples;
@@ -184,6 +187,8 @@ fn App() -> Element {
                 a { href: "#avatar-status-dot-examples", "AvatarStatusDot examples" }
                 " · "
                 a { href: "#divider-examples", "Divider examples" }
+                " · "
+                a { href: "#field-status-examples", "FieldStatus examples" }
                 " · "
                 a { href: "#kbd-examples", "Kbd examples" }
                 " · "
@@ -325,6 +330,7 @@ fn App() -> Element {
             BadgeExamples {}
             AvatarStatusDotExamples {}
             DividerExamples {}
+            FieldStatusExamples {}
             KbdExamples {}
             SkeletonExamples {}
             StatusDotExamples {}

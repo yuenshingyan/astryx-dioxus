@@ -33,6 +33,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - CheckboxIndicator follows `Indicator/CheckboxIndicator.tsx` and the Indicator family contract at the same pin. See `docs/checkbox-indicator-port.md`.
 - RadioIndicator follows `Indicator/RadioIndicator.tsx` and `Indicator/indicator.markers.stylex.ts` at the same pin. See `docs/radio-indicator-port.md`.
 - VisuallyHidden follows `VisuallyHidden/VisuallyHidden.tsx`, its specification, and all four original templates at the same pin. See `docs/visually-hidden-port.md`.
+- FieldStatus follows `FieldStatus/{FieldStatus.tsx,useFieldStatusAnnouncement.ts}`, the Core and Neutral status tokens and glyphs, and its two catalog templates at the same pin. See `docs/field-status-port.md`.
 - Layout follows `Layout/Layout.tsx`, the Layout spec, and its seven catalog templates at the same pin. See `docs/layout-port.md`.
 - LayoutPanel follows `Layout/{LayoutPanel.tsx,LayoutAreaContext.ts}`, the shared scroll-region contract, and its Navigation and Showcase templates at the same pin. Resize-controller integration remains separate. See `docs/layout-panel-port.md`.
 - LayoutContent follows `Layout/{LayoutContent.tsx,LayoutSlotsContext.ts}`, the shared `useScrollRegionProps` and overflow observation contracts, and its Basic and Showcase templates at the same pin. See `docs/layout-content-port.md`.
@@ -87,6 +88,7 @@ at the same pinned revision. Shared typography tokens remain theme-owned.
 ## Lucide / Feather artwork
 
 - `src/indicator/check_indicator.rs` uses the Lucide Check path for the default glyph.
+- `src/field_status/component.rs` uses Lucide circle-check, circle-x, and triangle-alert artwork for the Neutral status glyphs.
 
 - `examples/showcase/icon_button.rs` copies Neutral's Search, Copy, Info, Menu, X, MoreHorizontal, and Wrench SVG artwork, as measured from the original named examples.
 - `src/toast/pattern.rs` uses the same Neutral X artwork for the private demo dismiss control.
