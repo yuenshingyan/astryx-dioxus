@@ -38,6 +38,8 @@ mod spinner;
 mod status_dot;
 #[path = "showcase/text.rs"]
 mod text;
+#[path = "showcase/typography_animation.rs"]
+mod typography_animation;
 
 use badge::BadgeExamples;
 use button_contract::ButtonContractExamples;
@@ -69,6 +71,9 @@ fn main() {
 
 #[component]
 fn App() -> Element {
+    if typography_animation::is_requested() {
+        return rsx! { typography_animation::TypographyAnimation {} };
+    }
     let mut count = use_signal(|| 0);
     let mut ancestor_count = use_signal(|| 0);
     let mut form_count = use_signal(|| 0);

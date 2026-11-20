@@ -5,6 +5,11 @@ use std::error::Error;
 use std::fmt::{Display, Formatter};
 
 use dioxus::core::current_scope_id;
+use dioxus::html::events::{
+    onanimationend as onanimationend_attribute,
+    onanimationiteration as onanimationiteration_attribute,
+    onanimationstart as onanimationstart_attribute,
+};
 use dioxus::prelude::*;
 
 use crate::layer::LayerPlacement;
@@ -101,7 +106,8 @@ impl HeadingType {
 /// consumer CSS paints them. `style` is the inline replacement for StyleX xstyle;
 /// the dynamic line clamp wins over it. `onmounted` provides the native root handle
 /// in place of React ref; supported attributes and events reach that same root.
-/// No tab stop or native title is added for truncation.
+/// No tab stop or native title is added for truncation. Animation callbacks are
+/// opt-in: omitted callbacks install no native listener.
 /// `truncate_tooltip_placement` is the additive adapter for the source's
 /// boolean-or-placement prop; `has_truncate_tooltip: false` always disables
 /// measurement and presentation. Shared Tooltip fidelity limits are recorded in
@@ -175,9 +181,9 @@ pub fn Heading(
     #[props(default)] onselect: EventHandler<SelectionEvent>,
     #[props(default)] onscroll: EventHandler<ScrollEvent>,
     #[props(default)] onwheel: EventHandler<WheelEvent>,
-    #[props(default)] onanimationstart: EventHandler<AnimationEvent>,
-    #[props(default)] onanimationiteration: EventHandler<AnimationEvent>,
-    #[props(default)] onanimationend: EventHandler<AnimationEvent>,
+    #[props(default)] onanimationstart: Option<EventHandler<AnimationEvent>>,
+    #[props(default)] onanimationiteration: Option<EventHandler<AnimationEvent>>,
+    #[props(default)] onanimationend: Option<EventHandler<AnimationEvent>>,
     #[props(default)] ontransitionend: EventHandler<TransitionEvent>,
     #[props(default)] ontoggle: EventHandler<ToggleEvent>,
     #[props(default)] onload: EventHandler<ImageEvent>,
@@ -280,7 +286,22 @@ pub fn Heading(
                     .any(|attribute| attribute.name == "aria-level")
         })
         .map(HeadingLevel::number);
-    let attributes: Vec<_> = attributes
+    // Separate dynamic slots keep optional listener changes from shifting other
+    // listeners or caller attributes. No default listener may be registered:
+    // even a no-op animationiteration listener changes compositor servicing.
+    let animation_start_attributes: Vec<_> = onanimationstart
+        .map(|handler| onanimationstart_attribute(move |event| handler.call(event)))
+        .into_iter()
+        .collect();
+    let animation_iteration_attributes: Vec<_> = onanimationiteration
+        .map(|handler| onanimationiteration_attribute(move |event| handler.call(event)))
+        .into_iter()
+        .collect();
+    let animation_end_attributes: Vec<_> = onanimationend
+        .map(|handler| onanimationend_attribute(move |event| handler.call(event)))
+        .into_iter()
+        .collect();
+    let mut attributes: Vec<_> = attributes
         .into_iter()
         .filter(|attribute| {
             !matches!(
@@ -296,6 +317,8 @@ pub fn Heading(
             )
         })
         .collect();
+    // Dioxus diffs each spread as a name-sorted attribute list.
+    attributes.sort_by_key(|attribute| attribute.name);
     macro_rules! render_tag {
         ($tag:ident) => {
             rsx! {
@@ -331,8 +354,7 @@ pub fn Heading(
                     oninput: oninput, onchange: onchange, oninvalid: oninvalid,
                     onreset: onreset, onsubmit: onsubmit, onselect: onselect,
                     onscroll: onscroll, onwheel: onwheel,
-                    onanimationstart: onanimationstart, onanimationiteration: onanimationiteration,
-                    onanimationend: onanimationend, ontransitionend: ontransitionend,
+                    ontransitionend: ontransitionend,
                     ontoggle: ontoggle, onload: onload, onerror: onerror,
                     onabort: onabort, oncanplay: oncanplay, oncanplaythrough: oncanplaythrough,
                     ondurationchange: ondurationchange, onemptied: onemptied, onencrypted: onencrypted,
@@ -342,6 +364,9 @@ pub fn Heading(
                     onseeking: onseeking, onstalled: onstalled, onsuspend: onsuspend,
                     ontimeupdate: ontimeupdate, onvolumechange: onvolumechange, onwaiting: onwaiting,
                     onmounted: handle_mounted,
+                    ..animation_start_attributes,
+                    ..animation_iteration_attributes,
+                    ..animation_end_attributes,
                     ..attributes,
                     {children}
                 }

@@ -2,6 +2,11 @@
 // 476a3153417dbf75c565f7df05b0784e94ddd59e. See THIRD_PARTY_NOTICES.md.
 
 use dioxus::core::current_scope_id;
+use dioxus::html::events::{
+    onanimationend as onanimationend_attribute,
+    onanimationiteration as onanimationiteration_attribute,
+    onanimationstart as onanimationstart_attribute,
+};
 use dioxus::prelude::*;
 
 use super::text_clamp_context::{TextClampProvider, use_text_clamp_context};
@@ -44,6 +49,7 @@ pub enum TextTag {
 /// the shared Tooltip bridge reveals it on hover, tap or keyboard interest without
 /// adding a tab stop or duplicate description. That bridge has known pin-fidelity
 /// gaps documented in `docs/text-port.md`; this is not a complete Tooltip port.
+/// Animation callbacks are opt-in: omitted callbacks install no native listener.
 /// `onmounted` supplies native MountedData instead of ref.
 /// `truncate_tooltip_placement` supplies the source placement alternative without
 /// changing existing boolean `has_truncate_tooltip` callers; false always wins.
@@ -119,9 +125,9 @@ pub fn Text(
     #[props(default)] onselect: EventHandler<SelectionEvent>,
     #[props(default)] onscroll: EventHandler<ScrollEvent>,
     #[props(default)] onwheel: EventHandler<WheelEvent>,
-    #[props(default)] onanimationstart: EventHandler<AnimationEvent>,
-    #[props(default)] onanimationiteration: EventHandler<AnimationEvent>,
-    #[props(default)] onanimationend: EventHandler<AnimationEvent>,
+    #[props(default)] onanimationstart: Option<EventHandler<AnimationEvent>>,
+    #[props(default)] onanimationiteration: Option<EventHandler<AnimationEvent>>,
+    #[props(default)] onanimationend: Option<EventHandler<AnimationEvent>>,
     #[props(default)] ontransitionend: EventHandler<TransitionEvent>,
     #[props(default)] ontoggle: EventHandler<ToggleEvent>,
     #[props(default)] onload: EventHandler<ImageEvent>,
@@ -169,7 +175,22 @@ pub fn Text(
         mounted.call(event.clone());
         onmounted.call(event);
     };
-    let attributes: Vec<_> = attributes
+    // Keep each optional listener in its own dynamic slot: changing one must not
+    // shift the caller's raw attributes or another event's diff position. Absent
+    // callbacks must not register delegated animation listeners on first render.
+    let animation_start_attributes: Vec<_> = onanimationstart
+        .map(|handler| onanimationstart_attribute(move |event| handler.call(event)))
+        .into_iter()
+        .collect();
+    let animation_iteration_attributes: Vec<_> = onanimationiteration
+        .map(|handler| onanimationiteration_attribute(move |event| handler.call(event)))
+        .into_iter()
+        .collect();
+    let animation_end_attributes: Vec<_> = onanimationend
+        .map(|handler| onanimationend_attribute(move |event| handler.call(event)))
+        .into_iter()
+        .collect();
+    let mut attributes: Vec<_> = attributes
         .into_iter()
         .filter(|attribute| {
             !matches!(
@@ -184,6 +205,8 @@ pub fn Text(
             )
         })
         .collect();
+    // Dioxus diffs each spread as a name-sorted attribute list.
+    attributes.sort_by_key(|attribute| attribute.name);
     let color = color.unwrap_or_else(|| text_type.default_color());
     let mut classes = vec![
         "astryx-text".to_string(),
@@ -271,8 +294,7 @@ pub fn Text(
                     oninput: oninput, onchange: onchange, oninvalid: oninvalid,
                     onreset: onreset, onsubmit: onsubmit, onselect: onselect,
                     onscroll: onscroll, onwheel: onwheel,
-                    onanimationstart: onanimationstart, onanimationiteration: onanimationiteration,
-                    onanimationend: onanimationend, ontransitionend: ontransitionend,
+                    ontransitionend: ontransitionend,
                     ontoggle: ontoggle, onload: onload, onerror: onerror,
                     onabort: onabort, oncanplay: oncanplay, oncanplaythrough: oncanplaythrough,
                     ondurationchange: ondurationchange, onemptied: onemptied, onencrypted: onencrypted,
@@ -282,6 +304,9 @@ pub fn Text(
                     onseeking: onseeking, onstalled: onstalled, onsuspend: onsuspend,
                     ontimeupdate: ontimeupdate, onvolumechange: onvolumechange, onwaiting: onwaiting,
                     onmounted: handle_mounted,
+                    ..animation_start_attributes,
+                    ..animation_iteration_attributes,
+                    ..animation_end_attributes,
                     ..attributes,
                     {children}
                 }
