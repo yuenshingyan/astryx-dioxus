@@ -152,7 +152,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/stack/`: Stack and its axis/wrap types, plus StackItem.
 - `src/h_stack/`: [HStack](docs/h-stack-port.md), the horizontal Stack wrapper with both original patterns.
 - `src/v_stack/`: [VStack](docs/v-stack-port.md), the vertical Stack wrapper with both original patterns.
-- `src/layout/`: [LayoutContent](docs/layout-content-port.md), LayoutHeader, LayoutFooter, and shared padding helpers. The parent Layout is not yet ported.
+- `src/layout/`: [LayoutContent](docs/layout-content-port.md), LayoutHeader, LayoutFooter, [LayoutPanel](docs/layout-panel-port.md), and shared padding helpers. Parent Layout and panel resize integration are not yet ported.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
 - `src/link/`: Link, shared renderer/provider types, target/rel handling, and linkification.

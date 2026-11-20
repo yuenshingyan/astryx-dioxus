@@ -10,6 +10,7 @@ use crate::icon::{IconDefaultSizeContext, IconSize};
 use crate::input_group::input_group_internal_context::{
     InputGroupInternalContext, InputGroupInternalState,
 };
+use crate::layout::layout_area_context::LayoutAreaContext;
 use crate::layout::layout_divider_context::LayoutDividerContext;
 use crate::layout::layout_slots_context::LayoutSlotsContext;
 use crate::size_context::{ElementSize, SizeContext};
@@ -26,6 +27,7 @@ pub fn LayerContentBoundary(children: Element) -> Element {
     // Rust's statically known contexts replace React's dynamic reset registry.
     // Keep the provider sequence stable so updates never remount layer content.
     use_context_provider(AvatarSizeContext::default);
+    use_context_provider(LayoutAreaContext::default);
     use_context_provider(LayoutDividerContext::default);
     use_context_provider(LayoutSlotsContext::default);
     use_context_provider(|| SizeContext(Signal::new(ElementSize::Medium)));

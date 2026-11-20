@@ -46,6 +46,8 @@ mod layout_content;
 mod layout_footer;
 #[path = "showcase/layout_header.rs"]
 mod layout_header;
+#[path = "showcase/layout_panel.rs"]
+mod layout_panel;
 #[path = "showcase/link.rs"]
 mod link;
 #[path = "showcase/progress_bar.rs"]
@@ -94,6 +96,7 @@ use kbd::KbdExamples;
 use layout_content::LayoutContentExamples;
 use layout_footer::LayoutFooterExamples;
 use layout_header::LayoutHeaderExamples;
+use layout_panel::LayoutPanelExamples;
 use link::LinkExamples;
 use progress_bar::ProgressBarExamples;
 use radio_indicator::RadioIndicatorExamples;
@@ -166,6 +169,8 @@ fn App() -> Element {
                 a { href: "#layout-footer-examples", "LayoutFooter examples" }
                 " · "
                 a { href: "#layout-content-examples", "LayoutContent examples" }
+                " · "
+                a { href: "#layout-panel-examples", "LayoutPanel examples" }
                 " · "
                 a { href: "#spinner-examples", "Spinner examples" }
                 " · "
@@ -309,6 +314,7 @@ fn App() -> Element {
             LayoutHeaderExamples {}
             LayoutFooterExamples {}
             LayoutContentExamples {}
+            LayoutPanelExamples {}
             SpinnerExamples {}
             BadgeExamples {}
             AvatarStatusDotExamples {}
