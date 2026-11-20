@@ -1720,7 +1720,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 
 - [ ] **[Stack](https://astryx.atmeta.com/components/Stack)**
 
-  - Standalone implementation and verified contracts: [Stack port notes](docs/stack-port.md). Seven SSR tests and offline source-derived declaration/geometry comparisons pass; these are not published measurements or executed-upstream visual baselines. Overall remains open for faithful Token/Avatar/StackItem supporting patterns and upstream-runtime comparison. No HStack/VStack/StackItem/Grid/Layout completion is claimed.
+  - Standalone implementation and verified contracts: [Stack port notes](docs/stack-port.md). Seven SSR tests, source-derived comparisons, and isolated layout replay against actual published v0.7.16 captures pass. Token/Avatar/StackItem static demo framing now follows verified owner declarations; no supporting public ports are claimed. Overall remains open for intrinsic/full-image and interactive supporting parity. Published deployment commit is unknown; frozen supporting dimensions/paint are controls, not migrated implementations. No HStack/VStack/StackItem/Grid/Layout completion is claimed.
 
   - Sources: [English family API](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Stack/Stack.doc.mjs), [original TSX](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Stack/Stack.tsx).
 
@@ -1738,8 +1738,8 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 
   - **Named templates**
     - [x] [`StackAlignment`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackAlignment.doc.mjs) — “Stack — Alignment”: start/center/end buttons. Existing main Card/Text/Button; Stack topology checked against source-derived declarations, not an upstream-runtime image.
-    - [ ] [`StackDirections`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackDirections.doc.mjs) — “Stack — Directions”: horizontal/vertical badges (showcase).
-    - [ ] [`StackFillItem`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackFillItem.doc.mjs) — “Stack — Fill Item”: avatar, expanding text, button.
+    - [ ] [`StackDirections`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackDirections.doc.mjs) — “Stack — Directions”: horizontal/vertical **Tokens**, not Badges. Static source-derived Token framing and captured published original checked; interactive/public Token and full-image parity not claimed. Published wrap=wrap differs from pinned template; see port notes.
+    - [ ] [`StackFillItem`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackFillItem.doc.mjs) — “Stack — Fill Item”: source-derived static 36px Avatar and StackItem reset/static/fill framing; captured published original layout checked with frozen supporting dimensions/paint. Public Avatar tooltip/focus, StackItem AR2 and full-image parity remain open.
 
 ## Navigation
 
