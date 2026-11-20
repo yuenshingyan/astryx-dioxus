@@ -12,6 +12,7 @@ await withTarget(async({send,evaluate,waitFor,pause,exceptions,browser,target})=
  await send('Page.bringToFront');
  await waitFor(`!!document.getElementById('st-alignment')`);
  await evaluate(`document.fonts.load('400 14px Figtree').then(()=>document.fonts.ready).then(()=>true)`);
+ assert.equal(await evaluate(`(()=>{const region=document.querySelector('[data-astryx-live-region]');window.firstLiveRegion=region;return !!region && region.textContent==='' && region.getAttribute('aria-live')==='polite'})()`),true,'the empty polite region is present before the first action');
  await evaluate(`document.documentElement.style.colorScheme='dark';document.querySelector('main').dataset.astryxTheme='neutral';document.querySelector('main').style.color='var(--color-text-primary)'`);
  await send('Network.emulateNetworkConditions',{offline:true,latency:0,downloadThroughput:0,uploadThroughput:0});
  const report={kind:'Actual Rust-rendered Toast nodes, published comparison',browser:browser.Browser,publishedAt:published.capturedAt,viewport:[1200,1600,1],cases:[],tests:[]};
@@ -43,7 +44,8 @@ await withTarget(async({send,evaluate,waitFor,pause,exceptions,browser,target})=
   assert.equal(await evaluate(`document.querySelector('.astryx-toast').hasAttribute('role')`),false,'viewport is sole announcement owner');
   assert.equal(await evaluate(`document.querySelector('.astryx-demo-toast-media').dataset.astryxMedia`),'light');
   assert.deepEqual(await evaluate(`(()=>{const e=document.querySelector('.astryx-demo-toast-viewport');return[e.getAttribute('role'),e.getAttribute('aria-label'),e.matches(':popover-open')]})()`),['region','Notifications',true]);
-  assert.equal(await evaluate(`document.querySelector('[data-astryx-live-region]').textContent`),published.actions[i].body);
+  assert.equal(await evaluate(`document.querySelector('[data-astryx-live-region]')===firstLiveRegion`),true,'the announcement updates the already-mounted region');
+  assert.equal(await evaluate(`firstLiveRegion.textContent`),published.actions[i].body);
   const clip=await evaluate(`(()=>{const r=document.querySelector('.astryx-toast').getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height,scale:1}})()`);
   const shot=await send('Page.captureScreenshot',{format:'png',clip});await writeFile(`${out}/${published.actions[i].label.toLowerCase()}.png`,Buffer.from(shot.data,'base64'));
   report.cases.push({action:published.actions[i].label,actual,measured,clip});

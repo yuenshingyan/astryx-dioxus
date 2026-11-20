@@ -3,6 +3,8 @@ const id = await dioxus.recv();
 const viewport = document.getElementById(id);
 if (!viewport) return;
 const announcer = installAnnounce().createAnnouncer();
+// Let assistive technology discover the empty live region before the first action.
+announcer.prepare(viewport);
 const announced = new Set();
 let previous = document.activeElement;
 let returnTarget = previous;
