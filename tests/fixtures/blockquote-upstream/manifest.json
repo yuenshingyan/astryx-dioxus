@@ -119,6 +119,7 @@
     {
       "path": "packages/core/src/naming.ts",
       "file": "packages__core__src__naming.ts",
+      "suffix": "\n",
       "blob": "d69f584d7f35b852405cbf1b9cfb75d9b78ef8a3"
     },
     {

@@ -81,4 +81,3 @@ export function dataAttr(name: string): `data-${string}` {
 export function cssVar(name: string): string {
   return `--${cssVarNamespace}-${name}`;
 }
-

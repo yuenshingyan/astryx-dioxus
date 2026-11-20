@@ -7,7 +7,9 @@ const base=new URL('./fixtures/blockquote-upstream/',import.meta.url);
 export const manifest=JSON.parse(await readFile(new URL('manifest.json',base),'utf8'));
 const sources={};
 for(const entry of manifest.files){
- const data=await readFile(new URL(entry.file,base));
+ const stored=await readFile(new URL(entry.file,base));
+ // Preserve upstream bytes without storing a trailing blank line in the text fixture.
+ const data=entry.suffix===undefined?stored:Buffer.concat([stored,Buffer.from(entry.suffix,'utf8')]);
  assert.equal(createHash('sha1').update(`blob ${data.length}\0`).update(data).digest('hex'),entry.blob,entry.path);
  sources[entry.path]=data.toString();
 }
