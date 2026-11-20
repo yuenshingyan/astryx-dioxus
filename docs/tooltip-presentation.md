@@ -181,12 +181,14 @@ The WebKit polling helper now uses bounded 25ms polling rather than animation-fr
 polling, which had sampled after the 200ms hover window. The new Chromium
 blur-during-load test explicitly establishes keyboard modality after navigation.
 
-Installed Safari is **26.6.2 (21624.5.1.11.3)**. `safaridriver` starts, but a new
-isolated session returns `session not created`: enable “Allow remote automation”
-in Safari's Developer settings. **No permission/settings change was made; Safari
-itself remains unrun.** Temporary WebKit is genuine engine evidence, not evidence
-for that installed Safari version. Coarse-pointer reduced-media checks remain
-Chromium-only; Firefox/WebKit runs explicitly log that case as unrun.
+Installed Safari **26.6.2 (21624.5.1.11.3)** passed a focused WebDriver run
+once the user enabled **Allow Remote Automation**. With the local `text_patterns`
+example running, run `node tests/tooltip_safari.browser.mjs` (set `TEXT_URL` if not
+using port 8085). The test uses real Tab and Escape keys and verifies the tooltip
+is positioned clear of the trigger, focus stays on Text after dismissal, and the
+tooltip, description, and automatic tab stop are cleaned up when Text no longer
+overflows. This is separate from the broader Playwright WebKit coverage. The full
+presentation suite and coarse-pointer checks were not run in installed Safari.
 
 Focused local checks: `cargo fmt --check`,
 `CARGO_INCREMENTAL=0 cargo check --locked --lib --no-default-features`, JS syntax,
