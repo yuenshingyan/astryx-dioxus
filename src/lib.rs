@@ -14,6 +14,7 @@ mod clickable_card;
 mod code;
 mod compatibility;
 mod divider;
+mod field_status;
 mod grid;
 mod h_stack;
 mod heading;
@@ -58,6 +59,9 @@ pub use clickable_card::{ClickableCard, ClickableCardError};
 pub use code::{Code, CodeColor, CodeProps, CodeSize};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
+};
+pub use field_status::{
+    FieldStatus, FieldStatusProps, FieldStatusVariant, InputStatusType, InvalidFieldStatusVariant,
 };
 pub use grid::{
     Grid, GridAlignment, GridColumns, GridProps, GridRepeat, GridSpan, GridSpanColumns,

@@ -1,6 +1,6 @@
 // Adapted from Astryx useAnnounce. See THIRD_PARTY_NOTICES.md.
-// Native-dialog fallback and polite writer only; no ModalAnnounceProvider route.
-const announceRuntimeKey = Symbol.for('astryx.dioxus.use-announce.polite.v1');
+// Native-dialog fallback; no ModalAnnounceProvider route.
+const announceRuntimeKey = Symbol.for('astryx.dioxus.use-announce.v2');
 const installAnnounce = () => {
   if (document[announceRuntimeKey]) return document[announceRuntimeKey];
   const hiddenStyle = 'position:absolute;width:1px;height:1px;margin:-1px;padding:0;'
@@ -30,23 +30,25 @@ const installAnnounce = () => {
     if (focused && focused !== modal) return null;
     return modal;
   };
-  const stateFor = container => {
-    let state = states.get(container);
+  const stateFor = (container, priority) => {
+    let channels = states.get(container);
+    if (!channels) states.set(container, channels = new Map());
+    let state = channels.get(priority);
     if (state) {
       if (!state.target.isConnected) container.appendChild(state.target);
       return state;
     }
     const target = document.createElement('div');
     target.setAttribute(container === document.body
-      ? 'data-astryx-live-region' : 'data-astryx-modal-live-region', 'polite');
-    target.setAttribute('role', 'status');
-    target.setAttribute('aria-live', 'polite');
+      ? 'data-astryx-live-region' : 'data-astryx-modal-live-region', priority);
+    target.setAttribute('role', priority === 'assertive' ? 'alert' : 'status');
+    target.setAttribute('aria-live', priority);
     target.setAttribute('aria-atomic', 'true');
     target.style.cssText = hiddenStyle;
     // Initially empty, persistent, and outside the caller's rendered content.
     container.appendChild(target);
     state = { target, container, shares: new Set(), frame: null, settleFrame: null, timer: null };
-    states.set(container, state);
+    channels.set(priority, state);
     return state;
   };
   const wordsIn = state => [...new Set([...state.shares].map(share => share.text))].join(' ');
@@ -108,16 +110,16 @@ const installAnnounce = () => {
         for (const share of [...shares]) withdraw(share);
       };
       return {
-        prepare(element) {
+        prepare(element, priority = 'polite') {
           if (isDisposed) return;
           const container = route(element);
-          if (container) stateFor(container);
+          if (container) stateFor(container, priority);
         },
-        announce(element, text, isEligible) {
+        announce(element, text, isEligible, priority = 'polite') {
           if (isDisposed || !text || !isEligible()) return;
           const container = route(element);
           if (!container) return;
-          const state = stateFor(container);
+          const state = stateFor(container, priority);
           const share = { element, text, isEligible, owner: shares, state };
           shares.add(share);
           state.shares.add(share);

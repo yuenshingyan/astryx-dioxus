@@ -201,7 +201,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
   const announcePinned = record => {
     // Announcement routing/lifetime belongs to the original shared hook owner,
     // including native-modal isolation and withdrawal on owner removal.
-    const announcements = document[Symbol.for('astryx.dioxus.use-announce.polite.v1')];
+    const announcements = document[Symbol.for('astryx.dioxus.use-announce.v2')];
     if (announcements) {
       record.pinAnnouncer ||= announcements.createAnnouncer();
       record.pinAnnouncer.withdrawPending();
