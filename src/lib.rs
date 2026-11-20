@@ -3,6 +3,7 @@
 //! Include [`STYLES`] once using `document::Style` in your application root.
 
 mod aspect_ratio;
+mod avatar;
 mod badge;
 mod blockquote;
 mod button;
@@ -44,6 +45,9 @@ mod v_stack;
 mod visually_hidden;
 
 pub use aspect_ratio::{AspectRatio, AspectRatioFit, AspectRatioShape};
+pub use avatar::{
+    AvatarStatusDot, AvatarStatusDotProps, AvatarStatusDotVariant, InvalidAvatarStatusDotVariant,
+};
 pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
 pub use blockquote::{Blockquote, BlockquoteCite};
 pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, ButtonVariant};

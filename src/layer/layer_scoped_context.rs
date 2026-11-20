@@ -3,6 +3,7 @@
 
 use dioxus::prelude::*;
 
+use crate::avatar::AvatarSizeContext;
 use crate::button_group::button_group_context::{ButtonGroupContext, ConnectedButtonGroupContext};
 use crate::compatibility::{ButtonEnvironment, ButtonEnvironmentContext};
 use crate::icon::{IconDefaultSizeContext, IconSize};
@@ -22,6 +23,7 @@ use crate::text::text_clamp_context::TextClampContext;
 pub fn LayerContentBoundary(children: Element) -> Element {
     // Rust's statically known contexts replace React's dynamic reset registry.
     // Keep the provider sequence stable so updates never remount layer content.
+    use_context_provider(AvatarSizeContext::default);
     use_context_provider(|| SizeContext(Signal::new(ElementSize::Medium)));
     use_context_provider(|| IconDefaultSizeContext(Signal::new(IconSize::Medium)));
     use_context_provider(|| ButtonGroupContext(Signal::new(None)));
