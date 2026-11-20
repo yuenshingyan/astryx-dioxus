@@ -70,7 +70,7 @@ use progress_bar::ProgressBarExamples;
 use selectable_card::SelectableCardExamples;
 use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
-use stack::StackExamples;
+use stack::{StackExamples, StackItemExamples};
 use status_dot::StatusDotExamples;
 use text::TextExamples;
 
@@ -149,6 +149,8 @@ fn App() -> Element {
                 a { href: "#aspect-ratio-examples", "AspectRatio examples" }
                 " · "
                 a { href: "#stack-examples", "Stack examples" }
+                " · "
+                a { href: "#stack-item-examples", "StackItem examples" }
                 " · "
                 a { href: "#grid-examples", "Grid examples" }
                 " · "
@@ -264,6 +266,7 @@ fn App() -> Element {
             SelectableCardExamples {}
             AspectRatioExamples {}
             StackExamples {}
+            StackItemExamples {}
             GridExamples {}
             GridSpanExamples {}
             CenterExamples {}

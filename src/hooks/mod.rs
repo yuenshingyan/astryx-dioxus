@@ -1,3 +1,4 @@
+pub(crate) mod stack_item_scroll_region;
 pub(crate) mod use_announce;
 pub(crate) mod use_announce_rendered_text;
 pub(crate) mod use_clickable_container;
