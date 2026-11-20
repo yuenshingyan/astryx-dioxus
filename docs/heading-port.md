@@ -1,9 +1,10 @@
 # Heading port checkpoint
 
 **Not marked complete:** Heading-specific implementation and evidence are present,
-but the shared Text/Tooltip fidelity follow-up is still in progress. No public
-Tooltip port, independently executed upstream appearance comparison, or full
-accessibility conformance is claimed.
+and Heading now uses the integrated shared Tooltip lifecycle. The independent
+Tooltip module-loading and presentation limits in [Text verification](text-port.md)
+still apply. No public Tooltip port, independently executed upstream appearance
+comparison, or full accessibility conformance is claimed.
 
 ## Authority and ownership
 
@@ -96,14 +97,12 @@ chaining runs measurement, shared Tooltip registration, then caller. Source-owne
 LayerPlacement supplies above/below/start/end. No native title, tab stop or eager
 Tooltip layer/description is added by Heading.
 
-The shared bridge at `3daab94` still differs from the pin: automatic tips do not
-add the expected Tooltip-owned description after first interest, hidden layers are
-removed rather than persistently mounted, descendant focus gates differ, completed
-touch/pen is pointerup rather than source gesture click/toggle, and JS is bundled
-rather than separately lazily imported. A user-approved Text/Tooltip follow-up
-owns these fixes; Heading does not duplicate or patch that code. See
-[Text checkpoint](text-port.md). Heading's browser assertion for removed closed
-layers deliberately records the current bridge, not a claim of source parity.
+The approved shared follow-up adds the description on first interest, keeps the
+closed tooltip mounted, gates focus on the actual trigger, and uses completed
+touch/pen click to toggle. Heading's browser suite verifies that dismissal closes
+the tooltip without removing its description target, and checks logical placement
+of the open tooltip in both directions. Heading does not duplicate this behavior.
+See [Text verification](text-port.md) for remaining module-loading and presentation limits.
 
 The source itself records a keyboard reachability gap: a plain truncated Heading
 is not focusable, so sighted keyboard users cannot reveal the clipped text. Full

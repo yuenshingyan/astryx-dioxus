@@ -231,5 +231,8 @@ The integrated Text/Heading/Code branch passed the five standard Rust checks
 and the Button and Link browser suites. Skeleton and ProgressBar reproduced
 those same idle-trace failures on the integrated branch, including in a fresh
 Chrome profile. Both suites passed on the built, unchanged `de1d606` baseline
-in the shared Chrome session. The cause of the integrated trace differences
-is still unresolved; the assertions remain unchanged.
+in the shared Chrome session. The cause was default no-op animation callbacks registering delegated listeners
+on the page. Text and Heading now register their new animation callbacks only
+when supplied. On the final combined preview, the unchanged Skeleton and
+ProgressBar suites passed, along with Button, Link, and the new animation
+registration and callback-delivery regression suite.
