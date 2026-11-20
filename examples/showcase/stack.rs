@@ -6,25 +6,30 @@ use astryx_dioxus::{
 use dioxus::events::{onclick, onkeydown, onmounted};
 use dioxus::prelude::*;
 
-// Static subset of pinned Token.tsx, Avatar.tsx and Stack/stackItem.stylex.ts.
-// Keep these declarations demo-local; the independent owners are not public ports.
+#[path = "../../src/avatar/pattern.rs"]
+mod avatar;
+#[path = "../../src/tooltip/pattern_tooltip.rs"]
+mod pattern_tooltip;
+#[path = "../../src/stack_item/pattern.rs"]
+mod stack_item;
+#[path = "../../src/token/pattern.rs"]
+mod token;
+
+use avatar::PatternAvatar;
+use stack_item::{PatternItemSize, PatternStackItem};
+use token::PatternToken;
 const DEMO_CSS: &str = "
 .stack-frame { max-width:600px; padding:16px; }
 .stack-probe > span { display:block; flex:none; width:30px; height:20px; background:currentColor; }
-.stack-demo-token { display:inline-flex; align-items:center; gap:var(--spacing-1); padding-block:0; padding-inline:var(--spacing-2); border:0 none; border-radius:var(--radius-inner); font-family:inherit; font-size:var(--text-supporting-size); line-height:var(--text-supporting-leading); font-weight:var(--font-weight-medium); white-space:nowrap; text-decoration:none; max-width:100%; overflow:hidden; height:calc(var(--size-element-md) - 8px); background:var(--color-neutral); color:var(--color-text-primary); }
-.stack-demo-token > span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; unicode-bidi:isolate; }
-.stack-demo-avatar { position:relative; display:inline-flex; flex-shrink:0; border-radius:var(--radius-full); width:36px; height:36px; }
-.stack-demo-avatar-content { display:flex; align-items:center; justify-content:center; width:100%; height:100%; overflow:hidden; user-select:none; border-radius:var(--radius-full); }
-.stack-demo-avatar-fallback { display:flex; align-items:center; justify-content:center; width:100%; height:100%; background:var(--color-neutral); color:var(--color-text-primary); font-family:var(--font-family-body); font-weight:var(--font-weight-medium); text-transform:uppercase; font-size:14.4px; }
-.stack-demo-static { flex-grow:0; flex-shrink:0; min-width:0; min-height:0; }
-.stack-demo-fill { flex-grow:1; min-width:0; min-height:0; }
 .stack-class-override { gap:13px; padding-inline-start:17px; }
 ";
 
-/// Standalone Stack patterns. Static Token/Avatar/item declarations are derived
-/// from the pinned owners for this demo only; no supporting public port is claimed.
+/// Standalone Stack patterns with private, upstream-owned supporting slices.
+/// The published action text is observable; no standalone supporting port is claimed.
 #[component]
 pub fn StackExamples() -> Element {
+    let mut action_message = use_signal(String::new);
+    let mut action_count = use_signal(|| 0);
     let mut event_count = use_signal(|| 0);
     let mut mounted_count = use_signal(|| 0);
     let mut key_count = use_signal(|| 0);
@@ -35,7 +40,7 @@ pub fn StackExamples() -> Element {
         document::Style { "{DEMO_CSS}" }
         section { id: "stack-examples", class: "stack-frame",
             h2 { "Stack" }
-            p { "One-dimensional layout; Token, Avatar and StackItem static framing uses pinned source declarations, demo-only. Avatar tooltip/focus behavior is not implemented. No supporting public ports are claimed." }
+            p { "One-dimensional layout with private Token, Avatar and StackItem pattern slices. Avatar names are focusable tooltips. Actions announce the published demo messages; this is not a Toast migration." }
             h3 { "Stack — Alignment" }
             Stack { id: "st-alignment", gap: SpacingStep::Three, width: SizeValue::from("100%"), style: "max-width:500px",
                 for (label, value) in [("Start (left)", StackAlignment::Start), ("Center", StackAlignment::Center), ("End (right)", StackAlignment::End)] {
@@ -43,43 +48,48 @@ pub fn StackExamples() -> Element {
                         Stack { gap: SpacingStep::Four,
                             Text { text_type: TextType::SUPPORTING, color: TextColor::SECONDARY, "{label}" }
                             Stack { direction: StackDirection::Horizontal, gap: SpacingStep::One, h_align: value,
-                                Button { label: "Cancel", variant: ButtonVariant::Secondary, size: ButtonSize::Small }
-                                Button { label: "Save", size: ButtonSize::Small }
+                                Button { label: "Cancel", variant: ButtonVariant::Secondary, size: ButtonSize::Small,
+                                    onclick: move |_| { action_message.set("Demo: your edits would be discarded here".into()); action_count += 1; }
+                                }
+                                Button { label: "Save", variant: ButtonVariant::Primary, size: ButtonSize::Small,
+                                    onclick: move |_| { action_message.set("Demo: your changes would be saved here".into()); action_count += 1; }
+                                }
                             }
                         }
                     }
                 }
             }
-            h3 { "Stack — Directions (source-derived static Token framing)" }
+            h3 { "Stack — Directions" }
             Stack { id: "st-directions", direction: StackDirection::Horizontal, gap: SpacingStep::Ten, h_align: StackAlignment::Center,
                 Stack { direction: StackDirection::Horizontal, gap: SpacingStep::Two, v_align: StackAlignment::Center,
-                    for _ in 0..3 { span { class: "stack-demo-token", span { dir: "ltr", "Horizontal" } } }
+                    for _ in 0..3 { PatternToken { label: "Horizontal" } }
                 }
                 Stack { gap: SpacingStep::Two,
-                    for _ in 0..3 { span { class: "stack-demo-token", span { dir: "ltr", "Vertical" } } }
+                    for _ in 0..3 { PatternToken { label: "Vertical" } }
                 }
             }
-            h3 { "Stack — Fill Item (source-derived static item/avatar framing)" }
+            h3 { "Stack — Fill Item" }
             Stack { id: "st-fill", gap: SpacingStep::Three, width: SizeValue::from("100%"), style: "max-width:300px",
                 for (name, role, initials) in [("Olivia Chen", "Engineering Lead", "OC"), ("Marcus Rivera", "Product Designer", "MR"), ("Aisha Patel", "Marketing Manager", "AP")] {
                     Stack { direction: StackDirection::Horizontal, gap: SpacingStep::Three, v_align: StackAlignment::Center,
-                        div { class: "stack-demo-static",
-                            div { class: "stack-demo-avatar", "aria-hidden": "true",
-                                div { class: "stack-demo-avatar-content",
-                                    div { class: "stack-demo-avatar-fallback", "{initials}" }
-                                }
-                            }
+                        PatternStackItem { size: PatternItemSize::Static,
+                            PatternAvatar { name, initials }
                         }
-                        div { class: "stack-demo-fill",
+                        PatternStackItem { size: PatternItemSize::Fill,
                             Stack { gap: SpacingStep::Zero,
                                 Text { text_type: TextType::BODY, weight: TextWeight::Bold, "{name}" }
                                 Text { text_type: TextType::SUPPORTING, color: TextColor::SECONDARY, "{role}" }
                             }
                         }
-                        div { class: "stack-demo-static", Button { label: "View", variant: ButtonVariant::Secondary, size: ButtonSize::Small } }
+                        PatternStackItem { size: PatternItemSize::Static,
+                            Button { label: "View", variant: ButtonVariant::Secondary, size: ButtonSize::Small,
+                                onclick: move |_| { action_message.set("Demo: this profile would open here".into()); action_count += 1; }
+                            }
+                        }
                     }
                 }
             }
+            output { id: "st-pattern-action", role: "status", "data-count": "{action_count}", "{action_message}" }
             h3 { "Source contract probes" }
             div { id: "st-matrix",
                 for direction in [StackDirection::Horizontal, StackDirection::Vertical] {
