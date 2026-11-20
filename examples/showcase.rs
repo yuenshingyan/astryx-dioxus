@@ -6,6 +6,8 @@ use dioxus::prelude::*;
 
 #[path = "showcase/aspect_ratio.rs"]
 mod aspect_ratio;
+#[path = "showcase/avatar_status_dot.rs"]
+mod avatar_status_dot;
 #[path = "showcase/badge.rs"]
 mod badge;
 #[path = "showcase/blockquote.rs"]
@@ -66,6 +68,7 @@ mod v_stack;
 mod visually_hidden;
 
 use aspect_ratio::AspectRatioExamples;
+use avatar_status_dot::AvatarStatusDotExamples;
 use badge::BadgeExamples;
 use blockquote::BlockquoteExamples;
 use button_contract::ButtonContractExamples;
@@ -152,6 +155,8 @@ fn App() -> Element {
                 a { href: "#spinner-examples", "Spinner examples" }
                 " · "
                 a { href: "#badge-examples", "Badge examples" }
+                " · "
+                a { href: "#avatar-status-dot-examples", "AvatarStatusDot examples" }
                 " · "
                 a { href: "#divider-examples", "Divider examples" }
                 " · "
@@ -288,6 +293,7 @@ fn App() -> Element {
             LinkExamples {}
             SpinnerExamples {}
             BadgeExamples {}
+            AvatarStatusDotExamples {}
             DividerExamples {}
             KbdExamples {}
             SkeletonExamples {}

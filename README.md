@@ -79,6 +79,7 @@ See [Grid verification](docs/grid-port.md) for tested behavior and demo adaptati
 [CheckIndicator](docs/check-indicator-port.md) adds a decorative selection mark and a same-size replacement slot.
 [RadioIndicator](docs/radio-indicator-port.md) adds a decorative radio circle with a replaceable selection dot.
 [CheckboxIndicator](docs/checkbox-indicator-port.md) adds a decorative checkbox with checked and mixed marks and a replacement slot.
+[AvatarStatusDot](docs/avatar-status-dot-port.md) supports standalone dots; Avatar integration remains open.
 Stack implements axis/alias resolution, shared token gaps, local logical padding,
 sizing precedence, wrapping, scrolling and caller-rendered native roots. Its SSR and
 offline source-derived comparisons plus actual published captures/isolated layout
