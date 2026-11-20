@@ -5,6 +5,7 @@ use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
 use super::text_clamp_context::{TextClampProvider, use_text_clamp_context};
+use super::{resolve_style_color, use_truncation};
 use crate::theme::{
     TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap, WordBreak,
 };
@@ -39,7 +40,7 @@ pub enum TextTag {
 ///
 /// Clamping is CSS-only when `has_truncate_tooltip` is false: no controller or
 /// layout measurement is installed. Otherwise the shared Tooltip owner measures
-/// overflow on hover, tap or keyboard interest, without adding a tab stop or a
+/// overflow after layout and reveals it on hover, tap or keyboard interest, without adding a tab stop or a
 /// duplicate description. `onmounted` supplies native MountedData instead of ref.
 #[component]
 pub fn Text(
@@ -101,7 +102,13 @@ pub fn Text(
         String::new(),
         has_truncate_tooltip && max_lines > 0,
     );
+    let truncation = use_truncation(
+        tooltip_id.clone(),
+        if has_truncate_tooltip { max_lines } else { 0 },
+        false,
+    );
     let handle_mounted = move |event: MountedEvent| {
+        truncation.onmounted.call(event.clone());
         mounted.call(event.clone());
         onmounted.call(event);
     };
@@ -123,7 +130,7 @@ pub fn Text(
     let mut classes = vec![
         "astryx-text".to_string(),
         format!("astryx-text--type-{}", text_type.baseline()),
-        format!("astryx-text--color-{}", color.baseline()),
+        format!("astryx-text--color-{}", resolve_style_color(&color)),
     ];
     if let Some(size) = size {
         classes.push(format!("astryx-text--size-{}", size.as_str()));

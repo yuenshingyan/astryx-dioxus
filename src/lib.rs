@@ -67,7 +67,7 @@ pub use spinner::{Spinner, SpinnerError, SpinnerShade, SpinnerSize};
 pub use status_dot::{
     InvalidStatusDotVariant, StatusDot, StatusDotError, StatusDotIcon, StatusDotVariant,
 };
-pub use text::{Text, TextTag};
+pub use text::{Text, TextTag, Truncation, use_truncation};
 pub use theme::{
     InvalidTextName, TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap,
     WordBreak,

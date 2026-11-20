@@ -6,6 +6,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     if (!record) return;
     record.isPinned = false;
     record.pinAnnouncer?.withdrawPending();
+    record.cutAbort?.abort();
     record.cutResize?.disconnect();
     record.cutMutation?.disconnect();
     cancelTimer(record, record.showTimer);
@@ -119,17 +120,23 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       const refresh = () => {
         if (!record.tip || !record.element.isConnected) return;
         const element = record.element;
-        if (element.scrollWidth <= element.clientWidth && element.scrollHeight <= element.clientHeight) {
+        if (!isTextTruncated(element)) {
           hideTip(record); return;
         }
-        const text = element.textContent || record.label;
+        const text = truncationAnswer(element)?.fullText ?? (element.textContent || record.label);
         if (record.tip.textContent !== text) record.tip.textContent = text;
         positionTip(record);
       };
-      record.cutResize = new ResizeObserver(refresh);
-      record.cutMutation = new MutationObserver(refresh);
-      record.cutResize.observe(record.element);
-      record.cutMutation.observe(record.element, { childList: true, subtree: true, characterData: true });
+      if (truncationAnswer(record.element)) {
+        record.cutAbort?.abort();
+        record.cutAbort = new AbortController();
+        record.element.addEventListener('astryxtruncationchange', refresh, { signal: record.cutAbort.signal });
+      } else {
+        record.cutResize = new ResizeObserver(refresh);
+        record.cutMutation = new MutationObserver(refresh);
+        record.cutResize.observe(record.element);
+        record.cutMutation.observe(record.element, { childList: true, subtree: true, characterData: true });
+      }
     }
     if (record.boundTip !== tip) {
       record.layerAbort?.abort();
@@ -183,6 +190,12 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     }
     return nearest;
   };
+  const truncationAnswer = element => element[Symbol.for('astryx.dioxus.truncation')];
+  const isTextTruncated = element => {
+    const answer = truncationAnswer(element);
+    return answer ? answer.isTruncated
+      : element.scrollWidth > element.clientWidth || element.scrollHeight > element.clientHeight;
+  };
   const showAutomatic = record => {
     if (!record.isTruncation || callerTooltip(record)) return;
     // An explicit parent tooltip already explains this label. Do not stack tips.
@@ -191,8 +204,8 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     }
     const element = record.element;
     if (getComputedStyle(element).visibility !== 'hidden'
-      && (element.scrollWidth > element.clientWidth || element.scrollHeight > element.clientHeight)) {
-      showTip(record, element.textContent || record.label, true);
+      && isTextTruncated(element)) {
+      showTip(record, truncationAnswer(element)?.fullText ?? (element.textContent || record.label), true);
     }
   };
   const focusTip = record => {

@@ -4,5 +4,14 @@
 #[path = "text.rs"]
 mod component;
 pub(crate) mod text_clamp_context;
+mod use_truncation;
+
+use crate::theme::TextColor;
 
 pub use component::{Text, TextTag};
+pub use use_truncation::{Truncation, use_truncation};
+
+/// Shared built-in color baseline; custom colors keep their theme data name.
+pub(crate) fn resolve_style_color(color: &TextColor) -> &str {
+    color.baseline()
+}
