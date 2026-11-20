@@ -8,6 +8,7 @@ pub use global_icon_registry::{
 };
 
 pub use component::Icon;
+pub(crate) use component::render_icon;
 pub use icon_default_size_context::{
     IconDefaultSizeContext, IconDefaultSizeProvider, use_icon_size,
 };

@@ -20,6 +20,7 @@ mod hooks;
 mod i18n;
 mod icon;
 mod icon_button;
+mod indicator;
 mod input_group;
 mod interactive_role_context;
 mod kbd;
@@ -66,6 +67,7 @@ pub use icon::{
     InvalidIconName, get_extended_icon, register_icons, use_icon_size,
 };
 pub use icon_button::IconButton;
+pub use indicator::{CheckIndicator, CheckIndicatorProps, CheckIndicatorState, IndicatorSize};
 pub use interactive_role_context::{
     InteractiveRoleContext, InteractiveRoleProvider, use_interactive_role_context,
 };

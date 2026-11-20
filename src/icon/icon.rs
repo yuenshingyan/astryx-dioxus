@@ -22,6 +22,18 @@ pub fn Icon(
     #[props(default)] style: String,
 ) -> Element {
     let size = use_icon_size(size);
+    render_icon(icon, size, color, label, class, style, Vec::new())
+}
+
+pub(crate) fn render_icon(
+    icon: Element,
+    size: IconSize,
+    color: Option<String>,
+    label: Option<String>,
+    class: String,
+    style: String,
+    attributes: Vec<Attribute>,
+) -> Element {
     let dimension = size.dimension();
     let color = color
         .as_deref()
@@ -42,6 +54,7 @@ pub fn Icon(
             role: label.map(|_| "img"),
             "aria-label": label,
             "aria-hidden": label.is_none().then_some("true"),
+            ..attributes,
             span { class: "astryx-icon__glyph", "aria-hidden": "true", {icon} }
         }
     }
