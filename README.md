@@ -50,7 +50,10 @@ native input behavior, released layer capture and all three original patterns; s
 press/event integration, the private native-radio proof and the approved forced-color
 selection cue are verified. See [SelectableCard verification](docs/selectable-card-port.md)
 for callback adaptations, source-palette findings and verification boundaries.
-Supporting layer-boundary
+Blockquote adds semantic quotes with shallow author/source attribution, logical
+RTL rules, and all three original patterns including existing Card testimonials;
+see [Blockquote verification](docs/blockquote-port.md) for source-derived offline
+comparisons and evidence boundaries. Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
 Publishing remains disabled until package metadata and licensing are confirmed.
@@ -94,6 +97,7 @@ CSS styles target HTML/webview output, not a native renderer.
 ## Layout
 
 - `src/badge/`, `src/button/`, `src/button_group/`, `src/card/`, `src/clickable_card/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
+- `src/blockquote/`: semantic quote and bare attribution; no layout/typography dependency.
 - `src/selectable_card/`: controlled Card selection and its private native input context; not a completed Lab group migration.
 - `src/layout/`: shared spacing-step lowering for container publishers, not a completed Layout migration.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
@@ -130,7 +134,9 @@ For browser interaction checks, see [Button browser testing](docs/button-port.md
 [ProgressBar testing](docs/progress-bar-port.md#verification), [Card testing](docs/card-port.md#verification),
 [ClickableCard testing](docs/clickable-card-port.md#verification),
 and [SelectableCard testing](docs/selectable-card-port.md#verification-and-integration-boundary).
-Run all fourteen component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
+Blockquote's offline suite is `node tests/blockquote.browser.mjs` (preview port 8091),
+with `node tests/blockquote_source.mjs` and `node tests/blockquote.contrast.mjs`;
+see its verification notes. Run the fourteen existing component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
 `node tests/icon_button.browser.mjs`, `node tests/link.browser.mjs`, `node tests/spinner.browser.mjs`,
 `node tests/badge.browser.mjs`, `node tests/divider.browser.mjs`, `node tests/kbd.browser.mjs`,
 `node tests/skeleton.browser.mjs`, `node tests/status_dot.browser.mjs`, `node tests/progress_bar.browser.mjs`,

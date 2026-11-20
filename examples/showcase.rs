@@ -6,6 +6,8 @@ use dioxus::prelude::*;
 
 #[path = "showcase/badge.rs"]
 mod badge;
+#[path = "showcase/blockquote.rs"]
+mod blockquote;
 #[path = "showcase/button_contract.rs"]
 mod button_contract;
 #[path = "showcase/button_group.rs"]
@@ -36,6 +38,7 @@ mod spinner;
 mod status_dot;
 
 use badge::BadgeExamples;
+use blockquote::BlockquoteExamples;
 use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
@@ -115,6 +118,8 @@ fn App() -> Element {
                 a { href: "#status-dot-examples", "StatusDot examples" }
                 " · "
                 a { href: "#progress-bar-examples", "ProgressBar examples" }
+                " · "
+                a { href: "#blockquote-examples", "Blockquote examples" }
                 " · "
                 a { href: "#card-examples", "Card examples" }
             }
@@ -218,6 +223,7 @@ fn App() -> Element {
             SkeletonExamples {}
             StatusDotExamples {}
             ProgressBarExamples {}
+            BlockquoteExamples {}
             CardExamples {}
             ClickableCardExamples {}
             SelectableCardExamples {}

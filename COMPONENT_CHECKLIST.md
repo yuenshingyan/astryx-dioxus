@@ -9,7 +9,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), [Skeleton](docs/skeleton-port.md), [StatusDot](docs/status-dot-port.md), [ProgressBar](docs/progress-bar-port.md), [Card](docs/card-port.md), and [SelectableCard](docs/selectable-card-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), [Skeleton](docs/skeleton-port.md), [StatusDot](docs/status-dot-port.md), [ProgressBar](docs/progress-bar-port.md), [Card](docs/card-port.md), [SelectableCard](docs/selectable-card-port.md), and [Blockquote](docs/blockquote-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
@@ -480,17 +480,18 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [ ] **AvatarGroup — Interactive** (`AvatarGroupInteractive.doc.mjs`): profile links, overflow opens full member list.
     - [ ] **AvatarGroup** (`AvatarGroupShowcase.doc.mjs`): sliced facepile and server-side overflow count.
 
-- [ ] **[Blockquote](https://astryx.atmeta.com/components/Blockquote)**
+- [x] **[Blockquote](https://astryx.atmeta.com/components/Blockquote)**
 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Blockquote/Blockquote.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Blockquote).
 
   - **Content and behavior**
-    - [ ] No finite visual variant/size enum documented; quote children with or without `cite` attribution rendered in a cite element.
-    - [ ] Secondary text and logical inline-start rule/padding, mirrored to right in RTL.
+    - [x] No finite visual variant/size enum documented; quote children with or without `cite` attribution rendered in a cite element.
+    - [x] Secondary text and logical inline-start rule/padding, mirrored to right in RTL.
   - **Templates**
-    - [ ] **Blockquote — Showcase** (`BlockquoteShowcase.doc.mjs`): with/without citation.
-    - [ ] **Blockquote — Testimonials** (`BlockquoteTestimonials.doc.mjs`): quotes in Card/Grid social-proof layout.
-    - [ ] **Blockquote — With Attribution** (`BlockquoteWithCite.doc.mjs`): plain quote and credited quote.
+    - [x] **Blockquote — Showcase** (`BlockquoteShowcase.doc.mjs`): with/without citation.
+    - [x] **Blockquote — Testimonials** (`BlockquoteTestimonials.doc.mjs`): quotes in Card/Grid social-proof layout.
+    - [x] **Blockquote — With Attribution** (`BlockquoteWithCite.doc.mjs`): plain quote and credited quote.
+  - [Verification](docs/blockquote-port.md): six SSR tests, 48 offline source-derived pattern comparisons including existing Card framing, root refs/native events/AX/no-landmark/RTL/media, and 12/12 modeled text-contrast cases. Fixtures are pinned-source derivations, not published measurements; native demo-only Stack/Grid framing does not complete those independent migrations. Authoritative upstream gaps remain documented.
 
 - [ ] **[Citation](https://astryx.atmeta.com/components/Citation)**
 

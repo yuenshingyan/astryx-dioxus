@@ -1291,7 +1291,9 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 /* Blockquote: pinned logical rule and bare attribution, no content typography reset. */
 @layer astryx-base {
   .astryx-blockquote {
-    border-inline-start: var(--spacing-0-5) solid var(--color-border-emphasized);
+    border-inline-start-width: var(--spacing-0-5);
+    border-inline-start-style: solid;
+    border-inline-start-color: var(--color-border-emphasized);
     padding-inline-start: var(--spacing-4);
     color: var(--color-text-secondary);
     overflow-wrap: break-word;
