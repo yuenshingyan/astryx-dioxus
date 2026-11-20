@@ -100,7 +100,7 @@ fn App() -> Element {
     ];
 
     rsx! {
-        document::Title { "Astryx Dioxus — Buttons and Link" }
+        document::Title { "Astryx Dioxus Showcase" }
         document::Style { "{STYLES}" }
         document::Style { "@font-face {{font-family:Figtree;src:url('{FIGTREE}') format('woff2');font-style:normal;font-weight:300 900;font-display:swap;}}" }
         document::Style { "
@@ -113,11 +113,8 @@ fn App() -> Element {
             .demo-count--warning {{ background:light-dark(#fae19e,#e2b6233d);color:light-dark(#4b3900,#eec448); }}
         " }
         main { "data-astryx-theme": "astryx",
-            AspectRatioExamples {}
-            h1 { "Astryx Buttons and Link" }
+            h1 { "Astryx Dioxus Showcase" }
             p { "Documented patterns, interaction states, and integrations. See docs/ for each component's verification notes." }
-            a { href: "#stack-examples", "Stack examples" }
-            StackExamples {}
             nav { "aria-label": "Showcase sections",
                 a { href: "#button-group-examples", "ButtonGroup examples" }
                 " · "
@@ -142,6 +139,10 @@ fn App() -> Element {
                 a { href: "#blockquote-examples", "Blockquote examples" }
                 " · "
                 a { href: "#card-examples", "Card examples" }
+                " · "
+                a { href: "#aspect-ratio-examples", "AspectRatio examples" }
+                " · "
+                a { href: "#stack-examples", "Stack examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -249,6 +250,8 @@ fn App() -> Element {
             CardExamples {}
             ClickableCardExamples {}
             SelectableCardExamples {}
+            AspectRatioExamples {}
+            StackExamples {}
         }
     }
 }
