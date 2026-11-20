@@ -54,6 +54,9 @@ Semantic inline Code now has closed color/inherited-size props, native root even
 shared typography tokens and an offline four-pattern example; see
 [Code verification](docs/code-port.md). Shared Text/Heading frame integration and
 unrun engine/device/screen-reader checks remain explicitly separate.
+Text adds shared post-layout/content truncation measurement, placement and offline
+source-derived Text-only examples. Its existing shared Tooltip bridge still has
+pin-fidelity blockers; Text is not marked complete. See [Text checkpoint](docs/text-port.md).
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.

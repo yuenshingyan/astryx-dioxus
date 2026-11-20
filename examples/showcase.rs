@@ -34,6 +34,8 @@ mod skeleton;
 mod spinner;
 #[path = "showcase/status_dot.rs"]
 mod status_dot;
+#[path = "showcase/text.rs"]
+mod text;
 
 use badge::BadgeExamples;
 use button_contract::ButtonContractExamples;
@@ -50,6 +52,7 @@ use selectable_card::SelectableCardExamples;
 use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
 use status_dot::StatusDotExamples;
+use text::TextExamples;
 
 const FIGTREE: Asset = asset!("/assets/fonts/Figtree-latin.woff2");
 
@@ -217,6 +220,7 @@ fn App() -> Element {
             KbdExamples {}
             SkeletonExamples {}
             StatusDotExamples {}
+            TextExamples {}
             ProgressBarExamples {}
             CardExamples {}
             ClickableCardExamples {}

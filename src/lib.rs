@@ -52,7 +52,7 @@ pub use interactive_role_context::{
     InteractiveRoleContext, InteractiveRoleProvider, use_interactive_role_context,
 };
 pub use kbd::{Kbd, KbdError, KbdText};
-pub use layer::LayerContentBoundary;
+pub use layer::{LayerContentBoundary, LayerPlacement};
 pub use link::{
     Link, LinkComponentType, LinkDownload, LinkProvider, LinkRenderProps, LinkifyCaptures,
     LinkifyError, LinkifyMatch, LinkifyNode, LinkifyPattern, UseLinkifyOptions, linkify,
@@ -69,7 +69,7 @@ pub use spinner::{Spinner, SpinnerError, SpinnerShade, SpinnerSize};
 pub use status_dot::{
     InvalidStatusDotVariant, StatusDot, StatusDotError, StatusDotIcon, StatusDotVariant,
 };
-pub use text::{Text, TextTag};
+pub use text::{Text, TextTag, Truncation, use_truncation};
 pub use theme::{
     InvalidTextName, TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap,
     WordBreak,

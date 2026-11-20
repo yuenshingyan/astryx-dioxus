@@ -5,6 +5,8 @@ use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
 use super::text_clamp_context::{TextClampProvider, use_text_clamp_context};
+use super::{resolve_style_color, use_truncation};
+use crate::layer::LayerPlacement;
 use crate::theme::{
     TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap, WordBreak,
 };
@@ -38,9 +40,13 @@ pub enum TextTag {
 /// inline CSS escape hatch replacing StyleX `xstyle`.
 ///
 /// Clamping is CSS-only when `has_truncate_tooltip` is false: no controller or
-/// layout measurement is installed. Otherwise the shared Tooltip owner measures
-/// overflow on hover, tap or keyboard interest, without adding a tab stop or a
-/// duplicate description. `onmounted` supplies native MountedData instead of ref.
+/// layout measurement is installed. Otherwise Text measures overflow after layout;
+/// the shared Tooltip bridge reveals it on hover, tap or keyboard interest without
+/// adding a tab stop or duplicate description. That bridge has known pin-fidelity
+/// gaps documented in `docs/text-port.md`; this is not a complete Tooltip port.
+/// `onmounted` supplies native MountedData instead of ref.
+/// `truncate_tooltip_placement` supplies the source placement alternative without
+/// changing existing boolean `has_truncate_tooltip` callers; false always wins.
 #[component]
 pub fn Text(
     children: Element,
@@ -51,6 +57,8 @@ pub fn Text(
     #[props(default)] display: TextDisplay,
     #[props(default)] max_lines: u32,
     #[props(default = true)] has_truncate_tooltip: bool,
+    // Additive adapter for the source boolean-or-placement union.
+    #[props(default)] truncate_tooltip_placement: Option<LayerPlacement>,
     #[props(default)] word_break: Option<WordBreak>,
     #[props(default)] text_wrap: Option<TextWrap>,
     #[props(default)] justify: TextJustify,
@@ -90,6 +98,56 @@ pub fn Text(
     #[props(default)] ontouchmove: EventHandler<TouchEvent>,
     #[props(default)] ontouchend: EventHandler<TouchEvent>,
     #[props(default)] ontouchcancel: EventHandler<TouchEvent>,
+    #[props(default)] oncopy: EventHandler<ClipboardEvent>,
+    #[props(default)] oncut: EventHandler<ClipboardEvent>,
+    #[props(default)] onpaste: EventHandler<ClipboardEvent>,
+    #[props(default)] oncompositionstart: EventHandler<CompositionEvent>,
+    #[props(default)] oncompositionupdate: EventHandler<CompositionEvent>,
+    #[props(default)] oncompositionend: EventHandler<CompositionEvent>,
+    #[props(default)] ondrag: EventHandler<DragEvent>,
+    #[props(default)] ondragstart: EventHandler<DragEvent>,
+    #[props(default)] ondragend: EventHandler<DragEvent>,
+    #[props(default)] ondragenter: EventHandler<DragEvent>,
+    #[props(default)] ondragleave: EventHandler<DragEvent>,
+    #[props(default)] ondragover: EventHandler<DragEvent>,
+    #[props(default)] ondrop: EventHandler<DragEvent>,
+    #[props(default)] oninput: EventHandler<FormEvent>,
+    #[props(default)] onchange: EventHandler<FormEvent>,
+    #[props(default)] oninvalid: EventHandler<FormEvent>,
+    #[props(default)] onreset: EventHandler<FormEvent>,
+    #[props(default)] onsubmit: EventHandler<FormEvent>,
+    #[props(default)] onselect: EventHandler<SelectionEvent>,
+    #[props(default)] onscroll: EventHandler<ScrollEvent>,
+    #[props(default)] onwheel: EventHandler<WheelEvent>,
+    #[props(default)] onanimationstart: EventHandler<AnimationEvent>,
+    #[props(default)] onanimationiteration: EventHandler<AnimationEvent>,
+    #[props(default)] onanimationend: EventHandler<AnimationEvent>,
+    #[props(default)] ontransitionend: EventHandler<TransitionEvent>,
+    #[props(default)] ontoggle: EventHandler<ToggleEvent>,
+    #[props(default)] onload: EventHandler<ImageEvent>,
+    #[props(default)] onerror: EventHandler<ImageEvent>,
+    #[props(default)] onabort: EventHandler<MediaEvent>,
+    #[props(default)] oncanplay: EventHandler<MediaEvent>,
+    #[props(default)] oncanplaythrough: EventHandler<MediaEvent>,
+    #[props(default)] ondurationchange: EventHandler<MediaEvent>,
+    #[props(default)] onemptied: EventHandler<MediaEvent>,
+    #[props(default)] onencrypted: EventHandler<MediaEvent>,
+    #[props(default)] onended: EventHandler<MediaEvent>,
+    #[props(default)] onloadeddata: EventHandler<MediaEvent>,
+    #[props(default)] onloadedmetadata: EventHandler<MediaEvent>,
+    #[props(default)] onloadstart: EventHandler<MediaEvent>,
+    #[props(default)] onpause: EventHandler<MediaEvent>,
+    #[props(default)] onplay: EventHandler<MediaEvent>,
+    #[props(default)] onplaying: EventHandler<MediaEvent>,
+    #[props(default)] onprogress: EventHandler<MediaEvent>,
+    #[props(default)] onratechange: EventHandler<MediaEvent>,
+    #[props(default)] onseeked: EventHandler<MediaEvent>,
+    #[props(default)] onseeking: EventHandler<MediaEvent>,
+    #[props(default)] onstalled: EventHandler<MediaEvent>,
+    #[props(default)] onsuspend: EventHandler<MediaEvent>,
+    #[props(default)] ontimeupdate: EventHandler<MediaEvent>,
+    #[props(default)] onvolumechange: EventHandler<MediaEvent>,
+    #[props(default)] onwaiting: EventHandler<MediaEvent>,
     #[props(default)] onmounted: EventHandler<MountedEvent>,
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
@@ -101,7 +159,13 @@ pub fn Text(
         String::new(),
         has_truncate_tooltip && max_lines > 0,
     );
+    let truncation = use_truncation(
+        tooltip_id.clone(),
+        if has_truncate_tooltip { max_lines } else { 0 },
+        false,
+    );
     let handle_mounted = move |event: MountedEvent| {
+        truncation.onmounted.call(event.clone());
         mounted.call(event.clone());
         onmounted.call(event);
     };
@@ -116,6 +180,7 @@ pub fn Text(
                     | "data-size"
                     | "data-color"
                     | "data-astryx-truncation-id"
+                    | "data-astryx-truncation-placement"
             )
         })
         .collect();
@@ -123,7 +188,7 @@ pub fn Text(
     let mut classes = vec![
         "astryx-text".to_string(),
         format!("astryx-text--type-{}", text_type.baseline()),
-        format!("astryx-text--color-{}", color.baseline()),
+        format!("astryx-text--color-{}", resolve_style_color(&color)),
     ];
     if let Some(size) = size {
         classes.push(format!("astryx-text--size-{}", size.as_str()));
@@ -179,6 +244,7 @@ pub fn Text(
                     class: class,
                     style: style,
                     "data-astryx-truncation-id": tooltip_id.clone(),
+                    "data-astryx-truncation-placement": truncate_tooltip_placement.unwrap_or_default().as_str(),
                     "data-type": text_type.as_str(),
                     "data-size": size.map(TextSize::as_str),
                     "data-color": color.as_str(),
@@ -195,7 +261,27 @@ pub fn Text(
                     onfocus: onfocus, onblur: onblur, onkeydown: onkeydown,
                     onkeyup: onkeyup, onkeypress: onkeypress,
                     ontouchstart: ontouchstart, ontouchmove: ontouchmove,
-                    ontouchend: ontouchend, ontouchcancel: ontouchcancel, onmounted: handle_mounted,
+                    ontouchend: ontouchend, ontouchcancel: ontouchcancel,
+                    oncopy: oncopy, oncut: oncut, onpaste: onpaste,
+                    oncompositionstart: oncompositionstart, oncompositionupdate: oncompositionupdate,
+                    oncompositionend: oncompositionend,
+                    ondrag: ondrag, ondragstart: ondragstart, ondragend: ondragend,
+                    ondragenter: ondragenter, ondragleave: ondragleave,
+                    ondragover: ondragover, ondrop: ondrop,
+                    oninput: oninput, onchange: onchange, oninvalid: oninvalid,
+                    onreset: onreset, onsubmit: onsubmit, onselect: onselect,
+                    onscroll: onscroll, onwheel: onwheel,
+                    onanimationstart: onanimationstart, onanimationiteration: onanimationiteration,
+                    onanimationend: onanimationend, ontransitionend: ontransitionend,
+                    ontoggle: ontoggle, onload: onload, onerror: onerror,
+                    onabort: onabort, oncanplay: oncanplay, oncanplaythrough: oncanplaythrough,
+                    ondurationchange: ondurationchange, onemptied: onemptied, onencrypted: onencrypted,
+                    onended: onended, onloadeddata: onloadeddata, onloadedmetadata: onloadedmetadata,
+                    onloadstart: onloadstart, onpause: onpause, onplay: onplay, onplaying: onplaying,
+                    onprogress: onprogress, onratechange: onratechange, onseeked: onseeked,
+                    onseeking: onseeking, onstalled: onstalled, onsuspend: onsuspend,
+                    ontimeupdate: ontimeupdate, onvolumechange: onvolumechange, onwaiting: onwaiting,
+                    onmounted: handle_mounted,
                     ..attributes,
                     {children}
                 }
