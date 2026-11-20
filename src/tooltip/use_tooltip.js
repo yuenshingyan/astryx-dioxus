@@ -193,7 +193,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     }
   };
   const focusTip = record => {
-    if (record.pointerFocus || record.tooltipPolicy?.isHoverOnly(record)) return;
+    if ((record.pointerFocus && !record.focusTriggerAlways) || record.tooltipPolicy?.isHoverOnly(record)) return;
     if (record.isTruncation && !document.activeElement?.matches(':focus-visible')) return;
     if (record.tooltip) { showTip(record, record.tooltip); return; }
     if (record.isTruncation) { showAutomatic(record); return; }

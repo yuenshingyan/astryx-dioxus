@@ -16,6 +16,7 @@ mod interactive_role_context;
 mod kbd;
 mod layer;
 mod link;
+mod progress_bar;
 mod size_context;
 mod skeleton;
 mod spinner;
@@ -24,6 +25,7 @@ mod text;
 mod theme;
 mod tooltip;
 mod utils;
+mod visually_hidden;
 
 pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
 pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, ButtonVariant};
@@ -46,6 +48,10 @@ pub use link::{
     Link, LinkComponentType, LinkDownload, LinkProvider, LinkRenderProps, LinkifyCaptures,
     LinkifyError, LinkifyMatch, LinkifyNode, LinkifyPattern, UseLinkifyOptions, linkify,
     use_link_component, use_linkify,
+};
+pub use progress_bar::{
+    InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,
+    ProgressBarVariant,
 };
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
 pub use skeleton::{Skeleton, SkeletonError, SkeletonLength, SkeletonRadius};

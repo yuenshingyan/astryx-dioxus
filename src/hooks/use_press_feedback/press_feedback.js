@@ -72,7 +72,7 @@ if (!document[runtimeKey]) {
     // for Button's legacy geometric growth. Nested dots reached the host above.
     const statusDot = hit?.closest('[data-astryx-status-tooltip-id]');
     if (records.get(statusDot)?.isStatusDot) return null;
-    const foreign = hit?.closest('button,a[href],input,select,textarea,[role="button"],[role="link"],[role="menuitem"],[role="option"]');
+    const foreign = hit?.closest('button,a[href],input,select,textarea,[role="button"],[role="link"],[role="menuitem"],[role="option"],[tabindex]');
     // Tooltip-only toggles can share this record map without belonging to the
     // press router. Their native hit must never be redirected to a nearby Button.
     if (foreign && (!records.has(foreign) || !foreign.matches(pressRoot))) return null;
@@ -228,6 +228,7 @@ if (!document[runtimeKey]) {
       if (record.isFocused) focusTip(record);
       return {
         show() { tips.show(record); },
+        preview() { tips.showTip(record, record.tooltip); },
         hide() { tips.hideTip(record); },
         command(command) { tips.command(record, command); },
         update(config) {

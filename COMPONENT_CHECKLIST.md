@@ -848,24 +848,24 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [ ] `InfoTipPermissionNotes` — **InfoTip — Permission Notes**: who can change read-only settings.
     - [ ] `InfoTipShowcase` — **InfoTip**: compact info-tip showcase.
 
-- [ ] **[Progress Bar](https://astryx.atmeta.com/components/ProgressBar)**
+- [x] **[Progress Bar](https://astryx.atmeta.com/components/ProgressBar)**
 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/ProgressBar/ProgressBar.doc.mjs). Templates in `ProgressBar/` under [pinned root](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components).
 
   - **Semantic and progress modes**
-    - [ ] `variant`: `accent` (default), `success`, `warning`, `error`, `neutral`.
-    - [ ] isIndeterminate false (default determinate) / true (unknown duration); reduced motion pulses in place instead of traveling.
-    - [ ] isLabelHidden, hasValueLabel, isDisabled: each false by default / true; disabled grays fill/text, e.g. canceled/inactive task.
-    - [ ] Required accessible label; value default 0, max default 100 (open numeric progress data); percentage default formatter versus custom formatValueLabel.
-    - [ ] marks require value and accessible label, tooltip on hover/focus; past-fill mark uses variant on-color, bare track primary text (secondary disabled). Marks/value labels ignored in indeterminate mode.
-    - [ ] Coarse-pointer value animation linear proportional to distance (full track one second at default theme tempo), minimum visible positive fill; icons/labels composed beside, not inside bar.
+    - [x] `variant`: `accent` (default), `success`, `warning`, `error`, `neutral`; validated open names retain theme extensions. Approved accent/on-accent fallback and inset track/fill boundaries resolve unpainted custom and standalone-graphic source gaps.
+    - [x] Determinate default versus unknown progress modeled by ProgressBarState; reduced motion replaces 40%/1500ms travel with full-width 1↔.84 opacity, 2000ms per leg, without tempo scaling.
+    - [x] isLabelHidden, hasValueLabel, isDisabled: each false by default / true; clipped names remain referenced, counters share aria-valuetext, and disabled paint adds no invented ARIA disabled state.
+    - [x] Required accessible label; value default 0, max default 100; safe finite/range normalization, localized percentage template and custom formatter, native props/ref/event composition and recoverable text validation.
+    - [x] Named finite/clamped marks are focusable images outside the progressbar; hover/focus/touch/click tooltip preview, source on-color/track/disabled ink, themed overhang and removal cleanup verified. Unknown progress cannot carry marks and ignores value labels/formatters. **[Contrast](docs/progress-bar-port.md#contrast-and-limits):** approved boundaries pass all modeled cases; 15/168 conditional disabled-marker findings remain explicit.
+    - [x] Authoritative spec supersedes measured linear touch timing: every pointer uses full theme duration/easing, sampled retarget/reversal; reduced/forced-color updates land immediately. Coarse positive minimum is 16px capped to track, with matching mark coverage; nearest rendered direction, own-track resize and lifecycle cleanup verified. **[Verification](docs/progress-bar-port.md):** 18 source comparisons/five native frames, no idle Paint/Layout and compositor pixels through 700ms blocking in both busy modes. Icons/labels remain caller-composed outside the fill.
 
   - **Named templates**
-    - [ ] `ProgressBarCustomFormat` — **ProgressBar — Custom Format**: disk-usage GB value.
-    - [ ] `ProgressBarIndeterminate` — **ProgressBar — Indeterminate**: unknown-duration loading.
-    - [ ] `ProgressBarSemanticVariants` — **ProgressBar — Semantic Variants**: accent/success/warning/error/neutral.
-    - [ ] `ProgressBarShowcase` — **ProgressBar**: example 60% progress, not fixed style/default.
-    - [ ] `ProgressBarWithValueLabel` — **ProgressBar — With Value Label**: percentage text.
+    - [x] `ProgressBarCustomFormat` — **ProgressBar — Custom Format**: disk-usage GB value.
+    - [x] `ProgressBarIndeterminate` — **ProgressBar — Indeterminate**: unknown-duration loading.
+    - [x] `ProgressBarSemanticVariants` — **ProgressBar — Semantic Variants**: accent/success/warning/error/neutral.
+    - [x] `ProgressBarShowcase` — **ProgressBar**: example 60% progress, not fixed style/default.
+    - [x] `ProgressBarWithValueLabel` — **ProgressBar — With Value Label**: percentage text.
 
 - [x] **[Skeleton](https://astryx.atmeta.com/components/Skeleton)**
 
