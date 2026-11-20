@@ -42,7 +42,12 @@ original patterns. Approved graphic boundaries/custom fallback and retained disa
 findings are recorded in [ProgressBar verification](docs/progress-bar-port.md).
 Card adds the static surface, all thirteen tones/four elevations, shared sizing/spacing,
 corrected applied-padding publication and six static patterns plus the phone-row example;
-see [Card verification](docs/card-port.md). ClickableCard/SelectableCard remain separate pending ports.
+see [Card verification](docs/card-port.md). SelectableCard adds controlled native
+input behavior, released layer capture and all three original patterns; shared
+press/event integration, the private native-radio proof and the approved forced-color
+selection cue are verified. See [SelectableCard verification](docs/selectable-card-port.md)
+for callback adaptations, source-palette findings and verification boundaries.
+ClickableCard has a separate migration owner.
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
@@ -87,6 +92,7 @@ CSS styles target HTML/webview output, not a native renderer.
 ## Layout
 
 - `src/badge/`, `src/button/`, `src/button_group/`, `src/card/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
+- `src/selectable_card/`: controlled Card selection and its private native input context; not a completed Lab group migration.
 - `src/layout/`: shared spacing-step lowering for container publishers, not a completed Layout migration.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
@@ -124,6 +130,14 @@ Run all twelve component suites: `node tests/button.browser.mjs`, `node tests/bu
 `node tests/icon_button.browser.mjs`, `node tests/link.browser.mjs`, `node tests/spinner.browser.mjs`,
 `node tests/badge.browser.mjs`, `node tests/divider.browser.mjs`, `node tests/kbd.browser.mjs`,
 `node tests/skeleton.browser.mjs`, `node tests/status_dot.browser.mjs`, `node tests/progress_bar.browser.mjs`, and `node tests/card.browser.mjs`.
+SelectableCard's four suites are `node tests/selectable_card.browser.mjs`,
+`node tests/selectable_card_events.browser.mjs`,
+`node tests/selectable_card_press.browser.mjs` and
+`node tests/selectable_card_layer.browser.mjs`; all CDP operations must be
+serialized using the shared browser lock. Its contrast audit
+(`node tests/selectable_card.contrast.mjs`) intentionally exits 1 for 218/468
+conditional persistent-ring findings. The approved forced-color cue and its final
+integrated proof are recorded separately in its verification notes.
 Card's contrast audit (`node tests/card.contrast.mjs`) intentionally exits 1 for
 4/336 inherited core secondary-text findings; decorative edges get no invented graphic threshold.
 Also run `node tests/progress_bar_motion.browser.mjs` for native timing/resize/media/cleanup contracts.

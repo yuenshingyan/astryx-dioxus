@@ -5,9 +5,10 @@
 Authority: Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`,
 `SelectableCard/{SelectableCard.tsx,selectableCardInput.ts}`, its specification and
 checkbox/radio tests, `hooks/useClickableContainer.ts`, shared press/focus/overlay
-owners, and the three Card-directory CLI templates. This implementation is **not
-marked fully migrated** while the integration/policy items below remain unresolved.
-No staged next-minor behavior is enabled.
+owners, and the three Card-directory CLI templates. SelectableCard is complete
+for the source-faithful migration baseline, including the explicitly approved
+forced-color deviation and the normative corrections documented below. No staged
+next-minor behavior is enabled.
 
 SelectableCard composes the existing Card; it does not duplicate its paint,
 geometry, padding publication, sizing validation or elevation. The private native
@@ -25,8 +26,12 @@ without changing the existing Card API. Following the existing Button convention
 `onmounted`, and `onclick_capture` are reserved: supply them through named typed
 props, not raw attribute builders. Raw builders for these owned names are ignored.
 Non-reserved native event builders (including keydown) retain their original
-renderer payloads, including while disabled. No private renderer converter or
-invalid erased downcast is fabricated.
+renderer payloads, including while disabled. The shared retained-event hook keeps
+previously installed declarative listener-name slots inert when a builder is
+removed, dropping its old callback without removing the renderer's retained owner.
+Removal/restoration of builders and unrelated data attributes preserves root/input
+identity and emits no extra mount callback. No private renderer converter,
+renderer-marker mutation or invalid erased downcast is fabricated.
 
 The first child is a visually hidden native checkbox; the root adds no role or tab
 stop. Disabled inputs remain keyboard-reachable with `aria-disabled`, while the
@@ -129,28 +134,46 @@ this is not a passing contrast or blanket accessibility claim. Card's independen
 text audit and its documented source-palette findings still apply. Custom theme
 contrast is caller-owned.
 
-Native forced colors removes the inset shadow, and borderless variants have no
-remaining component-owned persistent visual selection mark. Observed default
-selected/unselected borders also both resolve to the same system ink. The checked native
-semantics remain, but are not a visible indicator. There is no authoritative
-source treatment. No forced-color redesign or acceptance of this limitation has
-been invented; human policy is required before a completion claim.
+The original forced-color rendering removes the inset shadow: borderless variants
+lose their persistent visual selection cue and default selected/unselected borders
+both resolve to the same system ink. Native checked semantics alone do not provide
+a visible cue. No authoritative source treatment was found.
 
-## Verification and remaining integration items
+The user explicitly **approved** a forced-colors-only **2px inset CanvasText
+selection border**, independent of the keyboard-focus outline, without changing
+normal colors. Integration owns its CSS and dedicated browser test. The approved
+stationary root-border implementation reserves 2px in both selected and unselected
+forced-color states, uses CanvasText/Canvas respectively, and preserves the old
+1px unselected inset-edge affordance when unfocused. The native input's independent
+outer focus outline takes precedence over that unselected edge. Unlike an absolute
+pseudo-child, the root border remains stationary when explicit-height Card content
+scrolls. Selection toggles must not change geometry; entering OS forced-color mode
+may reserve that border. Parent commit
+`baa7cfcdf80de66c2241255e857da417815ffa82` implements this approved deviation;
+its exact CSS was mirrored into this branch, not independently redesigned.
+`tests/selectable_card_forced_colors.browser.mjs` on the parent's public-API
+boundary example passed default, borderless, custom, disabled, both selection
+states, independent focus, stable geometry, 160px content scrolling and restoration
+of unchanged normal-mode paint. Evidence: `parent-forced-browser.log` in the task
+cache. This is actual browser proof, not a claim that the source supplied the cue.
 
-Integration checkpoint (not a final completion claim), locally run with
-`CARGO_INCREMENTAL=0`:
+## Verification and integration boundary
 
-- Renderer-neutral locked library check, locked tests (**187 Rust + 11 doc
-  tests**, including **7 new public SSR + 4 private input-channel tests**), fmt and
-  locked wasm showcase check passed at the earlier checkpoint. Latest focused
-  public SSR **7/7** and wasm showcase compile pass. Final standard-suite rerun is
-  pending the shared cleanup below; no final all-checks pass is claimed.
-- Host all-target Clippy passed before the latest support patch introduced a
-  Clickable-only unused `cancel_disabled_click` helper in this isolated branch.
-  Latest Clippy fails that shared dead-code diagnostic; wasm Clippy additionally
-  reports unconsumed early native transport/proof helpers. No suppression or
-  public API widening is added. Joint production-use/cleanup is required.
+Source checkpoint `65020628022a7494a90ecf93b70264ec203de55f`, locally run
+with `CARGO_INCREMENTAL=0` after consuming the final shared timing/profile and
+retained-event changes, then repeated host/tests/wasm and all four browser suites
+with the exact parent-approved forced-color CSS:
+
+- `cargo fmt --check`, `git diff --check`, locked renderer-neutral library check,
+  locked full tests (**188 Rust + 10 doc tests**, including **7 public SSR + 4
+  private input-channel tests**) and locked wasm showcase check **passed**.
+- Isolated host all-target Clippy **fails** only the Clickable-owned unused
+  `cancel_disabled_click`; isolated wasm library Clippy **fails** that helper plus
+  `delegate_action` and `navigate`. This branch intentionally lacks ClickableCard's
+  production use sites. No suppression, visibility widening or removal of needed
+  helpers is added. The parent combined branch's five standard checks and extra
+  wasm showcase Clippy passed before this consumption-only follow-up; final
+  combined verification remains integration-owned.
 - `tests/selectable_card.browser.mjs` passed **44 original Card observations** plus
   native callback/property/Space/Enter/IME/selection, layer deferral, disabled,
   raw-field reservation/non-reserved builders, canonical nested roles, AX, focus,
@@ -162,30 +185,44 @@ Integration checkpoint (not a final completion claim), locally run with
 - `tests/selectable_card_press.browser.mjs` passed governing every-pointer engine
   onset/release and actual held-tint pixels, nested mouse/pen/touch veto, custom
   ring roles, RTL, touch image/exit clock/easing, slide-off/cancel/disable/drop,
-  reduced coarse and fine-primary-touch treatment, and source forced-color evidence.
+  reduced coarse and fine-primary-touch treatment, and the approved forced-color
+  border (full focus/scroll/both-state proof has its own integration-owned suite).
 - `tests/selectable_card_layer.browser.mjs` passed actual body/native-modal Tooltip
   capture, caller isolation, disabled capture, hidden/removal cleanup and nested
   parent-before-child logical order, explicit capture-stop propagation, and
   unrelated recursive native dispatch through the corrected Rc document adapter.
-  All four browser suites passed together at this checkpoint; the shared clock
-  update still requires a final rerun.
-- CI, joint cross-card regressions, physical devices, other engines and real
-  screen readers are unrun. AX assertions are not screen-reader verification.
+  All four suites passed together on the rebuilt isolated 8082 preview after the
+  final shared clock/profile, document-route, retained-event and approved cue
+  updates. Final logs: `selectable/final-cue-selectable_card{,_events,_press,_layer}.log`.
+- The private radio channel passed the approved one-off actual native probe:
+  **9 radios / four independent groups**, source surface/input/Enter/Space/arrows
+  ordering and select-only behavior, rejected peer checked-property repair,
+  disabled mutation/Tab reachability, detached form owners, names/values and AX.
+  Exact harness/probe/results are archived under
+  `/tmp/astryx-interactive-cards-reference/selectable/` (`radio-browser.log`). All
+  temporary visibility/reexports and the example were removed; no public test
+  feature, radio/context API or Lab migration is shipped.
+- Parent integration reports **196 Rust + 11 doc tests**, all five standard
+  checks plus extra wasm showcase Clippy, **22 showcase browser suites**, the
+  latest native-boundary proof and the cross-card public-API harness **passed**
+  before the final approved cue/source follow-up. Logs are cached as
+  `parent-final-*`, `parent-browser-*` and `parent-boundaries-*`; these are parent
+  results, not isolated-branch passes. The final dedicated forced-color suite
+  subsequently passed at `baa7cfc`; the public cross-card boundary suite passed
+  again with that cue (`parent-final-boundaries-browser.log`).
+- CI, physical devices, other engines, hydration and real screen readers remain
+  unrun here. AX assertions are not screen-reader verification.
 
-Open integration/policy items (not silently redesigned):
+Resolved integration work includes all-pointer theme-clock release, the 10px
+row/card pan threshold outside scrollers, native token time grammar/easing,
+repeat cancellation and finite-animation completion, original-owner logical
+Tooltip metadata, depth-ordered reentrant document capture, and retained dynamic
+event slots. Obsolete native pointer transport is removed. No pending shared API,
+native source, radio-harness or human-policy decision remains.
 
-1. Finish shared motion clock/profile corrections and cleanup of truly unused
-   adapter helpers, then rerun final checks. Published-runtime desktop CSS timing
-   is not the desired baseline; governing INV5/INV7 and shared source timing apply.
-2. Consume/test the corrected depth-ordered, reentrant document route and retained
-   declarative event-slot adapter. Final joint cross-card regressions remain
-   integration-owned; neither a fake layer nor a weakened callback contract waives them.
-3. The private radio channel passed an approved one-off native probe: **9 radios /
-   four independent groups**, source surface/input/Enter/Space/arrows ordering and
-   select-only behavior, rejected peer checked-property repair, disabled mutation
-   and Tab reachability, detached form owners, names/values and AX state. Exact
-   harness/probe/results are archived in the task research cache; all temporary
-   visibility/reexports and the temporary example were removed. No public test
-   feature, radio mode/context API or Lab migration is shipped.
-4. Forced-color persistent-selection policy above remains unresolved. The
-   component parent checklist remains unchecked.
+No component implementation or policy blocker remains. The final joint rerun,
+CI, push and combined PR/merge are parent-owned. This isolated branch does not
+claim their future results. The integrated migration has **14 completed component
+parents** when the independent ClickableCard finalization and this SelectableCard
+finalization are combined; Card/ClickableCard checklist ownership is unchanged.
+Normal palette findings remain unchanged.
