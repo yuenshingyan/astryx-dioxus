@@ -140,7 +140,12 @@ listen(colorPreference, 'change', () => applyDemoToastMedia(card,media));
 if (!document.hasFocus()) holds.add('window');
 start();
 settleTimer = setTimeout(() => { if (!isExiting) row.dataset.settled = ''; }, timing()+50);
-viewport.astryxDemoToast?.announce(row, row.querySelector('.astryx-demo-toast-body').textContent);
+// The viewport opens a popover on the first row. Give the browser a frame
+// to expose that change before the polite writer schedules its text update.
+const announcementFrame = requestAnimationFrame(() => {
+  if (isExiting || !row.isConnected) return;
+  viewport.astryxDemoToast?.announce(row, row.querySelector('.astryx-demo-toast-body').textContent);
+});
 try {
   while (true) {
     const command = await dioxus.recv();
@@ -151,6 +156,7 @@ try {
   isDisposed = true;
   abort.abort();
   themeObserver.disconnect();
+  cancelAnimationFrame(announcementFrame);
   clearTimeout(timer); clearTimeout(exitTimer); clearTimeout(settleTimer);
   viewport.astryxDemoToast?.handoff(row);
 }

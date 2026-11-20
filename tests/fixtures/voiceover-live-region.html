@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>VoiceOver polite announcement check</title>
+</head>
+<body>
+  <h1>VoiceOver polite announcement check</h1>
+  <p>Activate the button once. Focus should remain on the button.</p>
+  <button type="button" id="announce">Send test message</button>
+  <p id="message" role="status" aria-live="polite" aria-atomic="true"></p>
+  <script>
+    document.getElementById('announce').addEventListener('click', () => {
+      document.getElementById('message').textContent = 'Live region test message received.';
+    });
+  </script>
+</body>
+</html>
