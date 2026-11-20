@@ -16,7 +16,7 @@ use super::selectable_card_input::{
 };
 use crate::Card;
 use crate::card::CardVariant;
-use crate::hooks::use_clickable_container::use_native_owner;
+use crate::hooks::use_clickable_container::{use_native_owner, use_retained_event_attributes};
 use crate::hooks::use_press_feedback::{PressFeedbackConfig, use_press_feedback};
 use crate::utils::disabled_interaction::cancel_disabled_key;
 use crate::utils::types::{Elevation, SizeValue, SpacingStep};
@@ -309,6 +309,7 @@ pub fn SelectableCard(
             caller.call(event);
         }
     }));
+    let attributes = use_retained_event_attributes(attributes);
     rsx! {
         Card {
             variant, elevation, padding, width, height, max_width,

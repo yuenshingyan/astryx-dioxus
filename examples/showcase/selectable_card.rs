@@ -95,6 +95,9 @@ pub fn SelectableCardExamples() -> Element {
     let mut should_remove_on_click = use_signal(|| false);
     let mut should_stop_capture = use_signal(|| false);
     let mut should_dispatch_unrelated = use_signal(|| false);
+    let mut has_raw_keydown = use_signal(|| true);
+    let mut has_raw_attribute = use_signal(|| true);
+    let mut raw_mount_count = use_signal(|| 0);
     rsx! {
         document::Style { "
           .demo-selectable-context {{font-family:var(--font-family-body);font-size:var(--text-body-size);line-height:var(--text-body-leading);font-weight:400;}}
@@ -160,6 +163,9 @@ pub fn SelectableCardExamples() -> Element {
             Button { id: "sc-remove-on-click", label: "Remove on next caller click", onclick: move |_| should_remove_on_click.set(true) }
             Button { id: "sc-stop-capture", label: "Toggle capture propagation stop", onclick: move |_| should_stop_capture.toggle() }
             Button { id: "sc-unrelated-on-click", label: "Toggle unrelated native dispatch", onclick: move |_| should_dispatch_unrelated.toggle() }
+            Button { id: "sc-raw-keydown-toggle", label: "Toggle native keydown builder", onclick: move |_| has_raw_keydown.toggle() }
+            Button { id: "sc-raw-attribute-toggle", label: "Toggle native data attribute", onclick: move |_| has_raw_attribute.toggle() }
+            output { id: "sc-raw-mounts", "{raw_mount_count}" }
             button { id: "sc-unrelated-target", r#type: "button", onclick: move |_| log.write().push("unrelated".to_owned()), "Unrelated native action" }
             output { id: "sc-log", "{log.read().join(\"|\")}" }
             if is_shown() {
@@ -208,11 +214,16 @@ pub fn SelectableCardExamples() -> Element {
                 }
             }
             SelectableCard { id: "sc-raw", label: "Attribute builder option", is_selected: false, is_disabled: is_disabled(), onchange: move |is_now_selected| log.write().push(format!("raw-change:{is_now_selected}")),
-                attributes: vec![
-                    click_attribute(move |_| log.write().push("raw-click".to_owned())),
-                    mouseup_attribute(move |_| log.write().push("raw-mouseup".to_owned())),
-                    keydown_attribute(move |_| log.write().push("raw-keydown".to_owned())),
-                ],
+                onmounted: move |_| raw_mount_count += 1,
+                attributes: {
+                    let mut attributes = vec![
+                        click_attribute(move |_| log.write().push("raw-click".to_owned())),
+                        mouseup_attribute(move |_| log.write().push("raw-mouseup".to_owned())),
+                    ];
+                    if has_raw_keydown() { attributes.push(keydown_attribute(move |_: KeyboardEvent| log.write().push("raw-keydown".to_owned()))); }
+                    if has_raw_attribute() { attributes.push(Attribute::new("data-raw-extra", "present", None, false)); }
+                    attributes
+                },
                 "Non-reserved keydown builders retain renderer payloads; use named card callbacks"
             }
             SelectableCard { id: "sc-rejected", label: "Rejected change", is_selected: false, onchange: move |is_now_selected| log.write().push(format!("rejected:{is_now_selected}")), "Caller does not accept requests" }

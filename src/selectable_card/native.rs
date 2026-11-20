@@ -1,7 +1,7 @@
 // SelectableCard's released before-layer policy. Neutral transport is shared;
 // isolation and delayed native default cancellation stay with their source owner.
 use dioxus::prelude::{EventHandler, MouseEvent, PointerEvent};
-use wasm_bindgen::{prelude::*, throw_val};
+use wasm_bindgen::{JsValue, prelude::wasm_bindgen, throw_val};
 use web_sys::{
     Element, HtmlInputElement, MouseEvent as DomMouseEvent, PointerEvent as DomPointerEvent,
 };
