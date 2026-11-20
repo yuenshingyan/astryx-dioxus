@@ -19,3 +19,4 @@ const clearLayerSurfaceOwner = element => {
   if (element.parentElement?.hasAttribute('popover')) layerSurfaceOwners.delete(element.parentElement);
 };
 const isLayerSurface = element => layerSurfaceRegistry.has(element);
+const layerSurfaceOwner = element => layerSurfaceOwners.get(element) || null;

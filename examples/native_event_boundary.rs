@@ -30,9 +30,8 @@ mod probe {
     use web_sys::{Element as DomElement, HtmlElement, MouseEvent as DomMouseEvent};
 
     use super::use_clickable_container::native::{
-        allows_activation, apply_cancellation, delegate_action, mouse_event, navigate,
-        pointer_event, use_clickable_container, use_native_document_listener, use_native_listener,
-        with_current_target,
+        allows_activation, delegate_action, mouse_event, navigate, use_native_document_listener,
+        use_native_event_listener, use_native_listener, with_current_target,
     };
 
     use super::use_clickable_container::use_native_owner;
@@ -109,6 +108,7 @@ mod probe {
                 .unwrap();
             }),
         );
+        let pointer_owner = owner.clone();
         let owner_scope = use_native_listener(
             "#native-probe".into(),
             "owner-probe",
@@ -149,8 +149,10 @@ mod probe {
                 .unwrap();
             }),
         );
-        let click = use_clickable_container(
+        let click = use_native_event_listener(
             "#native-probe".into(),
+            "click",
+            false,
             Rc::new(move |event| {
                 let root: DomElement = event.current_target().unwrap().unchecked_into();
                 let native: &DomMouseEvent = event.unchecked_ref();
@@ -195,32 +197,32 @@ mod probe {
                 // part of this transport; a layer child must still see its own click.
             }),
         );
-        let pointer = use_native_listener(
-            "#native-probe".into(),
-            "pointerdown",
-            false,
-            EventHandler::new(move |event: web_sys::Event| {
-                let root: DomElement = event.current_target().unwrap().unchecked_into();
-                let native: &web_sys::PointerEvent = event.unchecked_ref();
-                let wrapped = pointer_event(native);
-                let is_original =
-                    wrapped.data().downcast::<web_sys::PointerEvent>() == Some(native);
-                wrapped.prevent_default();
-                wrapped.stop_propagation();
-                apply_cancellation(&wrapped, &event);
-                root.set_attribute(
-                    "data-pointer",
-                    &format!(
-                        "{is_original}:{}:{}",
-                        native.default_prevented(),
-                        wrapped.pointer_id()
-                    ),
-                )
-                .unwrap();
-            }),
-        );
-        rsx! {div{id:"native-probe","data-pressable-container":"true",onmounted:move |event:MountedEvent|{owner_ref.call(event.clone());owner_scope.call(event.clone());click.call(event.clone());capture.call(event.clone());pointer.call(event.clone());saved_mount.set(Some(event));},
-            span{id:"probe-surface","Surface"}
+        // Ordinary pointer callbacks use the renderer's original metadata, not
+        // the obsolete constructed native-pointer adapter.
+        let pointer = move |event: PointerEvent| {
+            let root = pointer_owner.element().unwrap();
+            let native = event
+                .data()
+                .downcast::<web_sys::PointerEvent>()
+                .unwrap()
+                .clone();
+            let check_native = native.clone();
+            let check_root = root.clone();
+            with_current_target(native.as_ref(), &root, move || {
+                assert_eq!(
+                    check_native.current_target(),
+                    Some(check_root.clone().into())
+                );
+                check_root
+                    .set_attribute("data-pointer", &format!("true:true:{}", event.pointer_id()))
+                    .unwrap();
+                event.prevent_default();
+                event.stop_propagation();
+            })
+            .unwrap();
+        };
+        rsx! {div{id:"native-probe","data-pressable-container":"true",onmounted:move |event:MountedEvent|{owner_ref.call(event.clone());owner_scope.call(event.clone());click.call(event.clone());capture.call(event.clone());saved_mount.set(Some(event));},
+            span{id:"probe-surface",onpointerdown:pointer,"Surface"}
             button{id:"probe-own",r#type:"button","data-astryx-container-action":"","Own action"}
             button{id:"probe-child",r#type:"button","Child"}
             span{id:"probe-readonly",role:"button","aria-readonly":"true","Read-only"}

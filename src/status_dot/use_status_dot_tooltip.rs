@@ -3,6 +3,7 @@
 use dioxus::prelude::*;
 
 use crate::hooks::use_announce::ANNOUNCE_CONTROLLER;
+use crate::hooks::use_press_feedback::PRESS_FEEDBACK_CONTROLLER;
 use crate::tooltip::use_tooltip::TOOLTIP_CONTROLLER;
 use crate::utils::hit_area::HIT_AREA_CONTROLLER;
 use crate::utils::touch_hit_area::TOUCH_HIT_AREA_CONTROLLER;
@@ -31,7 +32,7 @@ fn start_status_dot_controller(
         TOUCH_HIT_AREA_CONTROLLER,
         include_str!("status_dot.js"),
         TOOLTIP_CONTROLLER,
-        include_str!("../hooks/use_press_feedback/press_feedback.js"),
+        PRESS_FEEDBACK_CONTROLLER,
         include_str!("use_status_dot_tooltip.js"),
     ));
     let _ = controller.send(config.clone());

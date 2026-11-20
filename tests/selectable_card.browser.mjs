@@ -86,6 +86,17 @@ await withTarget(async({send,evaluate,pause,waitFor,exceptions})=>{
  await click('#sc-child-cancel');await clear();await click('#sc-nested');assert.equal(await log(),'capture|nested|click');assert.equal(await evaluate('document.getElementById("sc-controlled").dataset.callerDefault'),'false');await click('#sc-child-cancel');
  await clear();await click('#sc-raw');assert.equal(await log(),'raw-change:true','reserved raw click is not a component callback alias');await clear();await click('#sc-raw > input');assert.equal(await log(),'raw-change:true');assert.equal(await evaluate('document.querySelector("#sc-raw > input").checked'),false);
  await clear();await evaluate('document.getElementById("sc-raw").dispatchEvent(new MouseEvent("mouseup",{bubbles:true}))');await pause(80);assert.equal(await log(),'','reserved raw mouseup is ignored');await evaluate('document.getElementById("sc-raw").dispatchEvent(new KeyboardEvent("keydown",{key:"a",bubbles:true}))');await pause(80);assert.equal(await log(),'raw-keydown');
+ // Removing/restoring native builders or unrelated attributes must not starve
+ // retained owned callbacks, remount the native input, or emit a fake ref mount.
+ await evaluate('window.rawRoot=document.getElementById("sc-raw");window.rawInput=rawRoot.firstElementChild');
+ assert.equal(await evaluate('document.getElementById("sc-raw-mounts").textContent'),'1');
+ let hasKeydown=true,hasExtra=true;
+ for(const toggle of ['sc-raw-keydown-toggle','sc-raw-attribute-toggle','sc-raw-keydown-toggle','sc-raw-attribute-toggle','sc-raw-attribute-toggle','sc-raw-keydown-toggle','sc-raw-attribute-toggle','sc-raw-keydown-toggle']) {
+  await click(`#${toggle}`);if(toggle==='sc-raw-keydown-toggle')hasKeydown=!hasKeydown;else hasExtra=!hasExtra;
+  assert.deepEqual(await evaluate('(()=>{const e=document.getElementById("sc-raw");return[e===rawRoot,e.firstElementChild===rawInput,e.hasAttribute("data-raw-extra"),document.getElementById("sc-raw-mounts").textContent]})()'),[true,true,hasExtra,'1']);
+  await clear();await click('#sc-raw');assert.equal(await log(),'raw-change:true');
+  await clear();await evaluate('document.getElementById("sc-raw").dispatchEvent(new KeyboardEvent("keydown",{key:"a",bubbles:true}))');await pause(40);assert.equal(await log(),hasKeydown?'raw-keydown':'');
+ }
  await evaluate('window.sameRoot=document.getElementById("sc-controlled");window.sameInput=sameRoot.firstElementChild');await click('#sc-change-props');assert.deepEqual(await evaluate('(()=>{const e=document.getElementById("sc-controlled");return[e===sameRoot,e.firstElementChild===sameInput,e.firstElementChild.getAttribute("aria-label"),e.dataset.variant,e.dataset.elevation,e.getBoundingClientRect().width,e.firstElementChild.checked]})()'),[true,true,'Renamed option','green','high',320,false]);await click('#sc-change-props');await click('#sc-surface');
  // An unmarked popover is not silently promoted to an open-layer boundary.
  await evaluate('document.getElementById("sc-unmarked").showPopover()');await clear();await click('#sc-unmarked');assert.equal(await log(),'capture|change:false|click');await evaluate('document.getElementById("sc-unmarked").hidePopover()');
