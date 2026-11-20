@@ -77,6 +77,7 @@ See [Grid verification](docs/grid-port.md) for tested behavior and demo adaptati
 [Center](docs/center-port.md) adds flex-axis centering and logical padding with all three original patterns.
 [Section](docs/section-port.md) adds themeable surfaces, dividers, and nested padding with all three original patterns.
 [CheckIndicator](docs/check-indicator-port.md) adds a decorative selection mark and a same-size replacement slot.
+[RadioIndicator](docs/radio-indicator-port.md) adds a decorative radio circle with a replaceable selection dot.
 Stack implements axis/alias resolution, shared token gaps, local logical padding,
 sizing precedence, wrapping, scrolling and caller-rendered native roots. Its SSR and
 offline source-derived comparisons plus actual published captures/isolated layout

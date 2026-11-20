@@ -1694,6 +1694,44 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-section--divider-end { border-inline-end: 1px solid var(--color-border); }
 }
 
+@layer astryx-base {
+  .astryx-radio-indicator {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border: var(--border-width) solid var(--color-border-emphasized);
+    border-radius: 50%;
+    background-color: var(--color-background-surface);
+    transition: background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard);
+  }
+  .astryx-radio-indicator[data-size="sm"] { width: 20px; height: 20px; }
+  .astryx-radio-indicator[data-checked] { background-color: var(--color-accent); border-color: var(--color-accent); }
+  .astryx-radio-indicator[data-disabled] { opacity: 0.5; border-color: var(--color-border); }
+  .astryx-radio-indicator[data-disabled]:not([data-checked]) { background-color: var(--color-background-muted); }
+  .astryx-radio-indicator-dot { width: 10px; height: 10px; border-radius: 50%; background-color: var(--color-on-accent); }
+  .astryx-radio-indicator-dot[data-size="sm"] { width: 8px; height: 8px; }
+  @media (hover: hover) {
+    :where([data-astryx-indicator-scope]:hover) .astryx-radio-indicator:not([data-disabled]):not([data-checked]) {
+      border-color: color-mix(in srgb, var(--color-border-emphasized), var(--color-tint-hover) 20%);
+      background-color: color-mix(in srgb, var(--color-background-surface), var(--color-tint-hover) 5%);
+    }
+    :where([data-astryx-indicator-scope]:hover) .astryx-radio-indicator[data-checked]:not([data-disabled]) {
+      border-color: color-mix(in srgb, var(--color-accent), var(--color-tint-hover) 15%);
+      background-color: color-mix(in srgb, var(--color-accent), var(--color-tint-hover) 15%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .astryx-radio-indicator { transition-duration: 0s; }
+  }
+  @media (forced-colors: active) {
+    .astryx-radio-indicator-dot { forced-color-adjust: none; background-color: CanvasText; }
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {
