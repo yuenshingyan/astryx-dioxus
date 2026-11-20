@@ -4,6 +4,8 @@ use std::pin::Pin;
 use astryx_dioxus::{Button, ButtonElevation, ButtonSize, ButtonType, ButtonVariant, STYLES};
 use dioxus::prelude::*;
 
+#[path = "showcase/aspect_ratio.rs"]
+mod aspect_ratio;
 #[path = "showcase/badge.rs"]
 mod badge;
 #[path = "showcase/button_contract.rs"]
@@ -35,6 +37,7 @@ mod spinner;
 #[path = "showcase/status_dot.rs"]
 mod status_dot;
 
+use aspect_ratio::AspectRatioExamples;
 use badge::BadgeExamples;
 use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
@@ -93,6 +96,7 @@ fn App() -> Element {
             .demo-count--warning {{ background:light-dark(#fae19e,#e2b6233d);color:light-dark(#4b3900,#eec448); }}
         " }
         main { "data-astryx-theme": "astryx",
+            AspectRatioExamples {}
             h1 { "Astryx Buttons and Link" }
             p { "Documented patterns, interaction states, and integrations. See docs/ for each component's verification notes." }
             nav { "aria-label": "Showcase sections",

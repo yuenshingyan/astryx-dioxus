@@ -49,6 +49,18 @@ impl AspectRatioFit {
 /// CSS and caller inline styles to override it. Height-only constraints do not
 /// release full width: use `width:auto` to derive width from height. Shrink-to-fit
 /// parents without a definite width can collapse to zero.
+///
+/// The ratio is required and numeric, not a string fraction:
+/// ```compile_fail
+/// use astryx_dioxus::AspectRatio;
+/// use dioxus::prelude::*;
+/// let _ = rsx! { AspectRatio { div {} } };
+/// ```
+/// ```compile_fail
+/// use astryx_dioxus::AspectRatio;
+/// use dioxus::prelude::*;
+/// let _ = rsx! { AspectRatio { ratio: "16/9", div {} } };
+/// ```
 #[component]
 pub fn AspectRatio(
     /// Required numeric width divided by height. Invalid values are left to CSS.
