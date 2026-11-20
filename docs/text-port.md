@@ -226,3 +226,10 @@ suite was not retried to hide it. Skeleton likewise failed its idle trace
 assertion `no per-frame style loop`; it was not retried, weakened or labeled
 pre-existing. Spinner's independent idle trace did pass. The full browser suite
 therefore does **not** have an all-green result.
+
+The integrated Text/Heading/Code branch passed the five standard Rust checks
+and the Button and Link browser suites. Skeleton and ProgressBar reproduced
+those same idle-trace failures on the integrated branch, including in a fresh
+Chrome profile. Both suites passed on the built, unchanged `de1d606` baseline
+in the shared Chrome session. The cause of the integrated trace differences
+is still unresolved; the assertions remain unchanged.
