@@ -20,6 +20,8 @@ mod button_patterns;
 mod card;
 #[path = "showcase/center.rs"]
 mod center;
+#[path = "showcase/check_indicator.rs"]
+mod check_indicator;
 #[path = "showcase/clickable_card.rs"]
 mod clickable_card;
 #[path = "showcase/divider.rs"]
@@ -67,6 +69,7 @@ use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
 use card::CardExamples;
 use center::CenterExamples;
+use check_indicator::CheckIndicatorExamples;
 use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
 use grid::{GridExamples, GridSpanExamples};
@@ -175,6 +178,8 @@ fn App() -> Element {
                 a { href: "#visually-hidden-examples", "VisuallyHidden examples" }
                 " · "
                 a { href: "#center-examples", "Center examples" }
+                " · "
+                a { href: "#check-indicator-examples", "CheckIndicator examples" }
                 " · "
                 a { href: "#section-examples", "Section examples" }
             }
@@ -293,6 +298,7 @@ fn App() -> Element {
             VStackExamples {}
             VisuallyHiddenExamples {}
             CenterExamples {}
+            CheckIndicatorExamples {}
             SectionExamples {}
         }
     }

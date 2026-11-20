@@ -54,6 +54,7 @@
   --color-overlay-hover: light-dark(#0536590c, #ffffff0c);
   --color-overlay-pressed: light-dark(#05365919, #ffffff19);
   --color-text-disabled: light-dark(#a4b0bc, #6f747c);
+  --color-icon-disabled: light-dark(#a4b0bc, #6f747c);
   --color-text-accent: light-dark(#0064e0, #3e9efb);
   --color-tint-hover: light-dark(black, white);
   --spacing-0: 0rem;
@@ -171,6 +172,7 @@
 [data-astryx-theme="neutral"] {
   --color-text-accent: var(--color-accent);
   --color-text-disabled: light-dark(#919191, #525252);
+  --color-icon-disabled: light-dark(#919191, #525252);
   --color-accent: light-dark(#1b1b1b, #f1f1f1);
   --color-on-accent: light-dark(#fff, #111);
   --color-on-light: #111;
