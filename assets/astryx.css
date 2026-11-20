@@ -1231,3 +1231,163 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 @layer astryx-theme {
   [data-astryx-theme="neutral"] .astryx-card:is([data-variant="blue"], [data-variant="cyan"], [data-variant="green"], [data-variant="orange"], [data-variant="pink"], [data-variant="purple"], [data-variant="red"], [data-variant="teal"], [data-variant="yellow"]) { --color-text-secondary: light-dark(#474747, #b9b9b9); }
 }
+
+/* ClickableCard owns interaction only; Card remains the surface/padding owner. */
+@layer astryx-components {
+  .astryx-clickable-card { --_press-overlay: transparent; position: relative; cursor: pointer; color: inherit; text-decoration: none; transition: border-color var(--duration-fast) var(--ease-standard); }
+  .astryx-clickable-card__action { color: inherit; text-decoration: none; box-sizing: border-box; position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; outline: none; }
+  .astryx-clickable-card:has(> .astryx-clickable-card__action:focus-visible) { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+  .astryx-clickable-card[aria-disabled="true"] { cursor: default; }
+  .astryx-clickable-card[data-disabled="true"] { cursor: default; opacity: .5; }
+  .astryx-clickable-card:not([data-disabled="true"], [aria-disabled="true"])::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background-color: var(--_press-overlay, transparent); transition: background-color var(--duration-fast) var(--ease-standard); }
+  @media (hover: hover) {
+    .astryx-clickable-card:not([data-disabled="true"], [aria-disabled="true"]):hover { --_press-overlay: var(--color-overlay-hover); }
+    .astryx-clickable-card[data-variant="default"]:not([data-disabled="true"], [aria-disabled="true"]):hover { border-color: var(--color-border-emphasized); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .astryx-clickable-card, .astryx-clickable-card::after { transition: none; }
+  }
+}
+
+/* utils/interactionOverlay: shared row/card pressedAlpha paint, not component policy. */
+@layer astryx-components {
+  [data-astryx-container-press] {
+    --_press-paint: color-mix(in srgb, var(--color-overlay-pressed) calc(var(--_astryx-press-strength, 0) * 100%), transparent);
+    --_press-paint-image: linear-gradient(var(--_press-paint), var(--_press-paint));
+  }
+  [data-astryx-container-press="true"][data-astryx-press="fading"] {
+    animation-name: astryx-container-press-release;
+    animation-duration: var(--duration-exit);
+    animation-timing-function: var(--ease-exit);
+    animation-fill-mode: both;
+  }
+  @keyframes astryx-container-press-release {
+    from { --_astryx-press-strength: 1; }
+    to { --_astryx-press-strength: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-astryx-container-press="true"][data-astryx-press="fading"] { animation-duration: min(var(--duration-exit), 200ms); }
+  }
+  [data-astryx-container-press="true"][data-pressable-container][data-astryx-press="on"]::after,
+  [data-astryx-container-press="true"][data-pressable-container][data-astryx-press="fading"]::after { background-color: transparent; background-image: var(--_press-paint-image); transition: none; }
+}
+
+/* Shared palette border roles required by SelectableCard's color-axis rings. */
+@layer astryx-theme {
+  [data-astryx-theme="neutral"] {
+    --color-border-blue: light-dark(#a1caff, #5aa0f8);
+    --color-border-cyan: light-dark(#85d5e9, #49adc4);
+    --color-border-gray: light-dark(#d4d4d4, #262626);
+    --color-border-green: light-dark(#aad4a9, #6ab26b);
+    --color-border-orange: light-dark(#ffc7a1, #df843f);
+    --color-border-pink: light-dark(#ffc0d7, #fc78b1);
+    --color-border-purple: light-dark(#f3bfff, #d885eb);
+    --color-border-red: light-dark(#ffaea7, #fa6762);
+    --color-border-teal: light-dark(#90d7c8, #4fb1a0);
+    --color-border-yellow: light-dark(#e3c36c, #c29900);
+  }
+}
+
+/* SelectableCard owns selection/interaction only; Card owns the surface. */
+@layer astryx-base {
+  :root {
+    --color-border-blue: light-dark(#0064e0, #2694fe);
+    --color-border-cyan: light-dark(#089dd0, #0171a4);
+    --color-border-gray: light-dark(#647685, #748695);
+    --color-border-green: light-dark(#0d8626, #0b991f);
+    --color-border-orange: light-dark(#eb6e00, #b34a01);
+    --color-border-pink: light-dark(#f351c0, #c02294);
+    --color-border-purple: light-dark(#9081ff, #7340fe);
+    --color-border-red: light-dark(#e3193b, #f5394f);
+    --color-border-teal: light-dark(#08a3a3, #08767d);
+    --color-border-yellow: light-dark(#c58600, #b47700);
+  }
+  .astryx-selectable-card {
+    --selectable-card-ring-color: var(--color-accent);
+    --_selectable-ring: var(--selectable-card-ring-color);
+    --_card-ring: 0 0 transparent;
+    --_press-overlay: transparent;
+    position: relative;
+    cursor: pointer;
+    transition: box-shadow var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard);
+    outline-width: 0;
+    outline-style: none;
+    outline-offset: 0;
+  }
+  .astryx-selectable-card:is([data-variant="default"], [data-variant="transparent"], [data-variant="muted"]) { --_selectable-ring: var(--color-accent); }
+  .astryx-selectable-card[data-variant="blue"] { --_selectable-ring: var(--color-border-blue); }
+  .astryx-selectable-card[data-variant="cyan"] { --_selectable-ring: var(--color-border-cyan); }
+  .astryx-selectable-card[data-variant="gray"] { --_selectable-ring: var(--color-border-gray); }
+  .astryx-selectable-card[data-variant="green"] { --_selectable-ring: var(--color-border-green); }
+  .astryx-selectable-card[data-variant="orange"] { --_selectable-ring: var(--color-border-orange); }
+  .astryx-selectable-card[data-variant="pink"] { --_selectable-ring: var(--color-border-pink); }
+  .astryx-selectable-card[data-variant="purple"] { --_selectable-ring: var(--color-border-purple); }
+  .astryx-selectable-card[data-variant="red"] { --_selectable-ring: var(--color-border-red); }
+  .astryx-selectable-card[data-variant="teal"] { --_selectable-ring: var(--color-border-teal); }
+  .astryx-selectable-card[data-variant="yellow"] { --_selectable-ring: var(--color-border-yellow); }
+  .astryx-selectable-card[data-selected="true"] { --_card-ring: inset 0 0 0 2px var(--_selectable-ring); }
+  .astryx-selectable-card[data-selected="true"][data-variant="default"] { border-color: var(--_selectable-ring); }
+  .astryx-selectable-card[data-disabled="true"] { opacity: .5; cursor: default; }
+  .astryx-selectable-card:has(> .astryx-selectable-card__input:focus-visible) {
+    outline-width: var(--focus-outline-width);
+    outline-style: var(--focus-outline-style);
+    outline-color: var(--focus-outline-color);
+    outline-offset: var(--focus-outline-offset);
+  }
+  .astryx-selectable-card__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+    outline: none;
+  }
+  .astryx-selectable-card[data-disabled="false"]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background-color: var(--_press-overlay);
+    transition: background-color var(--duration-fast) var(--ease-standard);
+  }
+  @media (hover: hover) {
+    .astryx-selectable-card[data-disabled="false"]:hover { --_press-overlay: var(--color-overlay-hover); }
+  }
+  @media (prefers-reduced-motion: reduce) and (not (pointer: coarse)) {
+    .astryx-selectable-card, .astryx-selectable-card::after { transition-duration: 0s; }
+  }
+  @media (prefers-reduced-motion: reduce) and (pointer: coarse) {
+    .astryx-selectable-card, .astryx-selectable-card::after {
+      transition-property: opacity;
+      transition-duration: min(var(--duration-exit), 200ms);
+      transition-timing-function: var(--ease-exit);
+    }
+  }
+}
+
+/* Approved SelectableCard forced-color cue. Reserve the border in both states
+   so selection never shifts layout; a root border cannot scroll away with content. */
+@layer astryx-components {
+  @media (forced-colors: active) {
+    .astryx-selectable-card {
+      border: 2px solid Canvas;
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+    .astryx-selectable-card[data-selected="true"] {
+      border-color: CanvasText;
+      outline-width: 0;
+    }
+    .astryx-selectable-card:has(> .astryx-selectable-card__input:focus-visible) {
+      outline-width: var(--focus-outline-width);
+      outline-style: var(--focus-outline-style);
+      outline-color: var(--focus-outline-color);
+      outline-offset: var(--focus-outline-offset);
+    }
+  }
+}

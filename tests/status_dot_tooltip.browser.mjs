@@ -45,8 +45,8 @@ async function waitFor(expression) {
 const scripts = await Promise.all([
   'src/hooks/use_announce/use_announce.js',
   'src/utils/hit_area.js', 'src/utils/touch_hit_area.js',
-  'src/status_dot/status_dot.js', 'src/tooltip/use_tooltip.js',
-  'src/hooks/use_press_feedback/press_feedback.js',
+  'src/status_dot/status_dot.js', 'src/private_attributes/layer_root.js', 'src/layer/layer_surface_press.js', 'src/tooltip/use_tooltip.js',
+  'src/motion/theme_timing.js', 'src/hooks/use_press_feedback/press_feedback.js',
 ].map(path => readFile(path, 'utf8')));
 try {
   await send('Runtime.enable');

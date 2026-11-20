@@ -1,3 +1,4 @@
+pub(crate) mod disabled_interaction;
 pub(crate) mod hit_area;
 pub(crate) mod is_apple_platform;
 pub(crate) mod safe_url;

@@ -6,6 +6,7 @@ mod badge;
 mod button;
 mod button_group;
 mod card;
+mod clickable_card;
 mod compatibility;
 mod divider;
 mod hooks;
@@ -18,7 +19,9 @@ mod kbd;
 mod layer;
 mod layout;
 mod link;
+mod private_attributes;
 mod progress_bar;
+mod selectable_card;
 mod size_context;
 mod skeleton;
 mod spinner;
@@ -33,6 +36,7 @@ pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
 pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, ButtonVariant};
 pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation};
 pub use card::{Card, CardVariant, InvalidCardVariant};
+pub use clickable_card::{ClickableCard, ClickableCardError};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };
@@ -56,6 +60,7 @@ pub use progress_bar::{
     InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,
     ProgressBarVariant,
 };
+pub use selectable_card::{SelectableCard, SelectableCardError, SelectableCardProps};
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
 pub use skeleton::{Skeleton, SkeletonError, SkeletonLength, SkeletonRadius};
 pub use spinner::{Spinner, SpinnerError, SpinnerShade, SpinnerSize};

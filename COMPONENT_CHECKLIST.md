@@ -9,7 +9,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Named examples may overlap variant/state tasks. They do not imply a separate example for every Cartesian product. All 699 associated template metadata files are represented.
 - The source snapshot is not a verified release tag for the catalog's displayed version. This covers the linked documentation, not every undocumented package export.
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
-- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), [Skeleton](docs/skeleton-port.md), and [StatusDot](docs/status-dot-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
+- Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), [Skeleton](docs/skeleton-port.md), [StatusDot](docs/status-dot-port.md), [ProgressBar](docs/progress-bar-port.md), [Card](docs/card-port.md), and [SelectableCard](docs/selectable-card-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
 ## Action
 
@@ -364,13 +364,13 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [x] **Card — Layout** (`CardWithInnerLayout.doc.mjs`): header/body/footer dividers and actions.
     - [x] **Card — Simple** (`CardWithSimpleContent.doc.mjs`).
 
-  - **Related interactive templates — deferred, not part of static Card completion**
-    - [ ] **ClickableCard — Elevated** (`ClickableCardElevated.doc.mjs`): med shadow on action surface.
-    - [ ] **ClickableCard** (`ClickableCardShowcase.doc.mjs`): navigation and independent nested controls.
-    - [ ] **ClickableCardWithNestedButton** (`ClickableCardWithNestedButton.doc.mjs`): product navigation plus Add to cart.
-    - [ ] **SelectableCard — Elevated** (`SelectableCardElevated.doc.mjs`): low shadow plus inset selection ring.
-    - [ ] **SelectableCardMulti** (`SelectableCardMulti.doc.mjs`): multi-select tags, matching colored borders.
-    - [ ] **SelectableCard** (`SelectableCardShowcase.doc.mjs`): single-select plan/radio behavior.
+  - **Related interactive templates — verified separately from static Card completion**
+    - [x] **ClickableCard — Elevated** (`ClickableCardElevated.doc.mjs`): med shadow on action surface.
+    - [x] **ClickableCard** (`ClickableCardShowcase.doc.mjs`): navigation and independent nested controls.
+    - [x] **ClickableCardWithNestedButton** (`ClickableCardWithNestedButton.doc.mjs`): product navigation plus Add to cart.
+    - [x] **SelectableCard — Elevated** (`SelectableCardElevated.doc.mjs`): low shadow plus inset selection ring; observed desktop/mobile light/dark frames.
+    - [x] **SelectableCardMulti** (`SelectableCardMulti.doc.mjs`): multi-select tags, matching source color-axis rings.
+    - [x] **SelectableCard** (`SelectableCardShowcase.doc.mjs`): preserved caller single-choice plan recipe; native semantics remain checkboxes, not radios.
 
 - [ ] **[Carousel](https://astryx.atmeta.com/components/Carousel)**
 
@@ -390,20 +390,21 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [ ] **Carousel — Snap** (`CarouselSnap.doc.mjs`): team cards land at start.
     - [ ] **useSnapPaging — Onboarding Pages** (`CarouselSnapPaging.doc.mjs`): switch one view/one card per flick.
 
-- [ ] **[Clickable Card](https://astryx.atmeta.com/components/ClickableCard)**
+- [x] **[Clickable Card](https://astryx.atmeta.com/components/ClickableCard)**
 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/ClickableCard/ClickableCard.doc.mjs), [associated Card templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Card). No own template directory supplied; related patterns live in Card metadata.
 
   - **Choices and activation**
-    - [ ] `variant`: `default` (default), `transparent`, `muted`, `blue`, `cyan`, `gray`, `green`, `orange`, `pink`, `purple`, `red`, `teal`, `yellow`.
-    - [ ] `elevation`: `none` (default), `low`, `med`, `high`; `padding`: `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4` (default), `5`, `6`, `8`, `10`.
-    - [ ] Surface action onClick versus href navigation, target default _self (open-ended target string, not fixed enum); plain/new-tab/Cmd/Ctrl/middle-click preserve shared navigation behavior.
-    - [ ] `isDisabled=false` default; disabled removes destination but keeps Tab stop/disabled announcement.
-    - [ ] Accessible label, arbitrary children/dimensions; nested interactive controls act independently, card handler only surface. Transparent/no-padding press-only recipe is better composed with useClickableContainer when no Card chrome is wanted.
+    - [x] Card-owned thirteen variants and validated open custom names; custom base remains transparent/borderless, not a fallback palette.
+    - [x] Shared four-value Elevation, eleven spacing steps and optional dimensions. Padding omission reads the Card theme (Neutral spacing 3; unthemed fallback spacing 4); no duplicate surface implementation.
+    - [x] Surface action versus href navigation (href wins), optional open target, native/provider/new-tab/Cmd/Ctrl/middle sinks share destination acceptance; hidden button/link retain distinct callback ownership. Released focusable no-op retained without deciding OQ1.
+    - [x] Disabled removes destination/click/mouseup, keeps named pointerdown/nonreserved native events, Tab stop/name/disabled AX state, half opacity and no hover/press paint. Provider disabled flips retain focus without scrolling.
+    - [x] Required nonblank accessible label, independent nested controls/selected text/layers, original ordinary child-before-root event metadata and scoped owner currentTarget. Named owned callbacks reserve raw onclick/onmouseup/onpointerdown/onmounted; nonreserved builders survive removal/readd without starving retained callbacks. Headless adapter remains internal, not a separately completed public hook.
+    - [x] Spec-led single own-action focus outline, owning-root disabled reflection, shared every-pointer press/nested veto/10px pan, theme exit clock and reduced fine-touch bound. **[Verification and limits](docs/clickable-card-port.md):** six original observations, nine SSR tests, native/browser proofs; preserved conditional contrast findings (58/1008 active text, 84/336 focus; disabled text advisory), no blanket AA/physical-screen-reader claim. Combined WASM Clippy/CI remain parent-integration checks.
   - **Associated named templates**
-    - [ ] **ClickableCard — Elevated** (`Card/ClickableCardElevated.doc.mjs`): elevation med.
-    - [ ] **ClickableCard** (`Card/ClickableCardShowcase.doc.mjs`): navigation with independent nested control.
-    - [ ] **ClickableCardWithNestedButton** (`Card/ClickableCardWithNestedButton.doc.mjs`): product link plus Add to cart action.
+    - [x] **ClickableCard — Elevated** (`Card/ClickableCardElevated.doc.mjs`): elevation med.
+    - [x] **ClickableCard** (`Card/ClickableCardShowcase.doc.mjs`): navigation with independent nested control.
+    - [x] **ClickableCardWithNestedButton** (`Card/ClickableCardWithNestedButton.doc.mjs`): product link plus Add to cart action.
 
 - [ ] **[Collapsible](https://astryx.atmeta.com/components/Collapsible)**
 
@@ -423,19 +424,22 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
     - [ ] **Collapsible — Single Mode** (`CollapsibleSingleAccordion.doc.mjs`): one open, defaultValue, Section heading.
     - [ ] **Collapsible — With Dividers** (`CollapsibleWithoutCard.doc.mjs`): manually divided flat detail/sidebar rows, metadata under answers.
 
-- [ ] **[Selectable Card](https://astryx.atmeta.com/components/SelectableCard)**
+- [x] **[Selectable Card](https://astryx.atmeta.com/components/SelectableCard)**
 
-  - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/SelectableCard/SelectableCard.doc.mjs). No named inline examples or supplied templates.
+  - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/SelectableCard/SelectableCard.doc.mjs), authoritative spec, and the three Card-directory templates listed above. [Verification](docs/selectable-card-port.md), including the approved forced-color cue and source-palette findings; standalone Lab group/Layer migrations remain independent.
 
   - **Surfaces and selection**
-    - [ ] variant `default` (default), `transparent`, `muted`, `blue`, `cyan`, `gray`, `green`, `orange`, `pink`, `purple`, `red`, `teal`, `yellow`.
-    - [ ] elevation `none` (default), `low`, `med`, `high`; selected accent ring composes with resting shadow.
-    - [ ] Required controlled isSelected true/false and onChange; isDisabled false (default) / true.
-    - [ ] padding `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4` (default), `5`, `6`, `8`, `10`; arbitrary width/height/maxWidth, rich children.
+    - [x] variant `default` (default), `transparent`, `muted`, `blue`, `cyan`, `gray`, `green`, `orange`, `pink`, `purple`, `red`, `teal`, `yellow`; source border-role tokens and custom ring lever.
+    - [x] elevation `none` (default), `low`, `med`, `high`; selected 2px inset ring composes with resting shadow without layout jitter.
+    - [x] Required controlled isSelected true/false and onChange; focusable native isDisabled false (default) / true; actual checked-property repair.
+    - [x] Card-owned padding `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4` (default), `5`, `6`, `8`, `10`; validated width/height/maxWidth and rich children delegate without duplicating Card geometry.
 
   - **Actual interaction and recipes**
-    - [ ] Required accessible label; checkbox semantics, one Tab stop per card; Space/Enter toggles focused card.
-    - [ ] Multi-select choices/add-ons/option grids with caller Set of IDs; not radio/single-select group and not navigation (ClickableCard owns navigation).
+    - [x] Required accessible label; native checkbox semantics, one Tab stop per card; single Space/Enter request and input-only delegated focus indicator.
+    - [x] Multi-select choices/add-ons/option grids with caller Set of IDs; source single-choice recipes explicitly retain checkbox semantics; not navigation (ClickableCard owns navigation).
+    - [x] Shared logical layer capture, reentrant owner-document routing, retained dynamic native event slots and all-pointer theme release clocks/10px pan. All four final isolated browser suites passed; parent joint cross-card harness passed before the final cue/source follow-up.
+    - [x] Private native-radio channel: approved actual-browser proof of 9 radios/four groups, ordering/select-only/controlled peer repair/form ownership/disabled/AX; temporary exports/example removed. No public radio/context or Lab group API.
+    - [x] Explicitly approved forced-colors-only stationary 2px CanvasText selection border: parent dedicated browser proof passed default/borderless/custom/disabled, independent focus, state-toggle geometry, scrolling and unchanged normal-mode paint. Exact CSS mirrored; all four isolated suites rerun successfully. Normal source ring audit remains 218/468 conditional essential-selection findings below 3:1; no passing-contrast claim.
 
 ## Content
 
