@@ -52,6 +52,8 @@ mod status_dot;
 mod text;
 #[path = "showcase/typography_animation.rs"]
 mod typography_animation;
+#[path = "showcase/v_stack.rs"]
+mod v_stack;
 
 use aspect_ratio::AspectRatioExamples;
 use badge::BadgeExamples;
@@ -76,6 +78,7 @@ use spinner::SpinnerExamples;
 use stack::{StackExamples, StackItemExamples};
 use status_dot::StatusDotExamples;
 use text::TextExamples;
+use v_stack::VStackExamples;
 
 const FIGTREE: Asset = asset!("/assets/fonts/Figtree-latin.woff2");
 
@@ -160,6 +163,8 @@ fn App() -> Element {
                 a { href: "#grid-span-examples", "GridSpan examples" }
                 " · "
                 a { href: "#h-stack-examples", "HStack examples" }
+                " · "
+                a { href: "#v-stack-examples", "VStack examples" }
                 " · "
                 a { href: "#center-examples", "Center examples" }
             }
@@ -275,6 +280,7 @@ fn App() -> Element {
             GridExamples {}
             GridSpanExamples {}
             HStackExamples {}
+            VStackExamples {}
             CenterExamples {}
         }
     }

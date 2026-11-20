@@ -38,6 +38,7 @@ mod text;
 mod theme;
 mod tooltip;
 mod utils;
+mod v_stack;
 mod visually_hidden;
 
 pub use aspect_ratio::{AspectRatio, AspectRatioFit, AspectRatioShape};
@@ -97,6 +98,7 @@ pub use theme::{
 };
 
 pub use utils::types::{Elevation, SizeValue, SizeValueError, SpacingStep};
+pub use v_stack::{VStack, VStackProps};
 
 // Compatibility spellings of provisional APIs. Core code uses upstream owners.
 pub use compatibility::{
