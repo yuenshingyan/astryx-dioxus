@@ -4,13 +4,13 @@
 const createTooltipController = ({ records, listen, later, cancelTimer }) => {
   const moduleKey = Symbol.for('astryx.dioxus.truncation-presentation.v1');
   const urls = typeof truncationPresentationUrls === 'undefined' ? null : truncationPresentationUrls.join(' ');
-  const cached = document[moduleKey];
-  // Content-hashed asset URLs must not reuse presentation from an older build
-  // if a renderer replaces its controllers without navigating the document.
-  const modules = cached?.urls === urls ? cached
+  // Explicit-only controllers do not configure or evict the truncation cache.
+  // Controllers with new content-hashed URLs must not reuse an older build.
+  const cached = urls === null ? null : document[moduleKey];
+  const modules = urls === null ? null : cached?.urls === urls ? cached
     : (document[moduleKey] = { urls, loaded: null, pending: null, attempt: 0 });
   const preload = record => {
-    if (urls === null) return Promise.reject(new Error('Truncation presentation asset URLs were not provided'));
+    if (!modules) return Promise.reject(new Error('Truncation presentation asset URLs were not provided'));
     if (modules.loaded) return Promise.resolve(modules.loaded);
     if (!modules.pending) {
       const suffix = modules.attempt++ ? `?recovery=${modules.attempt}` : '';
@@ -21,7 +21,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     return modules.pending;
   };
   const whenReady = (record, operation, kind) => {
-    if (modules.loaded) { operation(); return; }
+    if (modules?.loaded) { operation(); return; }
     record.pendingPresentation ||= new Map();
     record.pendingPresentation.set(kind, operation);
     const pending = record.pendingPresentation;
@@ -116,7 +116,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     .some(id => id && document.getElementById(id)?.getAttribute('role') === 'tooltip' && id !== record.tip?.id && id !== record.retainedTip?.id);
   const showTip = (record, text, automatic = false, isClosed = false) => {
     if (!text || !record.element.isConnected || !records.has(record.element)) return;
-    if (record.isTruncation && !modules.loaded) {
+    if (record.isTruncation && !modules?.loaded) {
       whenReady(record, () => showTip(record, text, automatic, isClosed), isClosed ? 'mount' : 'interest');
       return;
     }
@@ -347,7 +347,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       record.hideTimer = later(record, () => hideTip(record), 100);
     },
     answerTap(record, target, text) {
-      if (!modules.loaded) { whenReady(record, () => truncationTap(record, target, text), 'interest'); return; }
+      if (!modules?.loaded) { whenReady(record, () => truncationTap(record, target, text), 'interest'); return; }
       truncationTap(record, target, text);
     },
     remove: removeTruncation,

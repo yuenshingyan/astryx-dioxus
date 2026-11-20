@@ -32,6 +32,11 @@ const server = createServer(async (req,res) => {
     window.pointer=(type)=>e.dispatchEvent(new PointerEvent(type,{bubbles:true,pointerType:'mouse',pointerId:1}));
     window.tip=()=>document.getElementById('probe-tooltip');window.open=()=>!!tip()?.matches(':popover-open');
     window.loaded=()=>!!document[Symbol.for('astryx.dioxus.truncation-presentation.v1')]?.loaded;
+    window.installExplicitTooltip=()=>{
+      const truncationPresentationUrls=undefined;
+      ${scripts}
+      createTooltipController({records:new Map(),listen(){},later(){},cancelTimer(){}});
+    };
   </script>`);
 });
 await new Promise(resolve => server.listen(Number(process.env.TOOLTIP_PORT || 8099),'127.0.0.1',resolve));
@@ -50,10 +55,14 @@ try {
   await evaluate('cut(true)');
   while (requests.length<2) await wait(10);
   assert.equal(await evaluate('tip()'),null,'overflow preloads code, not DOM');
+  await evaluate('installExplicitTooltip()');
   await evaluate('pointer("pointerover")'); await wait(250);
   assert.equal(await evaluate('tip()'),null,'held actual network request prevents presentation');
-  await release(); await waitFor('loaded() && !!tip()');
+  await release(); await waitFor('!!tip()');
+  assert.equal(await evaluate('loaded()'),true,'an explicit tooltip mounted during preload must not replace the shared module entry');
   assert.equal(await evaluate('open()'),false,'pending hover starts its delay on module resolution');
+  await evaluate('installExplicitTooltip()');
+  assert.equal(await evaluate('loaded()'),true,'an explicit tooltip must not evict the loaded modules');
   await waitFor('open()'); await wait(300);
   const actual=await evaluate(rect('tip()'));
   await send('Page.navigate',{url:origin+'/reference'}); await waitFor('document.getElementById("tip")?.matches(":popover-open")');
