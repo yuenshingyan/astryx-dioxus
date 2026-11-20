@@ -1,7 +1,7 @@
 use astryx_dioxus::{
     Button, ButtonSize, ButtonVariant, Card, SizeValue, SpacingStep, Stack, StackAlignment,
-    StackCrossAlignment, StackDirection, StackMainAlignment, StackRenderProps, StackWrap, Text,
-    TextColor, TextType, TextWeight,
+    StackCrossAlignment, StackDirection, StackItem, StackItemSize, StackMainAlignment,
+    StackRenderProps, StackWrap, Text, TextColor, TextType, TextWeight,
 };
 use dioxus::events::{onclick, onkeydown, onmounted};
 use dioxus::prelude::*;
@@ -10,15 +10,12 @@ use dioxus::prelude::*;
 mod avatar;
 #[path = "../../src/tooltip/pattern_tooltip.rs"]
 mod pattern_tooltip;
-#[path = "../../src/stack_item/pattern.rs"]
-mod stack_item;
 #[path = "../../src/toast/pattern.rs"]
 mod toast;
 #[path = "../../src/token/pattern.rs"]
 mod token;
 
 use avatar::PatternAvatar;
-use stack_item::{PatternItemSize, PatternStackItem};
 use toast::{DemoToastViewport, use_demo_toasts};
 use token::PatternToken;
 const DEMO_CSS: &str = "
@@ -26,6 +23,35 @@ const DEMO_CSS: &str = "
 .stack-probe > span { display:block; flex:none; width:30px; height:20px; background:currentColor; }
 .stack-class-override { gap:13px; padding-inline-start:17px; }
 ";
+
+#[component]
+pub fn StackItemExamples() -> Element {
+    let mut is_tall = use_signal(|| true);
+    rsx! {
+        section { id: "stack-item-examples", "data-astryx-theme": "neutral",
+            h2 { "StackItem — original patterns" }
+            for (id, max_width, labels) in [("stack-item-showcase", 500, &["Static Width", "Fills remaining space", "Static Width"][..]), ("stack-item-fill", 400, &["Static", "Fills remaining space"][..])] {
+                Stack { key: "{id}", id, direction: StackDirection::Horizontal, gap: SpacingStep::Three,
+                    v_align: StackAlignment::Center, width: SizeValue::from("100%"), max_width: SizeValue::from(max_width),
+                    for (index, label) in labels.iter().enumerate() {
+                        StackItem { key: "{index}", size: if index == 1 { StackItemSize::Fill } else { StackItemSize::Static },
+                            Card { padding: SpacingStep::Three,
+                                Text { text_type: TextType::SUPPORTING, color: TextColor::SECONDARY, "{label}" }
+                            }
+                        }
+                    }
+                }
+            }
+            h3 { "Scrollable item" }
+            button { id: "stack-item-toggle-overflow", onclick: move |_| is_tall.toggle(), "Toggle overflow" }
+            Stack { height: SizeValue::from(100),
+                StackItem { id: "stack-item-scroll", size: StackItemSize::Fill, is_scrollable: true, scroll_label: "Scrollable example",
+                    div { style: if is_tall() { "height:240px" } else { "height:24px" }, "Content" }
+                }
+            }
+        }
+    }
+}
 
 /// Standalone Stack patterns with private, upstream-owned supporting slices.
 /// The published action text is observable; no standalone supporting port is claimed.
@@ -44,7 +70,7 @@ pub fn StackExamples() -> Element {
         document::Style { "{DEMO_CSS}" }
         section { id: "stack-examples", class: "stack-frame",
             h2 { "Stack" }
-            p { "One-dimensional layout with private Token, Avatar and StackItem pattern slices. Avatar names are focusable tooltips. Actions show the published demo messages in a private Toast slice; this is not a public Toast migration." }
+            p { "One-dimensional layout with private Token and Avatar pattern slices and the public StackItem. Avatar names are focusable tooltips. Actions show the published demo messages in a private Toast slice; this is not a public Toast migration." }
             h3 { "Stack — Alignment" }
             Stack { id: "st-alignment", gap: SpacingStep::Three, width: SizeValue::from("100%"), style: "max-width:500px",
                 for (label, value) in [("Start (left)", StackAlignment::Start), ("Center", StackAlignment::Center), ("End (right)", StackAlignment::End)] {
@@ -76,16 +102,16 @@ pub fn StackExamples() -> Element {
             Stack { id: "st-fill", gap: SpacingStep::Three, width: SizeValue::from("100%"), style: "max-width:300px",
                 for (name, role, initials) in [("Olivia Chen", "Engineering Lead", "OC"), ("Marcus Rivera", "Product Designer", "MR"), ("Aisha Patel", "Marketing Manager", "AP")] {
                     Stack { direction: StackDirection::Horizontal, gap: SpacingStep::Three, v_align: StackAlignment::Center,
-                        PatternStackItem { size: PatternItemSize::Static,
+                        StackItem { size: StackItemSize::Static,
                             PatternAvatar { name, initials }
                         }
-                        PatternStackItem { size: PatternItemSize::Fill,
+                        StackItem { size: StackItemSize::Fill,
                             Stack { gap: SpacingStep::Zero,
                                 Text { text_type: TextType::BODY, weight: TextWeight::Bold, "{name}" }
                                 Text { text_type: TextType::SUPPORTING, color: TextColor::SECONDARY, "{role}" }
                             }
                         }
-                        PatternStackItem { size: PatternItemSize::Static,
+                        StackItem { size: StackItemSize::Static,
                             Button { label: "View", variant: ButtonVariant::Secondary, size: ButtonSize::Small,
                                 onclick: move |_| { toasts.show("Demo: this profile would open here"); action_message.set("Demo: this profile would open here".into()); action_count += 1; }
                             }

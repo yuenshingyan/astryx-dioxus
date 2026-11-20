@@ -81,7 +81,8 @@ pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
 pub use skeleton::{Skeleton, SkeletonError, SkeletonLength, SkeletonRadius};
 pub use spinner::{Spinner, SpinnerError, SpinnerShade, SpinnerSize};
 pub use stack::{
-    Stack, StackAlignment, StackCrossAlignment, StackDirection, StackElement, StackMainAlignment,
+    Stack, StackAlignment, StackCrossAlignment, StackDirection, StackElement, StackItem,
+    StackItemCrossAlignSelf, StackItemProps, StackItemRoot, StackItemSize, StackMainAlignment,
     StackProps, StackRenderProps, StackWrap,
 };
 pub use status_dot::{

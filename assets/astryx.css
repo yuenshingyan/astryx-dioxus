@@ -1804,8 +1804,13 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     unicode-bidi: isolate;
   }
   .astryx-stack-item { min-width: 0; min-height: 0; }
-  .astryx-stack-item[data-size="static"] { flex-grow: 0; flex-shrink: 0; }
+  .astryx-stack-item:not([data-size="fill"]) { flex-grow: 0; flex-shrink: 0; }
   .astryx-stack-item[data-size="fill"] { flex-grow: 1; }
+  .astryx-stack-item--start { align-self: flex-start; }
+  .astryx-stack-item--center { align-self: center; }
+  .astryx-stack-item--end { align-self: flex-end; }
+  .astryx-stack-item--stretch { align-self: stretch; }
+  .astryx-stack-item--scrollable { overflow: auto; }
   .astryx-avatar {
     --_avatar-radius: var(--radius-full);
     position: relative;

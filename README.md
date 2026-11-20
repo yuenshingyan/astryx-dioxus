@@ -79,7 +79,7 @@ Stack implements axis/alias resolution, shared token gaps, local logical padding
 sizing precedence, wrapping, scrolling and caller-rendered native roots. Its SSR and
 offline source-derived comparisons plus actual published captures/isolated layout
 replay are recorded in [Stack verification](docs/stack-port.md). Private upstream-owned
-Token/Avatar/StackItem slices now render the original patterns, including named Avatar
+Token and Avatar slices and the public [StackItem](docs/stack-item-port.md) render the original patterns, including named Avatar
 keyboard/hover tooltips and observable published action messages. Actual Rust screenshots,
 intrinsic geometry and paint are compared against captured Neutral-dark originals;
 a same-node raster control isolates the historical transform-induced differences.
@@ -87,7 +87,7 @@ Layout-positioned screenshots are identical for Directions and differ by at most
 channel level for Alignment/Fill. The [private Stack Toast slice](docs/stack-toast-port.md)
 presents the published action messages; its open geometry, paint and selected interactions
 are checked in Chrome. This does not complete public Toast, Token, Avatar, HStack, VStack,
-StackItem, Grid or Layout migrations.
+Grid or Layout migrations.
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
@@ -143,7 +143,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/badge/`, `src/button/`, `src/button_group/`, `src/card/`, `src/clickable_card/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
 - `src/blockquote/`: semantic quote and bare attribution; no layout/typography dependency.
 - `src/selectable_card/`: controlled Card selection and its private native input context; not a completed Lab group migration.
-- `src/stack/`: standalone Stack and its axis/wrap types; convenience wrappers and StackItem remain separate migrations.
+- `src/stack/`: Stack and its axis/wrap types, plus StackItem; convenience wrappers remain separate migrations.
 - `src/layout/`: shared spacing-step lowering for container publishers, not a completed Layout migration.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
