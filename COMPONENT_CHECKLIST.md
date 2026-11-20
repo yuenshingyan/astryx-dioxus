@@ -345,24 +345,26 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 
 ## Container
 
-- [ ] **[Card](https://astryx.atmeta.com/components/Card)**
+- [x] **[Card](https://astryx.atmeta.com/components/Card)** — static Card contract complete; related interactive templates below remain pending under their separate component owners.
 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Card/Card.doc.mjs), [templates, including related interactive-card patterns](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Card).
 
   - **Choices and composition**
-    - [ ] `variant`: `default` (default), `transparent`, `muted`, `blue`, `cyan`, `gray`, `green`, `orange`, `pink`, `purple`, `red`, `teal`, `yellow`; colors categorize, not status.
-    - [ ] `elevation`: `none` (default), `low`, `med`, `high`.
-    - [ ] `padding`: `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; omission uses theme card padding, spacing 4 without theme.
-    - [ ] Free-form children, simple heading/body or structured Layout header/content/footer; arbitrary width/height/maxWidth/minHeight, not presets.
-    - [ ] Preferred width shrinks in flex/grid; static StackItem/wrapping/scrolling preserves width if needed. Long nonwrapping IDs truncate via Text; wide content needs scroll region.
-  - **Inline example and all associated templates**
-    - [ ] Inline **Cards sharing a row on a phone, with long IDs**: three shrinking payout cards, one-line IDs/full tooltip.
-    - [ ] **Card — Callout** (`CardCallout.doc.mjs`): muted supplementary information.
-    - [ ] **Card — Elevations** (`CardElevations.doc.mjs`): four depths.
-    - [ ] **Card** (`CardShowcase.doc.mjs`): default heading/body.
-    - [ ] **Card — Variants** (`CardVariants.doc.mjs`): default/muted/category colors adapting to light/dark tokens.
-    - [ ] **Card — Layout** (`CardWithInnerLayout.doc.mjs`): header/body/footer dividers and actions.
-    - [ ] **Card — Simple** (`CardWithSimpleContent.doc.mjs`).
+    - [x] `variant`: `default` (default), `transparent`, `muted`, `blue`, `cyan`, `gray`, `green`, `orange`, `pink`, `purple`, `red`, `teal`, `yellow`; colors categorize, not status. Validated theme extensions retain a transparent/borderless base, never another variant.
+    - [x] `elevation`: `none` (default), `low`, `med`, `high`; closed shared Elevation, source shadows/bezel and ring composition.
+    - [x] `padding`: `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; omission uses theme card padding, spacing 4 without theme. Shared spacing types/Layout-owned lowering; FR3 corrects published inset to actual border-reduced padding, with asymmetric/zero/nested/RTL bleed and direct-reader corner evidence.
+    - [x] Free-form children, simple heading/body or source-derived native Layout header/content/footer recipe; validated shared SizeValue supports open dimensions, CSS-wide keywords and native ref/events/semantics. No public Heading/Layout/Toast completion implied.
+    - [x] Preferred width shrinks in flex/grid; caller minimum can win, ordinary overflow clips and explicit non-auto height scrolls. Text owns ID truncation/recovery; wide content owns its scroll region. **[Verification](docs/card-port.md):** 30 source observations/six static patterns, explicit corrected Layout geometry, core/Neutral paint and 16 browser suites. Source text audit retains 4/336 core secondary-text findings.
+  - **Card-owned examples**
+    - [x] Inline **Cards sharing a row on a phone, with long IDs**: three shrinking payout cards, one-line IDs/full tooltip.
+    - [x] **Card — Callout** (`CardCallout.doc.mjs`): muted supplementary information.
+    - [x] **Card — Elevations** (`CardElevations.doc.mjs`): four depths.
+    - [x] **Card** (`CardShowcase.doc.mjs`): default heading/body.
+    - [x] **Card — Variants** (`CardVariants.doc.mjs`): default/muted/category colors adapting to light/dark tokens.
+    - [x] **Card — Layout** (`CardWithInnerLayout.doc.mjs`): header/body/footer dividers and actions.
+    - [x] **Card — Simple** (`CardWithSimpleContent.doc.mjs`).
+
+  - **Related interactive templates — deferred, not part of static Card completion**
     - [ ] **ClickableCard — Elevated** (`ClickableCardElevated.doc.mjs`): med shadow on action surface.
     - [ ] **ClickableCard** (`ClickableCardShowcase.doc.mjs`): navigation and independent nested controls.
     - [ ] **ClickableCardWithNestedButton** (`ClickableCardWithNestedButton.doc.mjs`): product navigation plus Add to cart.

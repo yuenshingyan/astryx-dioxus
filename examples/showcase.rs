@@ -12,6 +12,8 @@ mod button_contract;
 mod button_group;
 #[path = "showcase/button_patterns.rs"]
 mod button_patterns;
+#[path = "showcase/card.rs"]
+mod card;
 #[path = "showcase/divider.rs"]
 mod divider;
 #[path = "showcase/icon_button.rs"]
@@ -33,6 +35,7 @@ use badge::BadgeExamples;
 use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
+use card::CardExamples;
 use divider::DividerExamples;
 use icon_button::IconButtonExamples;
 use kbd::KbdExamples;
@@ -106,6 +109,8 @@ fn App() -> Element {
                 a { href: "#status-dot-examples", "StatusDot examples" }
                 " · "
                 a { href: "#progress-bar-examples", "ProgressBar examples" }
+                " · "
+                a { href: "#card-examples", "Card examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -207,6 +212,7 @@ fn App() -> Element {
             SkeletonExamples {}
             StatusDotExamples {}
             ProgressBarExamples {}
+            CardExamples {}
         }
     }
 }

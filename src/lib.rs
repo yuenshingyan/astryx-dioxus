@@ -5,6 +5,7 @@
 mod badge;
 mod button;
 mod button_group;
+mod card;
 mod compatibility;
 mod divider;
 mod hooks;
@@ -15,6 +16,7 @@ mod input_group;
 mod interactive_role_context;
 mod kbd;
 mod layer;
+mod layout;
 mod link;
 mod progress_bar;
 mod size_context;
@@ -30,6 +32,7 @@ mod visually_hidden;
 pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
 pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, ButtonVariant};
 pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation};
+pub use card::{Card, CardVariant, InvalidCardVariant};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };
@@ -64,6 +67,8 @@ pub use theme::{
     InvalidTextName, TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap,
     WordBreak,
 };
+
+pub use utils::types::{Elevation, SizeValue, SizeValueError, SpacingStep};
 
 // Compatibility spellings of provisional APIs. Core code uses upstream owners.
 pub use compatibility::{
