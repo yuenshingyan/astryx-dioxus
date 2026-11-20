@@ -27,7 +27,12 @@ await withTarget(async({send,evaluate,waitFor,pause,exceptions,browser,target})=
   await waitFor(`!document.querySelector('.astryx-toast')`);
  };
  for(const [i,selector]of ['#st-alignment button','#st-alignment button:nth-of-type(2)','#st-fill button'].entries()){
-  await click(selector);await waitFor(`document.querySelectorAll('.astryx-toast').length===1`);await pause(300);
+  if (i === 2) {
+   await evaluate(`document.querySelector(${JSON.stringify(selector)}).focus()`);
+   await key('Enter','Enter',13);
+  } else await click(selector);
+  await waitFor(`document.querySelectorAll('.astryx-toast').length===1`);await pause(300);
+  if (i === 2) assert.equal(await evaluate(`document.activeElement===document.querySelector(${JSON.stringify(selector)})`),true,'keyboard activation keeps focus on View');
   const actual=await evaluate(`(${cardMetrics.toString()})(document.querySelector('.astryx-toast'),document.querySelector('.astryx-toast'))`);
   const original=published.actions[i].metrics;
   const selectors=['.astryx-toast','.astryx-demo-toast-inner','.astryx-demo-toast-body','.astryx-demo-toast-end','.astryx-toast-close','.astryx-icon','svg'];
@@ -46,6 +51,14 @@ await withTarget(async({send,evaluate,waitFor,pause,exceptions,browser,target})=
   assert.deepEqual(await evaluate(`(()=>{const e=document.querySelector('.astryx-demo-toast-viewport');return[e.getAttribute('role'),e.getAttribute('aria-label'),e.matches(':popover-open')]})()`),['region','Notifications',true]);
   assert.equal(await evaluate(`document.querySelector('[data-astryx-live-region]')===firstLiveRegion`),true,'the announcement updates the already-mounted region');
   assert.equal(await evaluate(`firstLiveRegion.textContent`),published.actions[i].body);
+  if (i === 2) {
+   await send('Accessibility.enable');
+   const {nodes}=await send('Accessibility.getFullAXTree');
+   const status=nodes.find(node=>!node.ignored&&node.role?.value==='status'&&node.properties?.some(p=>p.name==='live'&&p.value.value==='polite'));
+   assert.ok(status,'Chrome exposes a polite status in its accessibility tree');
+   const children=nodes.filter(node=>status.childIds?.includes(node.nodeId));
+   assert.ok(children.some(node=>node.name?.value===published.actions[i].body),'the View message is exposed in the polite status');
+  }
   const clip=await evaluate(`(()=>{const r=document.querySelector('.astryx-toast').getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height,scale:1}})()`);
   const shot=await send('Page.captureScreenshot',{format:'png',clip});await writeFile(`${out}/${published.actions[i].label.toLowerCase()}.png`,Buffer.from(shot.data,'base64'));
   report.cases.push({action:published.actions[i].label,actual,measured,clip});
@@ -56,7 +69,7 @@ await withTarget(async({send,evaluate,waitFor,pause,exceptions,browser,target})=
   await key('Enter','Enter',13);await waitFor(`!document.querySelector('.astryx-toast')`);
   assert.equal(await evaluate(`document.activeElement===document.querySelector(${JSON.stringify(selector)})`),true);
  }
- report.tests.push('Three native pointer actions, published geometry/paint, one polite writer, F6/Enter dismiss and focus return');
+ report.tests.push('Pointer Cancel/Save and keyboard View, published geometry/paint, polite accessibility status, F6/Enter dismiss and focus return');
  // Every show is a new entry, including repeated identical messages; cap is five.
  await evaluate(`for(let i=0;i<6;i++)document.querySelector('#st-fill button').click()`);
  await waitFor(`document.querySelectorAll('.astryx-toast').length===5`);await pause(250);
