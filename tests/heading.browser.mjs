@@ -73,20 +73,21 @@ try {
   await page.send('Input.dispatchMouseEvent',{type:'mouseMoved',x:999,y:0});
   await page.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape'});
   await page.send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape'});
-  await page.waitFor(`!document.querySelector('[role=tooltip]')`); // checkpoint bridge removes closed layers; documented shared gap
+  await page.waitFor(`!document.querySelector('[role=tooltip]:popover-open')`);
+  assert.equal(await page.evaluate(`(()=>{const heading=document.querySelector('#heading-single');const ids=(heading.getAttribute('aria-describedby')||'').split(/\\s+/);return ids.some(id=>document.getElementById(id)?.matches('[role=tooltip]:not(:popover-open)'))})()`),true,'first-interest tooltip remains mounted and described after dismissal');
   assert.equal(await page.evaluate(`document.querySelector('#heading-multi')[Symbol.for('astryx.dioxus.truncation')].isTruncated`),true);
   assert.equal(await page.evaluate(`getComputedStyle(document.querySelector('#heading-multi')).webkitLineClamp`),'2');
   for(const dir of ['ltr','rtl']) {
     await page.evaluate(`document.querySelector('#heading-placement').style.marginLeft='400px';document.querySelector('#heading-placement').dir='${dir}';document.querySelector('#heading-placement').scrollIntoView({block:'center'})`);
     const anchor=await page.evaluate(`(()=>{const r=document.querySelector('#heading-placement').getBoundingClientRect();return {x:r.x+10,y:r.y+10}})()`);
     await page.send('Input.dispatchMouseEvent',{type:'mouseMoved',...anchor});
-    await page.waitFor(`!!document.querySelector('[role=tooltip]')`);
-    const rects=await page.evaluate(`(()=>{const a=document.querySelector('#heading-placement').getBoundingClientRect(),t=document.querySelector('[role=tooltip]').getBoundingClientRect();return {anchor:{left:a.left,right:a.right},tip:{left:t.left,right:t.right}}})()`);
+    await page.waitFor(`!!document.querySelector('[role=tooltip]:popover-open')`);
+    const rects=await page.evaluate(`(()=>{const a=document.querySelector('#heading-placement').getBoundingClientRect(),t=document.querySelector('[role=tooltip]:popover-open').getBoundingClientRect();return {anchor:{left:a.left,right:a.right},tip:{left:t.left,right:t.right}}})()`);
     assert.ok(dir==='ltr'?rects.tip.left>rects.anchor.right:rects.tip.right<rects.anchor.left,`${dir} logical end: ${JSON.stringify(rects)}`);
     await page.send('Input.dispatchMouseEvent',{type:'mouseMoved',x:999,y:0});
     await page.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape'});
     await page.send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape'});
-    await page.waitFor(`!document.querySelector('[role=tooltip]')`);
+    await page.waitFor(`!document.querySelector('[role=tooltip]:popover-open')`);
   }
   assert.equal(await page.evaluate(`window.headingWidthReads['heading-disabled-tip']||0`),0);
   assert.ok(await page.evaluate(`window.headingWidthReads['heading-single']||0`)>0);
