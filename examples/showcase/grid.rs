@@ -1,8 +1,8 @@
 use dioxus::prelude::*;
 
 use astryx_dioxus::{
-    Card, CardVariant, Grid, GridColumns, GridRepeat, SizeValue, SpacingStep, Stack,
-    StackDirection, Text, TextDisplay, TextType,
+    Card, CardVariant, Grid, GridColumns, GridRepeat, GridSpan, GridSpanColumns, SizeValue,
+    SpacingStep, Stack, StackDirection, Text, TextColor, TextDisplay, TextType,
 };
 
 #[component]
@@ -15,6 +15,40 @@ fn GridLabel(title: &'static str, detail: String, #[props(default)] is_spaced: b
         rsx! { Stack { direction: StackDirection::Vertical, gap: SpacingStep::One, {text} } }
     } else {
         text
+    }
+}
+
+#[component]
+fn SpanCard(label: &'static str, #[props(default = true)] has_fixed_height: bool) -> Element {
+    rsx! {
+        Card { height: has_fixed_height.then(|| SizeValue::from(80)),
+            Text { color: TextColor::SECONDARY, "{label}" }
+        }
+    }
+}
+
+#[component]
+pub(super) fn GridSpanExamples() -> Element {
+    rsx! {
+        section { id: "grid-span-examples", "data-astryx-theme": "neutral",
+            h2 { "GridSpan — original patterns" }
+            h3 { "Showcase" }
+            Grid { id: "grid-span-showcase", columns: GridColumns::Fixed(4), gap: SpacingStep::Three, width: SizeValue::from(400),
+                GridSpan { columns: GridSpanColumns::Count(3), SpanCard { label: "Spans 3 columns" } }
+                SpanCard { label: "1 col" }
+                GridSpan { rows: 2, SpanCard { label: "1 col", has_fixed_height: false } }
+                GridSpan { columns: GridSpanColumns::Count(3), SpanCard { label: "Full-width row" } }
+                SpanCard { label: "1 col" }
+                GridSpan { columns: GridSpanColumns::Count(2), SpanCard { label: "Spans 2 columns" } }
+            }
+            h3 { "Columns" }
+            Grid { id: "grid-span-columns", columns: GridColumns::Fixed(3), gap: SpacingStep::Three, width: SizeValue::from(400),
+                GridSpan { columns: GridSpanColumns::Count(2), SpanCard { label: "Spans 2 columns" } }
+                SpanCard { label: "1 col" }
+                SpanCard { label: "1 col" }
+                GridSpan { columns: GridSpanColumns::Count(2), SpanCard { label: "Spans 2 columns" } }
+            }
+        }
     }
 }
 
@@ -56,7 +90,7 @@ pub(super) fn GridExamples() -> Element {
             }
             h3 { "Dashboard layout" }
             Grid { id: "grid-dashboard", columns: GridColumns::Fixed(4), gap: SpacingStep::Four, width: SizeValue::from("100%"), max_width: SizeValue::from(500),
-                div { style: "display:grid;min-width:0;grid-template-columns:minmax(0,1fr);height:100%;grid-column:span 2;grid-row:span 2",
+                GridSpan { columns: GridSpanColumns::Count(2), rows: 2,
                     Card { GridLabel { title: "Weekly Traffic", detail: "Page views and unique visitors over the last 7 days" } }
                 }
                 for (title, detail) in [("Revenue","$48,290"), ("Active Users","12,841"), ("Conversion","3.2%"), ("Avg Response","245ms")] {
@@ -65,19 +99,19 @@ pub(super) fn GridExamples() -> Element {
                         Text { text_type: TextType::LABEL, display: TextDisplay::Block, "{detail}" }
                     }
                 }
-                div { style: "display:grid;min-width:0;grid-template-columns:minmax(0,1fr);height:100%;grid-column:1 / -1",
+                GridSpan { columns: GridSpanColumns::Full,
                     Card { GridLabel { title: "Recent Activity", detail: "Latest events across all projects" } }
                 }
             }
             h3 { "With spanning items" }
             Grid { id: "grid-with-span", columns: GridColumns::Fixed(3), gap: SpacingStep::Four, width: SizeValue::from("100%"), max_width: SizeValue::from(500),
-                div { style: "display:grid;min-width:0;grid-template-columns:minmax(0,1fr);height:100%;grid-row:span 2",
+                GridSpan { rows: 2,
                     Card { variant: CardVariant::CYAN, GridLabel { title: "Featured Release", detail: "Astryx 4.0 is now available with new layout primitives, refreshed tokens, and improved theming support across the system.", is_spaced: true } }
                 }
                 for (title, detail) in [("Components","54 available"), ("Templates","28 available"), ("Tokens","120 defined"), ("Themes","6 published"), ("Icons","312 available"), ("Patterns","18 documented"), ("Contributors","42 active")] {
                     Card { key: "{title}", GridLabel { title, detail: detail.to_owned() } }
                 }
-                div { style: "display:grid;min-width:0;grid-template-columns:minmax(0,1fr);height:100%;grid-column:1 / -1",
+                GridSpan { columns: GridSpanColumns::Full,
                     Card { variant: CardVariant::CYAN, GridLabel { title: "Community Showcase", detail: "See how teams are building with Astryx across the organization", is_spaced: true } }
                 }
             }

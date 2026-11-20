@@ -1638,6 +1638,12 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-grid[data-justify="center"] { justify-items: center; }
   .astryx-grid[data-justify="end"] { justify-items: end; }
   .astryx-grid[data-justify="stretch"] { justify-items: stretch; }
+  .astryx-grid-span {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
+    height: 100%;
+  }
 }
 
 /* AspectRatio: structural rules stay layered so caller CSS wins. */
