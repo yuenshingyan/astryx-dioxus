@@ -202,14 +202,14 @@ with the exact parent-approved forced-color CSS:
   `/tmp/astryx-interactive-cards-reference/selectable/` (`radio-browser.log`). All
   temporary visibility/reexports and the example were removed; no public test
   feature, radio/context API or Lab migration is shipped.
-- Parent integration reports **196 Rust + 11 doc tests**, all five standard
-  checks plus extra wasm showcase Clippy, **22 showcase browser suites**, the
-  latest native-boundary proof and the cross-card public-API harness **passed**
-  before the final approved cue/source follow-up. Logs are cached as
-  `parent-final-*`, `parent-browser-*` and `parent-boundaries-*`; these are parent
-  results, not isolated-branch passes. The final dedicated forced-color suite
-  subsequently passed at `baa7cfc`; the public cross-card boundary suite passed
-  again with that cue (`parent-final-boundaries-browser.log`).
+- Final joint integration passed **196 Rust + 11 doc tests**, all five standard
+  checks plus renderer-neutral WASM library and WASM showcase Clippy with
+  `-D warnings`, and **25 serialized Chrome suites**: 22 showcase regressions plus
+  the native-boundary, cross-card and approved forced-color proofs. These were
+  rerun after the final cue and retained-event consumption updates. Both combined
+  Clippy checks are clean; the isolated-branch unused warnings above are historical,
+  not remaining failures. Logs are cached as `parent-final-*`, `parent-browser-*`
+  and `parent-forced-*`; these are integration results, not isolated-branch passes.
 - CI, physical devices, other engines, hydration and real screen readers remain
   unrun here. AX assertions are not screen-reader verification.
 
@@ -220,9 +220,9 @@ Tooltip metadata, depth-ordered reentrant document capture, and retained dynamic
 event slots. Obsolete native pointer transport is removed. No pending shared API,
 native source, radio-harness or human-policy decision remains.
 
-No component implementation or policy blocker remains. The final joint rerun,
-CI, push and combined PR/merge are parent-owned. This isolated branch does not
-claim their future results. The integrated migration has **14 completed component
+No component implementation or policy blocker remains. The final joint rerun
+passed as recorded above; CI, push and combined PR/merge remain parent-owned.
+This document does not pre-claim their future results. The integrated migration has **14 completed component
 parents** when the independent ClickableCard finalization and this SelectableCard
 finalization are combined; Card/ClickableCard checklist ownership is unchanged.
 Normal palette findings remain unchanged.

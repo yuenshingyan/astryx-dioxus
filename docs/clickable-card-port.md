@@ -160,7 +160,13 @@ shared last-listener disposal. The source-palette contrast findings above remain
 Standalone WASM library Clippy was run and fails on **13 Selectable-dependent
 unused private native capabilities** in this isolated Clickable-only branch.
 No suppressions or visibility widening were added; obsolete pointer wrappers and
-old native root-click transport were removed. Parent integration must verify the
-combined WASM library is clean. Full combined CI/browser regressions are parent-owned,
-not claimed here. Physical screen readers/devices, other engines, native Windows
-High Contrast and complete hydration applications remain unverified.
+old native root-click transport were removed.
+
+Final joint integration passed all five standard checks (**196 Rust + 11 doc tests**),
+additional renderer-neutral WASM library and WASM showcase Clippy with `-D warnings`,
+and **25 serialized Chrome suites**: 22 showcase regressions plus the native-boundary,
+cross-card and approved SelectableCard forced-color proofs. The combined production
+capabilities are used and lint-clean; isolated-branch warnings above are historical,
+not remaining integration failures. Source contrast findings remain unchanged.
+Physical screen readers/devices, other engines, native Windows High Contrast and
+complete hydration applications remain unverified.
