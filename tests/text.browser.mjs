@@ -54,7 +54,7 @@ try {
       const geometry = await evaluate(`(()=>{const e=document.getElementById('tx-${placement}'),t=document.querySelector('[role=tooltip]:popover-open'),a=e.getBoundingClientRect(),b=t.getBoundingClientRect();return {above:b.bottom<=a.top,below:b.top>=a.bottom,left:b.right<=a.left,right:b.left>=a.right,text:t.textContent,description:e.getAttribute('aria-describedby')}})()`);
       const side = placement === 'start' ? (direction==='rtl'?'right':'left') : placement === 'end' ? (direction==='rtl'?'left':'right') : placement;
       assert.equal(geometry[side],true,`${direction}/${placement}: ${JSON.stringify(geometry)}`);
-      assert.ok(geometry.text.startsWith('Placement '+placement)); assert.equal(geometry.description,null);
+      assert.ok(geometry.text.startsWith('Placement '+placement)); assert.ok(geometry.description?.endsWith('-tooltip'));
       await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:1190,y:10});
       await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape'});
       await waitFor('!document.querySelector("[role=tooltip]:popover-open")');
@@ -88,12 +88,11 @@ try {
   await waitFor(`+document.getElementById('tx-events').textContent===${beforeEvents+111110}`);
   assert.deepEqual(await evaluate('(()=>{const e=document.getElementById("tx-native");return [e.tagName,e.htmlFor,e.lang,e.dataset.testid,e.style.marginInline,e.classList.contains("caller-text")]})()'),['LABEL','tx-field','en','native-text','7px',true]);
   await evaluate('document.getElementById("tx-focus-host").scrollIntoView({block:"center"});document.getElementById("tx-focus-host").focus()');
-  await waitFor('document.querySelector("[role=tooltip]:popover-open")');
-  await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape'});
-  await waitFor('!document.querySelector("[role=tooltip]:popover-open")');
+  await wait(250);
+  assert.equal(await evaluate('!!document.querySelector("[role=tooltip]:popover-open")'),false,'focus on an enclosing link is not focus inside Text');
   // Synthetic touch/pen sequences exercise shared native capture ownership;
   // this is not a claim of real-device gesture verification.
-  await evaluate(`window.touchSequence=(target,mode='tap',pointerType='touch')=>{const e=document.getElementById(target),opts={bubbles:true,isPrimary:true,pointerId:17,pointerType,button:0,clientX:20,clientY:20};e.dispatchEvent(new PointerEvent('pointerdown',opts));if(mode==='move')e.dispatchEvent(new PointerEvent('pointermove',{...opts,clientY:50}));if(mode==='scroll')document.dispatchEvent(new Event('scroll'));if(mode==='focus')e.focus();e.dispatchEvent(new PointerEvent('pointerup',opts));}`);
+  await evaluate(`window.touchSequence=(target,mode='tap',pointerType='touch')=>{const e=document.getElementById(target),opts={bubbles:true,isPrimary:true,pointerId:17,pointerType,button:0,clientX:20,clientY:20};e.dispatchEvent(new PointerEvent('pointerdown',opts));if(mode==='move')e.dispatchEvent(new PointerEvent('pointermove',{...opts,clientY:50}));if(mode==='scroll')document.dispatchEvent(new Event('scroll'));if(mode==='focus')e.focus();e.dispatchEvent(new PointerEvent('pointerup',opts));e.dispatchEvent(new MouseEvent('click',{bubbles:true}));}`);
   for (const mode of ['move','scroll']) {
     await evaluate(`touchSequence('tx-touch',${JSON.stringify(mode)})`); await wait(250);
     assert.equal(await evaluate('!!document.querySelector("[role=tooltip]:popover-open")'),false,mode+' is not a tap');

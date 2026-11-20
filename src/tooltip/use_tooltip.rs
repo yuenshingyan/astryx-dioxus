@@ -9,6 +9,14 @@ pub(crate) const TOOLTIP_CONTROLLER: &str = concat!(
     "\n",
     include_str!("../layer/layer_surface_press.js"),
     "\n",
+    include_str!("../utils/trigger_focus.js"),
+    "\n",
+    include_str!("../layer/gesture_counter.js"),
+    "\n",
+    include_str!("../layer/use_touch_trigger.js"),
+    "\n",
+    include_str!("../text/truncation_tooltip.js"),
+    "\n",
     include_str!("use_tooltip.js")
 );
 
@@ -34,8 +42,9 @@ pub(crate) fn tooltip_element(id: &str, tooltip: Option<&str>) -> Element {
 /// and put `data-astryx-truncation-id=id` on the Text root.
 /// Compose the returned handler into onmounted. No tab stop is added here;
 /// Text owns its keyboard-interest/tabindex policy. Hover, tap and focus within
-/// a focusable parent reveal actual width/height overflow on interest only.
-/// Automatic tips never add aria-describedby (their text is already the name).
+/// the trigger reveal actual width/height overflow on interest only.
+/// After first interest, Text tips retain a closed layer and its description.
+/// Button's private cut-label adapter remains undescribed.
 pub(crate) fn use_truncation_tooltip(
     id: String,
     text: String,
