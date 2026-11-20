@@ -2,7 +2,7 @@
 
 ## Scope and authority
 
-This task ports **Card only**, per the requested one-by-one sequence. ClickableCard and SelectableCard retain separate upstream modules and APIs; [ClickableCard verification](clickable-card-port.md) now records that independent port. SelectableCard remains pending here. Their examples are not passed off as static Card examples. Supporting native Heading/Stack/Grid/Layout recipes and the application's demo feedback do not complete those public migrations or Toast.
+This task ports **Card only**, per the requested one-by-one sequence. ClickableCard and SelectableCard retain separate upstream modules and APIs; [ClickableCard verification](clickable-card-port.md) and [SelectableCard verification](selectable-card-port.md) record their independent ports. Their examples are not passed off as static Card examples. Supporting native Heading/Stack/Grid/Layout recipes and the application's demo feedback do not complete those public migrations or Toast.
 
 Authority: Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`, especially `docs/specs/components/Card/Card.spec.md`, `docs/architecture/container-padding.md`, `packages/core/src/Card/`, Layout's container/padding/corner/block-bleed utilities, and the six Card-owned CLI templates. The recorded source-padding bug is corrected according to authoritative FR3; the palette is not redesigned.
 

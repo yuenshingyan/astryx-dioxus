@@ -14,5 +14,5 @@ for(const theme of ['core','neutral'])for(const [mode,name] of ['light','dark'].
   }
  }
 }
-console.log(`SelectableCard persistent ring: ${findings.length}/${count} conditional essential-selection findings below 3:1; minimum ${minimum.toFixed(3)}. Custom theme contrast remains caller-owned; Card text has a separate audit. Forced colors removes the box-shadow indicator on borderless variants; no treatment or approval is invented.`);
+console.log(`SelectableCard persistent ring: ${findings.length}/${count} conditional essential-selection findings below 3:1; minimum ${minimum.toFixed(3)}. Custom theme contrast remains caller-owned; Card text has a separate audit. The approved forced-colors-only 2px CanvasText selection border is verified separately; it does not change these normal-palette findings.`);
 if(findings.length){console.log(JSON.stringify(findings,null,2));process.exitCode=1;}

@@ -53,7 +53,8 @@ await withTarget(async({send,evaluate,waitFor,pause,exceptions})=>{
  await send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...p,id:8}]});await pause(20);assert.equal(await state(),'on');
  await send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await pause(10);assert.equal(await state(),'fading');
  assert.ok((await evaluate('document.getElementById("sc-controlled").getAnimations().map(a=>a.effect.getTiming().duration)')).includes(200));await pause(250);
- // Record (do not invent a fix for) source's forced-color persistent-state gap.
- await media({'forced-colors':'active'});assert.equal(await evaluate('getComputedStyle(document.getElementById("sc-custom")).boxShadow'),'none');assert.equal(await evaluate('getComputedStyle(document.getElementById("sc-custom")).borderWidth'),'0px');
- assert.equal(exceptions.length,0,JSON.stringify(exceptions));console.log('SelectableCard press/media: desktop engine hover/press, nested mouse/pen/touch veto, all ring roles/custom ring, RTL geometry, touch image/exit tokens, slide-off/cancel/disable/drop cleanup, reduced motion and preserved forced-color gap passed.');
+ // The approved forced-only root border replaces the source's discarded shadow;
+ // the integration-owned dedicated suite proves focus, scrolling and both states.
+ await media({'forced-colors':'active'});assert.equal(await evaluate('getComputedStyle(document.getElementById("sc-custom")).boxShadow'),'none');assert.equal(await evaluate('getComputedStyle(document.getElementById("sc-custom")).borderWidth'),'2px');
+ assert.equal(exceptions.length,0,JSON.stringify(exceptions));console.log('SelectableCard press/media: desktop engine hover/press, nested mouse/pen/touch veto, all ring roles/custom ring, RTL geometry, touch image/exit tokens, slide-off/cancel/disable/drop cleanup, reduced motion and approved forced-color border passed.');
 });
