@@ -14,6 +14,7 @@ mod code;
 mod compatibility;
 mod divider;
 mod grid;
+mod h_stack;
 mod heading;
 mod hooks;
 mod i18n;
@@ -55,6 +56,7 @@ pub use grid::{
     Grid, GridAlignment, GridColumns, GridProps, GridRepeat, GridSpan, GridSpanColumns,
     GridSpanProps,
 };
+pub use h_stack::{HStack, HStackProps};
 pub use heading::{Heading, HeadingLevel, HeadingProps, HeadingType, InvalidHeadingLevel};
 pub use hooks::use_interactive_role::{InteractiveRole, use_interactive_role};
 pub use icon::{

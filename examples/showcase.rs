@@ -26,6 +26,8 @@ mod clickable_card;
 mod divider;
 #[path = "showcase/grid.rs"]
 mod grid;
+#[path = "showcase/h_stack.rs"]
+mod h_stack;
 #[path = "showcase/heading.rs"]
 mod heading;
 #[path = "showcase/icon_button.rs"]
@@ -62,6 +64,7 @@ use center::CenterExamples;
 use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
 use grid::{GridExamples, GridSpanExamples};
+use h_stack::HStackExamples;
 use heading::HeadingExamples;
 use icon_button::IconButtonExamples;
 use kbd::KbdExamples;
@@ -155,6 +158,8 @@ fn App() -> Element {
                 a { href: "#grid-examples", "Grid examples" }
                 " · "
                 a { href: "#grid-span-examples", "GridSpan examples" }
+                " · "
+                a { href: "#h-stack-examples", "HStack examples" }
                 " · "
                 a { href: "#center-examples", "Center examples" }
             }
@@ -269,6 +274,7 @@ fn App() -> Element {
             StackItemExamples {}
             GridExamples {}
             GridSpanExamples {}
+            HStackExamples {}
             CenterExamples {}
         }
     }

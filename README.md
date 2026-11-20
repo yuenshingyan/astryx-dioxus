@@ -86,7 +86,7 @@ a same-node raster control isolates the historical transform-induced differences
 Layout-positioned screenshots are identical for Directions and differ by at most one
 channel level for Alignment/Fill. The [private Stack Toast slice](docs/stack-toast-port.md)
 presents the published action messages; its open geometry, paint and selected interactions
-are checked in Chrome. This does not complete public Toast, Token, Avatar, HStack, VStack,
+are checked in Chrome. This does not complete public Toast, Token, Avatar, VStack,
 Grid or Layout migrations.
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
@@ -143,7 +143,8 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/badge/`, `src/button/`, `src/button_group/`, `src/card/`, `src/clickable_card/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
 - `src/blockquote/`: semantic quote and bare attribution; no layout/typography dependency.
 - `src/selectable_card/`: controlled Card selection and its private native input context; not a completed Lab group migration.
-- `src/stack/`: Stack and its axis/wrap types, plus StackItem; convenience wrappers remain separate migrations.
+- `src/stack/`: Stack and its axis/wrap types, plus StackItem.
+- `src/h_stack/`: [HStack](docs/h-stack-port.md), the horizontal Stack wrapper with both original patterns.
 - `src/layout/`: shared spacing-step lowering for container publishers, not a completed Layout migration.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
