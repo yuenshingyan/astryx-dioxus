@@ -70,6 +70,8 @@ pub fn ClickableCardExamples() -> Element {
     let mut is_disabled = use_signal(|| false);
     let mut is_cancelled = use_signal(|| false);
     let mut is_shown = use_signal(|| true);
+    let mut has_native_builder = use_signal(|| true);
+    let mut dynamic_events = use_signal(String::new);
     let mut count = use_signal(|| 0);
     let mut up = use_signal(|| 0);
     let mut pointer = use_signal(|| 0);
@@ -158,6 +160,14 @@ pub fn ClickableCardExamples() -> Element {
                 Button{id:"cc-order-button",label:"Independent ordered button",onclick:move |_|order.write().push_str("button|")}
             }
             ClickableCard{id:"cc-raw",label:"Reserved and native builders",is_disabled:is_disabled(),attributes:vec![onclick(move |_|raw.write().push_str("reserved-click|")),onmouseup(move |_|raw.write().push_str("reserved-up|")),oncontextmenu(move |event:MouseEvent|{event.prevent_default();raw.write().push_str("context|");}),onkeydown(move |_|raw.write().push_str("key|"))],"Native builder surface"}
+            Button{id:"cc-toggle-builder",label:"Toggle non-reserved native builder",onclick:move |_|has_native_builder.toggle()}
+            output{id:"cc-dynamic-events","{dynamic_events}"}
+            ClickableCard{id:"cc-dynamic",label:"Dynamic native events",is_disabled:is_disabled(),
+                onclick:move |_|dynamic_events.write().push_str("click|"),
+                onpointerdown:move |_|dynamic_events.write().push_str("pointer|"),
+                attributes:if has_native_builder(){vec![onkeydown(move |_|dynamic_events.write().push_str("key|"))]}else{vec![]},
+                "Dynamic non-reserved builder"
+            }
             div{id:"cc-order-destination","Order destination"}
             div{id:"cc-variants",style:"display:flex;flex-wrap:wrap;gap:8px",
                 for variant in [CardVariant::DEFAULT,CardVariant::TRANSPARENT,CardVariant::MUTED,CardVariant::BLUE,CardVariant::CYAN,CardVariant::GRAY,CardVariant::GREEN,CardVariant::ORANGE,CardVariant::PINK,CardVariant::PURPLE,CardVariant::RED,CardVariant::TEAL,CardVariant::YELLOW,CardVariant::new("custom_Tier-7")?]{

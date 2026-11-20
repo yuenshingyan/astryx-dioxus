@@ -17,7 +17,9 @@ use crate::card::{Card, CardVariant};
 use crate::hooks::use_clickable_container::native::{
     allows_activation, delegate_action, navigate, with_current_target,
 };
-use crate::hooks::use_clickable_container::{NativeOwner, use_native_owner};
+use crate::hooks::use_clickable_container::{
+    NativeOwner, use_native_owner, use_retained_event_attributes,
+};
 use crate::hooks::use_press_feedback::{PressFeedbackConfig, use_press_feedback};
 use crate::link::{LinkRenderProps, use_link_component};
 use crate::utils::disabled_interaction::{cancel_disabled_click, cancel_disabled_key};
@@ -118,9 +120,6 @@ pub fn ClickableCard(
         is_disabled,
     });
     let renderer = use_link_component(None);
-    if label.trim().is_empty() {
-        return Err(ClickableCardError::EmptyLabel.into());
-    }
     let callbacks = CardCallbacks {
         root_owner: root_owner.clone(),
         action_owner: action_owner.clone(),
@@ -146,6 +145,10 @@ pub fn ClickableCard(
             )
         })
         .collect();
+    let remaining_attributes = use_retained_event_attributes(remaining_attributes);
+    if label.trim().is_empty() {
+        return Err(ClickableCardError::EmptyLabel.into());
+    }
     // Retain inert declarative listener slots while disabled. Removing one can
     // make the web renderer clear another retained callback's event ownership.
     let mut attributes = vec![
