@@ -1826,6 +1826,37 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
+@layer astryx-base {
+  .astryx-layout-footer {
+    --_layout-footer-height: initial;
+    height: var(--_layout-footer-height);
+    flex-shrink: 0;
+  }
+  .astryx-layout-footer[data-divider="true"] { border-block-start: 1px solid var(--color-border); }
+  .astryx-layout-footer__inner {
+    --_layout-footer-padding: initial;
+    --container-padding-inline-start: var(--_layout-footer-padding, var(--layout-padding-own-outer-x, var(--layout-padding-outer-x, var(--spacing-4))));
+    --container-padding-inline-end: var(--container-padding-inline-start);
+    --container-padding-block-start: var(--_layout-footer-padding, var(--layout-padding-inner-y, var(--spacing-4)));
+    --container-padding-block-end: var(--_layout-footer-padding, var(--layout-padding-own-outer-y, var(--layout-padding-outer-y, var(--spacing-4))));
+    --_container-bleed-block-start: 0px;
+    --_container-bleed-block-end: 0px;
+    box-sizing: border-box;
+    max-width: var(--layout-content-width, none);
+    margin-inline: auto;
+    padding-inline-start: var(--container-padding-inline-start);
+    padding-inline-end: var(--container-padding-inline-end);
+    padding-block-start: var(--container-padding-block-start);
+    padding-block-end: var(--container-padding-block-end);
+  }
+  .astryx-layout-footer__inner:has(> [data-container-corner]:first-child):not(:has(> * [data-container-corner])) {
+    --_container-bleed-block-start: var(--container-padding-block-start);
+  }
+  .astryx-layout-footer__inner:has(> [data-container-corner]:last-child):not(:has(> * [data-container-corner])) {
+    --_container-bleed-block-end: var(--container-padding-block-end);
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

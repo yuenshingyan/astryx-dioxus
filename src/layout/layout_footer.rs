@@ -1,0 +1,94 @@
+//! Bottom layout region adapted from Astryx Layout/LayoutFooter.tsx.
+
+use dioxus::prelude::*;
+
+use super::layout_divider_context::LayoutDividerContext;
+use super::padding::spacing_step_css;
+use crate::utils::types::{SizeValue, SpacingStep};
+
+/// Non-shrinking footer band with a centered content area and optional divider.
+#[component]
+pub fn LayoutFooter(
+    /// Overrides the nearest Layout's divider default.
+    #[props(default)]
+    has_divider: Option<bool>,
+    /// Height of the outer band.
+    #[props(default, into)]
+    height: Option<SizeValue>,
+    /// Overrides the inherited inset on every edge.
+    #[props(default)]
+    padding: Option<SpacingStep>,
+    /// Accessible name when a caller supplies a landmark role.
+    #[props(default)]
+    label: Option<String>,
+    /// Caller CSS classes on the outer band.
+    #[props(default)]
+    class: String,
+    /// Caller inline declarations on the outer band.
+    #[props(default)]
+    style: String,
+    /// Content of the inner wrapper.
+    #[props(default = rsx! {})]
+    children: Element,
+    /// Native outer attributes such as `role`, events, and `onmounted`.
+    #[props(extends = GlobalAttributes)]
+    attributes: Vec<Attribute>,
+) -> Element {
+    let has_divider = has_divider.unwrap_or_else(|| {
+        try_consume_context::<LayoutDividerContext>()
+            .unwrap_or_default()
+            .0
+    });
+    let mut outer_style = match height {
+        Some(height) => format!("--_layout-footer-height:{};", height.as_css()?),
+        None => String::new(),
+    };
+    outer_style.push_str(&style);
+    let mut inner_style = String::new();
+    if let Some(padding) = padding {
+        inner_style.push_str(&format!(
+            "--_layout-footer-padding:{};",
+            spacing_step_css(padding)
+        ));
+    }
+    let attributes: Vec<_> = attributes
+        .into_iter()
+        .filter(|attr| !matches!(attr.name, "class" | "style" | "data-divider"))
+        .collect();
+    rsx! {
+        div {
+            class: "astryx-layout-footer {class}",
+            style: (!outer_style.is_empty()).then_some(outer_style),
+            "aria-label": label,
+            "data-divider": has_divider.then_some("true"),
+            ..attributes,
+            div { class: "astryx-layout-footer__inner", style: (!inner_style.is_empty()).then_some(inner_style), {children} }
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use dioxus::prelude::*;
+    use dioxus_ssr::render_element;
+
+    use super::{LayoutDividerContext, LayoutFooter};
+    use crate::layer::LayerContentBoundary;
+
+    #[test]
+    fn divider_default_is_overridable_and_stops_at_a_layer_boundary() {
+        #[component]
+        fn Parent(children: Element) -> Element {
+            use_context_provider(|| LayoutDividerContext(true));
+            children
+        }
+        let html = render_element(rsx! {
+            Parent {
+                LayoutFooter { "Inherited" }
+                LayoutFooter { has_divider: false, "Opt out" }
+                LayerContentBoundary { LayoutFooter { "New layer" } }
+            }
+        });
+        assert_eq!(html.matches("data-divider=\"true\"").count(), 1, "{html}");
+    }
+}
