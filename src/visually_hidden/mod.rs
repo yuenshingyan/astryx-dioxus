@@ -1,4 +1,6 @@
 #[path = "visually_hidden.rs"]
 mod component;
 
-pub(crate) use component::VisuallyHidden;
+pub use component::{
+    VisuallyHidden, VisuallyHiddenElement, VisuallyHiddenProps, VisuallyHiddenRenderProps,
+};
