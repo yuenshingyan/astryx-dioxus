@@ -56,6 +56,8 @@ mod text;
 mod typography_animation;
 #[path = "showcase/v_stack.rs"]
 mod v_stack;
+#[path = "showcase/visually_hidden.rs"]
+mod visually_hidden;
 
 use aspect_ratio::AspectRatioExamples;
 use badge::BadgeExamples;
@@ -82,6 +84,7 @@ use stack::{StackExamples, StackItemExamples};
 use status_dot::StatusDotExamples;
 use text::TextExamples;
 use v_stack::VStackExamples;
+use visually_hidden::VisuallyHiddenExamples;
 
 const FIGTREE: Asset = asset!("/assets/fonts/Figtree-latin.woff2");
 
@@ -168,6 +171,8 @@ fn App() -> Element {
                 a { href: "#h-stack-examples", "HStack examples" }
                 " · "
                 a { href: "#v-stack-examples", "VStack examples" }
+                " · "
+                a { href: "#visually-hidden-examples", "VisuallyHidden examples" }
                 " · "
                 a { href: "#center-examples", "Center examples" }
                 " · "
@@ -286,6 +291,7 @@ fn App() -> Element {
             GridSpanExamples {}
             HStackExamples {}
             VStackExamples {}
+            VisuallyHiddenExamples {}
             CenterExamples {}
             SectionExamples {}
         }

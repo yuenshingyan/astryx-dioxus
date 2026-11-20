@@ -101,6 +101,9 @@ pub use theme::{
 
 pub use utils::types::{Elevation, SizeValue, SizeValueError, SpacingStep};
 pub use v_stack::{VStack, VStackProps};
+pub use visually_hidden::{
+    VisuallyHidden, VisuallyHiddenElement, VisuallyHiddenProps, VisuallyHiddenRenderProps,
+};
 
 // Compatibility spellings of provisional APIs. Core code uses upstream owners.
 pub use compatibility::{

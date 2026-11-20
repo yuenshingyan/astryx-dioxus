@@ -153,7 +153,8 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/link/`: Link, shared renderer/provider types, target/rel handling, and linkification.
 - `src/text/`, `src/theme/`: Text typography/clamp support and upstream-owned type definitions; standalone Text/Theme checklists remain independent.
 - `src/hooks/`, `src/tooltip/`: shared press/tooltip renderer bridges under their source owners.
-- `src/motion/`, `src/visually_hidden/`: required internal timing tables and fixed-span accessibility support; not completed public Motion/VisuallyHidden migrations.
+- `src/motion/`: shared internal timing tables, not a public Motion migration.
+- `src/visually_hidden/`: [VisuallyHidden](docs/visually-hidden-port.md), with fixed clipping, custom roots, and the four original patterns.
 - `src/interactive_role_context/`, `src/utils/`: inherited role, shared navigation policy, text-direction and platform-detection adapters; no combined control environment.
 - `src/i18n/`: the required server-safe strong-RTL predicate, not a completed internationalization runtime.
 - `src/input_group/`: the input-owned internal state contract used by existing controls; not a completed InputGroup component.
