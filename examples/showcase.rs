@@ -4,8 +4,12 @@ use std::pin::Pin;
 use astryx_dioxus::{Button, ButtonElevation, ButtonSize, ButtonType, ButtonVariant, STYLES};
 use dioxus::prelude::*;
 
+#[path = "showcase/aspect_ratio.rs"]
+mod aspect_ratio;
 #[path = "showcase/badge.rs"]
 mod badge;
+#[path = "showcase/blockquote.rs"]
+mod blockquote;
 #[path = "showcase/button_contract.rs"]
 mod button_contract;
 #[path = "showcase/button_group.rs"]
@@ -34,6 +38,8 @@ mod selectable_card;
 mod skeleton;
 #[path = "showcase/spinner.rs"]
 mod spinner;
+#[path = "showcase/stack.rs"]
+mod stack;
 #[path = "showcase/status_dot.rs"]
 mod status_dot;
 #[path = "showcase/text.rs"]
@@ -41,7 +47,9 @@ mod text;
 #[path = "showcase/typography_animation.rs"]
 mod typography_animation;
 
+use aspect_ratio::AspectRatioExamples;
 use badge::BadgeExamples;
+use blockquote::BlockquoteExamples;
 use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
@@ -56,6 +64,7 @@ use progress_bar::ProgressBarExamples;
 use selectable_card::SelectableCardExamples;
 use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
+use stack::StackExamples;
 use status_dot::StatusDotExamples;
 use text::TextExamples;
 
@@ -104,8 +113,11 @@ fn App() -> Element {
             .demo-count--warning {{ background:light-dark(#fae19e,#e2b6233d);color:light-dark(#4b3900,#eec448); }}
         " }
         main { "data-astryx-theme": "astryx",
+            AspectRatioExamples {}
             h1 { "Astryx Buttons and Link" }
             p { "Documented patterns, interaction states, and integrations. See docs/ for each component's verification notes." }
+            a { href: "#stack-examples", "Stack examples" }
+            StackExamples {}
             nav { "aria-label": "Showcase sections",
                 a { href: "#button-group-examples", "ButtonGroup examples" }
                 " · "
@@ -126,6 +138,8 @@ fn App() -> Element {
                 a { href: "#status-dot-examples", "StatusDot examples" }
                 " · "
                 a { href: "#progress-bar-examples", "ProgressBar examples" }
+                " · "
+                a { href: "#blockquote-examples", "Blockquote examples" }
                 " · "
                 a { href: "#card-examples", "Card examples" }
             }
@@ -231,6 +245,7 @@ fn App() -> Element {
             TextExamples {}
             HeadingExamples {}
             ProgressBarExamples {}
+            BlockquoteExamples {}
             CardExamples {}
             ClickableCardExamples {}
             SelectableCardExamples {}

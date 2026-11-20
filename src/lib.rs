@@ -2,7 +2,9 @@
 //!
 //! Include [`STYLES`] once using `document::Style` in your application root.
 
+mod aspect_ratio;
 mod badge;
+mod blockquote;
 mod button;
 mod button_group;
 mod card;
@@ -27,6 +29,7 @@ mod selectable_card;
 mod size_context;
 mod skeleton;
 mod spinner;
+mod stack;
 mod status_dot;
 mod text;
 mod theme;
@@ -34,7 +37,9 @@ mod tooltip;
 mod utils;
 mod visually_hidden;
 
+pub use aspect_ratio::{AspectRatio, AspectRatioFit, AspectRatioShape};
 pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
+pub use blockquote::{Blockquote, BlockquoteCite};
 pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, ButtonVariant};
 pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation};
 pub use card::{Card, CardVariant, InvalidCardVariant};
@@ -68,6 +73,10 @@ pub use selectable_card::{SelectableCard, SelectableCardError, SelectableCardPro
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
 pub use skeleton::{Skeleton, SkeletonError, SkeletonLength, SkeletonRadius};
 pub use spinner::{Spinner, SpinnerError, SpinnerShade, SpinnerSize};
+pub use stack::{
+    Stack, StackAlignment, StackCrossAlignment, StackDirection, StackElement, StackMainAlignment,
+    StackProps, StackRenderProps, StackWrap,
+};
 pub use status_dot::{
     InvalidStatusDotVariant, StatusDot, StatusDotError, StatusDotIcon, StatusDotVariant,
 };

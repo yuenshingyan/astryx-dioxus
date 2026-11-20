@@ -1,0 +1,131 @@
+{
+  "revision": "476a3153417dbf75c565f7df05b0784e94ddd59e",
+  "files": [
+    {
+      "path": "apps/storybook/stories/Blockquote.stories.tsx",
+      "file": "apps__storybook__stories__Blockquote.stories.tsx",
+      "blob": "6509a5cc49523134972c3125abc0bda3be669b91"
+    },
+    {
+      "path": "docs/specs/components/Blockquote/Blockquote.spec.md",
+      "file": "docs__specs__components__Blockquote__Blockquote.spec.md",
+      "blob": "cce850fcfb0b79d427f6cc2df211b287cee0ce0a"
+    },
+    {
+      "path": "packages/cli/assets/templates/blocks/components/Blockquote/BlockquoteShowcase.doc.mjs",
+      "file": "packages__cli__assets__templates__blocks__components__Blockquote__BlockquoteShowcase.doc.mjs",
+      "blob": "3680d0623e617164ba6ae7d6c3cbf7e6fa5fd183"
+    },
+    {
+      "path": "packages/cli/assets/templates/blocks/components/Blockquote/BlockquoteShowcase.tsx",
+      "file": "packages__cli__assets__templates__blocks__components__Blockquote__BlockquoteShowcase.tsx",
+      "blob": "f6c68fd733d749f0b4c88cea1c362e91279b1267"
+    },
+    {
+      "path": "packages/cli/assets/templates/blocks/components/Blockquote/BlockquoteTestimonials.doc.mjs",
+      "file": "packages__cli__assets__templates__blocks__components__Blockquote__BlockquoteTestimonials.doc.mjs",
+      "blob": "38883f8fd23936da0b099f46a27f622e40109e72"
+    },
+    {
+      "path": "packages/cli/assets/templates/blocks/components/Blockquote/BlockquoteTestimonials.tsx",
+      "file": "packages__cli__assets__templates__blocks__components__Blockquote__BlockquoteTestimonials.tsx",
+      "blob": "96b89c70e0967df49e02f4d86d39957169a8b0c7"
+    },
+    {
+      "path": "packages/cli/assets/templates/blocks/components/Blockquote/BlockquoteWithCite.doc.mjs",
+      "file": "packages__cli__assets__templates__blocks__components__Blockquote__BlockquoteWithCite.doc.mjs",
+      "blob": "ff3f8cd1511813c16f8755ec09e017d66a7586a0"
+    },
+    {
+      "path": "packages/cli/assets/templates/blocks/components/Blockquote/BlockquoteWithCite.tsx",
+      "file": "packages__cli__assets__templates__blocks__components__Blockquote__BlockquoteWithCite.tsx",
+      "blob": "3a9d0a3e6d7f445318637c8598503ed9db159b50"
+    },
+    {
+      "path": "packages/core/src/BaseProps.ts",
+      "file": "packages__core__src__BaseProps.ts",
+      "blob": "02db07241593be3d04da6a394dcfd8c352dd7e6d"
+    },
+    {
+      "path": "packages/core/src/Blockquote/Blockquote.doc.mjs",
+      "file": "packages__core__src__Blockquote__Blockquote.doc.mjs",
+      "blob": "10aefafe0b82d352c81fbbb44dc6bf48484bfff9"
+    },
+    {
+      "path": "packages/core/src/Blockquote/Blockquote.test.tsx",
+      "file": "packages__core__src__Blockquote__Blockquote.test.tsx",
+      "blob": "751ab38bdc6afa22f10122f74706b4f018671052"
+    },
+    {
+      "path": "packages/core/src/Blockquote/Blockquote.tsx",
+      "file": "packages__core__src__Blockquote__Blockquote.tsx",
+      "blob": "80c9858421e0a0fb5008fe1f9c8e0e0354c470cc"
+    },
+    {
+      "path": "packages/core/src/Blockquote/index.ts",
+      "file": "packages__core__src__Blockquote__index.ts",
+      "blob": "af8ea3bcf27ffc1320818a3b71fd6c8860637162"
+    },
+    {
+      "path": "packages/core/src/theme/tokens.stylex.ts",
+      "file": "packages__core__src__theme__tokens.stylex.ts",
+      "blob": "ec6ecd40da08501602ad730274d028d79640a1c9"
+    },
+    {
+      "path": "packages/core/src/utils/isRenderable.ts",
+      "file": "packages__core__src__utils__isRenderable.ts",
+      "blob": "2238a00ac82d719ede5a18b59f15bc34fc5baa74"
+    },
+    {
+      "path": "packages/core/src/utils/themeProps.ts",
+      "file": "packages__core__src__utils__themeProps.ts",
+      "blob": "b93fb205c539242dfb18982521175005cfc0653a"
+    },
+    {
+      "path": "packages/themes/neutral/src/neutralTheme.ts",
+      "file": "packages__themes__neutral__src__neutralTheme.ts",
+      "blob": "69b053e64622468f34212b9b3b7dc274c8f38947"
+    },
+    {
+      "path": "packages/core/src/Card/Card.tsx",
+      "file": "packages__core__src__Card__Card.tsx",
+      "blob": "66960eeca06bbc0f618ecf3d1cec69be20c2475a"
+    },
+    {
+      "path": "packages/core/src/Grid/Grid.tsx",
+      "file": "packages__core__src__Grid__Grid.tsx",
+      "blob": "b9ec203c718fbee3868a5d164574b694989e0785"
+    },
+    {
+      "path": "packages/core/src/Grid/GridSpan.tsx",
+      "file": "packages__core__src__Grid__GridSpan.tsx",
+      "blob": "7c109c52923e91c4e306fe07faf4a260703fc2db"
+    },
+    {
+      "path": "packages/core/src/Stack/Stack.tsx",
+      "file": "packages__core__src__Stack__Stack.tsx",
+      "blob": "c56d72759ad2f6f86102228e22c3123530b32894"
+    },
+    {
+      "path": "packages/core/src/Stack/stack.stylex.ts",
+      "file": "packages__core__src__Stack__stack.stylex.ts",
+      "blob": "7d08a52f1f59ee41bbf9f1171a427add1265f5f2"
+    },
+    {
+      "path": "packages/core/src/utils/mergeProps.ts",
+      "file": "packages__core__src__utils__mergeProps.ts",
+      "blob": "3750bb89d2ab097a2021a263983558e663814270"
+    },
+    {
+      "path": "packages/core/src/naming.ts",
+      "file": "packages__core__src__naming.ts",
+      "suffix": "\n",
+      "blob": "d69f584d7f35b852405cbf1b9cfb75d9b78ef8a3"
+    },
+    {
+      "path": "packages/themes/neutral/src/neutralPaletteRefs.generated.ts",
+      "file": "packages__themes__neutral__src__neutralPaletteRefs.generated.ts",
+      "blob": "878eac928e05df3c3109ec18d0f07afbaaacb1c4"
+    }
+  ]
+}

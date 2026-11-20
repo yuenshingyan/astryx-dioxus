@@ -1,0 +1,29 @@
+{
+  "directions": {
+    "size": [
+      330,
+      88
+    ],
+    "meanAbsoluteChannelError": 0.0,
+    "maxChannelError": 0,
+    "differentPixelFraction": 0.0
+  },
+  "alignment": {
+    "size": [
+      158,
+      312
+    ],
+    "meanAbsoluteChannelError": 0.004259980525803311,
+    "maxChannelError": 1,
+    "differentPixelFraction": 0.004259980525803311
+  },
+  "fill": {
+    "size": [
+      219,
+      144
+    ],
+    "meanAbsoluteChannelError": 0.009322678843226788,
+    "maxChannelError": 1,
+    "differentPixelFraction": 0.009322678843226788
+  }
+}
