@@ -66,10 +66,11 @@ Token/Avatar/StackItem slices now render the original patterns, including named 
 keyboard/hover tooltips and observable published action messages. Actual Rust screenshots,
 intrinsic geometry and paint are compared against captured Neutral-dark originals;
 a same-node raster control isolates the historical transform-induced differences.
-Correctly layout-positioned screenshots are identical for Directions and differ by at
-most one channel level for Alignment/Fill; remaining quantization-scale residuals and
-Toast presentation limits remain explicit. This does not
-complete public Token, Avatar, HStack, VStack, StackItem, Grid or Layout migrations.
+Layout-positioned screenshots are identical for Directions and differ by at most one
+channel level for Alignment/Fill. The [private Stack Toast slice](docs/stack-toast-port.md)
+presents the published action messages; its open geometry, paint and selected interactions
+are checked in Chrome. This does not complete public Toast, Token, Avatar, HStack, VStack,
+StackItem, Grid or Layout migrations.
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.

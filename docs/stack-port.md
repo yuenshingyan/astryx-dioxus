@@ -132,8 +132,10 @@ registers the same section. Existing older examples' native Stack framing is not
 silently rewritten. Supporting slices compile privately into the demo and SSR fixture
 via module paths; `src/lib.rs` exports no incomplete supporting APIs. Standalone owner
 migrations remain separate. Pinned templates have inert Buttons; later captured public
-code adds Toast callbacks. Exact messages are observable here, but a polite status is
-not a Toast overlay/timing/queue migration. The actual-node follow-up below supersedes
+code adds Toast callbacks. The follow-up [private Toast slice](stack-toast-port.md)
+now supplies the published demo overlay, timing, queue and announcement behavior;
+this is not a public Toast migration. Its actual open-Toast evidence supersedes
+older polite-status-only presentation limits. The actual-node follow-up below supersedes
 the earlier static-framing/isolated-layout limits for these exact patterns and mode.
 
 ## Verification and evidence limits
