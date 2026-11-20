@@ -71,6 +71,8 @@ AspectRatio adds required numeric ratios, both clipping shapes, optional child f
 responsive CSS overrides and all six original patterns using offline replacement
 artwork; see [AspectRatio verification](docs/aspect-ratio-port.md) for pinned-source
 comparisons and remaining release/asset boundaries.
+Grid adds native fixed and responsive tracks, gap overrides, and five showcase patterns.
+See [Grid verification](docs/grid-port.md) for tested behavior and demo adaptations.
 Stack implements axis/alias resolution, shared token gaps, local logical padding,
 sizing precedence, wrapping, scrolling and caller-rendered native roots. Its SSR and
 offline source-derived comparisons plus actual published captures/isolated layout

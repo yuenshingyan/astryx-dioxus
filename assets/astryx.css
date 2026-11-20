@@ -1617,6 +1617,29 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-code[data-size="inherit"] { font-size: inherit; line-height: inherit; }
 }
 
+/* Grid tracks remain class-level so caller CSS, including media rules, can win. */
+@layer astryx-base {
+  .astryx-grid {
+    --_grid-columns: initial;
+    --_grid-rows: initial;
+    --_grid-row-gap: initial;
+    --_grid-column-gap: initial;
+    display: grid;
+    grid-template-columns: var(--_grid-columns);
+    grid-auto-rows: var(--_grid-rows);
+    row-gap: var(--_grid-row-gap);
+    column-gap: var(--_grid-column-gap);
+  }
+  .astryx-grid[data-align="start"] { align-items: start; }
+  .astryx-grid[data-align="center"] { align-items: center; }
+  .astryx-grid[data-align="end"] { align-items: end; }
+  .astryx-grid[data-align="stretch"] { align-items: stretch; }
+  .astryx-grid[data-justify="start"] { justify-items: start; }
+  .astryx-grid[data-justify="center"] { justify-items: center; }
+  .astryx-grid[data-justify="end"] { justify-items: end; }
+  .astryx-grid[data-justify="stretch"] { justify-items: stretch; }
+}
+
 /* AspectRatio: structural rules stay layered so caller CSS wins. */
 @layer astryx-base {
   .astryx-aspect-ratio {

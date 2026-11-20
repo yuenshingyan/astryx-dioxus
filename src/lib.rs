@@ -12,6 +12,7 @@ mod clickable_card;
 mod code;
 mod compatibility;
 mod divider;
+mod grid;
 mod heading;
 mod hooks;
 mod i18n;
@@ -48,6 +49,7 @@ pub use code::{Code, CodeColor, CodeProps, CodeSize};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };
+pub use grid::{Grid, GridAlignment, GridColumns, GridProps, GridRepeat};
 pub use heading::{Heading, HeadingLevel, HeadingProps, HeadingType, InvalidHeadingLevel};
 pub use hooks::use_interactive_role::{InteractiveRole, use_interactive_role};
 pub use icon::{
