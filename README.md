@@ -50,6 +50,11 @@ native input behavior, released layer capture and all three original patterns; s
 press/event integration, the private native-radio proof and the approved forced-color
 selection cue are verified. See [SelectableCard verification](docs/selectable-card-port.md)
 for callback adaptations, source-palette findings and verification boundaries.
+Stack implements axis/alias resolution, shared token gaps, local logical padding,
+sizing precedence, wrapping, scrolling and caller-rendered native roots. Its SSR and
+offline source-derived comparisons are recorded in [Stack verification](docs/stack-port.md);
+Token/Avatar/StackItem demo framing and upstream-runtime visual verification remain
+explicitly open. This does not complete HStack, VStack, StackItem, Grid or Layout.
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
@@ -95,6 +100,7 @@ CSS styles target HTML/webview output, not a native renderer.
 
 - `src/badge/`, `src/button/`, `src/button_group/`, `src/card/`, `src/clickable_card/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
 - `src/selectable_card/`: controlled Card selection and its private native input context; not a completed Lab group migration.
+- `src/stack/`: standalone Stack and its axis/wrap types; convenience wrappers and StackItem remain separate migrations.
 - `src/layout/`: shared spacing-step lowering for container publishers, not a completed Layout migration.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
@@ -130,7 +136,11 @@ For browser interaction checks, see [Button browser testing](docs/button-port.md
 [ProgressBar testing](docs/progress-bar-port.md#verification), [Card testing](docs/card-port.md#verification),
 [ClickableCard testing](docs/clickable-card-port.md#verification),
 and [SelectableCard testing](docs/selectable-card-port.md#verification-and-integration-boundary).
-Run all fourteen component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
+For Stack, serve `dx serve --example stack --web --port 8093` and run
+`python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/stack.browser.mjs`;
+`python3 tests/stack_source.py --check` verifies the offline source-derived fixture.
+See its verification notes for the cache input, evidence limits and remaining gaps.
+Run all fourteen existing component suites: `node tests/button.browser.mjs`, `node tests/button_group.browser.mjs`,
 `node tests/icon_button.browser.mjs`, `node tests/link.browser.mjs`, `node tests/spinner.browser.mjs`,
 `node tests/badge.browser.mjs`, `node tests/divider.browser.mjs`, `node tests/kbd.browser.mjs`,
 `node tests/skeleton.browser.mjs`, `node tests/status_dot.browser.mjs`, `node tests/progress_bar.browser.mjs`,

@@ -1,5 +1,7 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates.
 // Adapted from Astryx 476a3153417dbf75c565f7df05b0784e94ddd59e.
+use dioxus::core::AttributeValue;
+use dioxus::html::PlatformEventData;
 use dioxus::prelude::*;
 
 use super::stack_style::{
@@ -96,6 +98,12 @@ pub fn Stack(
     /// Caller inline CSS, before explicit sizing props.
     #[props(default)]
     style: String,
+    /// Native click callback, composed with attribute-builder listeners.
+    #[props(default)]
+    onclick: Option<EventHandler<MouseEvent>>,
+    /// Native ref bridge, composed with attribute-builder mounted listeners.
+    #[props(default)]
+    onmounted: Option<EventHandler<MountedEvent>>,
     /// Free-form caller content.
     #[props(default = rsx! {})]
     children: Element,
@@ -182,6 +190,33 @@ pub fn Stack(
         root_attributes.push(Attribute::new("data-wrap", wrap.as_str(), None, false));
     }
     root_attributes.extend(attributes);
+    macro_rules! compose_listener {
+        ($name:literal, $handler:ident, $data:ident) => {
+            if let Some(handler) = $handler {
+                let callers: Vec<_> = root_attributes
+                    .iter()
+                    .filter(|attribute| attribute.name == $name)
+                    .cloned()
+                    .collect();
+                root_attributes.retain(|attribute| attribute.name != $name);
+                root_attributes.push(Attribute::new(
+                    $name,
+                    AttributeValue::listener(move |event: Event<PlatformEventData>| {
+                        for attribute in &callers {
+                            if let AttributeValue::Listener(callback) = &attribute.value {
+                                callback.call(event.clone().into_any());
+                            }
+                        }
+                        handler.call(event.map(|data| $data::from(data)));
+                    }),
+                    None,
+                    false,
+                ));
+            }
+        };
+    }
+    compose_listener!("onclick", onclick, MouseData);
+    compose_listener!("onmounted", onmounted, MountedData);
     if let Some(element) = as_element {
         return element.call(StackRenderProps {
             attributes: root_attributes,

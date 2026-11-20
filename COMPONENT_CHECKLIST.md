@@ -1717,22 +1717,24 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 
 - [ ] **[Stack](https://astryx.atmeta.com/components/Stack)**
 
+  - Standalone implementation and verified contracts: [Stack port notes](docs/stack-port.md). Seven SSR tests and offline source-derived declaration/geometry comparisons pass; these are not published measurements or executed-upstream visual baselines. Overall remains open for faithful Token/Avatar/StackItem supporting patterns and upstream-runtime comparison. No HStack/VStack/StackItem/Grid/Layout completion is claimed.
+
   - Sources: [English family API](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Stack/Stack.doc.mjs), [original TSX](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Stack/Stack.tsx).
 
   - **Layout choices**
-    - [ ] `direction`: `horizontal`, `vertical` (default); horizontal follows inline direction in LTR/RTL. HStack/VStack are configured wrappers, not additional direction strings.
-    - [ ] Each of `gap`, `padding`, `paddingInline`, `paddingInlineStart`, `paddingInlineEnd`, `paddingBlock`, `paddingBlockStart`, `paddingBlockEnd`: numeric steps `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10` (not strings). Edge overrides axis, axis overrides all-side padding.
-    - [ ] Main-axis alignment (`hAlign` horizontal, `vAlign` vertical, or `justify`): `start`, `center`, `end`, `between`, `around`, `evenly`.
-    - [ ] Cross-axis alignment (`vAlign` horizontal, `hAlign` vertical, or `align`): `start`, `center`, `end`, `stretch`. Family docs expose combined hAlign/vAlign union; TSX documents these axis-specific valid choices. Explicit axis alignment wins its alias.
-    - [ ] `wrap`: `nowrap` (default), `wrap`, `wrap-reverse`; `isScrollable`: false (default), true.
+    - [x] `direction`: `horizontal`, `vertical` (default); horizontal follows inline direction in LTR/RTL. HStack/VStack are configured wrappers, not additional direction strings.
+    - [x] Each of `gap`, `padding`, `paddingInline`, `paddingInlineStart`, `paddingInlineEnd`, `paddingBlock`, `paddingBlockStart`, `paddingBlockEnd`: numeric steps `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10` (not strings). Edge overrides axis, axis overrides all-side padding.
+    - [x] Main-axis alignment (`hAlign` horizontal, `vAlign` vertical, or `justify`): `start`, `center`, `end`, `between`, `around`, `evenly`.
+    - [x] Cross-axis alignment (`vAlign` horizontal, `hAlign` vertical, or `align`): `start`, `center`, `end`, `stretch`. Family docs expose combined hAlign/vAlign union; TSX documents these axis-specific valid choices. Explicit axis alignment wins its alias.
+    - [x] `wrap`: `nowrap` (browser default when omitted; reflection only when supplied), `wrap`, `wrap-reverse`; `isScrollable`: false (default), true.
 
   - **Content patterns**
-    - [ ] Polymorphic `as` (default div); arbitrary children with or without StackItem wrappers. Width/height/maxWidth/minHeight accept open-ended measurements and beat matching inline style fields.
+    - [x] Polymorphic `as` (Dioxus `as_element` caller root renderer, default div); arbitrary children with or without StackItem wrappers. Width/height/maxWidth/minHeight accept open-ended measurements and beat matching inline style fields.
     - [ ] HStack cross-axis vAlign and VStack cross-axis hAlign default stretch; no spacing default is asserted by the doc.
     - [ ] Use gap rather than child margins; fill item consumes leftover space; wrapping may avoid nested stacks.
 
   - **Named templates**
-    - [ ] [`StackAlignment`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackAlignment.doc.mjs) — “Stack — Alignment”: start/center/end buttons.
+    - [x] [`StackAlignment`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackAlignment.doc.mjs) — “Stack — Alignment”: start/center/end buttons. Existing main Card/Text/Button; Stack topology checked against source-derived declarations, not an upstream-runtime image.
     - [ ] [`StackDirections`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackDirections.doc.mjs) — “Stack — Directions”: horizontal/vertical badges (showcase).
     - [ ] [`StackFillItem`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Stack/StackFillItem.doc.mjs) — “Stack — Fill Item”: avatar, expanding text, button.
 
