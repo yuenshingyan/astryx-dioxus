@@ -18,7 +18,22 @@
     <p>Popover opened.</p>
     <button type="button" id="close-popover">Dismiss</button>
   </div>
+  <button type="button" id="announce-shared">Test Stack announcement writer</button>
+  <p id="shared-result"></p>
+  <script src="/use_announce.js"></script>
   <script>
+    const sharedButton = document.getElementById('announce-shared');
+    if (typeof installAnnounce === 'function') {
+      const writer = installAnnounce().createAnnouncer();
+      writer.prepare(sharedButton);
+      sharedButton.addEventListener('click', () => {
+        writer.announce(sharedButton, 'Stack writer test message received.', () => true);
+        document.getElementById('shared-result').textContent = 'Stack writer test message sent.';
+      });
+    } else {
+      sharedButton.disabled = true;
+      document.getElementById('shared-result').textContent = 'Serve use_announce.js alongside this page to run the Stack writer check.';
+    }
     document.getElementById('announce').addEventListener('click', () => {
       document.getElementById('message').textContent = 'Live region test message received.';
     });
