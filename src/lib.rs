@@ -36,7 +36,6 @@ pub use card::{Card, CardVariant, InvalidCardVariant};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };
-pub use hooks::use_clickable_container as clickable_container;
 pub use hooks::use_interactive_role::{InteractiveRole, use_interactive_role};
 pub use icon::{
     Icon, IconDefaultSizeContext, IconDefaultSizeProvider, IconEntry, IconRequest, IconSize,

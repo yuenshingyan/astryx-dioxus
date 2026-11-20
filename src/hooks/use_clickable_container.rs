@@ -1,22 +1,27 @@
 // Adapted from Astryx hooks/useClickableContainer.ts. See THIRD_PARTY_NOTICES.md.
 
 /// Nested controls own their activation, including marked nested containers.
-pub const INTERACTIVE_SELECTORS: &str = "button,a,input,select,textarea,[role=button],[role=link],[role=checkbox],[role=radio],[role=switch],[role=tab],[role=menuitem],[role=option],[role=combobox],[role=listbox],[role=slider],[role=spinbutton],[data-pressable-container]";
+#[cfg(target_arch = "wasm32")]
+pub(crate) const INTERACTIVE_SELECTORS: &str = "button,a,input,select,textarea,[role=button],[role=link],[role=checkbox],[role=radio],[role=switch],[role=tab],[role=menuitem],[role=option],[role=combobox],[role=listbox],[role=slider],[role=spinbutton],[data-pressable-container]";
 
 /// Native event boundary. No renderer or DOM is required for host rendering.
 #[cfg(target_arch = "wasm32")]
-pub mod native {
+pub(crate) mod native {
     use std::any::Any;
+    use std::cell::RefCell;
     use std::rc::Rc;
 
     use dioxus::html::geometry::{ClientPoint, ElementPoint, PagePoint, ScreenPoint};
     use dioxus::html::input_data::{MouseButton, MouseButtonSet, decode_mouse_button_set};
-    use dioxus::html::{HasMouseData, Modifiers};
+    use dioxus::html::{HasMouseData, HasPointerData, Modifiers};
     use dioxus::prelude::*;
     use wasm_bindgen::{JsCast, closure::Closure};
-    use web_sys::{Element, Event as DomEvent, EventTarget, MouseEvent as DomMouseEvent};
+    use web_sys::{
+        Element, Event as DomEvent, EventTarget, HtmlElement, MouseEvent as DomMouseEvent,
+    };
 
     use super::INTERACTIVE_SELECTORS;
+    use crate::utils::safe_url::is_safe_url;
 
     /// The original event remains downcastable, including during capture.
     pub struct NativeMouseData(pub DomMouseEvent);
@@ -61,6 +66,85 @@ pub mod native {
         }
     }
 
+    /// Native pointer data with the same downcast contract as native mouse data.
+    pub struct NativePointerData(pub web_sys::PointerEvent);
+    impl InteractionLocation for NativePointerData {
+        fn client_coordinates(&self) -> ClientPoint {
+            ClientPoint::new(self.0.client_x().into(), self.0.client_y().into())
+        }
+        fn page_coordinates(&self) -> PagePoint {
+            PagePoint::new(self.0.page_x().into(), self.0.page_y().into())
+        }
+        fn screen_coordinates(&self) -> ScreenPoint {
+            ScreenPoint::new(self.0.screen_x().into(), self.0.screen_y().into())
+        }
+    }
+    impl InteractionElementOffset for NativePointerData {
+        fn element_coordinates(&self) -> ElementPoint {
+            ElementPoint::new(self.0.offset_x().into(), self.0.offset_y().into())
+        }
+    }
+    impl ModifiersInteraction for NativePointerData {
+        fn modifiers(&self) -> Modifiers {
+            NativeMouseData(self.0.clone().unchecked_into()).modifiers()
+        }
+    }
+    impl PointerInteraction for NativePointerData {
+        fn trigger_button(&self) -> Option<MouseButton> {
+            Some(MouseButton::from_web_code(self.0.button()))
+        }
+        fn held_buttons(&self) -> MouseButtonSet {
+            decode_mouse_button_set(self.0.buttons())
+        }
+    }
+    impl HasPointerData for NativePointerData {
+        fn pointer_id(&self) -> i32 {
+            self.0.pointer_id()
+        }
+        fn width(&self) -> f64 {
+            self.0.width().into()
+        }
+        fn height(&self) -> f64 {
+            self.0.height().into()
+        }
+        fn pressure(&self) -> f32 {
+            self.0.pressure()
+        }
+        fn tangential_pressure(&self) -> f32 {
+            self.0.tangential_pressure()
+        }
+        fn tilt_x(&self) -> i32 {
+            self.0.tilt_x()
+        }
+        fn tilt_y(&self) -> i32 {
+            self.0.tilt_y()
+        }
+        fn twist(&self) -> i32 {
+            self.0.twist()
+        }
+        fn pointer_type(&self) -> String {
+            self.0.pointer_type()
+        }
+        fn is_primary(&self) -> bool {
+            self.0.is_primary()
+        }
+        fn as_any(&self) -> &dyn Any {
+            &self.0
+        }
+    }
+
+    /// Build separate metadata while preserving the original native pointer event.
+    pub fn pointer_event(event: &web_sys::PointerEvent) -> PointerEvent {
+        let wrapped = Event::new(
+            Rc::new(PointerData::new(NativePointerData(event.clone()))),
+            event.bubbles(),
+        );
+        if event.default_prevented() {
+            wrapped.prevent_default();
+        }
+        wrapped
+    }
+
     /// New Dioxus metadata isolates capture caller cancellation from child handlers.
     /// This never reconstructs or redispatches the native event.
     pub fn mouse_event(event: &DomMouseEvent) -> MouseEvent {
@@ -76,7 +160,7 @@ pub mod native {
 
     /// Apply ordinary callback cancellation synchronously at the native boundary.
     /// Capture policies may instead inspect this metadata and defer cancellation.
-    pub fn apply_cancellation(event: &MouseEvent, native: &DomEvent) {
+    pub fn apply_cancellation<T: ?Sized>(event: &Event<T>, native: &DomEvent) {
         if !event.default_action_enabled() {
             native.prevent_default();
         }
@@ -127,12 +211,34 @@ pub mod native {
                 .is_some_and(|target| !has_interactive_ancestor(&target, root))
     }
 
+    /// Select the source-prescribed navigation sink only after shared URL acceptance.
+    /// Middle clicks open separately and never delegate or invoke an action callback.
+    pub fn navigate(
+        event: &DomMouseEvent,
+        href: &str,
+        target: Option<&str>,
+        interactive: Option<&HtmlElement>,
+    ) {
+        if !is_safe_url(href) || event.default_prevented() {
+            return;
+        }
+        if event.button() == 1 || target == Some("_blank") || event.ctrl_key() || event.meta_key() {
+            if let Some(window) = web_sys::window() {
+                let _ = window.open_with_url_and_target_and_features(href, "_blank", "noopener");
+            }
+        } else if let Some(interactive) = interactive {
+            interactive.click();
+        } else if let Some(window) = web_sys::window() {
+            let _ = window.location().set_href(href);
+        }
+    }
+
     /// Owns a native listener and removes it before releasing its Rust closure.
     pub struct NativeListener {
         target: EventTarget,
         name: String,
         is_capture: bool,
-        callback: Closure<dyn FnMut(DomEvent)>,
+        callback: Closure<dyn Fn(DomEvent)>,
     }
 
     impl NativeListener {
@@ -141,9 +247,9 @@ pub mod native {
             target: &EventTarget,
             name: &str,
             is_capture: bool,
-            callback: impl FnMut(DomEvent) + 'static,
+            callback: impl Fn(DomEvent) + 'static,
         ) -> Result<Self, wasm_bindgen::JsValue> {
-            let callback = Closure::wrap(Box::new(callback) as Box<dyn FnMut(DomEvent)>);
+            let callback = Closure::wrap(Box::new(callback) as Box<dyn Fn(DomEvent)>);
             target.add_event_listener_with_callback_and_bool(
                 name,
                 callback.as_ref().unchecked_ref(),
@@ -171,9 +277,9 @@ pub mod native {
     /// supplied by the owning component; the shared hook owns listener disposal.
     pub fn use_clickable_container(
         selector: String,
-        callback: EventHandler<DomEvent>,
+        callback: Rc<dyn Fn(DomEvent)>,
     ) -> EventHandler<MountedEvent> {
-        use_native_listener(selector, "click", false, callback)
+        use_native_event_listener(selector, "click", false, callback)
     }
 
     /// Mount-time listener resource; callbacks update without listener churn.
@@ -185,6 +291,25 @@ pub mod native {
         is_capture: bool,
         callback: EventHandler<DomEvent>,
     ) -> EventHandler<MountedEvent> {
+        use_native_event_listener(
+            selector,
+            name,
+            is_capture,
+            Rc::new(move |event| callback.call(event)),
+        )
+    }
+
+    /// Reentrant native transport, used when a handler synchronously delegates a
+    /// click. The callback slot is cloned before invocation, never borrowed across
+    /// application code or native dispatch. No event classification policy is added.
+    pub fn use_native_event_listener(
+        selector: String,
+        name: &'static str,
+        is_capture: bool,
+        callback: Rc<dyn Fn(DomEvent)>,
+    ) -> EventHandler<MountedEvent> {
+        let callback_slot = use_hook(|| Rc::new(RefCell::new(callback.clone())));
+        *callback_slot.borrow_mut() = callback;
         let mut listener = use_signal(|| None::<NativeListener>);
         use_drop(move || {
             listener.write().take();
@@ -195,9 +320,11 @@ pub mod native {
                 .and_then(|window| window.document())
                 .and_then(|doc| doc.query_selector(&selector).ok().flatten());
             if let Some(root) = root {
+                let callback_slot = callback_slot.clone();
                 let installed =
                     NativeListener::new(root.as_ref(), name, is_capture, move |event| {
-                        callback.call(event)
+                        let callback = callback_slot.borrow().clone();
+                        callback(event);
                     });
                 if let Ok(installed) = installed {
                     listener.set(Some(installed));

@@ -141,13 +141,17 @@ if (!document[runtimeKey]) {
   const { hideTip, focusTip, syncDescription, showTip } = tips;
   listen(document, 'keydown', event => {
     tips.escape(event);
-    const record = records.get(event.target);
+    const actionRoot = event.target.matches?.('[data-astryx-container-action]') ? event.target.closest('[data-astryx-container-press="true"]') : null;
+    const record = records.get(event.target) || records.get(actionRoot);
     if (record) {
       record.pointerFocus = false;
-      if (coarse.matches && event.key === ' ' && enabled(record.element) && record.element.tagName === 'BUTTON') press(record, 'on');
+      if (coarse.matches && (event.key === ' ' || (actionRoot && event.key === 'Enter')) && enabled(record.element) && (record.element.tagName === 'BUTTON' || actionRoot)) press(record, 'on');
     }
   }, { capture: true });
-  listen(document, 'keyup', event => { if (coarse.matches && event.key === ' ') release(records.get(event.target)); }, { capture: true });
+  listen(document, 'keyup', event => {
+    const actionRoot = event.target.matches?.('[data-astryx-container-action]') ? event.target.closest('[data-astryx-container-press="true"]') : null;
+    if (coarse.matches && (event.key === ' ' || (actionRoot && event.key === 'Enter'))) release(records.get(event.target) || records.get(actionRoot));
+  }, { capture: true });
   listen(document, 'pointerdown', event => {
     if (!event.isPrimary || event.button !== 0) return;
     suppressed = null;
@@ -170,7 +174,7 @@ if (!document[runtimeKey]) {
       }
       return;
     }
-    if (event.pointerType !== 'touch' && !coarse.matches) return;
+    if (event.pointerType !== 'touch' && !coarse.matches && !isContainer(record.element)) return;
     if (gesture) { cancelTimer(gesture.original, gesture.timer); press(gesture.current, null); }
     const owner = isTracked(record.element) ? groupOwner(record.element) : null;
     const group = coarse.matches && ['touch', 'pen'].includes(event.pointerType) && owner?.getAttribute('aria-disabled') !== 'true' && !isMenu(record.element) ? owner : null;
