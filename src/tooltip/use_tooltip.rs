@@ -4,7 +4,13 @@ use dioxus::prelude::*;
 
 use crate::hooks::use_press_feedback::{PressFeedbackConfig, use_feedback_controller};
 
-pub(crate) const TOOLTIP_CONTROLLER: &str = include_str!("use_tooltip.js");
+pub(crate) const TOOLTIP_CONTROLLER: &str = concat!(
+    include_str!("../private_attributes/layer_root.js"),
+    "\n",
+    include_str!("../layer/layer_surface_press.js"),
+    "\n",
+    include_str!("use_tooltip.js")
+);
 
 /// Existing Button and Link may render this sibling for an explicit String
 /// tooltip. Compose `{id}-tooltip` into aria-describedby unless it repeats the

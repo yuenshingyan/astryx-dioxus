@@ -18,7 +18,9 @@ mod kbd;
 mod layer;
 mod layout;
 mod link;
+mod private_attributes;
 mod progress_bar;
+mod selectable_card;
 mod size_context;
 mod skeleton;
 mod spinner;
@@ -36,7 +38,6 @@ pub use card::{Card, CardVariant, InvalidCardVariant};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };
-pub use hooks::use_clickable_container as clickable_container;
 pub use hooks::use_interactive_role::{InteractiveRole, use_interactive_role};
 pub use icon::{
     Icon, IconDefaultSizeContext, IconDefaultSizeProvider, IconEntry, IconRequest, IconSize,
@@ -57,6 +58,7 @@ pub use progress_bar::{
     InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,
     ProgressBarVariant,
 };
+pub use selectable_card::{SelectableCard, SelectableCardError, SelectableCardProps};
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
 pub use skeleton::{Skeleton, SkeletonError, SkeletonLength, SkeletonRadius};
 pub use spinner::{Spinner, SpinnerError, SpinnerShade, SpinnerSize};

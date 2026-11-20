@@ -26,7 +26,7 @@ if (!document[runtimeKey]) {
     if (ownAction?.contains(target)) return false;
     for (let node = target; node && node !== root && node !== document.body; node = node.parentElement) {
       if ((node.matches?.(interactiveSelectors) && node.getAttribute('aria-readonly') !== 'true')
-        || node.matches?.('[data-astryx-layer-root],[role="tooltip"],dialog[open],[popover]:popover-open')) return true;
+        || isLayerSurface(node) || isLayerRoot(node)) return true;
     }
     return false;
   };
@@ -56,7 +56,11 @@ if (!document[runtimeKey]) {
       if (state && enabled(record.element)) record.element.dataset.astryxPress = state;
       else delete record.element.dataset.astryxPress;
       if (isContainer(record.element)) {
-        if (state === 'on') record.element.style.setProperty('--_astryx-press-strength', '1');
+        if (state === 'on') {
+          record.pressAnimation?.cancel();
+          record.pressAnimation = null;
+          record.element.style.setProperty('--_astryx-press-strength', '1');
+        }
         if (!state) {
           record.element.style.removeProperty('--_astryx-press-strength');
           record.pressAnimation?.cancel();
@@ -69,7 +73,8 @@ if (!document[runtimeKey]) {
     if (!record) return;
     const epoch = record.pressEpoch;
     press(record, 'fading');
-    const duration = reduced.matches ? (coarse.matches ? Math.min(200, exitDuration(record.element)) : 0) : exitDuration(record.element);
+    const isTouchRelease = record.pressPointerType === 'touch' || coarse.matches;
+    const duration = reduced.matches ? (isTouchRelease ? Math.min(200, exitDuration(record.element)) : 0) : exitDuration(record.element);
     if (isContainer(record.element)) {
       const ease = getComputedStyle(record.element).getPropertyValue('--ease-exit').trim() || 'ease-out';
       record.pressAnimation?.cancel();
@@ -77,7 +82,14 @@ if (!document[runtimeKey]) {
         { '--_astryx-press-strength': '1' }, { '--_astryx-press-strength': '0' },
       ], { duration, easing: ease, fill: 'forwards' });
     }
-    later(record, () => { if (record.pressEpoch === epoch) press(record, null); }, duration);
+    later(record, () => {
+      const finish = () => { if (record.pressEpoch === epoch) press(record, null); };
+      const animation = record.pressAnimation;
+      // Native animation start can lag the release clock by a frame. Preserve
+      // its final paint until that running animation completes, as upstream.
+      if (animation && (animation.playState === 'running' || animation.pending)) animation.finished.then(finish, () => {});
+      else finish();
+    }, duration);
   };
   const isScrolling = element => {
     for (let parent = element.parentElement; parent; parent = parent.parentElement) {
@@ -141,13 +153,17 @@ if (!document[runtimeKey]) {
   const { hideTip, focusTip, syncDescription, showTip } = tips;
   listen(document, 'keydown', event => {
     tips.escape(event);
-    const record = records.get(event.target);
+    const actionRoot = event.target.matches?.('[data-astryx-container-action]') ? event.target.closest('[data-astryx-container-press="true"]') : null;
+    const record = records.get(event.target) || records.get(actionRoot);
     if (record) {
       record.pointerFocus = false;
-      if (coarse.matches && event.key === ' ' && enabled(record.element) && record.element.tagName === 'BUTTON') press(record, 'on');
+      if (coarse.matches && (event.key === ' ' || (actionRoot && event.key === 'Enter')) && enabled(record.element) && (record.element.tagName === 'BUTTON' || actionRoot)) press(record, 'on');
     }
   }, { capture: true });
-  listen(document, 'keyup', event => { if (coarse.matches && event.key === ' ') release(records.get(event.target)); }, { capture: true });
+  listen(document, 'keyup', event => {
+    const actionRoot = event.target.matches?.('[data-astryx-container-action]') ? event.target.closest('[data-astryx-container-press="true"]') : null;
+    if (coarse.matches && (event.key === ' ' || (actionRoot && event.key === 'Enter'))) release(records.get(event.target) || records.get(actionRoot));
+  }, { capture: true });
   listen(document, 'pointerdown', event => {
     if (!event.isPrimary || event.button !== 0) return;
     suppressed = null;
@@ -163,6 +179,7 @@ if (!document[runtimeKey]) {
     }
     if (isContainer(record.element)) delete record.element.dataset.astryxNestedPress;
     record.pointerFocus = true;
+    record.pressPointerType = event.pointerType;
     if (!record.isPinned) hideTip(record);
     if (!enabled(record.element)) {
       if (event.pointerType === 'touch' && record.tooltip) {
@@ -170,7 +187,7 @@ if (!document[runtimeKey]) {
       }
       return;
     }
-    if (event.pointerType !== 'touch' && !coarse.matches) return;
+    if (event.pointerType !== 'touch' && !coarse.matches && !isContainer(record.element)) return;
     if (gesture) { cancelTimer(gesture.original, gesture.timer); press(gesture.current, null); }
     const owner = isTracked(record.element) ? groupOwner(record.element) : null;
     const group = coarse.matches && ['touch', 'pen'].includes(event.pointerType) && owner?.getAttribute('aria-disabled') !== 'true' && !isMenu(record.element) ? owner : null;

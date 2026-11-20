@@ -11,6 +11,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     cancelTimer(record, record.showTimer);
     cancelTimer(record, record.hideTimer);
     if (record.tip) {
+      clearLayerSurfaceOwner(record.tip);
       const id = record.tip.id;
       if (record.isAutomatic) {
         record.tip.remove();
@@ -110,6 +111,8 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       ids.add(tip.id);
       record.element.setAttribute('aria-describedby', [...ids].join(' '));
     }
+    markLayerRoot(tip);
+    registerLayerSurface(tip, record.element);
     tip.showPopover?.();
     positionTip(record);
     if (automatic && record.isTruncation) {
