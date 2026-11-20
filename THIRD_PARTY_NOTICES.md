@@ -28,6 +28,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - HStack and VStack follow their respective `HStack/HStack.tsx` and `VStack/VStack.tsx` sources and Basic and Showcase CLI templates at the same pin. Both delegate layout to Stack. See `docs/h-stack-port.md` and `docs/v-stack-port.md`.
 - The public StackItem follows `Stack/{StackItem.tsx,stackItem.stylex.ts}`, `hooks/{StackItemScrollRegion.tsx,useScrollRegionProps.ts}`, and the overflow observation contract in `AppShell/observeMainOverflow.ts` at the same pin. It replaces Stack's former demo-only item wrapper and includes both StackItem CLI templates. See `docs/stack-item-port.md`.
 - Stack's private Toast demo follows `Toast/{Toast.tsx,ToastViewport.tsx,useToast.tsx,useToastGesture.ts}` and `theme/{MediaTheme.tsx,onMediaTokens.ts}` at the same pin. `tests/fixtures/stack-toast/source.json` preserves twelve hash-verified originals with copyright headers; `published.json` and three PNGs record separate published observations, not deployment/pin equivalence. Shared announcements remain hook-owned; no public Toast migration is claimed. See `docs/stack-toast-port.md`.
+- Section follows `Section/Section.tsx`, the shared Layout padding contract, its specification, and all three Section CLI templates. See `docs/section-port.md`.
 - Center follows `Center/Center.tsx`, its specification, and all three Center CLI templates at the same pin. See `docs/center-port.md`.
 - Grid follows `Grid/Grid.tsx`, its authoritative specification and five CLI templates at the same pin. GridSpan follows `Grid/GridSpan.tsx`, its specification, and both GridSpan CLI templates. The Grid resize example uses a native range input; no public ResizeHandle port is claimed. See `docs/grid-port.md`.
 - The showcase's named AspectRatio, Blockquote, Grid, Stack, Badge, Button, ButtonGroup, Card, ClickableCard, SelectableCard, Divider, IconButton, Kbd, Link, ProgressBar, Skeleton, Spinner, and StatusDot patterns are adapted from their directories under `packages/cli/assets/templates/blocks/components/` at the same revision.
@@ -62,12 +63,13 @@ Inline Code (`src/code/`, its CSS, example and source-projection fixture) additi
 follows `packages/core/src/Code/` and the four CLI `components/Code/` templates
 at the same pinned revision. Shared typography tokens remain theme-owned.
 
-## Heroicons (ButtonGroup, Center, and IconButton showcase glyphs only)
+## Heroicons (showcase glyphs only)
 
 - `examples/showcase/button_group.rs` includes the clipboard-document, scissors, clipboard, and chevron-down outline SVG paths used by the original named showcase.
 - `examples/showcase/center.rs` includes the bold, italic, underline, list-bullet, link, photo, and inbox outline glyphs.
 - `examples/showcase/icon_button.rs` also includes the original floating template's Plus outline path.
-- Source: https://github.com/tailwindlabs/heroicons/tree/v2.2.0/optimized/24/outline
+- `examples/showcase/section.rs` includes the original Check solid glyph.
+- Source: https://github.com/tailwindlabs/heroicons/tree/v2.2.0/optimized/24
 - Copyright (c) Tailwind Labs, Inc.
 - MIT license; full text in [assets/licenses/heroicons.txt](assets/licenses/heroicons.txt).
 - This copies licensed SVG data; it adds no Rust/npm dependency or network service.

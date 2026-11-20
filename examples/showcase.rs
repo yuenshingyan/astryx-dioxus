@@ -38,6 +38,8 @@ mod kbd;
 mod link;
 #[path = "showcase/progress_bar.rs"]
 mod progress_bar;
+#[path = "showcase/section.rs"]
+mod section;
 #[path = "showcase/selectable_card.rs"]
 mod selectable_card;
 #[path = "showcase/skeleton.rs"]
@@ -72,6 +74,7 @@ use icon_button::IconButtonExamples;
 use kbd::KbdExamples;
 use link::LinkExamples;
 use progress_bar::ProgressBarExamples;
+use section::SectionExamples;
 use selectable_card::SelectableCardExamples;
 use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
@@ -167,6 +170,8 @@ fn App() -> Element {
                 a { href: "#v-stack-examples", "VStack examples" }
                 " · "
                 a { href: "#center-examples", "Center examples" }
+                " · "
+                a { href: "#section-examples", "Section examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -282,6 +287,7 @@ fn App() -> Element {
             HStackExamples {}
             VStackExamples {}
             CenterExamples {}
+            SectionExamples {}
         }
     }
 }

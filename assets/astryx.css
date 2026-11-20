@@ -1642,6 +1642,56 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-center:is([data-axis="both"], [data-axis="vertical"]) { align-items: center; }
 }
 
+@layer astryx-base {
+  .astryx-section-wrapper {
+    --_section-width: initial;
+    --_section-height: initial;
+    --_section-max-width: initial;
+    --_section-min-height: initial;
+    width: var(--_section-width);
+    height: var(--_section-height);
+    max-width: var(--_section-max-width);
+    min-height: var(--_section-min-height);
+    margin-inline-start: calc(-1 * var(--container-padding-inline-start, 0px));
+    margin-inline-end: calc(-1 * var(--container-padding-inline-end, 0px));
+  }
+  .astryx-section-wrapper:first-child { margin-top: calc(-1 * var(--container-padding-block-start, 0px)); }
+  .astryx-section-wrapper:last-child { margin-bottom: calc(-1 * var(--container-padding-block-end, 0px)); }
+  .astryx-section {
+    --_section-default: var(--_section-padding-propagated, var(--astryx-section-padding, var(--spacing-4)));
+    --container-padding-inline-start: var(--astryx-section-padding-inline-start, var(--astryx-section-padding-inline, var(--_section-default)));
+    --container-padding-inline-end: var(--astryx-section-padding-inline-end, var(--astryx-section-padding-inline, var(--_section-default)));
+    --container-padding-block-start: var(--astryx-section-padding-block-start, var(--astryx-section-padding-block, var(--_section-default)));
+    --container-padding-block-end: var(--astryx-section-padding-block-end, var(--astryx-section-padding-block, var(--_section-default)));
+    --layout-padding-own-outer-x: initial;
+    --layout-padding-own-outer-y: initial;
+    --layout-padding-outer-x: var(--container-padding-inline-start);
+    --layout-padding-outer-y: var(--container-padding-block-start);
+    --layout-padding-inner-x: var(--container-padding-inline-start);
+    --layout-padding-inner-y: var(--container-padding-block-start);
+    box-sizing: border-box;
+    height: 100%;
+    padding-inline-start: var(--container-padding-inline-start);
+    padding-inline-end: var(--container-padding-inline-end);
+    padding-block-start: var(--container-padding-block-start);
+    padding-block-end: var(--container-padding-block-end);
+  }
+  :where([data-astryx-layer-root], dialog:modal, [popover]:popover-open) {
+    --_section-padding-propagated: initial;
+    --container-padding-inline-start: initial;
+    --container-padding-inline-end: initial;
+    --container-padding-block-start: initial;
+    --container-padding-block-end: initial;
+  }
+  .astryx-section[data-variant="section"] { background-color: var(--color-background-surface); }
+  .astryx-section[data-variant="transparent"] { background-color: transparent; }
+  .astryx-section[data-variant="muted"] { background-color: var(--color-background-muted); }
+  .astryx-section--divider-top { border-top: 1px solid var(--color-border); }
+  .astryx-section--divider-bottom { border-bottom: 1px solid var(--color-border); }
+  .astryx-section--divider-start { border-inline-start: 1px solid var(--color-border); }
+  .astryx-section--divider-end { border-inline-end: 1px solid var(--color-border); }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {
