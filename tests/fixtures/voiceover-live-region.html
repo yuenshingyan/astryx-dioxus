@@ -9,9 +9,17 @@
   <p>Activate the button once. Focus should remain on the button.</p>
   <button type="button" id="announce">Send test message</button>
   <p id="message" role="status" aria-live="polite" aria-atomic="true"></p>
+  <button type="button" id="announce-clipped">Test hidden announcement</button>
+  <p id="clipped-result"></p>
+  <p id="clipped" role="status" aria-live="polite" aria-atomic="true"
+    style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;inset-block-start:0;inset-inline-start:0;pointer-events:none;user-select:none;"></p>
   <script>
     document.getElementById('announce').addEventListener('click', () => {
       document.getElementById('message').textContent = 'Live region test message received.';
+    });
+    document.getElementById('announce-clipped').addEventListener('click', () => {
+      document.getElementById('clipped').textContent = 'Hidden announcement received.';
+      document.getElementById('clipped-result').textContent = 'Hidden announcement sent.';
     });
   </script>
 </body>
