@@ -1369,3 +1369,25 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     }
   }
 }
+
+/* Approved SelectableCard forced-color cue. Reserve the border in both states
+   so selection never shifts layout; a root border cannot scroll away with content. */
+@layer astryx-components {
+  @media (forced-colors: active) {
+    .astryx-selectable-card {
+      border: 2px solid Canvas;
+      outline: 1px solid CanvasText;
+      outline-offset: -1px;
+    }
+    .astryx-selectable-card[data-selected="true"] {
+      border-color: CanvasText;
+      outline-width: 0;
+    }
+    .astryx-selectable-card:has(> .astryx-selectable-card__input:focus-visible) {
+      outline-width: var(--focus-outline-width);
+      outline-style: var(--focus-outline-style);
+      outline-color: var(--focus-outline-color);
+      outline-offset: var(--focus-outline-offset);
+    }
+  }
+}

@@ -1,5 +1,6 @@
 use astryx_dioxus::{
-    ClickableCard, STYLES, SelectableCard, SizeValue, StatusDot, StatusDotVariant,
+    CardVariant, ClickableCard, STYLES, SelectableCard, SizeValue, SpacingStep, StatusDot,
+    StatusDotVariant,
 };
 use dioxus::prelude::*;
 
@@ -82,6 +83,43 @@ fn App() -> Element {
             section {
                 StatusDot { id: "outside-help", variant: StatusDotVariant::NEUTRAL, label: "Outside help", tooltip: "Unowned portal help" }
             }
+            ForcedColorCases {}
+        }
+    }
+}
+
+#[component]
+fn ForcedColorCases() -> Element {
+    let custom = CardVariant::new("boundary-custom")?;
+    rsx! {
+        section { id: "forced-color-cases",
+            h2 { "Forced-color selection regression probes" }
+            ForcedOption { id: "forced-default", variant: CardVariant::DEFAULT }
+            ForcedOption { id: "forced-transparent", variant: CardVariant::TRANSPARENT }
+            ForcedOption { id: "forced-custom", variant: custom }
+            ForcedOption { id: "forced-disabled", variant: CardVariant::MUTED, is_disabled: true }
+            ForcedOption { id: "forced-scroll", variant: CardVariant::DEFAULT, is_scrollable: true }
+        }
+    }
+}
+
+#[component]
+fn ForcedOption(
+    id: String,
+    variant: CardVariant,
+    #[props(default)] is_disabled: bool,
+    #[props(default)] is_scrollable: bool,
+) -> Element {
+    let mut is_selected = use_signal(|| true);
+    rsx! {
+        SelectableCard {
+            id: id.clone(), label: format!("{id} option"), variant,
+            is_selected: is_selected(), is_disabled,
+            onchange: move |next| is_selected.set(next),
+            padding: SpacingStep::Zero, width: SizeValue::from(300),
+            height: is_scrollable.then(|| SizeValue::from(120)),
+            span { class: "boundary-content", "Option content" }
+            if is_scrollable { div { style: "height:400px", "Scrollable option content" } }
         }
     }
 }
