@@ -400,10 +400,26 @@ The historical comparator formula/PNG decoder is unchanged; it remains runnable 
 `stack-actual` and reports the original nonzero values. The new controls separately
 require zero differences for the causal comparisons and at most one channel level
 against published screenshots. The remaining one-level differences are retained,
-**unclassified quantization-scale residuals**; their precise cause is not proven.
-They are not silently called source defects or certified environment noise. No
-palette/alpha adjustment is justified from these measurements. The proven
-transform-induced noise is distinct from this small unresolved remainder.
+quantization-scale residuals. A fresh capture reproduced all three archived Rust
+PNGs byte for byte at the published Chrome version, viewport, device scale, and
+capture coordinates, using the bundled Figtree font. The published font binary
+was not retained. The read-only residual check localized every difference to
+nonuniform grayscale neighborhoods:
+
+| Pattern | Differing pixels by innermost measured owner box |
+| --- | --- |
+| Directions | None |
+| Alignment | 138 Button label, 72 Button outside its label |
+| Fill | 138 Button label, 156 Avatar fallback |
+
+These locations describe the differences, not their cause. There is no measured
+Stack layout or computed-paint mismatch to fix, and no basis for changing CSS
+to match one-level pixel rounding. Keep the published originals and the exact
+Directions control; accept the bounded residual without claiming pixel identity
+for Alignment or Fill. `python3 tests/stack_raster_residuals.py` verifies the
+archived captures. To verify a fresh run without overwriting the archive, set
+`STACK_EVIDENCE_DIR` to a separate directory when running
+`tests/stack_patterns.browser.mjs` and pass that directory to the Python check.
 
 Reproduction from the project root (own preview **8097**, never user8080):
 

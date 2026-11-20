@@ -2,10 +2,14 @@
 import assert from 'node:assert/strict';
 import {readFile, mkdir, writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
+import {resolve} from 'node:path';
+import {pathToFileURL} from 'node:url';
 import {withTarget} from './card_metrics.mjs';
 const published=JSON.parse(await readFile(new URL('./fixtures/stack-published.json',import.meta.url),'utf8'));
 // Preserve stack-actual as the historical transformed capture; corrected captures are additive.
-const evidenceDir=new URL('./fixtures/stack-raster/',import.meta.url);
+const evidenceDir=process.env.STACK_EVIDENCE_DIR
+ ? pathToFileURL(resolve(process.env.STACK_EVIDENCE_DIR)+'/')
+ : new URL('./fixtures/stack-raster/',import.meta.url);
 const near=(a,b,label)=>assert.ok(Math.abs(a-b)<=1/64+1e-6,`${label}: ${a} != ${b}`);
 await withTarget(async({send,evaluate,waitFor,pause,exceptions,browser})=>{
  await send('Network.enable');await send('Network.setBlockedURLs',{urls:['https://*']});
