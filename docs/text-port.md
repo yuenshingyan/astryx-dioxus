@@ -1,8 +1,9 @@
 # Text checkpoint and verification
 
-**Not marked complete.** Static typography and the Text-owned truncation hook are
-implemented and tested, but the existing shared Tooltip bridge differs from the
-pin. No public Tooltip, Table, Stack, Theme, Heading or Code port is claimed here.
+**Not marked complete.** Typography, measurement and the approved shared truncation
+interest/Tooltip lifecycle follow-up are implemented. Independent module loading
+and full upstream Layer presentation remain framework/bridge limits, not passed
+fidelity checks. No public Tooltip, Table, Stack, Theme, Heading or Code port is claimed.
 
 ## Authority and ownership
 
@@ -25,6 +26,11 @@ using Git blob SHA-1 (`sha1("blob " + byte_length + NUL + bytes)`). Examples:
 | `packages/core/src/Layer/useLayer.tsx` | `46a979075030e09b37bb6cf853d7194bef210470` |
 | `packages/core/src/Tooltip/Tooltip.tsx` | `02158c36794e99c9eb973cd427df8628b72c571e` |
 | `packages/core/src/Tooltip/useTooltip.tsx` | `bed87b68b5542c1f7e1177d8bc544b22ad2ee16d` |
+| `packages/core/src/Tooltip/Tooltip.test.tsx` | `2c419549ec59d3430c2c409e15f426a0218c9513` |
+| `packages/core/src/Tooltip/useTooltip.test.tsx` | `31c5a501594287a83989070b641810b64f5b2671` |
+| `packages/core/src/Button/Button.truncationTooltip.test.tsx` | `75d682af985845b493140aada19488c330614f66` |
+| `packages/core/src/Layer/useTouchTrigger.ts` | `60aeb0d767597b58786b65d57571734352eb8e26` |
+| `packages/core/src/utils/triggerFocus.ts` | `3a637670be96ad02ffcbde8f4d72304885edd826` |
 | `docs/architecture/public-component-api.md` | `6d3ff5868cbeb2c8af61714afc0a10c40749f6d8` |
 | `docs/architecture/component-theming-surface.md` | `83deab857ec9587d647a2c03ebaa3b66c9ac5083` |
 
@@ -32,10 +38,13 @@ using Git blob SHA-1 (`sha1("blob " + byte_length + NUL + bytes)`). Examples:
 clamp context. Heading is separate and uses the shared color resolver and hook.
 `src/theme/types.rs` retains open validated TextType/TextColor names. Shared
 observers remain under `src/utils/`; LayerPlacement belongs under `src/layer/`,
-not Text. Tooltip owns presentation, interest timing, descriptions and dismissal.
-Button's existing cut-text tooltip integration is not moved into Text in this
-checkpoint: faithfully relocating that source-owned internal hook needs a
-separate approved shared-owner follow-up, not a claim that Text owns Tooltip.
+not Text. `text/truncation_tooltip.js` owns first-interest retention, measured
+content and the private Button cut-text adapter, matching TruncationTooltip.tsx.
+Tooltip owns presentation, descriptions, focus decisions and open/closed state.
+`utils/trigger_focus.js` owns auto focus judgement; Layer's private gesture/touch
+adapters own completed-click recognition, action judgement and outside dismissal.
+The renderer bridge delegates native events through these owners instead of
+introducing React's present-interest context or remounting children.
 
 ## Complete prop inventory / Rust adapters
 
@@ -111,28 +120,52 @@ root/line geometry and native frames in the same engine offline. It uses no live
 network fonts. Exact upstream compiled appearance and other theme outputs remain
 unverified; source fixtures must not be represented as catalog equivalence.
 
-## Open pin-fidelity blockers — no completion checkbox
+## Approved lifecycle follow-up and remaining fidelity limits
 
-The existing shared automatic-tooltip bridge differs from Text's pin:
+The user explicitly approved shared truncation ownership work and Button/Link
+regression scope. Implemented contracts:
 
-1. It deliberately omits automatic tooltip descriptions and removes the layer
-   when hidden. Pinned Text tests expect Tooltip-owned `aria-describedby` after
-   first interest and a retained mounted (possibly closed) layer thereafter.
-2. Focus inside an unfocusable Text opens the current bridge's tooltip; source
-   tests expect the first focus to mount a closed Tooltip, whose own trigger
-   gate opens nothing. Standalone Text is unfocusable in both: the source spec
-   explicitly records that keyboard-reachability gap. No new tab stop is added.
-3. The current bridge completes touch/pen taps on pointerup, rather than the
-   source recognizer's completed click, and repeated taps do not implement the
-   same toggle. Drag/scroll/cancel and text-entry exclusion are tested, but this
-   does not settle full gesture semantics.
-4. Tooltip JavaScript is part of the current shared renderer bridge, not an
-   independently lazy-loaded public Tooltip module. Tooltip layers themselves
-   remain absent until interest.
+- No initial layer or owned description. First hover mounts a closed layer at
+  once, opens after 200ms, and leaving early cancels opening without unmounting.
+  Escape/blur/dismissal retain that closed layer and its description. Losing
+  overflow, disabling, or removal unmounts it; first interest survives a
+  same-root disable/enable or overflow interval.
+- Tooltip composes its owned `aria-describedby` token with caller tokens, even
+  when its text repeats the name. Cleanup removes only its own token, preserving
+  descriptions added after attach. Explicit caller tooltip precedence remains.
+- First keyboard focus inside unfocusable Text mounts closed but does not open.
+  Auto focus is judged on arrival against the actual trigger, not a focusable
+  ancestor; counted focus still closes after its trigger leaves the tab order.
+  Standalone Text's source-documented keyboard reachability gap is not fixed by
+  inventing a tab stop.
+- Touch/pen down and up alone open nothing. The completed click toggles; a
+  keyboard/new press, movement, scroll or cancellation invalidates stale taps.
+  A pen press cancels its pending hover. Outside release/cancel dismisses a
+  tap-opened layer, not outside down. Text-entry taps do not open/close it or
+  steal focus. Native caller preventDefault does not veto interest tracking.
+- Button's private Text-owned cut-label adapter measures visible, non-field
+  content only on keyboard focus. Hidden duplicates are excluded. It stays
+  undescribed and unmounts on blur/Escape/press; explicit tooltips win. Existing
+  explicit Tooltip, StatusDot/ProgressBar policy, native-modal/portal and
+  announcements remain on their existing paths.
 
-A parent decision is required on faithful shared Tooltip/interest ownership work
-versus an explicit accepted exception. This checkpoint does not silently decide
-that policy, claim full Text completion, or claim public Tooltip migration.
+**Lazy boundary verified against source, not claimed passed:** pinned
+`TruncationTooltip.tsx` calls `createModuleLoader(() => import('../Tooltip/Tooltip'))`
+when overflow enables the tooltip (before interest), uses the loaded module
+synchronously on interest, and holds interest while an import is unresolved.
+This Dioxus bridge uses Rust `include_str!` concatenation and `document::eval`;
+Tooltip JS is statically in that bridge. First-interest DOM is lazy, but there
+is no independent module download, import-pending/rejection state, React
+Suspense boundary, or chunk-loading race proof. No new dependency or public
+API was introduced to pretend otherwise. This remains a fidelity limit.
+
+This task does not port the whole public Tooltip/Layer stack: existing fixed
+positioning/Popover presentation is retained, rather than claiming upstream
+CSS-anchor fallback, exit-animation or theme-compiler equivalence. The existing
+Tooltip label typography also remains a bridge limitation, not a source-body
+Typography verification. Independently executed React comparison, full public
+Tooltip semantics and manual/other-engine checks below remain unverified.
+No approval for unrelated refactors or completion exceptions is inferred.
 
 ## Verification
 
@@ -148,10 +181,16 @@ The isolated `text_patterns` wasm example check also passed.
 CARGO_INCREMENTAL=0 dx serve --example text_patterns --web --port 8085 --open false --hot-reload false
 python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/text.browser.mjs
 python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/text_truncation.browser.mjs
+python3 /tmp/astryx-interactive-cards-reference/browser_lock.py node tests/text_tooltip.browser.mjs
 node tests/text.contrast.mjs
 ```
 
-Both Text browser suites passed in isolated Chrome targets. They cover shared
+The Text browser suites passed in isolated Chrome targets. The added
+`tests/text_tooltip.browser.mjs` tests production owner scripts offline for
+initial/retained DOM, description-token composition and cleanup, first focus
+mount/actual focus gate, roving blur, completed touch/pen click/repeated toggle,
+stale/cancelled/scrolled taps, text-entry exclusion, outside release, overflow
+and disable intervals, and Button's undescribed visible-label adapter. They cover shared
 observer scheduling/content/resize/removal/expanded state/fallback/peer cleanup,
 31 original-pattern fixture comparisons, logical placement in LTR/RTL, live
 content and tooltip toggles, stable clamp root, native mounted/click/attributes,
@@ -167,6 +206,23 @@ colors and arbitrary consumer backdrops/size overrides are excluded.
 
 Unrun: independently built upstream React appearance, real-device touch/pen,
 VoiceOver/NVDA/JAWS and manual keyboard/SR audit, Firefox/WebKit, real Windows High
-Contrast, iOS Dynamic Type, and the full pre-existing browser suite. Parent owns
+Contrast, iOS Dynamic Type, separate `native_event_boundary` and
+`interactive_card_boundaries` preview suites, and combined Heading/Code integration. Parent owns
 combined integration checks. These passing focused checks do not imply WCAG
-compliance or resolution of the blockers above.
+compliance or resolution of the framework/presentation limits above.
+
+Follow-up regression runs used this worktree's showcase on **8085**, never the
+parent's 8080, with every CDP command under `browser_lock.py`. Button, Link,
+ButtonGroup, IconButton, StatusDot, StatusDot's internal Tooltip suite,
+ProgressBar's dedicated motion suite, ClickableCard, SelectableCard, its events/
+press/layer suites, container press, Badge, Card, Divider, Kbd, Spinner, its rotor
+suite and announcements passed. A Link launch attempted during a dx rebuild timed out waiting for
+registration; rerunning after the build completed passed (not an automatic retry).
+ProgressBar's main browser suite failed its idle trace assertion
+`UpdateLayoutTree <= 2`; earlier assertions reached that point. The trace is
+browser-wide and the cause is not established; this is **not** labeled a
+pre-existing failure or a passing suite. The threshold was not changed and the
+suite was not retried to hide it. Skeleton likewise failed its idle trace
+assertion `no per-frame style loop`; it was not retried, weakened or labeled
+pre-existing. Spinner's independent idle trace did pass. The full browser suite
+therefore does **not** have an all-green result.

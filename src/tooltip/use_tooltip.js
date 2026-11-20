@@ -1,20 +1,20 @@
 // Adapted from Astryx Tooltip/useTooltip. See THIRD_PARTY_NOTICES.md.
-// Tooltip owns presentation, descriptions and interest; press only notifies dismissal.
+// Tooltip owns presentation, descriptions and trigger decisions; Text owns first interest.
+// Press only notifies dismissal.
 const createTooltipController = ({ records, listen, later, cancelTimer }) => {
   let visibleTip = null;
+  let isKeyboardModality = true;
   const hideTip = record => {
     if (!record) return;
     record.isPinned = false;
+    record.isTapOpen = false;
     record.pinAnnouncer?.withdrawPending();
-    record.cutAbort?.abort();
-    record.cutResize?.disconnect();
-    record.cutMutation?.disconnect();
     cancelTimer(record, record.showTimer);
     cancelTimer(record, record.hideTimer);
     if (record.tip) {
       clearLayerSurfaceOwner(record.tip);
       const id = record.tip.id;
-      if (record.isAutomatic) {
+      if (record.isAutomatic && !record.retainedTip) {
         record.tip.remove();
         record.layerAbort?.abort();
         record.boundTip = null;
@@ -71,7 +71,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     return content?.textContent || '';
   };
   const syncDescription = record => {
-    if (record.tooltipPolicy) return;
+    if (record.tooltipPolicy || record.isTruncation) return;
     const id = `${record.id}-tooltip`;
     const ids = new Set((record.element.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
     const name = record.tooltip ? accessibleName(record.element) : null;
@@ -81,15 +81,15 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     else record.element.removeAttribute('aria-describedby');
   };
   const callerTooltip = record => (record.element.getAttribute('aria-describedby') || '').split(/\s+/)
-    .some(id => id && document.getElementById(id)?.getAttribute('role') === 'tooltip' && id !== record.tip?.id);
-  const showTip = (record, text, automatic = false) => {
+    .some(id => id && document.getElementById(id)?.getAttribute('role') === 'tooltip' && id !== record.tip?.id && id !== record.retainedTip?.id);
+  const showTip = (record, text, automatic = false, isClosed = false) => {
     if (!text || !record.element.isConnected || !records.has(record.element)) return;
     if (record.tooltipPolicy && !record.tooltipPolicy.isEnabled(record)) return;
     if (record.isPinned && record.tip) return;
-    if (visibleTip?.isPinned && visibleTip !== record) return;
-    if (visibleTip && visibleTip !== record) hideTip(visibleTip);
-    hideTip(record);
-    const existing = !automatic && document.getElementById(`${record.id}-tooltip`);
+    if (!isClosed && visibleTip?.isPinned && visibleTip !== record) return;
+    if (!isClosed && visibleTip && visibleTip !== record) hideTip(visibleTip);
+    if (!isClosed) hideTip(record);
+    const existing = record.retainedTip || (!automatic && document.getElementById(`${record.id}-tooltip`));
     const tip = existing || document.createElement('div');
     tip.id = `${record.id}-tooltip`;
     tip.className = 'astryx-tooltip astryx-button-tooltip';
@@ -118,7 +118,15 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
         (record.element.closest('dialog:modal') || document.body).append(tip);
       }
     }
-    record.tip = tip;
+    if (automatic && record.isTruncation) {
+      record.retainedTip = tip;
+      record.ownedTip = tip;
+      const ids = new Set((record.element.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
+      if (!ids.has(tip.id)) { ids.add(tip.id); record.ownsTruncationDescription = true; }
+      record.element.setAttribute('aria-describedby', [...ids].join(' '));
+    }
+    if (record.tip && isClosed) positionTip(record);
+    if (!isClosed) record.tip = tip;
     record.isAutomatic = automatic;
     const name = accessibleName(record.element);
     if (!automatic && !record.tooltipPolicy && (name === null || name.trim() !== text.trim())) {
@@ -127,30 +135,10 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       record.element.setAttribute('aria-describedby', [...ids].join(' '));
     }
     markLayerRoot(tip);
-    registerLayerSurface(tip, record.element);
-    tip.showPopover?.();
-    positionTip(record);
-    if (automatic && record.isTruncation) {
-      const refresh = () => {
-        if (!record.tip || !record.element.isConnected) return;
-        const element = record.element;
-        if (!isTextTruncated(element)) {
-          hideTip(record); return;
-        }
-        const text = truncationAnswer(element)?.fullText ?? (element.textContent || record.label);
-        if (record.tip.textContent !== text) record.tip.textContent = text;
-        positionTip(record);
-      };
-      if (truncationAnswer(record.element)) {
-        record.cutAbort?.abort();
-        record.cutAbort = new AbortController();
-        record.element.addEventListener('astryxtruncationchange', refresh, { signal: record.cutAbort.signal });
-      } else {
-        record.cutResize = new ResizeObserver(refresh);
-        record.cutMutation = new MutationObserver(refresh);
-        record.cutResize.observe(record.element);
-        record.cutMutation.observe(record.element, { childList: true, subtree: true, characterData: true });
-      }
+    if (!isClosed) {
+      registerLayerSurface(tip, record.element);
+      tip.showPopover?.();
+      positionTip(record);
     }
     if (record.boundTip !== tip) {
       record.layerAbort?.abort();
@@ -163,8 +151,10 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
         tip.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); }, { signal: record.layerAbort.signal });
       }
     }
-    visibleTip = record;
-    record.tooltipPolicy?.onShow(record);
+    if (!isClosed) {
+      visibleTip = record;
+      record.tooltipPolicy?.onShow(record);
+    }
   };
   const announcePinned = record => {
     // Announcement routing/lifetime belongs to the original shared hook owner,
@@ -204,49 +194,24 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     }
     return nearest;
   };
-  const truncationAnswer = element => element[Symbol.for('astryx.dioxus.truncation')];
-  const isTextTruncated = element => {
-    const answer = truncationAnswer(element);
-    return answer ? answer.isTruncated
-      : element.scrollWidth > element.clientWidth || element.scrollHeight > element.clientHeight;
-  };
-  const showAutomatic = record => {
-    if (!record.isTruncation || callerTooltip(record)) return;
-    // An explicit parent tooltip already explains this label. Do not stack tips.
-    for (let parent = record.element.parentElement; parent; parent = parent.parentElement) {
-      if (records.get(parent)?.tooltip || callerTooltip({ element: parent })) return;
-    }
-    const element = record.element;
-    if (getComputedStyle(element).visibility !== 'hidden'
-      && isTextTruncated(element)) {
-      showTip(record, truncationAnswer(element)?.fullText ?? (element.textContent || record.label), true);
-    }
-  };
   const focusTip = record => {
     if ((record.pointerFocus && !record.focusTriggerAlways) || record.tooltipPolicy?.isHoverOnly(record)) return;
-    if (record.isTruncation && !document.activeElement?.matches(':focus-visible')) return;
+    if (record.isTruncation) return;
     if (record.tooltip) { showTip(record, record.tooltip); return; }
-    if (record.isTruncation) { showAutomatic(record); return; }
     if (record.isIconOnly || !record.element.matches(':focus-visible') || callerTooltip(record)) return;
     const label = record.element.querySelector('.astryx-button__label');
-    if (label && getComputedStyle(label).visibility !== 'hidden' && label.scrollWidth > label.clientWidth) {
-      showTip(record, record.label, true);
+    if (label && !record.pointerFocus && isKeyboardModality) {
+      const text = cutTextOnKeyboardFocus(label);
+      if (text) showTip(record, text, true);
     }
   };
   listen(document, 'focusin', event => {
     const record = interestRecord(event.target);
-    if (record) { record.isFocused = true; focusTip(record); }
-    if (!record?.tooltip && !record?.pointerFocus && event.target.matches?.(':focus-visible')) {
-      const text = [...records.values()].find(item => item.isTruncation && event.target.contains(item.element));
-      if (text) { text.isFocused = true; focusTip(text); }
-    }
+    if (record && !record.isTruncation) { record.isFocused = true; focusTip(record); }
   }, { capture: true });
   listen(document, 'focusout', event => {
-    for (const item of records.values()) {
-      if (item.isTruncation && event.target.contains(item.element)) { item.isFocused = false; item.pointerFocus = false; hideTip(item); }
-    }
     const record = interestRecord(event.target);
-    if (record) {
+    if (record && !record.isTruncation) {
       record.hadFocus = record.isFocused;
       record.isFocused = false; record.pointerFocus = false;
       if (!record.tip?.contains(event.relatedTarget)) hideTip(record);
@@ -255,55 +220,95 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
   }, { capture: true });
   listen(document, 'pointerover', event => {
     const record = interestRecord(event.target);
-    if (!record || record.element.contains(event.relatedTarget) || event.pointerType === 'touch' || (!record.tooltip && !record.isTruncation)) return;
+    if (!record || record.isTruncation || record.element.contains(event.relatedTarget) || event.pointerType === 'touch' || !record.tooltip) return;
     cancelTimer(record, record.hideTimer);
     cancelTimer(record, record.showTimer);
-    record.showTimer = later(record, () => record.tooltip ? showTip(record, record.tooltip) : showAutomatic(record), 200);
+    record.showTimer = later(record, () => showTip(record, record.tooltip), 200);
   }, { capture: true });
   listen(document, 'pointerout', event => {
     const record = interestRecord(event.target);
-    if (!record || record.element.contains(event.relatedTarget)) return;
+    if (!record || record.isTruncation || record.element.contains(event.relatedTarget)) return;
     cancelTimer(record, record.showTimer);
     if (record.tip && !record.isFocused && !record.isPinned) record.hideTimer = later(record, () => hideTip(record), 100);
   }, { capture: true });
-  let tap = null;
   listen(document, 'pointerdown', event => {
+    isKeyboardModality = false;
     const record = interestRecord(event.target);
-    if (record) {
+    if (record && !record.isTruncation) {
       record.pointerFocus = true;
       // A standalone pin trigger's click decides; pressing a preview must not
       // flash it shut, and pressing a nested image must never open on focus.
       if (!record.isPinned && (!record.tooltipPolicy || record.tooltipPolicy.isHoverOnly(record))) hideTip(record);
     }
-    // Text entry only focuses; it must not reveal the enclosing clipped copy.
-    const isTextEntry = event.target.closest?.('input,textarea,[contenteditable]:not([contenteditable="false"]),[role="textbox"],[role="searchbox"],[role="spinbutton"]');
-    tap = event.isPrimary && event.button === 0 && (event.pointerType === 'touch' || event.pointerType === 'pen') && record?.isTruncation && !isTextEntry
-      ? { record, id: event.pointerId, x: event.clientX, y: event.clientY } : null;
   }, { capture: true, passive: true });
-  listen(document, 'pointermove', event => {
-    if (tap?.id === event.pointerId && Math.hypot(event.clientX - tap.x, event.clientY - tap.y) > 10) tap = null;
-  }, { capture: true, passive: true });
-  listen(document, 'pointerup', event => {
-    if (tap?.id !== event.pointerId) return;
-    const record = tap.record;
-    tap = null;
-    if (record.element.contains(event.target)) showAutomatic(record);
-  }, { capture: true });
   listen(document, 'keydown', event => {
+    if (['Tab', 'Escape', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)
+        || !event.target.closest?.('input,textarea,[contenteditable]')) isKeyboardModality = true;
     for (const record of records.values()) {
       if (record.element.contains(event.target) || event.target.contains(record.element)) record.pointerFocus = false;
     }
   }, { capture: true });
-  listen(document, 'pointercancel', () => { tap = null; }, { capture: true });
-  // A queued scroll event can follow pointerover after scrollIntoView. Do not
-  // cancel that new hover; pointerout owns cancellation when the target leaves.
-  listen(document, 'scroll', () => { tap = null; }, { capture: true, passive: true });
+  const removeTruncation = record => {
+    hideTip(record);
+    record.layerAbort?.abort(); record.boundTip = null;
+    if (record.ownsTruncationDescription) {
+      const ids = (record.element.getAttribute('aria-describedby') || '').split(/\s+/).filter(id => id && id !== record.retainedTip?.id);
+      if (ids.length) record.element.setAttribute('aria-describedby', ids.join(' '));
+      else record.element.removeAttribute('aria-describedby');
+    }
+    record.ownsTruncationDescription = false;
+    record.retainedTip?.remove(); record.retainedTip = null; record.ownedTip = null;
+  };
+  listenForTruncationOutsideDismiss({ records, listen, hide: hideTip });
+  const truncationInterest = createTruncationInterest({ records, listen,
+    mount(record, text) {
+      if (callerTooltip(record)) return false;
+      for (let parent = record.element.parentElement; parent; parent = parent.parentElement) {
+        if (records.get(parent)?.tooltip || callerTooltip({ element: parent })) return false;
+      }
+      showTip(record, text, true, true);
+      return !!record.retainedTip;
+    },
+    hover(record, readText) {
+      cancelTimer(record, record.hideTimer); cancelTimer(record, record.showTimer);
+      record.showTimer = later(record, () => showTip(record, readText(), true), 200);
+    },
+    leave(record, next) {
+      cancelTimer(record, record.showTimer);
+      if (!record.isTapOpen && !record.retainedTip?.contains(next)) record.hideTimer = later(record, () => hideTip(record), 100);
+    },
+    press(record, isTouch) {
+      cancelTimer(record, record.showTimer); cancelTimer(record, record.hideTimer);
+      if (!isTouch) hideTip(record);
+    },
+    focus(record, target, text) {
+      record.isFocusCounted = isFocusOnTrigger(target, record.element);
+      if (!record.isFocusCounted) return;
+      cancelTimer(record, record.showTimer); cancelTimer(record, record.hideTimer);
+      showTip(record, text, true);
+    },
+    blur(record, target) {
+      if (!record.isFocusCounted && !isFocusOnTrigger(target, record.element)) return;
+      record.isFocusCounted = false;
+      record.hideTimer = later(record, () => hideTip(record), 100);
+    },
+    answerTap(record, target, text) {
+      const field = target.closest?.('input,textarea,select,[contenteditable]:not([contenteditable="false"]),[role="textbox"],[role="searchbox"],[role="spinbutton"],[role="combobox"],[role="listbox"],[role="slider"]');
+      const disabled = target.closest?.(':disabled,[aria-disabled="true"]');
+      if (field && field !== record.element && !disabled) return;
+      if ((!disabled && isActionTrigger(record.element)) || record.isTapOpen || record.tip) { hideTip(record); return; }
+      showTip(record, text, true);
+      record.isTapOpen = !!record.tip;
+    },
+    remove: removeTruncation,
+  });
   // Components own trigger semantics; Tooltip only supplies shared presentation
   // and show/hide capabilities. Cache one component policy per manager lifetime.
   const policies = new Map();
   return {
     hideTip, focusTip, syncDescription, showTip, show, refreshPolicyTip,
     attach(record) {
+      truncationInterest.attach(record);
       if (!record.tooltipPolicyFactory) return;
       let policy = policies.get(record.tooltipPolicyKey);
       if (!policy) {
@@ -318,18 +323,19 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     dispose(record) {
       hideTip(record);
       record.tooltipPolicy?.dispose(record);
-      if (tap?.record === record) tap = null;
+      truncationInterest.dispose(record);
+      if (record.isTruncation) removeTruncation(record);
       record.layerAbort?.abort();
       record.ownedTip?.remove();
       record.pinAnnouncer?.dispose(); record.pinAnnouncer = null;
-      if (!record.tooltipPolicy) {
+      if (!record.tooltipPolicy && !record.isTruncation) {
         const ids = (record.element.getAttribute('aria-describedby') || '').split(/\s+/).filter(id => id && id !== `${record.id}-tooltip`);
         if (ids.length) record.element.setAttribute('aria-describedby', ids.join(' '));
         else record.element.removeAttribute('aria-describedby');
       }
     },
     dismissOutside(target) {
-      if (visibleTip && !visibleTip.element.contains(target) && !visibleTip.tip?.contains(target)) hideTip(visibleTip);
+      if (visibleTip && !visibleTip.isTapOpen && !visibleTip.element.contains(target) && !visibleTip.tip?.contains(target)) hideTip(visibleTip);
     },
     escape(event) {
       if (event.key === 'Escape' && !event.isComposing && !event.defaultPrevented && visibleTip) { hideTip(visibleTip); event.preventDefault(); event.stopPropagation(); }
