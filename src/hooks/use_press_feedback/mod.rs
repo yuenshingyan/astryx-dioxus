@@ -4,6 +4,12 @@ use dioxus::prelude::*;
 
 use crate::tooltip::use_tooltip::TOOLTIP_CONTROLLER;
 
+pub(crate) const PRESS_FEEDBACK_CONTROLLER: &str = concat!(
+    include_str!("../../motion/theme_timing.js"),
+    "\n",
+    include_str!("press_feedback.js")
+);
+
 /// DOM bridge data; activation and async operations remain caller-owned.
 #[derive(Clone, PartialEq)]
 pub(crate) struct PressFeedbackConfig {
@@ -21,7 +27,7 @@ fn start_controller(config: &WireConfig) -> document::Eval {
     let controller = document::eval(&format!(
         "{}\n{}\n{}",
         TOOLTIP_CONTROLLER,
-        include_str!("press_feedback.js"),
+        PRESS_FEEDBACK_CONTROLLER,
         include_str!("use_press_feedback.js"),
     ));
     let _ = controller.send(config.clone());
