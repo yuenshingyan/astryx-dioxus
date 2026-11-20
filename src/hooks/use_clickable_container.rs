@@ -1,8 +1,47 @@
 // Adapted from Astryx hooks/useClickableContainer.ts. See THIRD_PARTY_NOTICES.md.
+#[cfg(target_arch = "wasm32")]
+use std::cell::RefCell;
+#[cfg(target_arch = "wasm32")]
+use std::rc::Rc;
+
+use dioxus::prelude::*;
+#[cfg(target_arch = "wasm32")]
+use web_sys::Element;
 
 /// Nested controls own their activation, including marked nested containers.
 #[cfg(target_arch = "wasm32")]
 pub(crate) const INTERACTIVE_SELECTORS: &str = "button,a,input,select,textarea,[role=button],[role=link],[role=checkbox],[role=radio],[role=switch],[role=tab],[role=menuitem],[role=option],[role=combobox],[role=listbox],[role=slider],[role=spinbutton],[data-pressable-container]";
+
+/// Renderer-neutral owner ref used by the native event adapter.
+#[derive(Clone, Default)]
+pub(crate) struct NativeOwner {
+    #[cfg(target_arch = "wasm32")]
+    element: Rc<RefCell<Option<Element>>>,
+}
+
+impl NativeOwner {
+    #[cfg(target_arch = "wasm32")]
+    pub(crate) fn element(&self) -> Option<Element> {
+        self.element.borrow().clone()
+    }
+}
+
+/// Adapt a native mounted ref without selecting a renderer for host rendering.
+pub(crate) fn use_native_owner() -> (NativeOwner, EventHandler<MountedEvent>) {
+    let owner = use_hook(NativeOwner::default);
+    let mounted_owner = owner.clone();
+    let mounted = EventHandler::new(move |event: MountedEvent| {
+        #[cfg(target_arch = "wasm32")]
+        {
+            *mounted_owner.element.borrow_mut() = event.data().downcast::<Element>().cloned();
+        }
+        #[cfg(not(target_arch = "wasm32"))]
+        {
+            let _ = (&mounted_owner, event);
+        }
+    });
+    (owner, mounted)
+}
 
 /// Native event boundary. No renderer or DOM is required for host rendering.
 #[cfg(target_arch = "wasm32")]
@@ -15,7 +54,7 @@ pub(crate) mod native {
     use dioxus::html::input_data::{MouseButton, MouseButtonSet, decode_mouse_button_set};
     use dioxus::html::{HasMouseData, HasPointerData, Modifiers};
     use dioxus::prelude::*;
-    use wasm_bindgen::{JsCast, closure::Closure};
+    use wasm_bindgen::{JsCast, JsValue, closure::Closure, prelude::wasm_bindgen};
     use web_sys::{
         Element, Event as DomEvent, EventTarget, HtmlElement, MouseEvent as DomMouseEvent,
     };
@@ -24,6 +63,37 @@ pub(crate) mod native {
     pub(crate) use crate::layer::layer_surface_press::is_layer_surface;
     use crate::private_attributes::layer_root::closest_layer_root;
     use crate::utils::safe_url::is_safe_url;
+
+    #[wasm_bindgen(
+        inline_js = "export function withOwnerCurrentTarget(event, owner, callback) { const previous = Object.getOwnPropertyDescriptor(event, 'currentTarget'); Object.defineProperty(event, 'currentTarget', { configurable: true, get: () => owner }); try { callback(); } finally { if (previous) Object.defineProperty(event, 'currentTarget', previous); else delete event.currentTarget; } }"
+    )]
+    extern "C" {
+        #[wasm_bindgen(catch, js_name = withOwnerCurrentTarget)]
+        fn with_owner_current_target(
+            event: &DomEvent,
+            owner: &Element,
+            callback: &Closure<dyn FnMut()>,
+        ) -> Result<(), JsValue>;
+    }
+
+    /// React's callback-local owner adapted over the SAME original DOM event.
+    /// Ordinary callers must retain their original Dioxus Event metadata. The
+    /// exact prior own descriptor (or absence) is restored in JS try/finally,
+    /// including nested scopes and JavaScript exceptions. No target/trust/event
+    /// reconstruction or renderer-private access is involved.
+    pub fn with_current_target(
+        event: &DomEvent,
+        owner: &Element,
+        callback: impl FnOnce() + 'static,
+    ) -> Result<(), JsValue> {
+        let mut callback = Some(callback);
+        let callback = Closure::wrap(Box::new(move || {
+            if let Some(callback) = callback.take() {
+                callback();
+            }
+        }) as Box<dyn FnMut()>);
+        with_owner_current_target(event, owner, &callback)
+    }
 
     /// The original event remains downcastable, including during capture.
     pub struct NativeMouseData(pub DomMouseEvent);

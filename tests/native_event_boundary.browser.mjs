@@ -1,0 +1,19 @@
+// Run against `dx serve --example native_event_boundary` on the assigned port.
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+await withTarget(async({send,evaluate,pause,waitFor,exceptions})=>{
+ await send('Page.navigate',{url:process.env.SHOWCASE_URL??'http://127.0.0.1:8081'});await waitFor('!!document.getElementById("native-probe")');await pause(100);
+ const scoped=await evaluate(`(()=>{const event=new Event('owner-probe',{bubbles:true,cancelable:true});const getter=()=>document.body;Object.defineProperty(event,'currentTarget',{get:getter,configurable:true,enumerable:true});document.getElementById('probe-surface').dispatchEvent(event);const after=Object.getOwnPropertyDescriptor(event,'currentTarget');const root=document.getElementById('native-probe');return [after.get===getter,after.configurable,after.enumerable,event.currentTarget===document.body,root.dataset.scope,root.dataset.exception]})()`);assert.deepEqual(scoped,[true,true,true,true,'nested-restored','restored']);
+ assert.equal(await evaluate(`(()=>{const event=new Event('owner-probe',{bubbles:true});document.getElementById('probe-surface').dispatchEvent(event);return !Object.hasOwn(event,'currentTarget')&&event.currentTarget===null})()`),true);
+ await evaluate(`window.seen=[];document.getElementById('probe-own').addEventListener('click',e=>seen.push({target:e.currentTarget.id,shift:e.shiftKey,ctrl:e.ctrlKey,prevented:e.defaultPrevented}));document.getElementById('probe-child').addEventListener('click',e=>seen.push({target:e.currentTarget.id,prevented:e.defaultPrevented}));`);
+ await evaluate(`document.getElementById('probe-surface').dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,shiftKey:true,ctrlKey:true}))`);
+ assert.equal(await evaluate('document.getElementById("native-probe").dataset.count'),'1');assert.equal(await evaluate('document.getElementById("native-probe").dataset.capture'),'true:true:true:false');
+ assert.deepEqual(await evaluate('seen'),[{target:'probe-own',shift:true,ctrl:true,prevented:false}]);
+ await evaluate('document.getElementById("probe-child").click()');assert.equal(await evaluate('document.getElementById("native-probe").dataset.count'),'1');assert.deepEqual(await evaluate('seen.at(-1)'),{target:'probe-child',prevented:false});
+ await evaluate('document.getElementById("probe-readonly").click()');assert.equal(await evaluate('document.getElementById("native-probe").dataset.count'),'2');
+ assert.equal(await evaluate('document.getElementById("probe-surface").dispatchEvent(new PointerEvent("pointerdown",{bubbles:true,cancelable:true,pointerId:47,pointerType:"pen",isPrimary:true}))'),false);
+ assert.equal(await evaluate('document.getElementById("native-probe").dataset.pointer'),'true:true:47');
+ await evaluate('window.oldRoot=document.getElementById("native-probe");window.oldSurface=document.getElementById("probe-surface");document.getElementById("probe-toggle").click()');await waitFor('!document.getElementById("native-probe")');await evaluate('oldSurface.click();oldSurface.dispatchEvent(new PointerEvent("pointerdown",{bubbles:true,cancelable:true,pointerId:99}))');assert.equal(await evaluate('oldRoot.dataset.count'),'2');assert.equal(await evaluate('oldRoot.dataset.pointer'),'true:true:47');
+ await evaluate('document.getElementById("probe-toggle").click()');await waitFor('!!document.getElementById("native-probe")');await evaluate('document.getElementById("probe-surface").click()');assert.equal(await evaluate('document.getElementById("native-probe").dataset.count'),'1');
+ assert.equal(exceptions.length,0,JSON.stringify(exceptions));console.log('Native boundary passed: original MouseData/PointerData identity downcasts during synchronous capture, isolated metadata, native child continuation, source action delegation reentry/modifiers, cancellation and listener drop/remount.');
+});
