@@ -4,7 +4,7 @@ use dioxus::core::{AttributeValue, current_scope_id};
 use dioxus::prelude::*;
 
 use super::layout_area_context::LayoutAreaContext;
-use super::layout_slots_context::LayoutSlotsContext;
+use super::layout_slots_context::layout_slots;
 use super::padding::spacing_step_css;
 use crate::hooks::use_scroll_region_props::use_scroll_region;
 use crate::utils::types::{SizeValue, SpacingStep};
@@ -45,7 +45,7 @@ pub fn LayoutPanel(
 ) -> Element {
     const MARKER: &str = "data-astryx-panel-scroll";
     let area = try_consume_context::<LayoutAreaContext>().unwrap_or_default();
-    let slots = try_consume_context::<LayoutSlotsContext>().unwrap_or_default();
+    let slots = layout_slots();
     let is_zero_width = matches!(width, Some(SizeValue::Pixels(value)) if value == 0.0);
     let width = width.map(|value| value.as_css()).transpose()?;
     let has_attribute = |name| {

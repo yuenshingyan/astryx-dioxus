@@ -1,18 +1,19 @@
 use dioxus::prelude::*;
 
 use astryx_dioxus::{
-    Card, CardVariant, Center, LayoutContent, LayoutFooter, LayoutHeader, LayoutPanel, SizeValue,
+    Card, CardVariant, Center, Layout, LayoutContent, LayoutFooter, LayoutHeader, LayoutPanel,
+    SizeValue,
 };
 
 #[component]
 fn PanelPattern(id: &'static str, #[props(default)] is_full: bool) -> Element {
     rsx! {
         Center { width: SizeValue::from(400), max_width: SizeValue::from("100%"),
-            div { style: "width:100%;min-width:0",
-                if is_full { LayoutHeader { has_divider: true, Card { variant: CardVariant::MUTED } } }
-                div { style: "display:flex;min-height:0",
-                    LayoutPanel { id, width: SizeValue::from(140), has_divider: true,
-                        class: "astryx-layout-panel--start", role: "navigation",
+            Layout { style: "width:100%;min-width:0",
+                header: rsx! { if is_full { LayoutHeader { has_divider: true, Card { variant: CardVariant::MUTED } } } },
+                footer: rsx! { if is_full { LayoutFooter { has_divider: true, Card { variant: CardVariant::MUTED } } } },
+                start: rsx! {
+                    LayoutPanel { id, width: SizeValue::from(140), has_divider: true, role: "navigation",
                         label: if is_full { "Dashboard navigation" } else { "Example navigation" },
                         ul { style: "list-style:none;margin:0;padding:0",
                             for name in ["Overview", "Analytics", "Reports", "Settings"] {
@@ -25,9 +26,8 @@ fn PanelPattern(id: &'static str, #[props(default)] is_full: bool) -> Element {
                             }
                         }
                     }
-                    LayoutContent { Card { variant: CardVariant::MUTED } }
-                }
-                if is_full { LayoutFooter { has_divider: true, Card { variant: CardVariant::MUTED } } }
+                },
+                LayoutContent { Card { variant: CardVariant::MUTED } }
             }
         }
     }

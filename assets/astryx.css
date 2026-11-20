@@ -1952,6 +1952,53 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
+@layer astryx-base {
+  .astryx-layout {
+    margin-inline-start: calc(-1 * var(--container-padding-inline-start, 0px));
+    margin-inline-end: calc(-1 * var(--container-padding-inline-end, 0px));
+    margin-block-start: calc(-1 * var(--container-padding-block-start, 0px));
+    margin-block-end: calc(-1 * var(--container-padding-block-end, 0px));
+  }
+  .astryx-layout[data-height="fill"], .astryx-layout[data-height="fill"] > .astryx-layout__inner {
+    height: calc(100% + var(--container-padding-block-start, 0px) + var(--container-padding-block-end, 0px));
+    max-height: var(--container-max-height, none);
+  }
+  .astryx-layout[data-height="auto"], .astryx-layout[data-height="auto"] > .astryx-layout__inner { min-height: 100%; }
+  .astryx-layout__inner {
+    display: flex;
+    flex-direction: column;
+    --container-padding-inline-start: 0px;
+    --container-padding-inline-end: 0px;
+    --container-padding-block-start: 0px;
+    --container-padding-block-end: 0px;
+    --layout-content-width: initial;
+    --layout-alignment-width: 100cqi;
+    --layout-padding-own-outer-x: initial;
+    --layout-padding-own-outer-y: initial;
+    --_layout-flush-block-start: initial;
+    --_layout-flush-block-end: initial;
+  }
+  .astryx-layout__middle { display: flex; flex: 1; min-height: 0; }
+  .astryx-layout-header:not([data-divider]) + .astryx-layout__middle { --_layout-flush-block-start: 0px; }
+  .astryx-layout__middle:has(+ .astryx-layout-footer:not([data-divider])) { --_layout-flush-block-end: 0px; }
+  .astryx-layout__content-slot { flex: 1; min-width: 0; min-height: 0; }
+  .astryx-layout__middle--constrained,
+  .astryx-layout__middle--align:is(.astryx-layout__middle--start, .astryx-layout__middle--end):not(:has(> div > .astryx-layout-content)),
+  .astryx-layout__middle--align:not(.astryx-layout__middle--start, .astryx-layout__middle--end) > .astryx-layout__content-slot:not(:has(> .astryx-layout-content)) {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: var(--layout-content-width, none);
+    margin-inline: auto;
+  }
+  .astryx-layout__middle--align:has(> .astryx-layout__content-slot > .astryx-layout-content) { container-type: inline-size; }
+  .astryx-layout__middle--start:has(> .astryx-layout__content-slot > .astryx-layout-content) {
+    padding-inline-start: max(0px, calc((100% - var(--layout-content-width)) / 2));
+  }
+  .astryx-layout__middle--end:has(> .astryx-layout__content-slot > .astryx-layout-content) {
+    padding-inline-end: max(0px, calc((100% - var(--layout-content-width)) / 2));
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

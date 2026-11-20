@@ -40,6 +40,8 @@ mod heading;
 mod icon_button;
 #[path = "showcase/kbd.rs"]
 mod kbd;
+#[path = "showcase/layout.rs"]
+mod layout;
 #[path = "showcase/layout_content.rs"]
 mod layout_content;
 #[path = "showcase/layout_footer.rs"]
@@ -93,6 +95,7 @@ use h_stack::HStackExamples;
 use heading::HeadingExamples;
 use icon_button::IconButtonExamples;
 use kbd::KbdExamples;
+use layout::LayoutExamples;
 use layout_content::LayoutContentExamples;
 use layout_footer::LayoutFooterExamples;
 use layout_header::LayoutHeaderExamples;
@@ -171,6 +174,8 @@ fn App() -> Element {
                 a { href: "#layout-content-examples", "LayoutContent examples" }
                 " · "
                 a { href: "#layout-panel-examples", "LayoutPanel examples" }
+                " · "
+                a { href: "#layout-examples", "Layout examples" }
                 " · "
                 a { href: "#spinner-examples", "Spinner examples" }
                 " · "
@@ -315,6 +320,7 @@ fn App() -> Element {
             LayoutFooterExamples {}
             LayoutContentExamples {}
             LayoutPanelExamples {}
+            LayoutExamples {}
             SpinnerExamples {}
             BadgeExamples {}
             AvatarStatusDotExamples {}

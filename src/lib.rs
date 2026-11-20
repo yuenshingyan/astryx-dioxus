@@ -82,8 +82,8 @@ pub use interactive_role_context::{
 pub use kbd::{Kbd, KbdError, KbdText};
 pub use layer::{LayerContentBoundary, LayerPlacement};
 pub use layout::{
-    LayoutContent, LayoutContentProps, LayoutFooter, LayoutFooterProps, LayoutHeader,
-    LayoutHeaderProps, LayoutPanel, LayoutPanelProps,
+    Layout, LayoutContent, LayoutContentProps, LayoutFooter, LayoutFooterProps, LayoutHeader,
+    LayoutHeaderProps, LayoutHeight, LayoutPanel, LayoutPanelProps, LayoutProps,
 };
 pub use link::{
     Link, LinkComponentType, LinkDownload, LinkProvider, LinkRenderProps, LinkifyCaptures,
