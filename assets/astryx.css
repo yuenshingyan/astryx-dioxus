@@ -93,6 +93,18 @@
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --text-heading-1-size: var(--font-size-2xl);
+  --text-heading-1-leading: 1.3333;
+  --text-heading-1-weight: var(--font-weight-semibold);
+  --text-heading-2-size: var(--font-size-xl);
+  --text-heading-2-leading: 1.4;
+  --text-heading-2-weight: var(--font-weight-semibold);
+  --text-heading-5-size: var(--font-size-sm);
+  --text-heading-5-leading: 1.6667;
+  --text-heading-5-weight: var(--font-weight-semibold);
+  --text-heading-6-size: var(--font-size-xs);
+  --text-heading-6-leading: 1.6;
+  --text-heading-6-weight: var(--font-weight-semibold);
   --text-heading-3-size: var(--font-size-lg);
   --text-heading-3-leading: 1.4118;
   --text-heading-3-weight: var(--font-weight-semibold);
@@ -741,6 +753,40 @@
   :where(.astryx-button[data-astryx-press="fading"])::before {
     transition: opacity 200ms cubic-bezier(0.42, 0, 0.58, 1);
   }
+}
+
+/* Heading's level baseline precedes Text-owned display and weight overrides.
+   The local margin reset mirrors upstream reset.css without a global reset. */
+.astryx-heading { margin: 0; font-family: var(--font-family-heading); }
+.astryx-heading--level-1 {
+  font-size: var(--text-heading-1-size);
+  line-height: var(--text-heading-1-leading);
+  font-weight: var(--text-heading-1-weight);
+}
+.astryx-heading--level-2 {
+  font-size: var(--text-heading-2-size);
+  line-height: var(--text-heading-2-leading);
+  font-weight: var(--text-heading-2-weight);
+}
+.astryx-heading--level-3 {
+  font-size: var(--text-heading-3-size);
+  line-height: var(--text-heading-3-leading);
+  font-weight: var(--text-heading-3-weight);
+}
+.astryx-heading--level-4 {
+  font-size: var(--text-heading-4-size);
+  line-height: var(--text-heading-4-leading);
+  font-weight: var(--text-heading-4-weight);
+}
+.astryx-heading--level-5 {
+  font-size: var(--text-heading-5-size);
+  line-height: var(--text-heading-5-leading);
+  font-weight: var(--text-heading-5-weight);
+}
+.astryx-heading--level-6 {
+  font-size: var(--text-heading-6-size);
+  line-height: var(--text-heading-6-leading);
+  font-weight: var(--text-heading-6-weight);
 }
 
 /* Text owns typography and clamping, including labels used by Link. */

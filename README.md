@@ -56,6 +56,10 @@ pin-fidelity blockers; Text is not marked complete. See [Text checkpoint](docs/t
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
+Heading now has native h1–h6, independent display types/weight/outline controls,
+all four original Heading patterns plus TextHeadingLevels, and focused SSR/offline
+Chromium evidence. It consumes the exact shared Text APIs; shared Tooltip fidelity
+work still prevents completion. See [Heading checkpoint](docs/heading-port.md).
 Publishing remains disabled until package metadata and licensing are confirmed.
 See [third-party notices](THIRD_PARTY_NOTICES.md) for the upstream MIT license.
 
