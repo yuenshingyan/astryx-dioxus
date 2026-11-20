@@ -76,6 +76,7 @@ See [Grid verification](docs/grid-port.md) for tested behavior and demo adaptati
 [GridSpan](docs/grid-span-port.md) adds numeric, full-width, and row spans with both original showcase patterns.
 [Center](docs/center-port.md) adds flex-axis centering and logical padding with all three original patterns.
 [Section](docs/section-port.md) adds themeable surfaces, dividers, and nested padding with all three original patterns.
+[LayoutHeader](docs/layout-header-port.md) adds a header band with inherited padding, a content-width cap, and an optional divider.
 [CheckIndicator](docs/check-indicator-port.md) adds a decorative selection mark and a same-size replacement slot.
 [RadioIndicator](docs/radio-indicator-port.md) adds a decorative radio circle with a replaceable selection dot.
 [CheckboxIndicator](docs/checkbox-indicator-port.md) adds a decorative checkbox with checked and mixed marks and a replacement slot.
@@ -151,7 +152,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/stack/`: Stack and its axis/wrap types, plus StackItem.
 - `src/h_stack/`: [HStack](docs/h-stack-port.md), the horizontal Stack wrapper with both original patterns.
 - `src/v_stack/`: [VStack](docs/v-stack-port.md), the vertical Stack wrapper with both original patterns.
-- `src/layout/`: shared spacing-step lowering for container publishers, not a completed Layout migration.
+- `src/layout/`: LayoutHeader and shared spacing-step lowering for container publishers. The parent Layout is not yet ported.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
 - `src/link/`: Link, shared renderer/provider types, target/rel handling, and linkification.
