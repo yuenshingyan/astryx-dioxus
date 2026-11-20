@@ -62,8 +62,33 @@ mod probe {
         let routed_capture = use_native_document_listener(
             "route-probe",
             true,
-            EventHandler::new(move |_| {
+            Rc::new(move |event: web_sys::Event| {
                 let root = capture_owner.element().unwrap();
+                if !event
+                    .target()
+                    .and_then(|target| target.dyn_into::<DomElement>().ok())
+                    .is_some_and(|target| root.contains(Some(&target)))
+                {
+                    return;
+                }
+                if root.get_attribute("data-reenter").as_deref() == Some("armed") {
+                    root.set_attribute("data-reenter", "done").unwrap();
+                    let unrelated = root
+                        .owner_document()
+                        .unwrap()
+                        .get_element_by_id("native-unrelated")
+                        .unwrap();
+                    unrelated
+                        .dispatch_event(
+                            &DomMouseEvent::new_with_mouse_event_init_dict("route-probe", &{
+                                let init = web_sys::MouseEventInit::new();
+                                init.set_bubbles(true);
+                                init
+                            })
+                            .unwrap(),
+                        )
+                        .unwrap();
+                }
                 root.set_attribute(
                     "data-route",
                     &(root.get_attribute("data-route").unwrap_or_default() + label),
@@ -75,7 +100,7 @@ mod probe {
         let routed_bubble = use_native_document_listener(
             "route-bubble",
             false,
-            EventHandler::new(move |_| {
+            Rc::new(move |_| {
                 let root = bubble_owner.element().unwrap();
                 root.set_attribute(
                     "data-route",
@@ -202,27 +227,41 @@ mod probe {
             button{id:"probe-register-outer",onclick:move |_|{if let Some(event)=saved_mount(){routed_capture.call(event.clone());routed_bubble.call(event);}},"Register outer after inner"}
             button{id:"probe-label",onclick:move |_|is_new_label.toggle(),"Update callback label"}
             InnerProbe{}
-        }}
+        } UnrelatedProbe{} }
     }
 
     #[component]
     fn InnerProbe() -> Element {
-        let route = |_: web_sys::Event| {
+        let route = |event: web_sys::Event| {
             let root = web_sys::window()
                 .unwrap()
                 .document()
                 .unwrap()
                 .get_element_by_id("native-probe")
                 .unwrap();
+            if !event
+                .target()
+                .and_then(|target| target.dyn_into::<DomElement>().ok())
+                .is_some_and(|target| root.contains(Some(&target)))
+            {
+                return;
+            }
             root.set_attribute(
                 "data-route",
                 &(root.get_attribute("data-route").unwrap_or_default() + "inner|"),
             )
             .unwrap();
         };
-        let capture = use_native_document_listener("route-probe", true, EventHandler::new(route));
-        let bubble = use_native_document_listener("route-bubble", false, EventHandler::new(route));
+        let capture = use_native_document_listener("route-probe", true, Rc::new(route));
+        let bubble = use_native_document_listener("route-bubble", false, Rc::new(route));
         rsx! {div{id:"native-inner",onmounted:move |event:MountedEvent|{capture.call(event.clone());bubble.call(event);},span{id:"probe-inner-surface","Inner surface"}}}
+    }
+
+    #[component]
+    fn UnrelatedProbe() -> Element {
+        let capture = use_native_document_listener("route-probe", true, Rc::new(|_| {}));
+        let bubble = use_native_document_listener("route-bubble", false, Rc::new(|_| {}));
+        rsx! {div{id:"native-unrelated",onmounted:move |event:MountedEvent|{capture.call(event.clone());bubble.call(event);},"Unrelated registration between inner and outer"}}
     }
 }
 

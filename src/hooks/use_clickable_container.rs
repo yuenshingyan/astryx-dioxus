@@ -48,7 +48,7 @@ pub(crate) fn use_native_owner() -> (NativeOwner, EventHandler<MountedEvent>) {
 pub(crate) mod native {
     use std::any::Any;
     use std::cell::RefCell;
-    use std::cmp::Ordering;
+    use std::iter::successors;
     use std::rc::Rc;
 
     use dioxus::html::geometry::{ClientPoint, ElementPoint, PagePoint, ScreenPoint};
@@ -489,19 +489,18 @@ pub(crate) mod native {
                 let listener =
                     NativeListener::new(document.as_ref(), name, is_capture, move |event| {
                         let mut ordered = routed.borrow().clone();
-                        ordered.sort_by(|a, b| {
-                            if a.root == b.root {
-                                return Ordering::Equal;
-                            }
-                            let order = if a.root.contains(Some(&b.root)) {
-                                Ordering::Less
-                            } else if b.root.contains(Some(&a.root)) {
-                                Ordering::Greater
-                            } else {
-                                Ordering::Equal
-                            };
-                            if is_capture { order } else { order.reverse() }
+                        // A containment-only comparator has non-transitive ties
+                        // for unrelated roots. Depth orders every ancestor before
+                        // its descendants, even with interleaved registrations.
+                        ordered.sort_by_cached_key(|registration| {
+                            successors(registration.root.parent_element(), |element| {
+                                element.parent_element()
+                            })
+                            .count()
                         });
+                        if !is_capture {
+                            ordered.reverse();
+                        }
                         for registration in ordered {
                             let is_active = routed
                                 .borrow()
@@ -549,9 +548,8 @@ pub(crate) mod native {
     pub fn use_native_document_listener(
         name: &'static str,
         is_capture: bool,
-        callback: EventHandler<DomEvent>,
+        callback: Rc<dyn Fn(DomEvent)>,
     ) -> EventHandler<MountedEvent> {
-        let callback: Rc<dyn Fn(DomEvent)> = Rc::new(move |event| callback.call(event));
         let slot = use_hook(|| Rc::new(RefCell::new(callback.clone())));
         *slot.borrow_mut() = callback;
         let mut subscription = use_signal(|| None::<DocumentSubscription>);
