@@ -1,0 +1,5091 @@
+{
+  "provenance": {
+    "url": "https://astryx.atmeta.com/components/ClickableCard",
+    "capturedAt": "2026-11-20T03:19:56.350Z",
+    "browser": "Chrome/157.0.8103.80",
+    "pinnedAuthority": "476a3153417dbf75c565f7df05b0784e94ddd59e",
+    "publishedEqualityNotAssumed": true
+  },
+  "cases": {
+    "light": {
+      "controls": [
+        {
+          "tree": {
+            "node": 0
+          },
+          "nodes": [
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-card",
+                "astryx-clickable-card"
+              ],
+              "attributes": {
+                "data-variant": "default",
+                "data-elevation": "none",
+                "data-astryx-pressable": "",
+                "data-pressable-container": "true"
+              },
+              "rawStyle": "--x-width: 320px;",
+              "box": [
+                0,
+                0,
+                320,
+                92
+              ],
+              "relativeToParent": [
+                286,
+                204.875,
+                320,
+                92
+              ],
+              "clientSize": [
+                318,
+                90
+              ],
+              "scrollSize": [
+                318,
+                90
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 0,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 1
+                },
+                {
+                  "node": 2
+                }
+              ]
+            },
+            {
+              "tag": "a",
+              "targets": [],
+              "attributes": {
+                "aria-label": "Settings",
+                "tabindex": "0",
+                "to": "#",
+                "href": "#"
+              },
+              "rawStyle": null,
+              "box": [
+                11,
+                11,
+                1,
+                1
+              ],
+              "relativeToParent": [
+                11,
+                11,
+                1,
+                1
+              ],
+              "clientSize": [
+                1,
+                1
+              ],
+              "scrollSize": [
+                1,
+                1
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 1,
+              "tokens": 0,
+              "children": []
+            },
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-stack"
+              ],
+              "attributes": {
+                "data-direction": "vertical",
+                "data-gap": "2"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                68
+              ],
+              "relativeToParent": [
+                12,
+                12,
+                296,
+                68
+              ],
+              "clientSize": [
+                296,
+                68
+              ],
+              "scrollSize": [
+                296,
+                68
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 2,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 3
+                },
+                {
+                  "node": 4
+                }
+              ]
+            },
+            {
+              "tag": "h4",
+              "targets": [
+                "astryx-heading"
+              ],
+              "attributes": {
+                "data-level": "4",
+                "data-color": "primary"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                20
+              ],
+              "relativeToParent": [
+                0,
+                0,
+                296,
+                20
+              ],
+              "clientSize": [
+                296,
+                20
+              ],
+              "scrollSize": [
+                296,
+                20
+              ],
+              "textRects": [
+                [
+                  12,
+                  13,
+                  54.09375,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "Settings",
+                  "rectangles": [
+                    [
+                      12,
+                      13,
+                      54.09375,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 3,
+              "tokens": 0,
+              "children": [
+                {
+                  "text": "Settings"
+                }
+              ]
+            },
+            {
+              "tag": "span",
+              "targets": [
+                "astryx-text"
+              ],
+              "attributes": {
+                "data-type": "body",
+                "data-color": "secondary"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                40,
+                296,
+                40
+              ],
+              "relativeToParent": [
+                0,
+                28,
+                296,
+                40
+              ],
+              "clientSize": [
+                296,
+                40
+              ],
+              "scrollSize": [
+                296,
+                40
+              ],
+              "textRects": [
+                [
+                  12,
+                  41,
+                  248.859375,
+                  17
+                ],
+                [
+                  12,
+                  61,
+                  286.34375,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "Click anywhere on this card to navigate. Nested buttons and links work independently.",
+                  "rectangles": [
+                    [
+                      12,
+                      41,
+                      248.859375,
+                      17
+                    ],
+                    [
+                      12,
+                      61,
+                      286.34375,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 4,
+              "tokens": 0,
+              "children": [
+                {
+                  "text": "Click anywhere on this card to navigate. Nested buttons and links work independently."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tree": {
+            "node": 0
+          },
+          "nodes": [
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-card",
+                "astryx-clickable-card"
+              ],
+              "attributes": {
+                "data-variant": "default",
+                "data-elevation": "med",
+                "data-astryx-pressable": "",
+                "data-pressable-container": "true"
+              },
+              "rawStyle": "--x-width: 320px;",
+              "box": [
+                0,
+                0,
+                320,
+                112
+              ],
+              "relativeToParent": [
+                0,
+                0,
+                320,
+                112
+              ],
+              "clientSize": [
+                318,
+                110
+              ],
+              "scrollSize": [
+                318,
+                110
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 5,
+              "tokens": 1,
+              "children": [
+                {
+                  "node": 1
+                },
+                {
+                  "node": 2
+                }
+              ]
+            },
+            {
+              "tag": "a",
+              "targets": [],
+              "attributes": {
+                "aria-label": "Open report",
+                "tabindex": "0",
+                "to": "#",
+                "href": "#"
+              },
+              "rawStyle": null,
+              "box": [
+                11,
+                11,
+                1,
+                1
+              ],
+              "relativeToParent": [
+                11,
+                11,
+                1,
+                1
+              ],
+              "clientSize": [
+                1,
+                1
+              ],
+              "scrollSize": [
+                1,
+                1
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 1,
+              "tokens": 1,
+              "children": []
+            },
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-stack"
+              ],
+              "attributes": {
+                "data-direction": "vertical",
+                "data-gap": "2"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                88
+              ],
+              "relativeToParent": [
+                12,
+                12,
+                296,
+                88
+              ],
+              "clientSize": [
+                296,
+                88
+              ],
+              "scrollSize": [
+                296,
+                88
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 6,
+              "tokens": 1,
+              "children": [
+                {
+                  "node": 3
+                },
+                {
+                  "node": 4
+                }
+              ]
+            },
+            {
+              "tag": "h4",
+              "targets": [
+                "astryx-heading"
+              ],
+              "attributes": {
+                "data-level": "4",
+                "data-color": "primary"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                20
+              ],
+              "relativeToParent": [
+                0,
+                0,
+                296,
+                20
+              ],
+              "clientSize": [
+                296,
+                20
+              ],
+              "scrollSize": [
+                296,
+                20
+              ],
+              "textRects": [
+                [
+                  12,
+                  13,
+                  105.734375,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "Quarterly report",
+                  "rectangles": [
+                    [
+                      12,
+                      13,
+                      105.734375,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 3,
+              "tokens": 1,
+              "children": [
+                {
+                  "text": "Quarterly report"
+                }
+              ]
+            },
+            {
+              "tag": "span",
+              "targets": [
+                "astryx-text"
+              ],
+              "attributes": {
+                "data-type": "body",
+                "data-color": "secondary"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                40,
+                296,
+                60
+              ],
+              "relativeToParent": [
+                0,
+                28,
+                296,
+                60
+              ],
+              "clientSize": [
+                296,
+                60
+              ],
+              "scrollSize": [
+                296,
+                60
+              ],
+              "textRects": [
+                [
+                  12,
+                  41,
+                  258.046875,
+                  17
+                ],
+                [
+                  12,
+                  61,
+                  252.984375,
+                  17
+                ],
+                [
+                  12,
+                  81,
+                  52.40625,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "A raised shadow signals the whole card is clickable, lifting it above the surrounding content.",
+                  "rectangles": [
+                    [
+                      12,
+                      41,
+                      258.046875,
+                      17
+                    ],
+                    [
+                      12,
+                      61,
+                      252.984375,
+                      17
+                    ],
+                    [
+                      12,
+                      81,
+                      52.40625,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 7,
+              "tokens": 1,
+              "children": [
+                {
+                  "text": "A raised shadow signals the whole card is clickable, lifting it above the surrounding content."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tree": {
+            "node": 0
+          },
+          "nodes": [
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-card",
+                "astryx-clickable-card"
+              ],
+              "attributes": {
+                "data-variant": "default",
+                "data-elevation": "none",
+                "data-astryx-pressable": "",
+                "data-pressable-container": "true"
+              },
+              "rawStyle": "--x-width: 320px;",
+              "box": [
+                0,
+                0,
+                320,
+                112
+              ],
+              "relativeToParent": [
+                0,
+                0,
+                320,
+                112
+              ],
+              "clientSize": [
+                318,
+                110
+              ],
+              "scrollSize": [
+                318,
+                110
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 8,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 1
+                },
+                {
+                  "node": 2
+                }
+              ]
+            },
+            {
+              "tag": "a",
+              "targets": [],
+              "attributes": {
+                "aria-label": "Product",
+                "tabindex": "0",
+                "to": "#",
+                "href": "#"
+              },
+              "rawStyle": null,
+              "box": [
+                11,
+                11,
+                1,
+                1
+              ],
+              "relativeToParent": [
+                11,
+                11,
+                1,
+                1
+              ],
+              "clientSize": [
+                1,
+                1
+              ],
+              "scrollSize": [
+                1,
+                1
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 1,
+              "tokens": 0,
+              "children": []
+            },
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-stack"
+              ],
+              "attributes": {
+                "data-direction": "vertical",
+                "data-gap": "3"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                88
+              ],
+              "relativeToParent": [
+                12,
+                12,
+                296,
+                88
+              ],
+              "clientSize": [
+                296,
+                88
+              ],
+              "scrollSize": [
+                296,
+                88
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 9,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 3
+                },
+                {
+                  "node": 6
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-stack"
+              ],
+              "attributes": {
+                "data-direction": "vertical",
+                "data-gap": "1"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                44
+              ],
+              "relativeToParent": [
+                0,
+                0,
+                296,
+                44
+              ],
+              "clientSize": [
+                296,
+                44
+              ],
+              "scrollSize": [
+                296,
+                44
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 10,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 4
+                },
+                {
+                  "node": 5
+                }
+              ]
+            },
+            {
+              "tag": "h4",
+              "targets": [
+                "astryx-heading"
+              ],
+              "attributes": {
+                "data-level": "4",
+                "data-color": "primary"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                20
+              ],
+              "relativeToParent": [
+                0,
+                0,
+                296,
+                20
+              ],
+              "clientSize": [
+                296,
+                20
+              ],
+              "scrollSize": [
+                296,
+                20
+              ],
+              "textRects": [
+                [
+                  12,
+                  13,
+                  138.890625,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "Wireless Headphones",
+                  "rectangles": [
+                    [
+                      12,
+                      13,
+                      138.890625,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 3,
+              "tokens": 0,
+              "children": [
+                {
+                  "text": "Wireless Headphones"
+                }
+              ]
+            },
+            {
+              "tag": "span",
+              "targets": [
+                "astryx-text"
+              ],
+              "attributes": {
+                "data-type": "body",
+                "data-color": "secondary"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                36,
+                296,
+                20
+              ],
+              "relativeToParent": [
+                0,
+                24,
+                296,
+                20
+              ],
+              "clientSize": [
+                296,
+                20
+              ],
+              "scrollSize": [
+                296,
+                20
+              ],
+              "textRects": [
+                [
+                  12,
+                  37,
+                  42.078125,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "$79.99",
+                  "rectangles": [
+                    [
+                      12,
+                      37,
+                      42.078125,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 11,
+              "tokens": 0,
+              "children": [
+                {
+                  "text": "$79.99"
+                }
+              ]
+            },
+            {
+              "tag": "button",
+              "targets": [
+                "astryx-button"
+              ],
+              "attributes": {
+                "type": "button",
+                "data-variant": "primary",
+                "data-size": "md",
+                "data-elevation": "none",
+                "data-astryx-pressable": ""
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                68,
+                296,
+                32
+              ],
+              "relativeToParent": [
+                0,
+                56,
+                296,
+                32
+              ],
+              "clientSize": [
+                296,
+                32
+              ],
+              "scrollSize": [
+                296,
+                32
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 12,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 7
+                },
+                {
+                  "node": 9
+                }
+              ]
+            },
+            {
+              "tag": "span",
+              "targets": [],
+              "attributes": {},
+              "rawStyle": null,
+              "box": [
+                24,
+                76,
+                272,
+                16
+              ],
+              "relativeToParent": [
+                12,
+                8,
+                272,
+                16
+              ],
+              "clientSize": [
+                272,
+                16
+              ],
+              "scrollSize": [
+                272,
+                18
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 13,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 8
+                }
+              ]
+            },
+            {
+              "tag": "span",
+              "targets": [],
+              "attributes": {},
+              "rawStyle": null,
+              "box": [
+                124.3125,
+                74,
+                71.359375,
+                20
+              ],
+              "relativeToParent": [
+                100.3125,
+                -2,
+                71.359375,
+                20
+              ],
+              "clientSize": [
+                71,
+                20
+              ],
+              "scrollSize": [
+                71,
+                20
+              ],
+              "textRects": [
+                [
+                  124.3125,
+                  75,
+                  71.359375,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "Add to cart",
+                  "rectangles": [
+                    [
+                      124.3125,
+                      75,
+                      71.359375,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 14,
+              "tokens": 0,
+              "children": [
+                {
+                  "text": "Add to cart"
+                }
+              ]
+            },
+            {
+              "tag": "span",
+              "targets": [],
+              "attributes": {
+                "role": "status",
+                "aria-live": "polite"
+              },
+              "rawStyle": null,
+              "box": [
+                11,
+                67,
+                1,
+                1
+              ],
+              "relativeToParent": [
+                -1,
+                -1,
+                1,
+                1
+              ],
+              "clientSize": [
+                1,
+                1
+              ],
+              "scrollSize": [
+                1,
+                1
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 15,
+              "tokens": 0,
+              "children": []
+            }
+          ]
+        }
+      ],
+      "frames": [
+        {
+          "tag": "DIV",
+          "style": "",
+          "box": [
+            892,
+            501.75
+          ],
+          "backdrop": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "tag": "DIV",
+          "style": "",
+          "box": [
+            320,
+            112
+          ],
+          "backdrop": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "tag": "DIV",
+          "style": "",
+          "box": [
+            320,
+            112
+          ],
+          "backdrop": "rgba(0, 0, 0, 0)"
+        }
+      ]
+    },
+    "dark": {
+      "controls": [
+        {
+          "tree": {
+            "node": 0
+          },
+          "nodes": [
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-card",
+                "astryx-clickable-card"
+              ],
+              "attributes": {
+                "data-variant": "default",
+                "data-elevation": "none",
+                "data-astryx-pressable": "",
+                "data-pressable-container": "true"
+              },
+              "rawStyle": "--x-width: 320px;",
+              "box": [
+                0,
+                0,
+                320,
+                92
+              ],
+              "relativeToParent": [
+                286,
+                204.875,
+                320,
+                92
+              ],
+              "clientSize": [
+                318,
+                90
+              ],
+              "scrollSize": [
+                318,
+                90
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 16,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 1
+                },
+                {
+                  "node": 2
+                }
+              ]
+            },
+            {
+              "tag": "a",
+              "targets": [],
+              "attributes": {
+                "aria-label": "Settings",
+                "tabindex": "0",
+                "to": "#",
+                "href": "#"
+              },
+              "rawStyle": null,
+              "box": [
+                11,
+                11,
+                1,
+                1
+              ],
+              "relativeToParent": [
+                11,
+                11,
+                1,
+                1
+              ],
+              "clientSize": [
+                1,
+                1
+              ],
+              "scrollSize": [
+                1,
+                1
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 17,
+              "tokens": 0,
+              "children": []
+            },
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-stack"
+              ],
+              "attributes": {
+                "data-direction": "vertical",
+                "data-gap": "2"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                68
+              ],
+              "relativeToParent": [
+                12,
+                12,
+                296,
+                68
+              ],
+              "clientSize": [
+                296,
+                68
+              ],
+              "scrollSize": [
+                296,
+                68
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 18,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 3
+                },
+                {
+                  "node": 4
+                }
+              ]
+            },
+            {
+              "tag": "h4",
+              "targets": [
+                "astryx-heading"
+              ],
+              "attributes": {
+                "data-level": "4",
+                "data-color": "primary"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                20
+              ],
+              "relativeToParent": [
+                0,
+                0,
+                296,
+                20
+              ],
+              "clientSize": [
+                296,
+                20
+              ],
+              "scrollSize": [
+                296,
+                20
+              ],
+              "textRects": [
+                [
+                  12,
+                  13,
+                  54.09375,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "Settings",
+                  "rectangles": [
+                    [
+                      12,
+                      13,
+                      54.09375,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 19,
+              "tokens": 0,
+              "children": [
+                {
+                  "text": "Settings"
+                }
+              ]
+            },
+            {
+              "tag": "span",
+              "targets": [
+                "astryx-text"
+              ],
+              "attributes": {
+                "data-type": "body",
+                "data-color": "secondary"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                40,
+                296,
+                40
+              ],
+              "relativeToParent": [
+                0,
+                28,
+                296,
+                40
+              ],
+              "clientSize": [
+                296,
+                40
+              ],
+              "scrollSize": [
+                296,
+                40
+              ],
+              "textRects": [
+                [
+                  12,
+                  41,
+                  248.859375,
+                  17
+                ],
+                [
+                  12,
+                  61,
+                  286.34375,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "Click anywhere on this card to navigate. Nested buttons and links work independently.",
+                  "rectangles": [
+                    [
+                      12,
+                      41,
+                      248.859375,
+                      17
+                    ],
+                    [
+                      12,
+                      61,
+                      286.34375,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 20,
+              "tokens": 0,
+              "children": [
+                {
+                  "text": "Click anywhere on this card to navigate. Nested buttons and links work independently."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tree": {
+            "node": 0
+          },
+          "nodes": [
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-card",
+                "astryx-clickable-card"
+              ],
+              "attributes": {
+                "data-variant": "default",
+                "data-elevation": "med",
+                "data-astryx-pressable": "",
+                "data-pressable-container": "true"
+              },
+              "rawStyle": "--x-width: 320px;",
+              "box": [
+                0,
+                0,
+                320,
+                112
+              ],
+              "relativeToParent": [
+                0,
+                0,
+                320,
+                112
+              ],
+              "clientSize": [
+                318,
+                110
+              ],
+              "scrollSize": [
+                318,
+                110
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 21,
+              "tokens": 1,
+              "children": [
+                {
+                  "node": 1
+                },
+                {
+                  "node": 2
+                }
+              ]
+            },
+            {
+              "tag": "a",
+              "targets": [],
+              "attributes": {
+                "aria-label": "Open report",
+                "tabindex": "0",
+                "to": "#",
+                "href": "#"
+              },
+              "rawStyle": null,
+              "box": [
+                11,
+                11,
+                1,
+                1
+              ],
+              "relativeToParent": [
+                11,
+                11,
+                1,
+                1
+              ],
+              "clientSize": [
+                1,
+                1
+              ],
+              "scrollSize": [
+                1,
+                1
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 17,
+              "tokens": 1,
+              "children": []
+            },
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-stack"
+              ],
+              "attributes": {
+                "data-direction": "vertical",
+                "data-gap": "2"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                88
+              ],
+              "relativeToParent": [
+                12,
+                12,
+                296,
+                88
+              ],
+              "clientSize": [
+                296,
+                88
+              ],
+              "scrollSize": [
+                296,
+                88
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 22,
+              "tokens": 1,
+              "children": [
+                {
+                  "node": 3
+                },
+                {
+                  "node": 4
+                }
+              ]
+            },
+            {
+              "tag": "h4",
+              "targets": [
+                "astryx-heading"
+              ],
+              "attributes": {
+                "data-level": "4",
+                "data-color": "primary"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                20
+              ],
+              "relativeToParent": [
+                0,
+                0,
+                296,
+                20
+              ],
+              "clientSize": [
+                296,
+                20
+              ],
+              "scrollSize": [
+                296,
+                20
+              ],
+              "textRects": [
+                [
+                  12,
+                  13,
+                  105.734375,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "Quarterly report",
+                  "rectangles": [
+                    [
+                      12,
+                      13,
+                      105.734375,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 19,
+              "tokens": 1,
+              "children": [
+                {
+                  "text": "Quarterly report"
+                }
+              ]
+            },
+            {
+              "tag": "span",
+              "targets": [
+                "astryx-text"
+              ],
+              "attributes": {
+                "data-type": "body",
+                "data-color": "secondary"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                40,
+                296,
+                60
+              ],
+              "relativeToParent": [
+                0,
+                28,
+                296,
+                60
+              ],
+              "clientSize": [
+                296,
+                60
+              ],
+              "scrollSize": [
+                296,
+                60
+              ],
+              "textRects": [
+                [
+                  12,
+                  41,
+                  258.046875,
+                  17
+                ],
+                [
+                  12,
+                  61,
+                  252.984375,
+                  17
+                ],
+                [
+                  12,
+                  81,
+                  52.40625,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "A raised shadow signals the whole card is clickable, lifting it above the surrounding content.",
+                  "rectangles": [
+                    [
+                      12,
+                      41,
+                      258.046875,
+                      17
+                    ],
+                    [
+                      12,
+                      61,
+                      252.984375,
+                      17
+                    ],
+                    [
+                      12,
+                      81,
+                      52.40625,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 23,
+              "tokens": 1,
+              "children": [
+                {
+                  "text": "A raised shadow signals the whole card is clickable, lifting it above the surrounding content."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tree": {
+            "node": 0
+          },
+          "nodes": [
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-card",
+                "astryx-clickable-card"
+              ],
+              "attributes": {
+                "data-variant": "default",
+                "data-elevation": "none",
+                "data-astryx-pressable": "",
+                "data-pressable-container": "true"
+              },
+              "rawStyle": "--x-width: 320px;",
+              "box": [
+                0,
+                0,
+                320,
+                112
+              ],
+              "relativeToParent": [
+                0,
+                0,
+                320,
+                112
+              ],
+              "clientSize": [
+                318,
+                110
+              ],
+              "scrollSize": [
+                318,
+                110
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 24,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 1
+                },
+                {
+                  "node": 2
+                }
+              ]
+            },
+            {
+              "tag": "a",
+              "targets": [],
+              "attributes": {
+                "aria-label": "Product",
+                "tabindex": "0",
+                "to": "#",
+                "href": "#"
+              },
+              "rawStyle": null,
+              "box": [
+                11,
+                11,
+                1,
+                1
+              ],
+              "relativeToParent": [
+                11,
+                11,
+                1,
+                1
+              ],
+              "clientSize": [
+                1,
+                1
+              ],
+              "scrollSize": [
+                1,
+                1
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 17,
+              "tokens": 0,
+              "children": []
+            },
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-stack"
+              ],
+              "attributes": {
+                "data-direction": "vertical",
+                "data-gap": "3"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                88
+              ],
+              "relativeToParent": [
+                12,
+                12,
+                296,
+                88
+              ],
+              "clientSize": [
+                296,
+                88
+              ],
+              "scrollSize": [
+                296,
+                88
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 25,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 3
+                },
+                {
+                  "node": 6
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "targets": [
+                "astryx-stack"
+              ],
+              "attributes": {
+                "data-direction": "vertical",
+                "data-gap": "1"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                44
+              ],
+              "relativeToParent": [
+                0,
+                0,
+                296,
+                44
+              ],
+              "clientSize": [
+                296,
+                44
+              ],
+              "scrollSize": [
+                296,
+                44
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 26,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 4
+                },
+                {
+                  "node": 5
+                }
+              ]
+            },
+            {
+              "tag": "h4",
+              "targets": [
+                "astryx-heading"
+              ],
+              "attributes": {
+                "data-level": "4",
+                "data-color": "primary"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                12,
+                296,
+                20
+              ],
+              "relativeToParent": [
+                0,
+                0,
+                296,
+                20
+              ],
+              "clientSize": [
+                296,
+                20
+              ],
+              "scrollSize": [
+                296,
+                20
+              ],
+              "textRects": [
+                [
+                  12,
+                  13,
+                  138.890625,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "Wireless Headphones",
+                  "rectangles": [
+                    [
+                      12,
+                      13,
+                      138.890625,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 19,
+              "tokens": 0,
+              "children": [
+                {
+                  "text": "Wireless Headphones"
+                }
+              ]
+            },
+            {
+              "tag": "span",
+              "targets": [
+                "astryx-text"
+              ],
+              "attributes": {
+                "data-type": "body",
+                "data-color": "secondary"
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                36,
+                296,
+                20
+              ],
+              "relativeToParent": [
+                0,
+                24,
+                296,
+                20
+              ],
+              "clientSize": [
+                296,
+                20
+              ],
+              "scrollSize": [
+                296,
+                20
+              ],
+              "textRects": [
+                [
+                  12,
+                  37,
+                  42.078125,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "$79.99",
+                  "rectangles": [
+                    [
+                      12,
+                      37,
+                      42.078125,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 27,
+              "tokens": 0,
+              "children": [
+                {
+                  "text": "$79.99"
+                }
+              ]
+            },
+            {
+              "tag": "button",
+              "targets": [
+                "astryx-button"
+              ],
+              "attributes": {
+                "type": "button",
+                "data-variant": "primary",
+                "data-size": "md",
+                "data-elevation": "none",
+                "data-astryx-pressable": ""
+              },
+              "rawStyle": null,
+              "box": [
+                12,
+                68,
+                296,
+                32
+              ],
+              "relativeToParent": [
+                0,
+                56,
+                296,
+                32
+              ],
+              "clientSize": [
+                296,
+                32
+              ],
+              "scrollSize": [
+                296,
+                32
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 28,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 7
+                },
+                {
+                  "node": 9
+                }
+              ]
+            },
+            {
+              "tag": "span",
+              "targets": [],
+              "attributes": {},
+              "rawStyle": null,
+              "box": [
+                24,
+                76,
+                272,
+                16
+              ],
+              "relativeToParent": [
+                12,
+                8,
+                272,
+                16
+              ],
+              "clientSize": [
+                272,
+                16
+              ],
+              "scrollSize": [
+                272,
+                18
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 29,
+              "tokens": 0,
+              "children": [
+                {
+                  "node": 8
+                }
+              ]
+            },
+            {
+              "tag": "span",
+              "targets": [],
+              "attributes": {},
+              "rawStyle": null,
+              "box": [
+                124.3125,
+                74,
+                71.359375,
+                20
+              ],
+              "relativeToParent": [
+                100.3125,
+                -2,
+                71.359375,
+                20
+              ],
+              "clientSize": [
+                71,
+                20
+              ],
+              "scrollSize": [
+                71,
+                20
+              ],
+              "textRects": [
+                [
+                  124.3125,
+                  75,
+                  71.359375,
+                  17
+                ]
+              ],
+              "textRuns": [
+                {
+                  "text": "Add to cart",
+                  "rectangles": [
+                    [
+                      124.3125,
+                      75,
+                      71.359375,
+                      17
+                    ]
+                  ]
+                }
+              ],
+              "style": 30,
+              "tokens": 0,
+              "children": [
+                {
+                  "text": "Add to cart"
+                }
+              ]
+            },
+            {
+              "tag": "span",
+              "targets": [],
+              "attributes": {
+                "role": "status",
+                "aria-live": "polite"
+              },
+              "rawStyle": null,
+              "box": [
+                11,
+                67,
+                1,
+                1
+              ],
+              "relativeToParent": [
+                -1,
+                -1,
+                1,
+                1
+              ],
+              "clientSize": [
+                1,
+                1
+              ],
+              "scrollSize": [
+                1,
+                1
+              ],
+              "textRects": [],
+              "textRuns": [],
+              "style": 31,
+              "tokens": 0,
+              "children": []
+            }
+          ]
+        }
+      ],
+      "frames": [
+        {
+          "tag": "DIV",
+          "style": "",
+          "box": [
+            892,
+            501.75
+          ],
+          "backdrop": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "tag": "DIV",
+          "style": "",
+          "box": [
+            320,
+            112
+          ],
+          "backdrop": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "tag": "DIV",
+          "style": "",
+          "box": [
+            320,
+            112
+          ],
+          "backdrop": "rgba(0, 0, 0, 0)"
+        }
+      ]
+    }
+  },
+  "profiles": {
+    "styles": [
+      {
+        "display": "block",
+        "position": "relative",
+        "boxSizing": "border-box",
+        "width": "320px",
+        "height": "92px",
+        "minWidth": "0px",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "11px",
+        "paddingInlineStart": "11px",
+        "paddingInlineEnd": "11px",
+        "paddingBlockStart": "11px",
+        "paddingBlockEnd": "11px",
+        "margin": "0px",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "backgroundImage": "none",
+        "color": "rgb(0, 0, 0)",
+        "opacity": "1",
+        "borderRadius": "12px",
+        "borderWidth": "1px",
+        "borderStyle": "solid",
+        "borderColor": "rgba(0, 0, 0, 0.08)",
+        "outlineWidth": "0px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(0, 0, 0)",
+        "outlineOffset": "0px",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "overflow": "clip",
+        "overflowX": "clip",
+        "overflowY": "clip",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "border-color",
+        "transitionDuration": "0.125s",
+        "transitionTimingFunction": "cubic-bezier(0.24, 1, 0.4, 1)",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "block",
+        "position": "absolute",
+        "boxSizing": "border-box",
+        "width": "1px",
+        "height": "1px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "-1px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(0, 0, 0)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(0, 0, 0)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(0, 0, 0)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden",
+        "overflowWrap": "normal",
+        "clip": "rect(0px, 0px, 0px, 0px)",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "nowrap",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "flex",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "68px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "column",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "8px",
+        "columnGap": "8px",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(0, 0, 0)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(0, 0, 0)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(0, 0, 0)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "block",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "20px",
+        "minWidth": "auto",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(0, 0, 0)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(0, 0, 0)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(0, 0, 0)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "break-word",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "block",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "40px",
+        "minWidth": "auto",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(71, 71, 71)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(71, 71, 71)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(71, 71, 71)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "break-word",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "block",
+        "position": "relative",
+        "boxSizing": "border-box",
+        "width": "320px",
+        "height": "112px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "11px",
+        "paddingInlineStart": "11px",
+        "paddingInlineEnd": "11px",
+        "paddingBlockStart": "11px",
+        "paddingBlockEnd": "11px",
+        "margin": "0px",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "backgroundImage": "none",
+        "color": "rgb(0, 0, 0)",
+        "opacity": "1",
+        "borderRadius": "12px",
+        "borderWidth": "1px",
+        "borderStyle": "solid",
+        "borderColor": "rgba(0, 0, 0, 0.08)",
+        "outlineWidth": "0px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(0, 0, 0)",
+        "outlineOffset": "0px",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklch(0 0 0 / 0.05) 0px 2px 4px 0px, oklch(0 0 0 / 0.1) 0px 4px 12px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 1px inset",
+        "overflow": "clip",
+        "overflowX": "clip",
+        "overflowY": "clip",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "border-color",
+        "transitionDuration": "0.125s",
+        "transitionTimingFunction": "cubic-bezier(0.24, 1, 0.4, 1)",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "flex",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "88px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "column",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "8px",
+        "columnGap": "8px",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(0, 0, 0)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(0, 0, 0)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(0, 0, 0)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "block",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "60px",
+        "minWidth": "auto",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(71, 71, 71)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(71, 71, 71)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(71, 71, 71)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "break-word",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "block",
+        "position": "relative",
+        "boxSizing": "border-box",
+        "width": "320px",
+        "height": "112px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "11px",
+        "paddingInlineStart": "11px",
+        "paddingInlineEnd": "11px",
+        "paddingBlockStart": "11px",
+        "paddingBlockEnd": "11px",
+        "margin": "0px",
+        "backgroundColor": "rgb(255, 255, 255)",
+        "backgroundImage": "none",
+        "color": "rgb(0, 0, 0)",
+        "opacity": "1",
+        "borderRadius": "12px",
+        "borderWidth": "1px",
+        "borderStyle": "solid",
+        "borderColor": "rgba(0, 0, 0, 0.08)",
+        "outlineWidth": "0px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(0, 0, 0)",
+        "outlineOffset": "0px",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "overflow": "clip",
+        "overflowX": "clip",
+        "overflowY": "clip",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "border-color",
+        "transitionDuration": "0.125s",
+        "transitionTimingFunction": "cubic-bezier(0.24, 1, 0.4, 1)",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "flex",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "88px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "column",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "12px",
+        "columnGap": "12px",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(0, 0, 0)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(0, 0, 0)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(0, 0, 0)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "flex",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "44px",
+        "minWidth": "auto",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "column",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "4px",
+        "columnGap": "4px",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(0, 0, 0)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(0, 0, 0)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(0, 0, 0)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "block",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "20px",
+        "minWidth": "auto",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(71, 71, 71)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(71, 71, 71)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(71, 71, 71)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "break-word",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "flex",
+        "position": "relative",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "32px",
+        "minWidth": "0px",
+        "minHeight": "auto",
+        "maxWidth": "100%",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "center",
+        "alignSelf": "auto",
+        "justifyContent": "center",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "8px",
+        "columnGap": "8px",
+        "padding": "8px 12px",
+        "paddingInlineStart": "12px",
+        "paddingInlineEnd": "12px",
+        "paddingBlockStart": "8px",
+        "paddingBlockEnd": "8px",
+        "margin": "0px",
+        "backgroundColor": "rgb(27, 27, 27)",
+        "backgroundImage": "none",
+        "color": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "borderRadius": "10px",
+        "borderWidth": "0px",
+        "borderStyle": "none",
+        "borderColor": "rgb(255, 255, 255)",
+        "outlineWidth": "0px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "nowrap",
+        "textOverflow": "clip",
+        "textAlign": "center",
+        "transitionProperty": "background-image, background-color, color, opacity, transform",
+        "transitionDuration": "0.125s",
+        "transitionTimingFunction": "cubic-bezier(0.24, 1, 0.4, 1)",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "flex",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "272px",
+        "height": "16px",
+        "minWidth": "0px",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "center",
+        "alignSelf": "stretch",
+        "justifyContent": "center",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "8px",
+        "columnGap": "8px",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(255, 255, 255)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "nowrap",
+        "textOverflow": "clip",
+        "textAlign": "center",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "block",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "71.3594px",
+        "height": "20px",
+        "minWidth": "0px",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(255, 255, 255)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "nowrap",
+        "textOverflow": "ellipsis",
+        "textAlign": "center",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "block",
+        "position": "absolute",
+        "boxSizing": "border-box",
+        "width": "1px",
+        "height": "1px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "-1px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "none",
+        "borderColor": "rgb(255, 255, 255)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden",
+        "overflowWrap": "normal",
+        "clip": "rect(0px, 0px, 0px, 0px)",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "nowrap",
+        "textOverflow": "clip",
+        "textAlign": "center",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "light"
+      },
+      {
+        "display": "block",
+        "position": "relative",
+        "boxSizing": "border-box",
+        "width": "320px",
+        "height": "92px",
+        "minWidth": "0px",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "11px",
+        "paddingInlineStart": "11px",
+        "paddingInlineEnd": "11px",
+        "paddingBlockStart": "11px",
+        "paddingBlockEnd": "11px",
+        "margin": "0px",
+        "backgroundColor": "rgb(27, 27, 27)",
+        "backgroundImage": "none",
+        "color": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "borderRadius": "12px",
+        "borderWidth": "1px",
+        "borderStyle": "solid",
+        "borderColor": "rgba(255, 255, 255, 0.1)",
+        "outlineWidth": "0px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineOffset": "0px",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "overflow": "clip",
+        "overflowX": "clip",
+        "overflowY": "clip",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "border-color",
+        "transitionDuration": "0.125s",
+        "transitionTimingFunction": "cubic-bezier(0.24, 1, 0.4, 1)",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "block",
+        "position": "absolute",
+        "boxSizing": "border-box",
+        "width": "1px",
+        "height": "1px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "-1px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(255, 255, 255)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden",
+        "overflowWrap": "normal",
+        "clip": "rect(0px, 0px, 0px, 0px)",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "nowrap",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "flex",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "68px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "column",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "8px",
+        "columnGap": "8px",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(255, 255, 255)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "block",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "20px",
+        "minWidth": "auto",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(255, 255, 255)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "break-word",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "block",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "40px",
+        "minWidth": "auto",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(158, 158, 158)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(158, 158, 158)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(158, 158, 158)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "break-word",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "block",
+        "position": "relative",
+        "boxSizing": "border-box",
+        "width": "320px",
+        "height": "112px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "11px",
+        "paddingInlineStart": "11px",
+        "paddingInlineEnd": "11px",
+        "paddingBlockStart": "11px",
+        "paddingBlockEnd": "11px",
+        "margin": "0px",
+        "backgroundColor": "rgb(27, 27, 27)",
+        "backgroundImage": "none",
+        "color": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "borderRadius": "12px",
+        "borderWidth": "1px",
+        "borderStyle": "solid",
+        "borderColor": "rgba(255, 255, 255, 0.1)",
+        "outlineWidth": "0px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineOffset": "0px",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklch(0 0 0 / 0.35) 0px 2px 4px 0px, oklch(0 0 0 / 0.5) 0px 4px 12px 0px, oklch(1 0 0 / 0.12) 0px 0px 0px 1px inset",
+        "overflow": "clip",
+        "overflowX": "clip",
+        "overflowY": "clip",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "border-color",
+        "transitionDuration": "0.125s",
+        "transitionTimingFunction": "cubic-bezier(0.24, 1, 0.4, 1)",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "flex",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "88px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "column",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "8px",
+        "columnGap": "8px",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(255, 255, 255)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "block",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "60px",
+        "minWidth": "auto",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(158, 158, 158)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(158, 158, 158)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(158, 158, 158)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "break-word",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "block",
+        "position": "relative",
+        "boxSizing": "border-box",
+        "width": "320px",
+        "height": "112px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "11px",
+        "paddingInlineStart": "11px",
+        "paddingInlineEnd": "11px",
+        "paddingBlockStart": "11px",
+        "paddingBlockEnd": "11px",
+        "margin": "0px",
+        "backgroundColor": "rgb(27, 27, 27)",
+        "backgroundImage": "none",
+        "color": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "borderRadius": "12px",
+        "borderWidth": "1px",
+        "borderStyle": "solid",
+        "borderColor": "rgba(255, 255, 255, 0.1)",
+        "outlineWidth": "0px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineOffset": "0px",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "overflow": "clip",
+        "overflowX": "clip",
+        "overflowY": "clip",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "border-color",
+        "transitionDuration": "0.125s",
+        "transitionTimingFunction": "cubic-bezier(0.24, 1, 0.4, 1)",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "flex",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "88px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "column",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "12px",
+        "columnGap": "12px",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(255, 255, 255)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "flex",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "44px",
+        "minWidth": "auto",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "column",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "4px",
+        "columnGap": "4px",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(255, 255, 255)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(255, 255, 255)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "block",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "20px",
+        "minWidth": "auto",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(158, 158, 158)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(158, 158, 158)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(158, 158, 158)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "break-word",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "normal",
+        "textOverflow": "clip",
+        "textAlign": "start",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "flex",
+        "position": "relative",
+        "boxSizing": "border-box",
+        "width": "296px",
+        "height": "32px",
+        "minWidth": "0px",
+        "minHeight": "auto",
+        "maxWidth": "100%",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "center",
+        "alignSelf": "auto",
+        "justifyContent": "center",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "8px",
+        "columnGap": "8px",
+        "padding": "8px 12px",
+        "paddingInlineStart": "12px",
+        "paddingInlineEnd": "12px",
+        "paddingBlockStart": "8px",
+        "paddingBlockEnd": "8px",
+        "margin": "0px",
+        "backgroundColor": "rgb(241, 241, 241)",
+        "backgroundImage": "none",
+        "color": "rgb(17, 17, 17)",
+        "opacity": "1",
+        "borderRadius": "10px",
+        "borderWidth": "0px",
+        "borderStyle": "none",
+        "borderColor": "rgb(17, 17, 17)",
+        "outlineWidth": "0px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(17, 17, 17)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "nowrap",
+        "textOverflow": "clip",
+        "textAlign": "center",
+        "transitionProperty": "background-image, background-color, color, opacity, transform",
+        "transitionDuration": "0.125s",
+        "transitionTimingFunction": "cubic-bezier(0.24, 1, 0.4, 1)",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "flex",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "272px",
+        "height": "16px",
+        "minWidth": "0px",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "1",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "center",
+        "alignSelf": "stretch",
+        "justifyContent": "center",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "8px",
+        "columnGap": "8px",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(17, 17, 17)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(17, 17, 17)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(17, 17, 17)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "visible",
+        "overflowX": "visible",
+        "overflowY": "visible",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "nowrap",
+        "textOverflow": "clip",
+        "textAlign": "center",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "block",
+        "position": "static",
+        "boxSizing": "border-box",
+        "width": "71.3594px",
+        "height": "20px",
+        "minWidth": "0px",
+        "minHeight": "auto",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "0px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(17, 17, 17)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "solid",
+        "borderColor": "rgb(17, 17, 17)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(17, 17, 17)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden",
+        "overflowWrap": "normal",
+        "clip": "auto",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "nowrap",
+        "textOverflow": "ellipsis",
+        "textAlign": "center",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      },
+      {
+        "display": "block",
+        "position": "absolute",
+        "boxSizing": "border-box",
+        "width": "1px",
+        "height": "1px",
+        "minWidth": "0px",
+        "minHeight": "0px",
+        "maxWidth": "none",
+        "maxHeight": "none",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "flexGrow": "0",
+        "flexShrink": "1",
+        "flexBasis": "auto",
+        "alignItems": "normal",
+        "alignSelf": "auto",
+        "justifyContent": "normal",
+        "gridTemplateColumns": "none",
+        "gridTemplateRows": "none",
+        "rowGap": "normal",
+        "columnGap": "normal",
+        "padding": "0px",
+        "paddingInlineStart": "0px",
+        "paddingInlineEnd": "0px",
+        "paddingBlockStart": "0px",
+        "paddingBlockEnd": "0px",
+        "margin": "-1px",
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "backgroundImage": "none",
+        "color": "rgb(17, 17, 17)",
+        "opacity": "1",
+        "borderRadius": "0px",
+        "borderWidth": "0px",
+        "borderStyle": "none",
+        "borderColor": "rgb(17, 17, 17)",
+        "outlineWidth": "3px",
+        "outlineStyle": "none",
+        "outlineColor": "rgb(17, 17, 17)",
+        "outlineOffset": "0px",
+        "boxShadow": "none",
+        "overflow": "hidden",
+        "overflowX": "hidden",
+        "overflowY": "hidden",
+        "overflowWrap": "normal",
+        "clip": "rect(0px, 0px, 0px, 0px)",
+        "clipPath": "none",
+        "transform": "none",
+        "direction": "ltr",
+        "fontFamily": "Figtree, -apple-system, \"system-ui\", \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "20.0004px",
+        "letterSpacing": "normal",
+        "fontVariantNumeric": "normal",
+        "whiteSpace": "nowrap",
+        "textOverflow": "clip",
+        "textAlign": "center",
+        "transitionProperty": "all",
+        "transitionDuration": "0s",
+        "transitionTimingFunction": "ease",
+        "animationName": "none",
+        "animationDuration": "0s",
+        "forcedColorAdjust": "auto",
+        "colorScheme": "dark"
+      }
+    ],
+    "tokens": [
+      {
+        "--font-family-body": "Figtree,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif",
+        "--color-data-red-3": "light-dark(#FB7D87,#FB7D87)",
+        "--color-data-yellow-1": "light-dark(#FDF6BA,#FDF6BA)",
+        "--font-size-4xs": "min(calc(0.375rem * 1),min(calc(0.4375rem * 1),min(calc(0.5rem * 1),min(calc(0.625rem * 1),min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))))))))",
+        "--color-data-categorical-teal": "light-dark(#08A3A3,#08A3A3)",
+        "--color-background-yellow": "light-dark(#fae19e,#453a1c)",
+        "--color-syntax-operator": "light-dark(#525252,#b9b9b9)",
+        "--color-icon-accent": "light-dark(#1b1b1b,#f1f1f1)",
+        "--color-icon-info": "light-dark(#0067ce,#a1caff)",
+        "--color-data-shamrock-4": "light-dark(#138546,#138546)",
+        "--_container-host-radius-top-right": "",
+        "--text-supporting-weight": "400",
+        "--color-data-pink-3": "light-dark(#F989D3,#F989D3)",
+        "--spacing-1-5": "0.375rem",
+        "--color-on-info": "light-dark(#ffffff,#111111)",
+        "--spacing-12": "3rem",
+        "--color-border-gray": "light-dark(#d4d4d4,#262626)",
+        "--color-data-teal-2": "light-dark(#6CE6D8,#6CE6D8)",
+        "--color-data-categorical-pink": "light-dark(#F351C0,#F351C0)",
+        "--color-on-error": "light-dark(#ffffff,#111111)",
+        "--color-text-secondary": "light-dark(#474747,#9e9e9e)",
+        "--_card-radius-end-start": "",
+        "--container-corner-end-start": "0px",
+        "--color-text-pink": "light-dark(#70003f,#ffa9ca)",
+        "--radius-none": "0px",
+        "--color-icon-primary": "light-dark(#000000,#ffffff)",
+        "--color-data-categorical-blue": "light-dark(#0171E3,#0171E3)",
+        "--text-display-3-weight": "400",
+        "--color-border-blue": "light-dark(#a1caff,#5aa0f8)",
+        "--font-size-4xl": "min(calc(2.1875rem * 1),calc(2.625rem * 1))",
+        "--color-icon-warning": "light-dark(#836700,#eec448)",
+        "--text-display-2-leading": "1.2571",
+        "--color-border-purple": "light-dark(#f3bfff,#d885eb)",
+        "--_container-host-radius-start-end": "",
+        "--_container-corner-start-end": "0.75rem",
+        "--color-data-blue-3": "light-dark(#2694FE,#2694FE)",
+        "--color-syntax-background": "light-dark(#ffffff,#111111)",
+        "--text-heading-2-weight": "600",
+        "--astryx-card-padding": "0.75rem",
+        "--shadow-low": "0 2px 4px light-dark(oklch(0 0 0/5%),oklch(0 0 0/25%)),0 4px 8px light-dark(oklch(0 0 0/10%),oklch(0 0 0/40%)),inset 0 0 0 1px light-dark(transparent,oklch(1 0 0/8%))",
+        "--color-on-warning-muted": "light-dark(#4b3900,#eec448)",
+        "--color-data-blue-2": "light-dark(#78BEFF,#78BEFF)",
+        "--color-text-green": "light-dark(#00490b,#90ca90)",
+        "--color-accent": "light-dark(#1b1b1b,#f1f1f1)",
+        "--color-text-accent": "light-dark(#1b1b1b,#f1f1f1)",
+        "--radius-container": "0.75rem",
+        "--_card-elevation": "0 0 transparent",
+        "--font-weight-bold": "700",
+        "--text-heading-6-weight": "600",
+        "--color-neutral": "light-dark(#0000000F,#ffffff1A)",
+        "--color-data-neutral": "light-dark(#8494A3,#8C939B)",
+        "--color-data-blue-4": "light-dark(#004CBC,#004CBC)",
+        "--spacing-5": "1.25rem",
+        "--_card-radius-end-end": "",
+        "--text-display-1-weight": "400",
+        "--font-size-xs": "min(calc(0.625rem * 1),min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))))",
+        "--_container-bleed-block-end": "0px",
+        "--color-data-purple-3": "light-dark(#9081FF,#9081FF)",
+        "--color-on-warning": "#111111",
+        "--color-info": "light-dark(#0074e2,#6d9cfe)",
+        "--shadow-inset-hover": "inset 0px 0px 0px 2px #0074e24D",
+        "--color-skeleton": "light-dark(#d4d4d4,#525252)",
+        "--color-text-orange": "light-dark(#622700,#ffb37e)",
+        "--color-background-muted": "light-dark(#f1f1f1,#1b1b1b)",
+        "--layout-padding-inner-x": "0.75rem",
+        "--color-on-error-muted": "light-dark(#76000c,#ffaea7)",
+        "--color-data-categorical-purple": "light-dark(#6B1EFD,#6B1EFD)",
+        "--color-warning-muted": "light-dark(#fae19e,#e2b6233D)",
+        "--container-padding-block-end": "0.75rem",
+        "--color-icon-orange": "light-dark(#622700,#ff9e55)",
+        "--spacing-4": "1rem",
+        "--color-on-success": "light-dark(#ffffff,#111111)",
+        "--spacing-1": "0.25rem",
+        "--shadow-inset-error": "inset 0px 0px 0px 2px #de47454D",
+        "--container-max-height": "",
+        "--color-data-gray-1": "light-dark(#F1F4F7,#F2F4F6)",
+        "--text-heading-5-size": "min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))))",
+        "--text-large-leading": "1.4118",
+        "--shadow-inset-selected": "inset 0px 0px 0px 2px #0074e280",
+        "--color-icon-secondary": "light-dark(#6a6a6a,#9e9e9e)",
+        "--color-overlay-hover": "light-dark(#0000000D,#ffffff0D)",
+        "--color-tint-hover": "light-dark(#000000,#ffffff)",
+        "--color-overlay-pressed": "light-dark(#0000001A,#ffffff1A)",
+        "--spacing-6": "1.5rem",
+        "--_card-radius": "0.75rem",
+        "--color-data-teal-5": "light-dark(#08767D,#08767D)",
+        "--color-data-categorical-green": "light-dark(#0B991F,#0B991F)",
+        "--_container-corner-end-end": "0.75rem",
+        "--font-size-2xl": "min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))",
+        "--color-icon-cyan": "light-dark(#004351,#71c7dd)",
+        "--shadow-high": "0 4px 6px light-dark(oklch(0 0 0/10%),oklch(0 0 0/50%)),0 12px 24px light-dark(oklch(0 0 0/15%),oklch(0 0 0/70%)),inset 0 0 0 1px light-dark(transparent,oklch(1 0 0/15%))",
+        "--color-on-light": "#111111",
+        "--color-icon-green": "light-dark(#00490b,#90ca90)",
+        "--color-background-pink": "light-dark(#ffc0d7,#572b3d)",
+        "--text-body-size": "min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))",
+        "--color-syntax-diff-header": "transparent",
+        "--spacing-0": "0rem",
+        "--color-icon-error": "light-dark(#c0262c,#ffaea7)",
+        "--color-background-gray": "light-dark(#e2e2e2,#303030)",
+        "--text-display-1-leading": "1.2381",
+        "--color-data-red-2": "light-dark(#FFB2B8,#FFB2B8)",
+        "--text-supporting-size": "min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))))",
+        "--font-size-2xs": "min(calc(0.5rem * 1),min(calc(0.625rem * 1),min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))))))",
+        "--color-border-green": "light-dark(#aad4a9,#6ab26b)",
+        "--font-size-5xl": "calc(2.625rem * 1)",
+        "--_container-host-radius-end-start": "",
+        "--color-data-gray-4": "light-dark(#5D6C7B,#666A72)",
+        "--text-heading-6-size": "min(calc(0.625rem * 1),min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))))",
+        "--color-border-pink": "light-dark(#ffc0d7,#fc78b1)",
+        "--color-text-info": "light-dark(#0067ce,#a1caff)",
+        "--color-data-yellow-2": "light-dark(#FCEC85,#FCEC85)",
+        "--color-text-warning": "light-dark(#836700,#eec448)",
+        "--color-border-emphasized": "light-dark(#d4d4d4,#525252)",
+        "--text-display-1-size": "calc(2.625rem * 1)",
+        "--color-background-green": "light-dark(#bce0bb,#2b422b)",
+        "--_card-radius-top-left": "",
+        "--color-icon-teal": "light-dark(#00463d,#81c9bb)",
+        "--layout-padding-inner-y": "0.75rem",
+        "--font-size-3xl": "min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))",
+        "--color-data-pink-2": "light-dark(#FEADE3,#FEADE3)",
+        "--color-error": "light-dark(#c9303a,#ff705d)",
+        "--font-family-heading": "Figtree,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif",
+        "--font-size-lg": "min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))",
+        "--color-data-teal-4": "light-dark(#0C9293,#0C9293)",
+        "--color-data-pink-1": "light-dark(#FCE3F4,#FCE3F4)",
+        "--color-border": "light-dark(#00000014,#ffffff1A)",
+        "--layout-padding-own-outer-y": "",
+        "--_card-radius-start-end": "",
+        "--color-accent-muted": "light-dark(#d4d4d4,#474747)",
+        "--color-data-categorical-cyan": "light-dark(#0171A4,#0171A4)",
+        "--text-heading-2-leading": "1.4",
+        "--color-background-popover": "light-dark(#ffffff,#1b1b1b)",
+        "--color-data-red-4": "light-dark(#D31130,#D31130)",
+        "--color-icon-pink": "light-dark(#70003f,#fd92bd)",
+        "--text-supporting-leading": "1.6667",
+        "--color-on-info-muted": "light-dark(#003978,#a1caff)",
+        "--color-on-success-muted": "light-dark(#00490b,#90ca90)",
+        "--color-data-shamrock-5": "light-dark(#0B603D,#0B603D)",
+        "--spacing-0-5": "0.125rem",
+        "--color-background-blue": "light-dark(#b9d7ff,#253c5a)",
+        "--color-syntax-function": "light-dark(#00458c,#a1caff)",
+        "--shadow-inset-success": "inset 0px 0px 0px 2px #2f7d334D",
+        "--_container-host-radius": "0.75rem",
+        "--_card-radius-start-start": "",
+        "--color-syntax-constant": "light-dark(#733100,#ffb37e)",
+        "--text-heading-3-weight": "700",
+        "--border-width": "1px",
+        "--text-heading-6-leading": "1.6",
+        "--color-overlay": "light-dark(#00000080,#000000CC)",
+        "--text-heading-4-leading": "1.4286",
+        "--container-corner-start-end": "0px",
+        "--container-padding-inline-start": "0.75rem",
+        "--color-border-success": "light-dark(#2f7d33,#90ca90)",
+        "--text-display-2-weight": "400",
+        "--color-syntax-tag": "light-dark(#8a0011,#ffaea7)",
+        "--color-text-blue": "light-dark(#003978,#a1caff)",
+        "--font-family-code": "ui-monospace,\"SF Mono\",Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace",
+        "--radius-inner": "0.375rem",
+        "--color-error-muted": "light-dark(#ffc4be,#ff98903D)",
+        "--text-large-size": "min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))",
+        "--_container-host-radius-start-start": "",
+        "--color-data-orange-1": "light-dark(#FFE6CF,#FFE6CF)",
+        "--color-data-gray-3": "light-dark(#AFB9C4,#B2B8BE)",
+        "--color-border-red": "light-dark(#ffaea7,#fa6762)",
+        "--layout-padding-outer-x": "0.75rem",
+        "--color-background-orange": "light-dark(#ffc7a1,#503424)",
+        "--color-text-red": "light-dark(#76000c,#ffaea7)",
+        "--color-syntax-type": "light-dark(#6b187c,#efa8ff)",
+        "--color-data-purple-4": "light-dark(#6B1EFD,#6B1EFD)",
+        "--text-code-leading": "1.4286",
+        "--radius-element": "0.625rem",
+        "--color-background-error-inverted": "light-dark(#AA071E,#E3193B)",
+        "--spacing-8": "2rem",
+        "--color-data-shamrock-3": "light-dark(#24BB5E,#24BB5E)",
+        "--color-info-muted": "light-dark(#b9d7ff,#88bcff3D)",
+        "--color-border-info": "light-dark(#0067ce,#a1caff)",
+        "--text-heading-3-size": "min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))",
+        "--color-text-teal": "light-dark(#00463d,#90d7c8)",
+        "--color-data-purple-1": "light-dark(#E8E8FB,#E8E8FB)",
+        "--text-label-size": "min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))",
+        "--text-heading-2-size": "min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))",
+        "--container-padding-block-start": "0.75rem",
+        "--color-border-error": "light-dark(#c0262c,#ffaea7)",
+        "--text-heading-1-leading": "1.3333",
+        "--color-data-red-1": "light-dark(#FEE4E6,#FEE4E6)",
+        "--layout-padding-outer-y": "0.75rem",
+        "--color-icon-blue": "light-dark(#003978,#88bcff)",
+        "--_container-host-radius-bottom-right": "",
+        "--color-data-blue-1": "light-dark(#DBECFF,#DBECFF)",
+        "--color-icon-red": "light-dark(#76000c,#ff9890)",
+        "--spacing-3": "0.75rem",
+        "--font-size-base": "min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))",
+        "--text-label-leading": "1.4286",
+        "--text-code-size": "min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))",
+        "--layout-padding-own-outer-x": "",
+        "--color-border-cyan": "light-dark(#85d5e9,#49adc4)",
+        "--_container-corner-start-start": "0.75rem",
+        "--color-data-orange-4": "light-dark(#D66100,#D66100)",
+        "--_container-bleed-block-start": "0px",
+        "--color-data-yellow-5": "light-dark(#8A5001,#8A5001)",
+        "--color-syntax-number": "light-dark(#733100,#ffb37e)",
+        "--color-syntax-punctuation": "light-dark(#525252,#b9b9b9)",
+        "--text-display-3-leading": "1.3793",
+        "--text-heading-1-weight": "600",
+        "--color-data-orange-3": "light-dark(#FD9537,#FD9537)",
+        "--color-syntax-attribute": "light-dark(#584400,#eec448)",
+        "--container-corner-end-end": "0px",
+        "--text-label-weight": "500",
+        "--color-data-pink-5": "light-dark(#8E1073,#8E1073)",
+        "--color-border-warning": "light-dark(#836700,#eec448)",
+        "--text-heading-3-leading": "1.4118",
+        "--radius-chat": "28px",
+        "--color-syntax-removed": "color-mix(in srgb,light-dark(#ffc4be,#ff98903D) 25%,transparent)",
+        "--text-heading-5-weight": "600",
+        "--spacing-10": "2.5rem",
+        "--_container-host-radius-end-end": "",
+        "--color-icon-disabled": "light-dark(#919191,#525252)",
+        "--text-body-leading": "1.4286",
+        "--container-padding-inline-end": "0.75rem",
+        "--color-syntax-variable": "light-dark(#111111,#e2e2e2)",
+        "--color-text-primary": "light-dark(#000000,#ffffff)",
+        "--color-background-body": "light-dark(#f1f1f1,#1b1b1b)",
+        "--color-text-purple": "light-dark(#5c0e6c,#eaacf8)",
+        "--radius-page": "1.75rem",
+        "--_container-host-radius-bottom-left": "",
+        "--color-data-teal-3": "light-dark(#0DB7AF,#0DB7AF)",
+        "--color-data-gray-5": "light-dark(#25363F,#333338)",
+        "--color-data-orange-2": "light-dark(#FDB876,#FDB876)",
+        "--color-data-red-5": "light-dark(#9D0519,#9D0519)",
+        "--color-data-yellow-3": "light-dark(#FBCE03,#FBCE03)",
+        "--color-data-purple-2": "light-dark(#B3B0FE,#B3B0FE)",
+        "--spacing-9": "2.25rem",
+        "--color-icon-yellow": "light-dark(#4b3900,#e2b623)",
+        "--_card-radius-bottom-left": "",
+        "--color-background-teal": "light-dark(#a9e2d6,#28413c)",
+        "--font-size-sm": "min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))))",
+        "--color-syntax-comment": "light-dark(#525252,#b9b9b9)",
+        "--color-background-cyan": "light-dark(#9ae2f4,#274046)",
+        "--color-syntax-property": "light-dark(#005348,#90d7c8)",
+        "--color-syntax-string": "light-dark(#0b5615,#a4d6a3)",
+        "--text-large-weight": "600",
+        "--font-size-3xs": "min(calc(0.4375rem * 1),min(calc(0.5rem * 1),min(calc(0.625rem * 1),min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))))))",
+        "--color-data-categorical-brown": "light-dark(#965E03,#965E03)",
+        "--color-background-red": "light-dark(#ffc4be,#5b2b28)",
+        "--color-warning": "#ffce2f",
+        "--color-data-pink-4": "light-dark(#D123A1,#D123A1)",
+        "--color-syntax-removed-marker": "light-dark(#525252,#b9b9b9)",
+        "--text-code-weight": "400",
+        "--color-text-success": "light-dark(#2f7d33,#90ca90)",
+        "--color-shadow": "light-dark(#0000001A,#0000004D)",
+        "--color-text-error": "light-dark(#c0262c,#ffaea7)",
+        "--color-syntax-added": "color-mix(in srgb,light-dark(#bce0bb,#90ca903D) 25%,transparent)",
+        "--color-success-muted": "light-dark(#bce0bb,#90ca903D)",
+        "--color-success": "light-dark(#198100,#64af4c)",
+        "--color-data-categorical-red": "light-dark(#F5394F,#F5394F)",
+        "--color-border-yellow": "light-dark(#e3c36c,#c29900)",
+        "--font-weight-semibold": "600",
+        "--color-text-gray": "light-dark(#1b1b1b,#d4d4d4)",
+        "--color-brand": "light-dark(#225BFF,#3D87FF)",
+        "--_card-radius-bottom-right": "",
+        "--color-background-surface": "light-dark(#ffffff,#262626)",
+        "--color-data-yellow-4": "light-dark(#D69804,#D69804)",
+        "--color-background-purple": "light-dark(#f7d5ff,#4a2f51)",
+        "--text-body-weight": "400",
+        "--color-on-accent": "light-dark(#ffffff,#111111)",
+        "--color-border-teal": "light-dark(#90d7c8,#4fb1a0)",
+        "--color-data-gray-2": "light-dark(#CCD3DB,#D0D3D6)",
+        "--color-border-orange": "light-dark(#ffc7a1,#df843f)",
+        "--spacing-2": "0.5rem",
+        "--color-on-dark": "#ffffff",
+        "--text-heading-1-size": "min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))",
+        "--color-track": "light-dark(#CCD3DB,#5A5E66)",
+        "--container-corner-start-start": "0px",
+        "--font-size-xl": "min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))",
+        "--color-data-categorical-indigo": "light-dark(#6F8AFF,#6F8AFF)",
+        "--color-syntax-added-marker": "light-dark(#525252,#b9b9b9)",
+        "--color-text-disabled": "light-dark(#919191,#525252)",
+        "--text-heading-5-leading": "1.6667",
+        "--text-display-3-size": "min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))",
+        "--text-heading-4-size": "min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))",
+        "--shadow-inset-warning": "inset 0px 0px 0px 2px #f8d36a4D",
+        "--radius-full": "9999px",
+        "--color-syntax-keyword": "light-dark(#6b187c,#efa8ff)",
+        "--shadow-med": "0 2px 4px light-dark(oklch(0 0 0/5%),oklch(0 0 0/35%)),0 4px 12px light-dark(oklch(0 0 0/10%),oklch(0 0 0/50%)),inset 0 0 0 1px light-dark(transparent,oklch(1 0 0/12%))",
+        "--color-text-cyan": "light-dark(#004351,#85d5e9)",
+        "--_container-host-radius-top-left": "",
+        "--color-data-teal-1": "light-dark(#D7FCF8,#D7FCF8)",
+        "--spacing-11": "2.75rem",
+        "--color-data-categorical-orange": "light-dark(#EB6E00,#EB6E00)",
+        "--color-data-shamrock-1": "light-dark(#D6FEE4,#D6FEE4)",
+        "--color-icon-gray": "light-dark(#474747,#9e9e9e)",
+        "--_card-radius-top-right": "",
+        "--_container-corner-end-start": "0.75rem",
+        "--color-background-card": "light-dark(#ffffff,#1b1b1b)",
+        "--font-weight-medium": "500",
+        "--font-weight-normal": "400",
+        "--color-data-blue-5": "light-dark(#02165E,#02165E)",
+        "--color-data-shamrock-2": "light-dark(#8EF7AA,#8EF7AA)",
+        "--color-data-orange-5": "light-dark(#A13F04,#A13F04)",
+        "--spacing-7": "1.75rem",
+        "--color-data-purple-5": "light-dark(#3E0697,#3E0697)",
+        "--text-heading-4-weight": "700",
+        "--color-background-inverted": "light-dark(#0A1317,#FFFFFF)",
+        "--text-display-2-size": "min(calc(2.1875rem * 1),calc(2.625rem * 1))",
+        "--color-text-yellow": "light-dark(#4b3900,#eec448)",
+        "--color-icon-success": "light-dark(#2f7d33,#90ca90)",
+        "--color-icon-purple": "light-dark(#5c0e6c,#e496f6)"
+      },
+      {
+        "--font-family-body": "Figtree,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif",
+        "--color-data-red-3": "light-dark(#FB7D87,#FB7D87)",
+        "--color-data-yellow-1": "light-dark(#FDF6BA,#FDF6BA)",
+        "--font-size-4xs": "min(calc(0.375rem * 1),min(calc(0.4375rem * 1),min(calc(0.5rem * 1),min(calc(0.625rem * 1),min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))))))))",
+        "--color-data-categorical-teal": "light-dark(#08A3A3,#08A3A3)",
+        "--color-background-yellow": "light-dark(#fae19e,#453a1c)",
+        "--color-syntax-operator": "light-dark(#525252,#b9b9b9)",
+        "--color-icon-accent": "light-dark(#1b1b1b,#f1f1f1)",
+        "--color-icon-info": "light-dark(#0067ce,#a1caff)",
+        "--color-data-shamrock-4": "light-dark(#138546,#138546)",
+        "--_container-host-radius-top-right": "",
+        "--text-supporting-weight": "400",
+        "--color-data-pink-3": "light-dark(#F989D3,#F989D3)",
+        "--spacing-1-5": "0.375rem",
+        "--color-on-info": "light-dark(#ffffff,#111111)",
+        "--spacing-12": "3rem",
+        "--color-border-gray": "light-dark(#d4d4d4,#262626)",
+        "--color-data-teal-2": "light-dark(#6CE6D8,#6CE6D8)",
+        "--color-data-categorical-pink": "light-dark(#F351C0,#F351C0)",
+        "--color-on-error": "light-dark(#ffffff,#111111)",
+        "--color-text-secondary": "light-dark(#474747,#9e9e9e)",
+        "--_card-radius-end-start": "",
+        "--container-corner-end-start": "0px",
+        "--color-text-pink": "light-dark(#70003f,#ffa9ca)",
+        "--radius-none": "0px",
+        "--color-icon-primary": "light-dark(#000000,#ffffff)",
+        "--color-data-categorical-blue": "light-dark(#0171E3,#0171E3)",
+        "--text-display-3-weight": "400",
+        "--color-border-blue": "light-dark(#a1caff,#5aa0f8)",
+        "--font-size-4xl": "min(calc(2.1875rem * 1),calc(2.625rem * 1))",
+        "--color-icon-warning": "light-dark(#836700,#eec448)",
+        "--text-display-2-leading": "1.2571",
+        "--color-border-purple": "light-dark(#f3bfff,#d885eb)",
+        "--_container-host-radius-start-end": "",
+        "--_container-corner-start-end": "0.75rem",
+        "--color-data-blue-3": "light-dark(#2694FE,#2694FE)",
+        "--color-syntax-background": "light-dark(#ffffff,#111111)",
+        "--text-heading-2-weight": "600",
+        "--astryx-card-padding": "0.75rem",
+        "--shadow-low": "0 2px 4px light-dark(oklch(0 0 0/5%),oklch(0 0 0/25%)),0 4px 8px light-dark(oklch(0 0 0/10%),oklch(0 0 0/40%)),inset 0 0 0 1px light-dark(transparent,oklch(1 0 0/8%))",
+        "--color-on-warning-muted": "light-dark(#4b3900,#eec448)",
+        "--color-data-blue-2": "light-dark(#78BEFF,#78BEFF)",
+        "--color-text-green": "light-dark(#00490b,#90ca90)",
+        "--color-accent": "light-dark(#1b1b1b,#f1f1f1)",
+        "--color-text-accent": "light-dark(#1b1b1b,#f1f1f1)",
+        "--radius-container": "0.75rem",
+        "--_card-elevation": "0 2px 4px light-dark(oklch(0 0 0/5%),oklch(0 0 0/35%)),0 4px 12px light-dark(oklch(0 0 0/10%),oklch(0 0 0/50%)),inset 0 0 0 1px light-dark(transparent,oklch(1 0 0/12%))",
+        "--font-weight-bold": "700",
+        "--text-heading-6-weight": "600",
+        "--color-neutral": "light-dark(#0000000F,#ffffff1A)",
+        "--color-data-neutral": "light-dark(#8494A3,#8C939B)",
+        "--color-data-blue-4": "light-dark(#004CBC,#004CBC)",
+        "--spacing-5": "1.25rem",
+        "--_card-radius-end-end": "",
+        "--text-display-1-weight": "400",
+        "--font-size-xs": "min(calc(0.625rem * 1),min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))))",
+        "--_container-bleed-block-end": "0px",
+        "--color-data-purple-3": "light-dark(#9081FF,#9081FF)",
+        "--color-on-warning": "#111111",
+        "--color-info": "light-dark(#0074e2,#6d9cfe)",
+        "--shadow-inset-hover": "inset 0px 0px 0px 2px #0074e24D",
+        "--color-skeleton": "light-dark(#d4d4d4,#525252)",
+        "--color-text-orange": "light-dark(#622700,#ffb37e)",
+        "--color-background-muted": "light-dark(#f1f1f1,#1b1b1b)",
+        "--layout-padding-inner-x": "0.75rem",
+        "--color-on-error-muted": "light-dark(#76000c,#ffaea7)",
+        "--color-data-categorical-purple": "light-dark(#6B1EFD,#6B1EFD)",
+        "--color-warning-muted": "light-dark(#fae19e,#e2b6233D)",
+        "--container-padding-block-end": "0.75rem",
+        "--color-icon-orange": "light-dark(#622700,#ff9e55)",
+        "--spacing-4": "1rem",
+        "--color-on-success": "light-dark(#ffffff,#111111)",
+        "--spacing-1": "0.25rem",
+        "--shadow-inset-error": "inset 0px 0px 0px 2px #de47454D",
+        "--container-max-height": "",
+        "--color-data-gray-1": "light-dark(#F1F4F7,#F2F4F6)",
+        "--text-heading-5-size": "min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))))",
+        "--text-large-leading": "1.4118",
+        "--shadow-inset-selected": "inset 0px 0px 0px 2px #0074e280",
+        "--color-icon-secondary": "light-dark(#6a6a6a,#9e9e9e)",
+        "--color-overlay-hover": "light-dark(#0000000D,#ffffff0D)",
+        "--color-tint-hover": "light-dark(#000000,#ffffff)",
+        "--color-overlay-pressed": "light-dark(#0000001A,#ffffff1A)",
+        "--spacing-6": "1.5rem",
+        "--_card-radius": "0.75rem",
+        "--color-data-teal-5": "light-dark(#08767D,#08767D)",
+        "--color-data-categorical-green": "light-dark(#0B991F,#0B991F)",
+        "--_container-corner-end-end": "0.75rem",
+        "--font-size-2xl": "min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))",
+        "--color-icon-cyan": "light-dark(#004351,#71c7dd)",
+        "--shadow-high": "0 4px 6px light-dark(oklch(0 0 0/10%),oklch(0 0 0/50%)),0 12px 24px light-dark(oklch(0 0 0/15%),oklch(0 0 0/70%)),inset 0 0 0 1px light-dark(transparent,oklch(1 0 0/15%))",
+        "--color-on-light": "#111111",
+        "--color-icon-green": "light-dark(#00490b,#90ca90)",
+        "--color-background-pink": "light-dark(#ffc0d7,#572b3d)",
+        "--text-body-size": "min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))",
+        "--color-syntax-diff-header": "transparent",
+        "--spacing-0": "0rem",
+        "--color-icon-error": "light-dark(#c0262c,#ffaea7)",
+        "--color-background-gray": "light-dark(#e2e2e2,#303030)",
+        "--text-display-1-leading": "1.2381",
+        "--color-data-red-2": "light-dark(#FFB2B8,#FFB2B8)",
+        "--text-supporting-size": "min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))))",
+        "--font-size-2xs": "min(calc(0.5rem * 1),min(calc(0.625rem * 1),min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))))))",
+        "--color-border-green": "light-dark(#aad4a9,#6ab26b)",
+        "--font-size-5xl": "calc(2.625rem * 1)",
+        "--_container-host-radius-end-start": "",
+        "--color-data-gray-4": "light-dark(#5D6C7B,#666A72)",
+        "--text-heading-6-size": "min(calc(0.625rem * 1),min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))))",
+        "--color-border-pink": "light-dark(#ffc0d7,#fc78b1)",
+        "--color-text-info": "light-dark(#0067ce,#a1caff)",
+        "--color-data-yellow-2": "light-dark(#FCEC85,#FCEC85)",
+        "--color-text-warning": "light-dark(#836700,#eec448)",
+        "--color-border-emphasized": "light-dark(#d4d4d4,#525252)",
+        "--text-display-1-size": "calc(2.625rem * 1)",
+        "--color-background-green": "light-dark(#bce0bb,#2b422b)",
+        "--_card-radius-top-left": "",
+        "--color-icon-teal": "light-dark(#00463d,#81c9bb)",
+        "--layout-padding-inner-y": "0.75rem",
+        "--font-size-3xl": "min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))",
+        "--color-data-pink-2": "light-dark(#FEADE3,#FEADE3)",
+        "--color-error": "light-dark(#c9303a,#ff705d)",
+        "--font-family-heading": "Figtree,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif",
+        "--font-size-lg": "min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))",
+        "--color-data-teal-4": "light-dark(#0C9293,#0C9293)",
+        "--color-data-pink-1": "light-dark(#FCE3F4,#FCE3F4)",
+        "--color-border": "light-dark(#00000014,#ffffff1A)",
+        "--layout-padding-own-outer-y": "",
+        "--_card-radius-start-end": "",
+        "--color-accent-muted": "light-dark(#d4d4d4,#474747)",
+        "--color-data-categorical-cyan": "light-dark(#0171A4,#0171A4)",
+        "--text-heading-2-leading": "1.4",
+        "--color-background-popover": "light-dark(#ffffff,#1b1b1b)",
+        "--color-data-red-4": "light-dark(#D31130,#D31130)",
+        "--color-icon-pink": "light-dark(#70003f,#fd92bd)",
+        "--text-supporting-leading": "1.6667",
+        "--color-on-info-muted": "light-dark(#003978,#a1caff)",
+        "--color-on-success-muted": "light-dark(#00490b,#90ca90)",
+        "--color-data-shamrock-5": "light-dark(#0B603D,#0B603D)",
+        "--spacing-0-5": "0.125rem",
+        "--color-background-blue": "light-dark(#b9d7ff,#253c5a)",
+        "--color-syntax-function": "light-dark(#00458c,#a1caff)",
+        "--shadow-inset-success": "inset 0px 0px 0px 2px #2f7d334D",
+        "--_container-host-radius": "0.75rem",
+        "--_card-radius-start-start": "",
+        "--color-syntax-constant": "light-dark(#733100,#ffb37e)",
+        "--text-heading-3-weight": "700",
+        "--border-width": "1px",
+        "--text-heading-6-leading": "1.6",
+        "--color-overlay": "light-dark(#00000080,#000000CC)",
+        "--text-heading-4-leading": "1.4286",
+        "--container-corner-start-end": "0px",
+        "--container-padding-inline-start": "0.75rem",
+        "--color-border-success": "light-dark(#2f7d33,#90ca90)",
+        "--text-display-2-weight": "400",
+        "--color-syntax-tag": "light-dark(#8a0011,#ffaea7)",
+        "--color-text-blue": "light-dark(#003978,#a1caff)",
+        "--font-family-code": "ui-monospace,\"SF Mono\",Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace",
+        "--radius-inner": "0.375rem",
+        "--color-error-muted": "light-dark(#ffc4be,#ff98903D)",
+        "--text-large-size": "min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))",
+        "--_container-host-radius-start-start": "",
+        "--color-data-orange-1": "light-dark(#FFE6CF,#FFE6CF)",
+        "--color-data-gray-3": "light-dark(#AFB9C4,#B2B8BE)",
+        "--color-border-red": "light-dark(#ffaea7,#fa6762)",
+        "--layout-padding-outer-x": "0.75rem",
+        "--color-background-orange": "light-dark(#ffc7a1,#503424)",
+        "--color-text-red": "light-dark(#76000c,#ffaea7)",
+        "--color-syntax-type": "light-dark(#6b187c,#efa8ff)",
+        "--color-data-purple-4": "light-dark(#6B1EFD,#6B1EFD)",
+        "--text-code-leading": "1.4286",
+        "--radius-element": "0.625rem",
+        "--color-background-error-inverted": "light-dark(#AA071E,#E3193B)",
+        "--spacing-8": "2rem",
+        "--color-data-shamrock-3": "light-dark(#24BB5E,#24BB5E)",
+        "--color-info-muted": "light-dark(#b9d7ff,#88bcff3D)",
+        "--color-border-info": "light-dark(#0067ce,#a1caff)",
+        "--text-heading-3-size": "min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))",
+        "--color-text-teal": "light-dark(#00463d,#90d7c8)",
+        "--color-data-purple-1": "light-dark(#E8E8FB,#E8E8FB)",
+        "--text-label-size": "min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))",
+        "--text-heading-2-size": "min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))",
+        "--container-padding-block-start": "0.75rem",
+        "--color-border-error": "light-dark(#c0262c,#ffaea7)",
+        "--text-heading-1-leading": "1.3333",
+        "--color-data-red-1": "light-dark(#FEE4E6,#FEE4E6)",
+        "--layout-padding-outer-y": "0.75rem",
+        "--color-icon-blue": "light-dark(#003978,#88bcff)",
+        "--_container-host-radius-bottom-right": "",
+        "--color-data-blue-1": "light-dark(#DBECFF,#DBECFF)",
+        "--color-icon-red": "light-dark(#76000c,#ff9890)",
+        "--spacing-3": "0.75rem",
+        "--font-size-base": "min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))",
+        "--text-label-leading": "1.4286",
+        "--text-code-size": "min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))",
+        "--layout-padding-own-outer-x": "",
+        "--color-border-cyan": "light-dark(#85d5e9,#49adc4)",
+        "--_container-corner-start-start": "0.75rem",
+        "--color-data-orange-4": "light-dark(#D66100,#D66100)",
+        "--_container-bleed-block-start": "0px",
+        "--color-data-yellow-5": "light-dark(#8A5001,#8A5001)",
+        "--color-syntax-number": "light-dark(#733100,#ffb37e)",
+        "--color-syntax-punctuation": "light-dark(#525252,#b9b9b9)",
+        "--text-display-3-leading": "1.3793",
+        "--text-heading-1-weight": "600",
+        "--color-data-orange-3": "light-dark(#FD9537,#FD9537)",
+        "--color-syntax-attribute": "light-dark(#584400,#eec448)",
+        "--container-corner-end-end": "0px",
+        "--text-label-weight": "500",
+        "--color-data-pink-5": "light-dark(#8E1073,#8E1073)",
+        "--color-border-warning": "light-dark(#836700,#eec448)",
+        "--text-heading-3-leading": "1.4118",
+        "--radius-chat": "28px",
+        "--color-syntax-removed": "color-mix(in srgb,light-dark(#ffc4be,#ff98903D) 25%,transparent)",
+        "--text-heading-5-weight": "600",
+        "--spacing-10": "2.5rem",
+        "--_container-host-radius-end-end": "",
+        "--color-icon-disabled": "light-dark(#919191,#525252)",
+        "--text-body-leading": "1.4286",
+        "--container-padding-inline-end": "0.75rem",
+        "--color-syntax-variable": "light-dark(#111111,#e2e2e2)",
+        "--color-text-primary": "light-dark(#000000,#ffffff)",
+        "--color-background-body": "light-dark(#f1f1f1,#1b1b1b)",
+        "--color-text-purple": "light-dark(#5c0e6c,#eaacf8)",
+        "--radius-page": "1.75rem",
+        "--_container-host-radius-bottom-left": "",
+        "--color-data-teal-3": "light-dark(#0DB7AF,#0DB7AF)",
+        "--color-data-gray-5": "light-dark(#25363F,#333338)",
+        "--color-data-orange-2": "light-dark(#FDB876,#FDB876)",
+        "--color-data-red-5": "light-dark(#9D0519,#9D0519)",
+        "--color-data-yellow-3": "light-dark(#FBCE03,#FBCE03)",
+        "--color-data-purple-2": "light-dark(#B3B0FE,#B3B0FE)",
+        "--spacing-9": "2.25rem",
+        "--color-icon-yellow": "light-dark(#4b3900,#e2b623)",
+        "--_card-radius-bottom-left": "",
+        "--color-background-teal": "light-dark(#a9e2d6,#28413c)",
+        "--font-size-sm": "min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))))))",
+        "--color-syntax-comment": "light-dark(#525252,#b9b9b9)",
+        "--color-background-cyan": "light-dark(#9ae2f4,#274046)",
+        "--color-syntax-property": "light-dark(#005348,#90d7c8)",
+        "--color-syntax-string": "light-dark(#0b5615,#a4d6a3)",
+        "--text-large-weight": "600",
+        "--font-size-3xs": "min(calc(0.4375rem * 1),min(calc(0.5rem * 1),min(calc(0.625rem * 1),min(calc(0.75rem * 1),min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))))))",
+        "--color-data-categorical-brown": "light-dark(#965E03,#965E03)",
+        "--color-background-red": "light-dark(#ffc4be,#5b2b28)",
+        "--color-warning": "#ffce2f",
+        "--color-data-pink-4": "light-dark(#D123A1,#D123A1)",
+        "--color-syntax-removed-marker": "light-dark(#525252,#b9b9b9)",
+        "--text-code-weight": "400",
+        "--color-text-success": "light-dark(#2f7d33,#90ca90)",
+        "--color-shadow": "light-dark(#0000001A,#0000004D)",
+        "--color-text-error": "light-dark(#c0262c,#ffaea7)",
+        "--color-syntax-added": "color-mix(in srgb,light-dark(#bce0bb,#90ca903D) 25%,transparent)",
+        "--color-success-muted": "light-dark(#bce0bb,#90ca903D)",
+        "--color-success": "light-dark(#198100,#64af4c)",
+        "--color-data-categorical-red": "light-dark(#F5394F,#F5394F)",
+        "--color-border-yellow": "light-dark(#e3c36c,#c29900)",
+        "--font-weight-semibold": "600",
+        "--color-text-gray": "light-dark(#1b1b1b,#d4d4d4)",
+        "--color-brand": "light-dark(#225BFF,#3D87FF)",
+        "--_card-radius-bottom-right": "",
+        "--color-background-surface": "light-dark(#ffffff,#262626)",
+        "--color-data-yellow-4": "light-dark(#D69804,#D69804)",
+        "--color-background-purple": "light-dark(#f7d5ff,#4a2f51)",
+        "--text-body-weight": "400",
+        "--color-on-accent": "light-dark(#ffffff,#111111)",
+        "--color-border-teal": "light-dark(#90d7c8,#4fb1a0)",
+        "--color-data-gray-2": "light-dark(#CCD3DB,#D0D3D6)",
+        "--color-border-orange": "light-dark(#ffc7a1,#df843f)",
+        "--spacing-2": "0.5rem",
+        "--color-on-dark": "#ffffff",
+        "--text-heading-1-size": "min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1))))",
+        "--color-track": "light-dark(#CCD3DB,#5A5E66)",
+        "--container-corner-start-start": "0px",
+        "--font-size-xl": "min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))",
+        "--color-data-categorical-indigo": "light-dark(#6F8AFF,#6F8AFF)",
+        "--color-syntax-added-marker": "light-dark(#525252,#b9b9b9)",
+        "--color-text-disabled": "light-dark(#919191,#525252)",
+        "--text-heading-5-leading": "1.6667",
+        "--text-display-3-size": "min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))",
+        "--text-heading-4-size": "min(calc(0.875rem * 1),min(calc(1.0625rem * 1),min(calc(1.25rem * 1),min(calc(1.5rem * 1),min(calc(1.8125rem * 1),min(calc(2.1875rem * 1),calc(2.625rem * 1)))))))",
+        "--shadow-inset-warning": "inset 0px 0px 0px 2px #f8d36a4D",
+        "--radius-full": "9999px",
+        "--color-syntax-keyword": "light-dark(#6b187c,#efa8ff)",
+        "--shadow-med": "0 2px 4px light-dark(oklch(0 0 0/5%),oklch(0 0 0/35%)),0 4px 12px light-dark(oklch(0 0 0/10%),oklch(0 0 0/50%)),inset 0 0 0 1px light-dark(transparent,oklch(1 0 0/12%))",
+        "--color-text-cyan": "light-dark(#004351,#85d5e9)",
+        "--_container-host-radius-top-left": "",
+        "--color-data-teal-1": "light-dark(#D7FCF8,#D7FCF8)",
+        "--spacing-11": "2.75rem",
+        "--color-data-categorical-orange": "light-dark(#EB6E00,#EB6E00)",
+        "--color-data-shamrock-1": "light-dark(#D6FEE4,#D6FEE4)",
+        "--color-icon-gray": "light-dark(#474747,#9e9e9e)",
+        "--_card-radius-top-right": "",
+        "--_container-corner-end-start": "0.75rem",
+        "--color-background-card": "light-dark(#ffffff,#1b1b1b)",
+        "--font-weight-medium": "500",
+        "--font-weight-normal": "400",
+        "--color-data-blue-5": "light-dark(#02165E,#02165E)",
+        "--color-data-shamrock-2": "light-dark(#8EF7AA,#8EF7AA)",
+        "--color-data-orange-5": "light-dark(#A13F04,#A13F04)",
+        "--spacing-7": "1.75rem",
+        "--color-data-purple-5": "light-dark(#3E0697,#3E0697)",
+        "--text-heading-4-weight": "700",
+        "--color-background-inverted": "light-dark(#0A1317,#FFFFFF)",
+        "--text-display-2-size": "min(calc(2.1875rem * 1),calc(2.625rem * 1))",
+        "--color-text-yellow": "light-dark(#4b3900,#eec448)",
+        "--color-icon-success": "light-dark(#2f7d33,#90ca90)",
+        "--color-icon-purple": "light-dark(#5c0e6c,#e496f6)"
+      }
+    ]
+  },
+  "pinnedBlobs": [
+    {
+      "path": ".github/visual-baseline/shots/core-press-feedback-touch--buttons__neutral-dark.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4e8a3a656b471855ed8cc59d3f86c5b2ccfcc9a6",
+      "size": 13302,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/4e8a3a656b471855ed8cc59d3f86c5b2ccfcc9a6"
+    },
+    {
+      "path": ".github/visual-baseline/shots/core-press-feedback-touch--buttons__neutral-light.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0f5a7e392e5f9d952f4c7eaaab1b81c73df3910f",
+      "size": 12930,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/0f5a7e392e5f9d952f4c7eaaab1b81c73df3910f"
+    },
+    {
+      "path": ".github/visual-baseline/shots/core-press-feedback-touch--controls__probe-dark.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3b1a4ac703e5ef9fe0b51e469f1e4bb312f6691c",
+      "size": 26712,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/3b1a4ac703e5ef9fe0b51e469f1e4bb312f6691c"
+    },
+    {
+      "path": ".github/visual-baseline/shots/core-press-feedback-touch--controls__probe-light.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "645d0280f3693af8912b68c5f99e21ded72b68a1",
+      "size": 26093,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/645d0280f3693af8912b68c5f99e21ded72b68a1"
+    },
+    {
+      "path": "docs/architecture/component-theming-surface.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "83deab857ec9587d647a2c03ebaa3b66c9ac5083",
+      "size": 50526,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/83deab857ec9587d647a2c03ebaa3b66c9ac5083"
+    },
+    {
+      "path": "docs/architecture/interaction-modality.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8ceed8dd174523d8fcee83950aeda368d80770fa",
+      "size": 30030,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/8ceed8dd174523d8fcee83950aeda368d80770fa"
+    },
+    {
+      "path": "docs/architecture/press-feedback.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5449e5530c3e21ec690894d11431e30a71304c1b",
+      "size": 26920,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/5449e5530c3e21ec690894d11431e30a71304c1b"
+    },
+    {
+      "path": "docs/architecture/public-component-api.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6d3ff5868cbeb2c8af61714afc0a10c40749f6d8",
+      "size": 48173,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/6d3ff5868cbeb2c8af61714afc0a10c40749f6d8"
+    },
+    {
+      "path": "docs/families/navigation-destinations.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6d70e962d86899cccb49a1ba1ce356e9c2dc86ea",
+      "size": 18529,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/6d70e962d86899cccb49a1ba1ce356e9c2dc86ea"
+    },
+    {
+      "path": "packages/cli/assets/templates/blocks/components/Hooks/useClickableContainerHookUsage.doc.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "67a3224c319d1f5c460513e8fba5747cc4656607",
+      "size": 715,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/67a3224c319d1f5c460513e8fba5747cc4656607"
+    },
+    {
+      "path": "packages/cli/assets/templates/blocks/components/Hooks/useClickableContainerHookUsage.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3feb69582cfcd5f4bf86dae5b4b85a8901d2014a",
+      "size": 2186,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/3feb69582cfcd5f4bf86dae5b4b85a8901d2014a"
+    },
+    {
+      "path": "packages/cli/assets/templates/blocks/components/Hooks/usePressFeedbackHookUsage.doc.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bf390e3c9d6c02c2d3a47e667e45619c4c5866d5",
+      "size": 716,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/bf390e3c9d6c02c2d3a47e667e45619c4c5866d5"
+    },
+    {
+      "path": "packages/cli/assets/templates/blocks/components/Hooks/usePressFeedbackHookUsage.test.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d9c2da4babdd8cd2da7e2def830622fa02caf90b",
+      "size": 4502,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/d9c2da4babdd8cd2da7e2def830622fa02caf90b"
+    },
+    {
+      "path": "packages/cli/assets/templates/blocks/components/Hooks/usePressFeedbackHookUsage.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e74f53d29c360b252feadeef83ce3565a0a411f7",
+      "size": 1299,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/e74f53d29c360b252feadeef83ce3565a0a411f7"
+    },
+    {
+      "path": "packages/core/src/__tests__/CardPress.a11y.chromium.spec.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a2a063cee82ae4d918250a60db4634f377d75748",
+      "size": 11189,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/a2a063cee82ae4d918250a60db4634f377d75748"
+    },
+    {
+      "path": "packages/core/src/__tests__/ReducedMotionPress.a11y.chromium.spec.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8cba8834a50c373e567218ed1b6ce86c69b6c98b",
+      "size": 15656,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/8cba8834a50c373e567218ed1b6ce86c69b6c98b"
+    },
+    {
+      "path": "packages/core/src/hooks/useClickableContainer.a11y.chromium.spec.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6cf15f846855d0a385b80bdf0fff9d1d536ceaff",
+      "size": 3437,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/6cf15f846855d0a385b80bdf0fff9d1d536ceaff"
+    },
+    {
+      "path": "packages/core/src/hooks/useClickableContainer.doc.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "92abfabcbf1b8e8cfd5ff927e473957c83924e82",
+      "size": 7305,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/92abfabcbf1b8e8cfd5ff927e473957c83924e82"
+    },
+    {
+      "path": "packages/core/src/hooks/useClickableContainer.test.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "97f505de2219f15108cf746ac9e7c92bdbaa9492",
+      "size": 11729,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/97f505de2219f15108cf746ac9e7c92bdbaa9492"
+    },
+    {
+      "path": "packages/core/src/hooks/useClickableContainer.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a505b76a262b69f3134ec1f77f4ffddf6fc7514b",
+      "size": 13443,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/a505b76a262b69f3134ec1f77f4ffddf6fc7514b"
+    },
+    {
+      "path": "packages/core/src/hooks/usePressFeedback.doc.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a43ebb0f8f2733db2d1ce894d514ce45b330f420",
+      "size": 5192,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/a43ebb0f8f2733db2d1ce894d514ce45b330f420"
+    },
+    {
+      "path": "packages/core/src/hooks/usePressFeedback.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9d3bda758ec5a10a9552cf71d5b0b0e0bd3a3018",
+      "size": 2462,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/9d3bda758ec5a10a9552cf71d5b0b0e0bd3a3018"
+    },
+    {
+      "path": "packages/core/src/privateAttributes/layerRoot.stylex.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cfb7349cacfbbca307ee48a2ad1223a206c3443d",
+      "size": 1670,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/cfb7349cacfbbca307ee48a2ad1223a206c3443d"
+    },
+    {
+      "path": "packages/core/src/utils/chainEventHandlers.test.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2d1d91154da4f1a45579c3fb1686fd6d9a94414a",
+      "size": 1118,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/2d1d91154da4f1a45579c3fb1686fd6d9a94414a"
+    },
+    {
+      "path": "packages/core/src/utils/chainEventHandlers.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "de202b90528550c4f004d93fde986bad885aa122",
+      "size": 1207,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/de202b90528550c4f004d93fde986bad885aa122"
+    },
+    {
+      "path": "packages/core/src/utils/disabledInteraction.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ea154f57a78dc6fe678791e881510e6dd56e6ffe",
+      "size": 1984,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/ea154f57a78dc6fe678791e881510e6dd56e6ffe"
+    },
+    {
+      "path": "packages/core/src/utils/focusOutline.stylex.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e240078cd7e5dbdc8e287d03a5933e94ac0e28a3",
+      "size": 9387,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/e240078cd7e5dbdc8e287d03a5933e94ac0e28a3"
+    },
+    {
+      "path": "packages/core/src/utils/interactionOverlay.cell.test.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "993e74ad3c34fae74152f694d6f76abd151367aa",
+      "size": 11906,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/993e74ad3c34fae74152f694d6f76abd151367aa"
+    },
+    {
+      "path": "packages/core/src/utils/interactionOverlay.exports.test.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3f77a057d57187ef74efdd8baf40bbd79e17a95d",
+      "size": 2152,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/3f77a057d57187ef74efdd8baf40bbd79e17a95d"
+    },
+    {
+      "path": "packages/core/src/utils/interactionOverlay.stylex.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3cf8008b6a0ae74b4fedce5212b91b05851c5d51",
+      "size": 13464,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/3cf8008b6a0ae74b4fedce5212b91b05851c5d51"
+    },
+    {
+      "path": "packages/core/src/utils/interactionOverlayXstyle.test.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3e6e4375b8d347769463812f5d574758e880a0e5",
+      "size": 1496,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/3e6e4375b8d347769463812f5d574758e880a0e5"
+    },
+    {
+      "path": "packages/core/src/utils/safeUrl.test.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "424960164a7c86ede52fa0e72ef3d1dd868bbfe7",
+      "size": 3442,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/424960164a7c86ede52fa0e72ef3d1dd868bbfe7"
+    },
+    {
+      "path": "packages/core/src/utils/safeUrl.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7cbae8b5c03604a6af50e2e30100ebaf47e4bc03",
+      "size": 3027,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/7cbae8b5c03604a6af50e2e30100ebaf47e4bc03"
+    },
+    {
+      "path": "packages/core/src/utils/themeProps.test.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "59ec41e36b3230e7c9b4a914e0aa062893bfab0d",
+      "size": 1928,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/59ec41e36b3230e7c9b4a914e0aa062893bfab0d"
+    },
+    {
+      "path": "packages/core/src/utils/themeProps.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b93fb205c539242dfb18982521175005cfc0653a",
+      "size": 2959,
+      "url": "https://api.github.com/repos/meta/astryx/git/blobs/b93fb205c539242dfb18982521175005cfc0653a"
+    }
+  ]
+}
