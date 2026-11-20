@@ -33,6 +33,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - CheckboxIndicator follows `Indicator/CheckboxIndicator.tsx` and the Indicator family contract at the same pin. See `docs/checkbox-indicator-port.md`.
 - RadioIndicator follows `Indicator/RadioIndicator.tsx` and `Indicator/indicator.markers.stylex.ts` at the same pin. See `docs/radio-indicator-port.md`.
 - VisuallyHidden follows `VisuallyHidden/VisuallyHidden.tsx`, its specification, and all four original templates at the same pin. See `docs/visually-hidden-port.md`.
+- LayoutContent follows `Layout/{LayoutContent.tsx,LayoutSlotsContext.ts}`, the shared `useScrollRegionProps` and overflow observation contracts, and its Basic and Showcase templates at the same pin. See `docs/layout-content-port.md`.
 - LayoutHeader and LayoutFooter follow `Layout/{LayoutHeader.tsx,LayoutFooter.tsx,LayoutDividerContext.ts}`, the shared container padding and block-bleed contracts, and their respective CLI templates at the same pin. See `docs/layout-header-port.md` and `docs/layout-footer-port.md`.
 - Section follows `Section/Section.tsx`, the shared Layout padding contract, its specification, and all three Section CLI templates. See `docs/section-port.md`.
 - Center follows `Center/Center.tsx`, its specification, and all three Center CLI templates at the same pin. See `docs/center-port.md`.

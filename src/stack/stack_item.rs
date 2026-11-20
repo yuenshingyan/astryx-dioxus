@@ -2,7 +2,7 @@ use dioxus::core::{AttributeValue, current_scope_id};
 use dioxus::prelude::*;
 
 use super::component::{StackElement, StackRenderProps};
-use crate::hooks::stack_item_scroll_region::use_scroll_region;
+use crate::hooks::use_scroll_region_props::use_scroll_region;
 
 /// Flex sizing for an item.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -78,6 +78,7 @@ pub fn StackItem(
         is_scrollable && !matches!(root, StackItemRoot::Custom(_)) && !has_attribute("role");
     let id = format!("stack-item-{}", current_scope_id().0);
     let is_group = use_scroll_region(
+        "data-astryx-item-scroll",
         id.clone(),
         matches!(root, StackItemRoot::Span),
         should_measure,

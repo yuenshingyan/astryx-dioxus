@@ -1,6 +1,11 @@
 use dioxus::prelude::*;
 
-pub(crate) fn use_scroll_region(id: String, is_span: bool, should_measure: bool) -> bool {
+pub(crate) fn use_scroll_region(
+    marker: &'static str,
+    id: String,
+    is_span: bool,
+    should_measure: bool,
+) -> bool {
     let mut overflows = use_signal(|| false);
     let mut controller = use_signal(|| None::<document::Eval>);
     use_drop(move || {
@@ -24,9 +29,9 @@ pub(crate) fn use_scroll_region(id: String, is_span: bool, should_measure: bool)
             let mut eval = document::eval(concat!(
                 include_str!("../utils/shared_resize_observer.js"),
                 "\n",
-                include_str!("stack_item_scroll_region.js"),
+                include_str!("use_scroll_region_props.js"),
             ));
-            let _ = eval.send(id);
+            let _ = eval.send((marker, id));
             controller.set(Some(eval));
             spawn(async move {
                 while let Ok(value) = eval.recv::<bool>().await {

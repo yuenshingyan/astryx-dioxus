@@ -1857,6 +1857,55 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
+@layer astryx-base {
+  .astryx-layout-content {
+    --_layout-content-padding: initial;
+    --_layout-content-inline: var(--layout-padding-inner-x, var(--spacing-4));
+    --_layout-content-outer-x: var(--layout-padding-own-outer-x, var(--layout-padding-outer-x, var(--spacing-4)));
+    --_layout-content-outer-y: var(--layout-padding-own-outer-y, var(--layout-padding-outer-y, var(--spacing-4)));
+    --_layout-content-start: var(--_layout-content-inline);
+    --_layout-content-end: var(--_layout-content-inline);
+    --_layout-content-top: var(--_layout-flush-block-start, var(--layout-padding-inner-y, var(--spacing-4)));
+    --_layout-content-bottom: var(--_layout-flush-block-end, var(--layout-padding-inner-y, var(--spacing-4)));
+    --container-padding-inline-start: var(--_layout-content-padding, var(--_layout-content-start));
+    --container-padding-inline-end: var(--_layout-content-padding, var(--_layout-content-end));
+    --container-padding-block-start: var(--_layout-content-padding, var(--_layout-content-top));
+    --container-padding-block-end: var(--_layout-content-padding, var(--_layout-content-bottom));
+    --_container-bleed-block-start: 0px;
+    --_container-bleed-block-end: 0px;
+    box-sizing: border-box;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow: clip;
+    padding-inline-start: var(--container-padding-inline-start);
+    padding-inline-end: var(--container-padding-inline-end);
+    padding-block-start: var(--container-padding-block-start);
+    padding-block-end: var(--container-padding-block-end);
+  }
+  .astryx-layout-content--scrollable { overflow: auto; }
+  .astryx-layout-content--open-start { --_layout-content-start: var(--_layout-content-outer-x); }
+  .astryx-layout-content--open-end { --_layout-content-end: var(--_layout-content-outer-x); }
+  .astryx-layout-content--open-header { --_layout-content-top: var(--_layout-content-outer-y); }
+  .astryx-layout-content--open-footer { --_layout-content-bottom: var(--_layout-content-outer-y); }
+  .astryx-layout-content--open-start:not(.astryx-layout-content--full-bleed) {
+    padding-inline-start: max(var(--container-padding-inline-start), calc(100cqi - var(--layout-alignment-width, 100cqi) + var(--container-padding-inline-start)));
+  }
+  .astryx-layout-content--open-end:not(.astryx-layout-content--full-bleed) {
+    padding-inline-end: max(var(--container-padding-inline-end), calc(100cqi - var(--layout-alignment-width, 100cqi) + var(--container-padding-inline-end)));
+  }
+  .astryx-layout-content--open-start.astryx-layout-content--open-end:not(.astryx-layout-content--full-bleed) {
+    padding-inline-start: max(var(--container-padding-inline-start), calc((100cqi - var(--layout-alignment-width, 100cqi)) / 2 + var(--container-padding-inline-start)));
+    padding-inline-end: max(var(--container-padding-inline-end), calc((100cqi - var(--layout-alignment-width, 100cqi)) / 2 + var(--container-padding-inline-end)));
+  }
+  .astryx-layout-content:has(> [data-container-corner]:first-child):not(:has(> * [data-container-corner])) {
+    --_container-bleed-block-start: var(--container-padding-block-start);
+  }
+  .astryx-layout-content:has(> [data-container-corner]:last-child):not(:has(> * [data-container-corner])) {
+    --_container-bleed-block-end: var(--container-padding-block-end);
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {
