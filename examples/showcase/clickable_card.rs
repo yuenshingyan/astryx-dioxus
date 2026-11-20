@@ -157,7 +157,7 @@ pub fn ClickableCardExamples() -> Element {
                 span{id:"cc-up-child",onmouseup:move |_|order.write().push_str("child-up|"),"Mouseup child"}
                 Button{id:"cc-order-button",label:"Independent ordered button",onclick:move |_|order.write().push_str("button|")}
             }
-            ClickableCard{id:"cc-raw",label:"Reserved and native builders",is_disabled:is_disabled(),attributes:vec![onclick(move |_|raw.write().push_str("reserved-click|")),onmouseup(move |_|raw.write().push_str("reserved-up|")),oncontextmenu(move |event|{event.prevent_default();raw.write().push_str("context|");}),onkeydown(move |_|raw.write().push_str("key|"))],"Native builder surface"}
+            ClickableCard{id:"cc-raw",label:"Reserved and native builders",is_disabled:is_disabled(),attributes:vec![onclick(move |_|raw.write().push_str("reserved-click|")),onmouseup(move |_|raw.write().push_str("reserved-up|")),oncontextmenu(move |event:MouseEvent|{event.prevent_default();raw.write().push_str("context|");}),onkeydown(move |_|raw.write().push_str("key|"))],"Native builder surface"}
             div{id:"cc-order-destination","Order destination"}
             div{id:"cc-variants",style:"display:flex;flex-wrap:wrap;gap:8px",
                 for variant in [CardVariant::DEFAULT,CardVariant::TRANSPARENT,CardVariant::MUTED,CardVariant::BLUE,CardVariant::CYAN,CardVariant::GRAY,CardVariant::GREEN,CardVariant::ORANGE,CardVariant::PINK,CardVariant::PURPLE,CardVariant::RED,CardVariant::TEAL,CardVariant::YELLOW,CardVariant::new("custom_Tier-7")?]{
