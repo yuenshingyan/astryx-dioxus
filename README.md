@@ -65,8 +65,11 @@ replay are recorded in [Stack verification](docs/stack-port.md). Private upstrea
 Token/Avatar/StackItem slices now render the original patterns, including named Avatar
 keyboard/hover tooltips and observable published action messages. Actual Rust screenshots,
 intrinsic geometry and paint are compared against captured Neutral-dark originals;
-nonzero raster differences and Toast presentation limits remain explicit. This does not
-complete public Token, Avatar, HStack, VStack, StackItem, Grid or Layout migrations.
+nonzero raster differences remain explicit. The [private Stack Toast slice](docs/stack-toast-port.md)
+now presents the published action messages with source-derived timing, queue, announcement
+and cleanup behavior; actual open Toast geometry/paint and selected interactions are compared
+in Chrome. This does not complete public Toast, Token, Avatar, HStack, VStack, StackItem,
+Grid or Layout migrations.
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.

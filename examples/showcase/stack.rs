@@ -12,11 +12,14 @@ mod avatar;
 mod pattern_tooltip;
 #[path = "../../src/stack_item/pattern.rs"]
 mod stack_item;
+#[path = "../../src/toast/pattern.rs"]
+mod toast;
 #[path = "../../src/token/pattern.rs"]
 mod token;
 
 use avatar::PatternAvatar;
 use stack_item::{PatternItemSize, PatternStackItem};
+use toast::{DemoToastViewport, use_demo_toasts};
 use token::PatternToken;
 const DEMO_CSS: &str = "
 .stack-frame { max-width:600px; padding:16px; }
@@ -28,6 +31,7 @@ const DEMO_CSS: &str = "
 /// The published action text is observable; no standalone supporting port is claimed.
 #[component]
 pub fn StackExamples() -> Element {
+    let toasts = use_demo_toasts();
     let mut action_message = use_signal(String::new);
     let mut action_count = use_signal(|| 0);
     let mut event_count = use_signal(|| 0);
@@ -40,7 +44,7 @@ pub fn StackExamples() -> Element {
         document::Style { "{DEMO_CSS}" }
         section { id: "stack-examples", class: "stack-frame",
             h2 { "Stack" }
-            p { "One-dimensional layout with private Token, Avatar and StackItem pattern slices. Avatar names are focusable tooltips. Actions announce the published demo messages; this is not a Toast migration." }
+            p { "One-dimensional layout with private Token, Avatar and StackItem pattern slices. Avatar names are focusable tooltips. Actions show the published demo messages in a private Toast slice; this is not a public Toast migration." }
             h3 { "Stack — Alignment" }
             Stack { id: "st-alignment", gap: SpacingStep::Three, width: SizeValue::from("100%"), style: "max-width:500px",
                 for (label, value) in [("Start (left)", StackAlignment::Start), ("Center", StackAlignment::Center), ("End (right)", StackAlignment::End)] {
@@ -49,10 +53,10 @@ pub fn StackExamples() -> Element {
                             Text { text_type: TextType::SUPPORTING, color: TextColor::SECONDARY, "{label}" }
                             Stack { direction: StackDirection::Horizontal, gap: SpacingStep::One, h_align: value,
                                 Button { label: "Cancel", variant: ButtonVariant::Secondary, size: ButtonSize::Small,
-                                    onclick: move |_| { action_message.set("Demo: your edits would be discarded here".into()); action_count += 1; }
+                                    onclick: move |_| { toasts.show("Demo: your edits would be discarded here"); action_message.set("Demo: your edits would be discarded here".into()); action_count += 1; }
                                 }
                                 Button { label: "Save", variant: ButtonVariant::Primary, size: ButtonSize::Small,
-                                    onclick: move |_| { action_message.set("Demo: your changes would be saved here".into()); action_count += 1; }
+                                    onclick: move |_| { toasts.show("Demo: your changes would be saved here"); action_message.set("Demo: your changes would be saved here".into()); action_count += 1; }
                                 }
                             }
                         }
@@ -83,13 +87,14 @@ pub fn StackExamples() -> Element {
                         }
                         PatternStackItem { size: PatternItemSize::Static,
                             Button { label: "View", variant: ButtonVariant::Secondary, size: ButtonSize::Small,
-                                onclick: move |_| { action_message.set("Demo: this profile would open here".into()); action_count += 1; }
+                                onclick: move |_| { toasts.show("Demo: this profile would open here"); action_message.set("Demo: this profile would open here".into()); action_count += 1; }
                             }
                         }
                     }
                 }
             }
-            output { id: "st-pattern-action", role: "status", "data-count": "{action_count}", "{action_message}" }
+            output { id: "st-pattern-action", hidden: true, "aria-hidden": "true", "data-count": "{action_count}", "{action_message}" }
+            DemoToastViewport { toasts, label: "Notifications", dismiss_label: "Dismiss notification" }
             h3 { "Source contract probes" }
             div { id: "st-matrix",
                 for direction in [StackDirection::Horizontal, StackDirection::Vertical] {
