@@ -193,16 +193,29 @@ try {
   const nativeExitPaints = await evaluate('nativeExit.hidePopover();getComputedStyle(nativeExit).display !== "none" && nativeExit.getAnimations().some(a=>a.playState === "running")');
   await evaluate('nativeExit.remove();pointer("pointerover")');
   await waitFor('open()'); await wait(300);
-  await evaluate('document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}))');
+  await evaluate('window.unrelated=tip().firstElementChild.animate([{opacity:1},{opacity:0.5}],{duration:5000});document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}))');
   assert.equal(await evaluate('!!e.style.getPropertyValue("anchor-name")'),nativeExitPaints,'retain anchor exactly when native discrete exit paints');
+  assert.equal(await evaluate('!open() && (getComputedStyle(tip()).display !== "none")'),nativeExitPaints,'closed surface only paints on engines with native support');
+  await waitFor('!e.style.getPropertyValue("anchor-name")');
+  assert.equal(await evaluate('unrelated.playState'),'running','anchor lifetime ends independently of child animation');
+  await evaluate('unrelated.cancel()');
   console.log(`Native discrete popover exit paints: ${nativeExitPaints} (false means immediate native hide, not an animated-exit pass)`);
   if (nativeExitPaints) {
     await evaluate('pointer("pointerover")'); await waitFor('open()');
+    await wait(300);
+    await evaluate('document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}));pointer("pointerover")');
+    await waitFor('open()');
     await wait(750);
     assert.equal(await evaluate('!!e.style.getPropertyValue("anchor-name")'),true,'old exit completion cannot detach reopened anchor');
     await evaluate('document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}))');
   }
   await wait(750); assert.equal(await evaluate('e.style.getPropertyValue("anchor-name")'),'','exit completion releases anchor');
+  await send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
+  await evaluate('pointer("pointerover")'); await waitFor('open()');
+  await evaluate('tip().style.setProperty("transition-property", "display, overlay, opacity", "important");document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}))');
+  assert.equal(await evaluate('!open() && getComputedStyle(tip()).display === "none" && !e.style.getPropertyValue("anchor-name")'),true,'consumer display exit is immediate under reduced motion');
+  assert.equal(await evaluate('tip().style.getPropertyValue("transition-property")'),'display, overlay, opacity','consumer inline transition property is restored');
+  assert.equal(await evaluate('tip().style.getPropertyPriority("transition-property")'),'important','consumer inline priority is restored');
   assert.deepEqual(page.errors,[],'no unhandled asynchronous module or presentation exceptions');
   console.log('Tooltip separate-module network hold/failure/recovery/stale resolution, source geometry/typography, native layout/modal and reduced/exit: PASS');
 } finally { await page.close(); await new Promise(resolve=>server.close(resolve)); }

@@ -9,7 +9,7 @@ const closeTransitionKeepsShown = tip => {
   return list('transition-property').some((name, index) =>
     (name === 'all' || name === 'display') &&
     behaviors[index % behaviors.length] === 'allow-discrete' &&
-    (durations[index % durations.length] || 0) + Math.max(0, delays[index % delays.length] || 0) > 0);
+    (durations[index % durations.length] || 0) + (delays[index % delays.length] || 0) > 0);
 };
 export const createLayerPresentation = (element, tip, placement) => {
   const name = `--astryx-truncation-${tip.id.replace(/[^a-zA-Z0-9_-]/g, '-')}`;
@@ -50,14 +50,26 @@ export const createLayerPresentation = (element, tip, placement) => {
     },
     hide() {
       const current = ++generation;
-      // Source has no default exit animation. A consumer's discrete display exit
-      // can keep painting; keep its anchor until its finite animations finish.
+      if (keepsShown && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const property = tip.style.getPropertyValue('transition-property');
+        const priority = tip.style.getPropertyPriority('transition-property');
+        tip.style.setProperty('transition-property', 'none', 'important');
+        tip.hidePopover();
+        // Commit the hidden state before restoring consumer transitions.
+        void getComputedStyle(tip).display;
+        if (property) tip.style.setProperty('transition-property', property, priority);
+        else tip.style.removeProperty('transition-property');
+        remove();
+        return;
+      }
       tip.hidePopover();
-      const animations = keepsShown
-        ? tip.getAnimations({subtree: true}).filter(a => a.playState === 'running' && a.effect?.getComputedTiming().endTime !== Infinity)
-        : [];
-      if (!animations.length) { remove(); return; }
-      Promise.allSettled(animations.map(a => a.finished)).then(() => { if (generation === current) remove(); });
+      // Parsing allow-discrete does not mean this engine paints a closed popover.
+      // Never keep the anchor alive for unrelated animations or fake a top layer.
+      const exit = keepsShown && getComputedStyle(tip).display !== 'none' && tip.getAnimations().find(a =>
+        a.transitionProperty === 'display' && a.playState === 'running');
+      if (!exit) { remove(); return; }
+      const finish = () => { if (generation === current) remove(); };
+      exit.finished.then(finish, finish);
     },
     dispose() { generation++; remove(); tip.remove(); },
   };

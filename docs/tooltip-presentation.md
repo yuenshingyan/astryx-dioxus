@@ -62,11 +62,10 @@ was also downloaded/verified (`69b053e64622468f34212b9b3b7dc274c8f38947`).
   a coarse primary pointer uses the fixed 200ms easeInOut opacity fade.
 - The source declares **no default exit animation**. Default hide is immediate,
   retaining the layer/description but releasing its anchor. Consumer-authored
-  discrete display exits retain the anchor through finite running animations;
-  generation guards prevent old completion from detaching a reopened layer.
-  As in pinned `useLayer`, the closed state's display/allow-discrete transition
-  gates that wait: unrelated finite animations in hidden content cannot retain
-  an anchor. Disposal removes it immediately and releases resources.
+  discrete display exits retain the anchor only while a running native `display`
+  transition keeps the closed popover visible. Unrelated animations cannot delay
+  cleanup, and a prior exit cannot detach a reopened layer. Reduced motion skips
+  even consumer-authored exits. Disposal removes the anchor immediately.
 
 No public API, new dependency, diagnostic suppression or ownership relocation.
 This does not implement unrelated Layer alignment/custom-positioning APIs,
@@ -174,9 +173,10 @@ measures whether a custom exit actually paints rather than trusting
 `CSS.supports`. Chromium paints it and tests retention, reopened-generation safety
 and completion. Firefox/WebKit parse the CSS but immediately hide the popover
 (no running exit); their immediate anchor release is verified. **Animated custom
-popover exits are not certified in Firefox/WebKit**; no JS exit polyfill is added.
-The earlier unconditional animated-exit assertions failed in both engines; this
-native limitation is recorded rather than relabeled an animated-exit success.
+popover exits are not implemented in Firefox/WebKit**. Immediate dismissal is
+intentional where native top-layer painting is unavailable: this preserves the
+browser's modal, positioning and focus behavior rather than substituting a
+second surface or keeping a logically dismissed popover open.
 The WebKit polling helper now uses bounded 25ms polling rather than animation-frame
 polling, which had sampled after the 200ms hover window. The new Chromium
 blur-during-load test explicitly establishes keyboard modality after navigation.
