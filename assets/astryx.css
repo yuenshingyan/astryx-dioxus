@@ -1617,6 +1617,31 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-code[data-size="inherit"] { font-size: inherit; line-height: inherit; }
 }
 
+@layer astryx-base {
+  .astryx-center {
+    --_center-width: initial;
+    --_center-height: initial;
+    --_center-max-width: initial;
+    --_center-min-height: initial;
+    --_center-padding-inline-start: initial;
+    --_center-padding-inline-end: initial;
+    --_center-padding-block-start: initial;
+    --_center-padding-block-end: initial;
+    display: flex;
+    width: var(--_center-width);
+    height: var(--_center-height);
+    max-width: var(--_center-max-width);
+    min-height: var(--_center-min-height);
+    padding-inline-start: var(--_center-padding-inline-start);
+    padding-inline-end: var(--_center-padding-inline-end);
+    padding-block-start: var(--_center-padding-block-start);
+    padding-block-end: var(--_center-padding-block-end);
+  }
+  .astryx-center--inline { display: inline-flex; }
+  .astryx-center:is([data-axis="both"], [data-axis="horizontal"]) { justify-content: center; }
+  .astryx-center:is([data-axis="both"], [data-axis="vertical"]) { align-items: center; }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

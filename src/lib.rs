@@ -8,6 +8,7 @@ mod blockquote;
 mod button;
 mod button_group;
 mod card;
+mod center;
 mod clickable_card;
 mod code;
 mod compatibility;
@@ -44,6 +45,7 @@ pub use blockquote::{Blockquote, BlockquoteCite};
 pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, ButtonVariant};
 pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation};
 pub use card::{Card, CardVariant, InvalidCardVariant};
+pub use center::{Center, CenterAxis, CenterProps};
 pub use clickable_card::{ClickableCard, ClickableCardError};
 pub use code::{Code, CodeColor, CodeProps, CodeSize};
 pub use divider::{
