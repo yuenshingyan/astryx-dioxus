@@ -1,0 +1,21 @@
+<!doctype html><meta charset="utf-8">
+<!-- Source-derived, not an executed React/StyleX build. Pin 476a3153417dbf75c565f7df05b0784e94ddd59e:
+ Tooltip/useTooltip container/content; Layer/useLayer centered area, margins and clear fallback;
+ layerViewportInset and layerSlideRules. No live fonts or services. -->
+<style>
+:root { --spacing-1:4px; --spacing-2:8px; --spacing-4:16px; }
+body { margin:0; font-family:Arial; }
+#anchor { position:fixed; left:240px; top:220px; width:80px; height:24px; anchor-name:--original; }
+#tip { position:fixed; position-anchor:--original; position-area:self-block-start; align-self:unsafe self-end; inset:auto; inset-inline:0; margin:16px 16px 4px; padding:0; border:0; background:light-dark(#0a1317,#fff); color:light-dark(#fff,#1f1f22); border-radius:12px; font-family:Arial; font-size:14px; line-height:1.4286; max-inline-size:calc(100vi - 32px); max-block-size:calc(100dvb - 32px); overflow:auto; box-sizing:border-box; position-try-fallbacks:flip-block,--original-beside-end,--original-beside-start,--original-fit-above,--original-fit-below; }
+#tip > div { padding:4px 8px; max-width:300px; word-break:break-word; }
+@position-try --original-beside-end { position-area:self-inline-end span-all; margin:16px 16px 16px 4px; inset-block:0; inline-size:max-content; align-self:normal; justify-self:unsafe self-start; }
+@position-try --original-beside-start { position-area:self-inline-start span-all; margin:16px 4px 16px 16px; inset-block:0; inline-size:max-content; align-self:normal; justify-self:unsafe self-end; }
+@position-try --original-fit-above { position-area:self-block-start span-all; margin:16px 16px 4px; inset-inline:0; block-size:max(calc(100% - 20px),calc((100dvb - anchor-size(block)) / 2 - 21px)); align-self:unsafe self-end; }
+@position-try --original-fit-below { position-area:self-block-end span-all; margin:4px 16px 16px; inset-inline:0; block-size:max(calc(100% - 20px),calc((100dvb - anchor-size(block)) / 2 - 21px)); align-self:unsafe self-start; }
+</style>
+<span id="anchor">Clipped</span><div id="tip" role="tooltip" popover="manual"><div>Original tooltip body content with enough words to wrap across multiple lines.</div></div>
+<script>
+const params = new URLSearchParams(location.search);
+for (const property of ['left', 'top']) if (params.has(property)) anchor.style[property] = `${Number(params.get(property))}px`;
+tip.showPopover();
+</script>

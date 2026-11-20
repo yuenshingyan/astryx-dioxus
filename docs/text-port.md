@@ -1,9 +1,10 @@
 # Text checkpoint and verification
 
-**Not marked complete.** Typography, measurement and the approved shared truncation
-interest/Tooltip lifecycle follow-up are implemented. Independent module loading
-and full upstream Layer presentation remain framework/bridge limits, not passed
-fidelity checks. No public Tooltip, Table, Stack, Theme, Heading or Code port is claimed.
+**Not marked complete.** Typography, measurement, the approved shared truncation
+interest lifecycle and private demand-loaded Tooltip/Layer presentation subset are
+implemented. See [presentation verification](tooltip-presentation.md) for loading,
+native anchor fallback, typography and exit/media evidence. This is not a full
+public Tooltip/Layer, Table, Stack or Theme port.
 
 ## Authority and ownership
 
@@ -149,23 +150,21 @@ regression scope. Implemented contracts:
   explicit Tooltip, StatusDot/ProgressBar policy, native-modal/portal and
   announcements remain on their existing paths.
 
-**Lazy boundary verified against source, not claimed passed:** pinned
-`TruncationTooltip.tsx` calls `createModuleLoader(() => import('../Tooltip/Tooltip'))`
-when overflow enables the tooltip (before interest), uses the loaded module
-synchronously on interest, and holds interest while an import is unresolved.
-This Dioxus bridge uses Rust `include_str!` concatenation and `document::eval`;
-Tooltip JS is statically in that bridge. First-interest DOM is lazy, but there
-is no independent module download, import-pending/rejection state, React
-Suspense boundary, or chunk-loading race proof. No new dependency or public
-API was introduced to pretend otherwise. This remains a fidelity limit.
+The presentation follow-up replaces the former bundled-code limit with two
+separate Dioxus asset modules under Tooltip and Layer. Overflow preloads them
+before interest; pending hover/focus/completed-tap state is held safely, cancelled
+on dismissal, and discarded after disable/overflow loss/removal. Failed imports
+recover on later interest through a fresh module URL. The existing shared
+explicit Tooltip and Button cut-label paths remain unchanged.
 
-This task does not port the whole public Tooltip/Layer stack: existing fixed
-positioning/Popover presentation is retained, rather than claiming upstream
-CSS-anchor fallback, exit-animation or theme-compiler equivalence. The existing
-Tooltip label typography also remains a bridge limitation, not a source-body
-Typography verification. Independently executed React comparison, full public
-Tooltip semantics and manual/other-engine checks below remain unverified.
-No approval for unrelated refactors or completion exceptions is inferred.
+Private truncation surfaces now use source body typography, native CSS anchor
+placement/fallback, modal-local hosting and the source entrance/reduced-motion
+rules. Default close is immediate (the source declares no default exit);
+consumer discrete-display exits keep their anchor until finite animation
+completion. Full public Layer/Tooltip APIs, software-keyboard clearance, theme
+compiler equivalence and independently executed upstream React comparison are
+not claimed. See [presentation verification](tooltip-presentation.md) for exact
+scope, source hashes, offline network/browser evidence and regression results.
 
 ## Verification
 

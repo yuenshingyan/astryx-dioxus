@@ -82,6 +82,7 @@ try {
     const anchor=await page.evaluate(`(()=>{const r=document.querySelector('#heading-placement').getBoundingClientRect();return {x:r.x+10,y:r.y+10}})()`);
     await page.send('Input.dispatchMouseEvent',{type:'mouseMoved',...anchor});
     await page.waitFor(`!!document.querySelector('[role=tooltip]:popover-open')`);
+    await page.waitFor(`document.querySelector('[role=tooltip]:popover-open').getAnimations().every(animation=>animation.playState==='finished')`);
     const rects=await page.evaluate(`(()=>{const a=document.querySelector('#heading-placement').getBoundingClientRect(),t=document.querySelector('[role=tooltip]:popover-open').getBoundingClientRect();return {anchor:{left:a.left,right:a.right},tip:{left:t.left,right:t.right}}})()`);
     assert.ok(dir==='ltr'?rects.tip.left>rects.anchor.right:rects.tip.right<rects.anchor.left,`${dir} logical end: ${JSON.stringify(rects)}`);
     await page.send('Input.dispatchMouseEvent',{type:'mouseMoved',x:999,y:0});

@@ -16,8 +16,12 @@ export const createLayerPresentation = (element, tip, placement) => {
     show() {
       generation++;
       add();
+      // Read the settled box, not the entrance's translated first frame. Otherwise
+      // the measured gap can itself include the travel and let the tip cross its anchor.
+      const animation = tip.style.getPropertyValue('animation');
+      const priority = tip.style.getPropertyPriority('animation');
+      tip.style.setProperty('animation', 'none', 'important');
       tip.showPopover();
-      // The entrance follows the actual landing side, including a native flip.
       const a = element.getBoundingClientRect(), b = tip.getBoundingClientRect();
       const x = b.right <= a.left ? 1 : b.left >= a.right ? -1 : 0;
       const y = b.bottom <= a.top ? 1 : b.top >= a.bottom ? -1 : 0;
@@ -26,6 +30,8 @@ export const createLayerPresentation = (element, tip, placement) => {
       tip.style.setProperty('--_astryx-layer-enter-origin', `${x === 1 ? '100%' : x === -1 ? '0%' : '50%'} ${y === 1 ? '100%' : y === -1 ? '0%' : '50%'}`);
       const gap = x === 1 ? a.left - b.right : x === -1 ? b.left - a.right : y === 1 ? a.top - b.bottom : b.top - a.bottom;
       tip.style.setProperty('--_astryx-layer-enter-gap', `${Math.max(0, gap)}px`);
+      if (animation) tip.style.setProperty('animation', animation, priority);
+      else tip.style.removeProperty('animation');
     },
     hide() {
       const current = ++generation;

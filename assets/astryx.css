@@ -140,6 +140,7 @@
   --focus-outline-color: var(--color-accent);
   --focus-outline-offset: 3px;
   --duration-fast: 175ms;
+  --duration-fast-max: 230ms;
   --duration-exit: var(--duration-fast);
   --ease-exit: cubic-bezier(0.3, 0, 0.6, 0.6);
   --duration-medium-min: 310ms;
@@ -231,6 +232,7 @@
   --_button-radius: var(--radius-element);
   --focus-outline-color: var(--color-accent);
   --duration-fast: 125ms;
+  --duration-fast-max: 165ms;
   --duration-medium-min: 225ms;
   --duration-medium: 300ms;
   --duration-medium-max: 400ms;
@@ -443,8 +445,8 @@
   padding: 0;
   border: 0;
   box-sizing: border-box;
-  max-inline-size: calc(100vi - 2 * var(--_astryx-gutter-inline));
-  max-block-size: calc(100dvb - 2 * var(--_astryx-gutter-block));
+  max-inline-size: calc(100vi - max(var(--spacing-4), env(safe-area-inset-left, 0px)) - max(var(--spacing-4), env(safe-area-inset-right, 0px)) - var(--astryx-layer-inset-inline-start, 0px) - var(--astryx-layer-inset-inline-end, 0px));
+  max-block-size: calc(100dvb - max(var(--spacing-4), env(safe-area-inset-top, 0px)) - max(var(--spacing-4), env(safe-area-inset-bottom, 0px)) - var(--astryx-layer-inset-block-start, 0px) - var(--astryx-layer-inset-block-end, 0px));
   overflow: auto;
   background: var(--color-background-inverted);
   color: var(--color-background-surface);
@@ -452,9 +454,21 @@
   font-family: var(--font-family-body);
   font-size: var(--text-body-size);
   line-height: var(--text-body-leading);
-  font-weight: normal;
+  font-weight: var(--text-body-weight);
+  font-style: normal;
   text-align: start;
+  text-align-last: auto;
+  text-indent: 0;
+  text-transform: none;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-shadow: none;
   white-space: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: manual;
+  --step-connector-gap: initial;
+  --_astryx-text-overflow-wrap: initial;
 }
 .astryx-truncation-tooltip:not(:popover-open) { display: none; }
 .astryx-truncation-tooltip__content {
@@ -464,7 +478,7 @@
   word-break: break-word;
 }
 .astryx-truncation-tooltip[data-placement="above"] {
-  position-area: self-block-start span-all;
+  position-area: self-block-start;
   align-self: unsafe self-end;
   margin-block: var(--_astryx-gutter-block) var(--spacing-1);
   margin-inline: var(--_astryx-gutter-inline);
@@ -472,7 +486,7 @@
   position-try-fallbacks: flip-block, --astryx-truncation-beside-end, --astryx-truncation-beside-start, --astryx-truncation-fit-above, --astryx-truncation-fit-below;
 }
 .astryx-truncation-tooltip[data-placement="below"] {
-  position-area: self-block-end span-all;
+  position-area: self-block-end;
   align-self: unsafe self-start;
   margin-block: var(--spacing-1) var(--_astryx-gutter-block);
   margin-inline: var(--_astryx-gutter-inline);
@@ -482,15 +496,16 @@
 .astryx-truncation-tooltip[data-placement="start"],
 .astryx-truncation-tooltip[data-placement="end"] {
   margin-block: var(--_astryx-gutter-block);
-  position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline, --astryx-truncation-slide-start, --astryx-truncation-slide-end;
 }
 .astryx-truncation-tooltip[data-placement="start"] {
   position-area: self-inline-start;
   margin-inline: var(--_astryx-gutter-inline) var(--spacing-1);
+  position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline, left span-top, left span-bottom, right span-top, right span-bottom, --astryx-truncation-slide-start, --astryx-truncation-slide-end;
 }
 .astryx-truncation-tooltip[data-placement="end"] {
   position-area: self-inline-end;
   margin-inline: var(--spacing-1) var(--_astryx-gutter-inline);
+  position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline, right span-top, right span-bottom, left span-top, left span-bottom, --astryx-truncation-slide-end, --astryx-truncation-slide-start;
 }
 @position-try --astryx-truncation-beside-end {
   position-area: self-inline-end span-all;
@@ -544,7 +559,7 @@
 }
 @keyframes astryx-truncation-fade { from { opacity: 0; } to { opacity: 1; } }
 .astryx-truncation-tooltip:popover-open {
-  animation: astryx-truncation-enter var(--duration-fast-max, 200ms) var(--ease-standard) backwards;
+  animation: astryx-truncation-enter var(--duration-fast-max) var(--ease-standard) backwards;
   transform-origin: var(--_astryx-layer-enter-origin, 50% 50%);
 }
 @media (prefers-reduced-motion: reduce) and (not (pointer: coarse)) {

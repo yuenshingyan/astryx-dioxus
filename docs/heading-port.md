@@ -1,9 +1,9 @@
 # Heading port checkpoint
 
 **Not marked complete:** Heading-specific implementation and evidence are present,
-and Heading now uses the integrated shared Tooltip lifecycle. The independent
-Tooltip module-loading and presentation limits in [Text verification](text-port.md)
-still apply. No public Tooltip port, independently executed upstream appearance
+including the integrated shared Tooltip lifecycle and private demand-loaded
+presentation subset. See [presentation verification](tooltip-presentation.md).
+No full public Tooltip/Layer port, independently executed upstream appearance
 comparison, or full accessibility conformance is claimed.
 
 ## Authority and ownership
@@ -102,7 +102,8 @@ closed tooltip mounted, gates focus on the actual trigger, and uses completed
 touch/pen click to toggle. Heading's browser suite verifies that dismissal closes
 the tooltip without removing its description target, and checks logical placement
 of the open tooltip in both directions. Heading does not duplicate this behavior.
-See [Text verification](text-port.md) for remaining module-loading and presentation limits.
+See [presentation verification](tooltip-presentation.md) for separate module-loading,
+native placement/fallback, body typography and exit/reduced-motion evidence and limits.
 
 The source itself records a keyboard reachability gap: a plain truncated Heading
 is not focusable, so sighted keyboard users cannot reveal the clipped text. Full

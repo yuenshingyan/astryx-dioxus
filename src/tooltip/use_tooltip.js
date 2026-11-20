@@ -3,8 +3,14 @@
 // Press only notifies dismissal.
 const createTooltipController = ({ records, listen, later, cancelTimer }) => {
   const moduleKey = Symbol.for('astryx.dioxus.truncation-presentation.v1');
-  const modules = document[moduleKey] ||= { loaded: null, pending: null, attempt: 0 };
+  const urls = typeof truncationPresentationUrls === 'undefined' ? null : truncationPresentationUrls.join(' ');
+  const cached = document[moduleKey];
+  // Content-hashed asset URLs must not reuse presentation from an older build
+  // if a renderer replaces its controllers without navigating the document.
+  const modules = cached?.urls === urls ? cached
+    : (document[moduleKey] = { urls, loaded: null, pending: null, attempt: 0 });
   const preload = record => {
+    if (urls === null) return Promise.reject(new Error('Truncation presentation asset URLs were not provided'));
     if (modules.loaded) return Promise.resolve(modules.loaded);
     if (!modules.pending) {
       const suffix = modules.attempt++ ? `?recovery=${modules.attempt}` : '';
@@ -114,6 +120,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
       whenReady(record, () => showTip(record, text, automatic, isClosed), isClosed ? 'mount' : 'interest');
       return;
     }
+    if (record.isTruncation) text = record.truncationText || text;
     if (record.tooltipPolicy && !record.tooltipPolicy.isEnabled(record)) return;
     if (record.isPinned && record.tip) return;
     if (!isClosed && visibleTip?.isPinned && visibleTip !== record) return;
@@ -122,7 +129,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     const existing = record.retainedTip || (!automatic && document.getElementById(`${record.id}-tooltip`));
     const tip = existing || document.createElement('div');
     tip.id = `${record.id}-tooltip`;
-    tip.className = 'astryx-tooltip astryx-button-tooltip';
+    tip.className = record.isTruncation ? 'astryx-tooltip astryx-truncation-tooltip' : 'astryx-tooltip astryx-button-tooltip';
     tip.setAttribute('role', 'tooltip');
     tip.setAttribute('popover', 'manual');
     if (record.truncationPresentation) record.truncationPresentation.update(text);
@@ -130,7 +137,7 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     // Copy inherited theme/typography onto the top-layer surface, not body defaults.
     const css = getComputedStyle(record.element);
     ['--color-background-inverted', '--color-background-surface', '--radius-container', '--text-label-size', '--text-label-leading'].forEach(name => tip.style.setProperty(name, css.getPropertyValue(name)));
-    tip.style.fontFamily = css.fontFamily;
+    if (!record.isTruncation) tip.style.fontFamily = css.fontFamily;
     if (!existing) {
       // Automatic Text tips must not become part of an enclosing link's name.
       const host = automatic && record.isTruncation
@@ -297,9 +304,15 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
     record.retainedTip?.remove(); record.retainedTip = null; record.ownedTip = null;
   };
   listenForTruncationOutsideDismiss({ records, listen, hide: hideTip });
+  for (const type of ['pointerup', 'pointercancel']) listen(document, type, event => {
+    for (const record of records.values()) {
+      if (record.isTruncation && !record.element.contains(event.target)) forgetPending(record);
+    }
+  }, {capture: true, passive: true});
   const truncationInterest = createTruncationInterest({ records, listen,
     preload(record) { preload(record).catch(() => {}); },
     mount(record, text) {
+      record.truncationText = text;
       if (callerTooltip(record)) return false;
       for (let parent = record.element.parentElement; parent; parent = parent.parentElement) {
         if (records.get(parent)?.tooltip || callerTooltip({ element: parent })) return false;

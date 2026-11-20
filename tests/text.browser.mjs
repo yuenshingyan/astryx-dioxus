@@ -44,6 +44,8 @@ try {
     compare(actual, reference, mode);
   }
   await click('tx-theme');
+  await waitFor('!!document[Symbol.for("astryx.dioxus.truncation-presentation.v1")]?.loaded');
+  assert.equal(await evaluate('performance.getEntriesByType("resource").filter(entry=>/\\/assets\\/truncation_presentation-.*\\.js$/.test(new URL(entry.name).pathname)).length'),2,'Dioxus requests separate Tooltip and Layer asset modules');
   assert.deepEqual(await evaluate('["tx-hook-build","tx-hook-bundle","tx-hook-readme"].map(id=>document.getElementById(id).nextElementSibling.dataset.hookState)'), ['true','true','false']);
   assert.equal(await evaluate('document.querySelectorAll("#text-examples [title],#text-examples [role=tooltip],#text-examples .astryx-text[tabindex],#text-examples .astryx-text[aria-describedby]").length'),0,'no eager layers/title/tabstop/duplicate descriptions');
   for (const direction of ['ltr','rtl']) {

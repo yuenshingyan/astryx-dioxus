@@ -5,9 +5,10 @@ import {openTextPage} from './internal/text_cdp.mjs';
 const page = await openTextPage();
 const {evaluate, waitFor, send} = page;
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+const moduleUrls = await Promise.all(['src/tooltip/truncation_presentation.js', 'src/layer/truncation_presentation.js'].map(async path => `data:text/javascript;base64,${Buffer.from(await readFile(path)).toString('base64')}`));
 const scripts = await Promise.all(['src/private_attributes/layer_root.js','src/layer/layer_surface_press.js','src/utils/trigger_focus.js','src/layer/gesture_counter.js','src/layer/use_touch_trigger.js','src/text/truncation_tooltip.js','src/tooltip/use_tooltip.js','src/motion/theme_timing.js','src/hooks/use_press_feedback/press_feedback.js'].map(p=>readFile(p,'utf8')));
 try {
-  await evaluate(`(()=>{${scripts.join('\n')}
+  await evaluate(`(()=>{const truncationPresentationUrls = ${JSON.stringify(moduleUrls)};${scripts.join('\n')}
     document.body.innerHTML='<p id="caller">Caller description</p><p id="later">Later description</p><span id="text" aria-describedby="caller" style="display:block;width:80px;overflow:hidden;white-space:nowrap">A very long clipped label <a id="child" href="#">Link</a><input id="field"></span><button id="outside">Outside</button><button id="button"><span class="astryx-button__label" style="display:block;width:50px;overflow:hidden;white-space:nowrap">Save and continue to the next step<span aria-hidden="true">Hidden copy</span></span></button>';
     installPressFeedback();window.runtime=document[runtimeKey];window.e=document.getElementById('text');window.child=document.getElementById('child');window.field=document.getElementById('field');window.outside=document.getElementById('outside');
     e[Symbol.for('astryx.dioxus.truncation')]={isTruncated:true,fullText:'A very long clipped label Link'};
@@ -21,6 +22,7 @@ try {
   })()`);
   assert.equal(await evaluate('tip()'),null,'no initial DOM');
   assert.equal(await evaluate('e.getAttribute("aria-describedby")'),'caller');
+  await waitFor('!!document[Symbol.for("astryx.dioxus.truncation-presentation.v1")]?.loaded');
   await evaluate('pointer(e,"pointerover","mouse")');
   assert.equal(await evaluate('!!tip() && !open()'),true,'first hover mounts closed immediately');
   assert.equal(await evaluate('e.getAttribute("aria-describedby")'),'caller cut-tooltip');

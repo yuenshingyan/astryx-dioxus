@@ -58,16 +58,19 @@ Text adds shared post-layout/content truncation measurement, placement and offli
 source-derived Text-only examples. The approved shared follow-up adds retained
 first-interest tooltips, owned descriptions, actual-trigger focus gating and
 completed touch/pen toggling while preserving Button's undescribed cut-label path.
-Independent lazy-module loading and full Tooltip/Layer presentation remain
-unverified fidelity limits; Text is not marked complete. See [Text verification](docs/text-port.md).
+Private truncation presentation uses independently downloaded Dioxus assets,
+native CSS anchors, source body typography and reduced-motion/exit semantics;
+see [presentation verification](docs/tooltip-presentation.md) for the tested internal
+subset and remaining full Tooltip/Layer limits. Text is not marked complete.
+See [Text verification](docs/text-port.md).
 Supporting layer-boundary
 utilities do not complete the standalone Layer migration. Unrelated components
 and unrun audits are not marked complete.
 Heading now has native h1–h6, independent display types/weight/outline controls,
 all four original Heading patterns plus TextHeadingLevels, and focused SSR/offline
 Chromium evidence. It shares Text’s retained tooltip lifecycle and opt-in animation
-callbacks; the Tooltip presentation and loading limits remain documented in
-[Heading verification](docs/heading-port.md).
+callbacks and demand-loaded private presentation; remaining verification limits
+are documented in [Heading verification](docs/heading-port.md).
 Publishing remains disabled until package metadata and licensing are confirmed.
 See [third-party notices](THIRD_PARTY_NOTICES.md) for the upstream MIT license.
 
