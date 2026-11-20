@@ -75,6 +75,7 @@ Grid adds native fixed and responsive tracks, gap overrides, and five showcase p
 See [Grid verification](docs/grid-port.md) for tested behavior and demo adaptations.
 [GridSpan](docs/grid-span-port.md) adds numeric, full-width, and row spans with both original showcase patterns.
 [Center](docs/center-port.md) adds flex-axis centering and logical padding with all three original patterns.
+[Section](docs/section-port.md) adds themeable surfaces, dividers, and nested padding with all three original patterns.
 Stack implements axis/alias resolution, shared token gaps, local logical padding,
 sizing precedence, wrapping, scrolling and caller-rendered native roots. Its SSR and
 offline source-derived comparisons plus actual published captures/isolated layout
