@@ -42,6 +42,8 @@ mod checkbox_indicator;
 mod clickable_card;
 #[path = "showcase/divider.rs"]
 mod divider;
+#[path = "showcase/dropdown_menu_group.rs"]
+mod dropdown_menu_group;
 #[path = "showcase/empty_state.rs"]
 mod empty_state;
 #[path = "showcase/field_status.rs"]
@@ -123,6 +125,7 @@ use check_indicator::CheckIndicatorExamples;
 use checkbox_indicator::CheckboxIndicatorExamples;
 use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
+use dropdown_menu_group::DropdownMenuGroupExamples;
 use empty_state::EmptyStateExamples;
 use field_status::FieldStatusExamples;
 use grid::{GridExamples, GridSpanExamples};
@@ -233,6 +236,8 @@ fn App() -> Element {
                 a { href: "#divider-examples", "Divider examples" }
                 " · "
                 a { href: "#dropdown-menu-divider-example", "DropdownMenuDivider example" }
+                " · "
+                a { href: "#dropdown-menu-group-examples", "DropdownMenuGroup examples" }
                 " · "
                 a { href: "#field-status-examples", "FieldStatus examples" }
                 " · "
@@ -399,6 +404,7 @@ fn App() -> Element {
             AvatarGroupOverflowExamples {}
             AvatarGroupExamples {}
             DividerExamples {}
+            DropdownMenuGroupExamples {}
             section { id: "dropdown-menu-divider-example", "data-astryx-theme": "neutral",
                 h2 { "DropdownMenuDivider" }
                 div { style: "max-width:240px",
