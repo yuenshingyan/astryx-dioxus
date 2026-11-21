@@ -10,6 +10,7 @@ mod use_linkify;
 pub use component::{Link, LinkDownload};
 pub use link_provider::{ButtonLinkProvider, LinkProvider};
 pub use types::{LinkComponentType, LinkRenderProps};
+pub(crate) use use_link_component::render_navigation_anchor;
 pub use use_link_component::use_link_component;
 pub use use_linkify::{
     LinkifyCaptures, LinkifyError, LinkifyMatch, LinkifyNode, LinkifyPattern, UseLinkifyOptions,

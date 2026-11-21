@@ -2,42 +2,9 @@
 
 use dioxus::prelude::*;
 
-use crate::link::{Link, LinkComponentType, LinkRenderProps, use_link_component};
+use crate::link::{Link, LinkComponentType, render_navigation_anchor, use_link_component};
 use crate::theme::{TextColor, TextSize, TextWeight};
-use crate::utils::disabled_interaction::{cancel_disabled_click, cancel_disabled_key};
 use crate::utils::is_renderable::is_renderable;
-use crate::utils::safe_url::is_safe_url;
-
-fn heading_anchor(
-    href: String,
-    renderer: Option<LinkComponentType>,
-    attributes: Vec<Attribute>,
-    children: Element,
-    onmounted: Option<EventHandler<MountedEvent>>,
-) -> Element {
-    let is_safe = is_safe_url(&href);
-    if let Some(renderer) = renderer.filter(|_| is_safe) {
-        return renderer.call(LinkRenderProps {
-            href: Some(href),
-            target: None,
-            rel: None,
-            attributes,
-            children,
-            onclick: EventHandler::default(),
-            onkeydown: EventHandler::default(),
-            onmounted: onmounted.unwrap_or_default(),
-        });
-    }
-    rsx! {
-        a { href: is_safe.then_some(href), role: (!is_safe).then_some("link"),
-            tabindex: (!is_safe).then_some("0"), "aria-disabled": (!is_safe).then_some("true"),
-            onclick: move |event| { if !is_safe { cancel_disabled_click(&event); } },
-            onkeydown: move |event| { if !is_safe { cancel_disabled_key(&event); } },
-            onmounted: move |event| { if let Some(handler) = onmounted { handler.call(event); } },
-            ..attributes, {children}
-        }
-    }
-}
 
 /// Identifies a product, suite, or account in the side navigation header.
 #[component]
@@ -100,7 +67,7 @@ pub fn SideNavHeading(
     }
     let icon = icon.filter(is_renderable).map(|icon| {
         if let Some(href) = heading_href.clone().filter(|_| !is_whole_link) {
-            heading_anchor(
+            render_navigation_anchor(
                 href,
                 renderer,
                 vec![
@@ -135,9 +102,9 @@ pub fn SideNavHeading(
     };
     let content = if let Some(href) = heading_href.filter(|_| is_whole_link) {
         if end.is_none() {
-            return heading_anchor(href, renderer, attributes, content, onmounted);
+            return render_navigation_anchor(href, renderer, attributes, content, onmounted);
         }
-        heading_anchor(
+        render_navigation_anchor(
             href,
             renderer,
             vec![Attribute::new(

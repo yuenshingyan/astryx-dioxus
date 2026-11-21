@@ -2421,6 +2421,51 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
+@layer astryx-base {
+  :is(.astryx-top-nav-heading, .astryx-top-nav-heading__link) {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: start;
+    align-items: center;
+    gap: var(--spacing-2);
+    min-width: 0;
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+  .astryx-top-nav-heading {
+    box-sizing: border-box;
+    min-height: var(--spacing-8);
+    padding-inline: var(--spacing-2);
+  }
+  .astryx-top-nav-heading:has(.astryx-nav-icon) { padding-inline-start: 0; }
+  :is(.astryx-top-nav-heading, .astryx-top-nav-heading__link):has(> .astryx-top-nav-heading__text, > .astryx-top-nav-heading__link) { grid-template-columns: minmax(0, 1fr); }
+  :is(.astryx-top-nav-heading, .astryx-top-nav-heading__link):has(> .astryx-top-nav-heading__logo + .astryx-top-nav-heading__text) { grid-template-columns: auto minmax(0, 1fr); }
+  .astryx-top-nav-heading:has(> .astryx-top-nav-heading__text--linked) { grid-template-columns: minmax(min-content, 1fr); }
+  .astryx-top-nav-heading:has(> .astryx-top-nav-heading__logo + .astryx-top-nav-heading__text--linked) { grid-template-columns: auto minmax(min-content, 1fr); }
+  .astryx-top-nav-heading__link { align-self: stretch; }
+  .astryx-top-nav-heading__logo, .astryx-top-nav-heading__end { display: flex; align-items: center; }
+  .astryx-top-nav-heading__end { margin-inline-start: auto; }
+  .astryx-top-nav-heading__text { display: flex; flex-direction: column; min-width: 0; }
+  .astryx-top-nav-heading__text--linked > .astryx-link { min-width: 0; max-width: 100%; overflow: hidden; }
+  .astryx-top-nav-heading__title, .astryx-top-nav-heading__secondary { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .astryx-top-nav-heading__title {
+    color: var(--color-text-primary);
+    font-size: var(--text-large-size);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--text-large-leading);
+  }
+  .astryx-top-nav-heading__secondary {
+    color: var(--color-text-secondary);
+    font-size: var(--text-supporting-size);
+    line-height: var(--text-supporting-leading);
+  }
+  a:is(.astryx-top-nav-heading, .astryx-top-nav-heading__link) { border-radius: var(--radius-element); }
+  a:is(.astryx-top-nav-heading, .astryx-top-nav-heading__link, .astryx-top-nav-heading__logo):focus-visible {
+    outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+    outline-offset: var(--focus-outline-offset);
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

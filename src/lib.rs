@@ -53,6 +53,7 @@ mod thumbnail;
 mod timer;
 mod token;
 mod tooltip;
+mod top_nav;
 mod utils;
 mod v_stack;
 mod visually_hidden;
@@ -160,6 +161,7 @@ pub use theme::{MediaTheme, MediaThemeFallback, MediaThemeMode, MediaThemeProps}
 pub use thumbnail::{Thumbnail, ThumbnailProps, ThumbnailRemoveVisibility};
 pub use timer::{Timer, TimerFormat, TimerProps};
 pub use token::{InvalidTokenColor, Token, TokenColor, TokenProps, TokenSize};
+pub use top_nav::{TopNavHeading, TopNavHeadingProps};
 
 pub use utils::types::{Elevation, SizeValue, SizeValueError, SpacingStep};
 pub use v_stack::{VStack, VStackProps};
