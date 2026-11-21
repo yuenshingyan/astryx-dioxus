@@ -178,9 +178,10 @@ pub use status_dot::{
     InvalidStatusDotVariant, StatusDot, StatusDotError, StatusDotIcon, StatusDotVariant,
 };
 pub use table::{
-    TableBody, TableBodyProps, TableCell, TableCellProps, TableCellScope, TableFooter,
-    TableFooterProps, TableHeader, TableHeaderCell, TableHeaderCellProps, TableHeaderProps,
-    TableRow, TableRowProps,
+    Table, TableBody, TableBodyProps, TableCell, TableCellProps, TableCellScope, TableDensity,
+    TableDividers, TableFooter, TableFooterProps, TableHeader, TableHeaderCell,
+    TableHeaderCellProps, TableHeaderProps, TableProps, TableRow, TableRowProps, TableTextOverflow,
+    TableVerticalAlign,
 };
 pub use text::{Text, TextTag, Truncation, use_truncation};
 pub use theme::{
