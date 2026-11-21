@@ -2846,6 +2846,14 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-chat-dictation-button { position: relative; display: inline-flex; align-items: center; justify-content: center; isolation: isolate; --_dictation-height: 18px; --_dictation-width: 2.5px; --_dictation-gap: 2px; }
+  .astryx-chat-dictation-button[data-size="sm"] { --_dictation-height: 14px; --_dictation-width: 2px; --_dictation-gap: 1.5px; }
+  .astryx-chat-dictation-button__meter { position: absolute; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 1; gap: var(--_dictation-gap); height: var(--_dictation-height); }
+  .astryx-chat-dictation-button__bar { width: var(--_dictation-width); height: 100%; border-radius: var(--radius-full); transform: scaleY(var(--_dictation-scale)); background-color: color-mix(in srgb, var(--color-accent), var(--color-error) var(--_dictation-clip)); transition: transform 60ms ease-out, background-color 60ms ease-out; }
+  @media (prefers-reduced-motion: reduce) {
+    .astryx-chat-dictation-button__bar { transition-duration: 0s; }
+  }
+
   .astryx-chat-layout {
     position: relative; display: flex; flex-direction: column; flex: 1; min-height: 0;
     container-type: inline-size; overflow: hidden auto;
