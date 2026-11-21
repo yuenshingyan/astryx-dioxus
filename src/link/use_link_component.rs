@@ -20,6 +20,17 @@ pub(crate) fn render_navigation_anchor(
     children: Element,
     onmounted: Option<EventHandler<MountedEvent>>,
 ) -> Element {
+    render_navigation_anchor_with_click(href, renderer, attributes, children, onmounted, None)
+}
+
+pub(crate) fn render_navigation_anchor_with_click(
+    href: String,
+    renderer: Option<LinkComponentType>,
+    attributes: Vec<Attribute>,
+    children: Element,
+    onmounted: Option<EventHandler<MountedEvent>>,
+    onclick: Option<EventHandler<MouseEvent>>,
+) -> Element {
     let is_safe = is_safe_url(&href);
     if let Some(renderer) = renderer.filter(|_| is_safe) {
         return renderer.call(LinkRenderProps {
@@ -28,7 +39,7 @@ pub(crate) fn render_navigation_anchor(
             rel: None,
             attributes,
             children,
-            onclick: EventHandler::default(),
+            onclick: onclick.unwrap_or_default(),
             onkeydown: EventHandler::default(),
             onmounted: onmounted.unwrap_or_default(),
         });
@@ -36,7 +47,10 @@ pub(crate) fn render_navigation_anchor(
     rsx! {
         a { href: is_safe.then_some(href), role: (!is_safe).then_some("link"),
             tabindex: (!is_safe).then_some("0"), "aria-disabled": (!is_safe).then_some("true"),
-            onclick: move |event| { if !is_safe { cancel_disabled_click(&event); } },
+            onclick: move |event| {
+                if !is_safe { cancel_disabled_click(&event); }
+                else if let Some(handler) = onclick { handler.call(event); }
+            },
             onkeydown: move |event| { if !is_safe { cancel_disabled_key(&event); } },
             onmounted: move |event| { if let Some(handler) = onmounted { handler.call(event); } },
             ..attributes, {children}

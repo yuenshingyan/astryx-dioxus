@@ -168,6 +168,7 @@ pub use timer::{Timer, TimerFormat, TimerProps};
 pub use token::{InvalidTokenColor, Token, TokenColor, TokenProps, TokenSize};
 pub use top_nav::{
     TopNavHeading, TopNavHeadingProps, TopNavMegaMenuFeaturedCard, TopNavMegaMenuFeaturedCardProps,
+    TopNavMegaMenuItem, TopNavMegaMenuItemProps,
 };
 
 pub use utils::types::{Elevation, SizeValue, SizeValueError, SpacingStep};

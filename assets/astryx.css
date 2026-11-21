@@ -2526,6 +2526,32 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-top-nav-mega-menu-featured-card__arrow:dir(rtl) { transform: scaleX(-1); }
 }
 
+@layer astryx-base {
+  .astryx-top-nav-mega-menu-item {
+    display: flex; align-items: flex-start; gap: var(--spacing-3); padding: var(--spacing-3);
+    border: 0; border-radius: var(--radius-element); box-sizing: border-box; width: 100%;
+    text-decoration: none; color: inherit; font-family: inherit; text-align: start;
+  }
+  :is(a, button).astryx-top-nav-mega-menu-item { background-color: transparent; cursor: pointer; }
+  .astryx-top-nav-mega-menu-item[aria-disabled="true"] { cursor: default; }
+  @media (hover: hover) {
+    :is(a, button).astryx-top-nav-mega-menu-item:hover:not([aria-disabled="true"]):not(:disabled) { background-color: var(--color-overlay-hover); }
+  }
+  :is(a, button).astryx-top-nav-mega-menu-item:active:not([aria-disabled="true"]):not(:disabled) { background-color: var(--color-overlay-pressed); }
+  .astryx-top-nav-mega-menu-item:focus-visible {
+    outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+    outline-offset: var(--focus-outline-offset);
+  }
+  .astryx-top-nav-mega-menu-item__icon {
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    width: 40px; height: 40px; border-radius: var(--radius-element);
+    background-color: var(--color-neutral); color: var(--color-icon-secondary);
+  }
+  .astryx-top-nav-mega-menu-item__content { display: flex; flex-direction: column; min-width: 0; gap: var(--spacing-1); }
+  .astryx-top-nav-mega-menu-item__title { font-size: var(--text-label-size); line-height: var(--text-label-leading); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); }
+  .astryx-top-nav-mega-menu-item__description { font-size: var(--text-supporting-size); line-height: var(--text-supporting-leading); font-weight: var(--font-weight-normal); color: var(--color-text-secondary); }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {
