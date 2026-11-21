@@ -154,7 +154,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/v_stack/`: [VStack](docs/v-stack-port.md), the vertical Stack wrapper with both original patterns.
 - `src/avatar/`: [Avatar](docs/avatar-port.md) and [AvatarStatusDot](docs/avatar-status-dot-port.md), with offline image examples and status-name composition.
 - `src/avatar_group/`: [AvatarGroup](docs/avatar-group-port.md) and [AvatarGroupOverflow](docs/avatar-group-overflow-port.md), with shared member geometry and keyboard navigation.
-- `src/side_nav/`: [SideNavHeading](docs/side-nav-heading-port.md) and [SideNavSection](docs/side-nav-section-port.md), with static and linked headings and named groups. Rail collapse and menu integration remain pending.
+- `src/side_nav/`: [SideNavHeading](docs/side-nav-heading-port.md) and [SideNavSection](docs/side-nav-section-port.md), with static and linked headings and named groups. [SideNavCollapseButton](docs/side-nav-collapse-button-port.md) supports caller-controlled collapse. Rail context and menu integration remain pending.
 - `src/nav_icon/`: [NavIcon](docs/nav-icon-port.md), a circular accent mark with caller-owned artwork and semantics.
 - `src/top_nav/`: [TopNavHeading](docs/top-nav-heading-port.md), with static, logo-only, and linked forms. Parent and menu integration remain pending.
 - `src/breadcrumbs/`: [Breadcrumbs](docs/breadcrumbs-port.md) and [BreadcrumbItem](docs/breadcrumb-item-port.md), with named navigation trails and link, button, and current-page forms. Menu integration remains pending.

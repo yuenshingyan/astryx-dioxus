@@ -2504,6 +2504,16 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-side-nav-section__items { display: flex; flex-direction: column; gap: var(--spacing-0-5); }
 }
 
+@layer astryx-base {
+  .astryx-side-nav-collapse-button__mirror { display: flex; align-items: center; justify-content: center; }
+  .astryx-side-nav-collapse-button__mirror:dir(rtl) { transform: scaleX(-1); }
+  .astryx-side-nav-collapse-button__chevron { transition: transform var(--duration-fast) var(--ease-standard); }
+  .astryx-side-nav-collapse-button[data-collapsed] .astryx-side-nav-collapse-button__chevron { transform: rotate(180deg); }
+  @media (prefers-reduced-motion: reduce) {
+    .astryx-side-nav-collapse-button__chevron { transition: none; }
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {
