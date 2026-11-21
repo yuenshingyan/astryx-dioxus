@@ -34,6 +34,8 @@ mod button_patterns;
 mod card;
 #[path = "showcase/center.rs"]
 mod center;
+#[path = "showcase/chat_layout_scroll_button.rs"]
+mod chat_layout_scroll_button;
 #[path = "showcase/chat_message.rs"]
 mod chat_message;
 #[path = "showcase/chat_message_bubble.rs"]
@@ -191,6 +193,7 @@ use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
 use card::CardExamples;
 use center::CenterExamples;
+use chat_layout_scroll_button::ChatLayoutScrollButtonExamples;
 use chat_message::ChatMessageExamples;
 use chat_message_bubble::ChatMessageBubbleExamples;
 use chat_message_list::ChatMessageListExamples;
@@ -416,6 +419,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#chat-message-list-examples", "ChatMessageList examples" }
                 " · "
+                a { href: "#chat-layout-scroll-button-examples", "ChatLayoutScrollButton examples" }
+                " · "
                 a { href: "#aspect-ratio-examples", "AspectRatio examples" }
                 " · "
                 a { href: "#stack-examples", "Stack examples" }
@@ -625,6 +630,7 @@ fn App() -> Element {
             ChatMessageExamples {}
             ChatMessageBubbleExamples {}
             ChatMessageListExamples {}
+            ChatLayoutScrollButtonExamples {}
             ClickableCardExamples {}
             SelectableCardExamples {}
             AspectRatioExamples {}
