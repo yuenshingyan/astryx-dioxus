@@ -2699,6 +2699,18 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-command-palette-footer__hint { display: flex; align-items: center; gap: var(--spacing-1); }
 }
 
+@layer astryx-base {
+  .astryx-command-palette-list {
+    overflow-y: auto;
+    max-height: 100%;
+    padding: var(--spacing-1);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-0-5);
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

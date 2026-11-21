@@ -85,7 +85,7 @@ pub use clickable_card::{ClickableCard, ClickableCardError};
 pub use code::{Code, CodeColor, CodeProps, CodeSize};
 pub use command_palette::{
     CommandPaletteEmpty, CommandPaletteEmptyProps, CommandPaletteFooter, CommandPaletteFooterProps,
-    CommandPaletteGroup, CommandPaletteGroupProps,
+    CommandPaletteGroup, CommandPaletteGroupProps, CommandPaletteList, CommandPaletteListProps,
 };
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
