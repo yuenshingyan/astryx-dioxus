@@ -2728,6 +2728,40 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-command-palette-item:active:not([data-disabled]) { background-image: linear-gradient(var(--color-overlay-pressed), var(--color-overlay-pressed)); }
 }
 
+@layer astryx-base {
+  .astryx-table-scroll-wrapper[data-axis="inline"] > .astryx-scrollable-area__content { inline-size: 100%; }
+  .astryx-table { width: 100%; border-collapse: collapse; border-spacing: 0; table-layout: auto; font-family: inherit; color: var(--color-text-primary); }
+  .astryx-table { --_table-block: var(--spacing-2); --_table-inline: var(--spacing-3); }
+  .astryx-table[data-density="compact"] { --_table-block: var(--spacing-1); --_table-inline: var(--spacing-2); }
+  .astryx-table[data-density="spacious"] { --_table-block: var(--spacing-3); --_table-inline: var(--spacing-4); }
+  .astryx-table > :is(thead, tbody, tfoot) > tr > :is(.astryx-table-cell, .astryx-table-header-cell) {
+    box-sizing: border-box;
+    padding: var(--_table-block) var(--_table-inline);
+    overflow: hidden;
+    max-width: 0;
+  }
+  .astryx-table > :is(thead, tbody, tfoot) > tr > .astryx-table-cell { font-size: var(--text-body-size); vertical-align: middle; }
+  .astryx-table[data-vertical-align="top"] > :is(thead, tbody, tfoot) > tr > .astryx-table-cell { vertical-align: top; }
+  .astryx-table[data-vertical-align="bottom"] > :is(thead, tbody, tfoot) > tr > .astryx-table-cell { vertical-align: bottom; }
+  .astryx-table[data-text-overflow="wrap"] > :is(thead, tbody, tfoot) > tr > .astryx-table-cell { overflow-wrap: break-word; word-break: break-word; }
+  .astryx-table[data-text-overflow="truncate"] > :is(thead, tbody, tfoot) > tr > .astryx-table-cell,
+  .astryx-table > :is(thead, tbody, tfoot) > tr > .astryx-table-header-cell { white-space: nowrap; text-overflow: ellipsis; }
+  .astryx-table > :is(thead, tbody, tfoot) > tr > .astryx-table-header-cell {
+    font-size: var(--text-label-size); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); text-align: start;
+    border-block-end: var(--border-width) solid var(--color-border);
+  }
+  .astryx-table:is([data-dividers="rows"], [data-dividers="grid"]) > :is(thead, tbody, tfoot) > tr:not(:last-child) > .astryx-table-cell {
+    border-block-end: var(--border-width) solid var(--color-border);
+  }
+  .astryx-table:is([data-dividers="columns"], [data-dividers="grid"]) > :is(thead, tbody, tfoot) > tr > :is(.astryx-table-cell, .astryx-table-header-cell):not(:last-child) {
+    border-inline-end: var(--border-width) solid var(--color-border);
+  }
+  .astryx-table[data-striped] > tbody > .astryx-table-row:nth-child(even) { background-color: var(--color-background-muted); }
+  @media (hover: hover) {
+    .astryx-table[data-hover] > tbody > .astryx-table-row:hover { background-color: var(--color-overlay-hover); }
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

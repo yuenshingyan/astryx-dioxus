@@ -1,0 +1,7 @@
+# Table children-mode checkpoint
+
+`src/table/component.rs` composes caller-supplied native sections in a styled table. It reuses ScrollableArea for horizontal overflow and adds a viewport tab stop only when content overflows. An explicit name or `aria-labelledby` reference reaches both surfaces. Table styles apply to its own rows and cells, leaving standalone components unstyled. The API exposes density, divider, alignment, and overflow choices, plus striping and hover.
+
+Source: Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`, `Table/Table.tsx` (`233b1621e1921bfbc17cc6442ac3500deadbe749`), `Table/BaseTable.tsx` (`61f66413f4dce56577a70751c3cb3e38180f332e`), `Table/table.stylex.ts`, and the Table spec (`7bb1254d54cf2f2ace355871635fe60228d38e30`). The showcase adapts TableShowcase and TableGridDividersTable to explicit rows and cells; it does not reproduce data-mode column sizing.
+
+All five standard Rust checks passed. SSR verified native section nesting and explicit naming. Chrome verified compact grid padding and dividers, scrolling, conditional viewport focusability, and table and viewport names in the accessibility tree. The six earlier table component suites and showcase navigation also passed. Other appearance combinations were not exhaustively compared. Data mode, plugins, virtualization, container bleed and edge insets, cut-text tooltips, remaining catalog templates, published visual parity, and manual assistive technology verification remain open. The migration checklist remains open.

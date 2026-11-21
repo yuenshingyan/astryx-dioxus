@@ -126,6 +126,8 @@ mod spinner;
 mod stack;
 #[path = "showcase/status_dot.rs"]
 mod status_dot;
+#[path = "showcase/table.rs"]
+mod table;
 #[path = "showcase/table_header.rs"]
 mod table_header;
 #[path = "showcase/text.rs"]
@@ -213,6 +215,7 @@ use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
 use stack::{StackExamples, StackItemExamples};
 use status_dot::StatusDotExamples;
+use table::TableExamples;
 use table_header::TableHeaderExamples;
 use text::TextExamples;
 use thumbnail::ThumbnailExamples;
@@ -327,6 +330,8 @@ fn App() -> Element {
                 a { href: "#table-header-examples", "TableHeader examples" }
                 " · "
                 a { href: "#table-footer-examples", "TableBody and TableFooter examples" }
+                " · "
+                a { href: "#table-examples", "Table examples" }
                 " · "
                 a { href: "#toggle-button-examples", "ToggleButton examples" }
                 " · "
@@ -544,6 +549,7 @@ fn App() -> Element {
             ThumbnailExamples {}
             TimerExamples {}
             TableHeaderExamples {}
+            TableExamples {}
             ToggleButtonExamples {}
             ToggleButtonGroupExamples {}
             TokenExamples {}
