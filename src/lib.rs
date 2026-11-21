@@ -116,6 +116,7 @@ pub use indicator::{
     CheckboxIndicatorProps, CheckboxIndicatorState, IndicatorSize, RadioIndicator,
     RadioIndicatorProps, RadioIndicatorState,
 };
+pub use input_group::{InputGroupText, InputGroupTextProps};
 pub use interactive_role_context::{
     InteractiveRoleContext, InteractiveRoleProvider, use_interactive_role_context,
 };
