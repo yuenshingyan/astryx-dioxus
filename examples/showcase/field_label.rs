@@ -28,11 +28,11 @@ pub(super) fn FieldLabelExamples() -> Element {
             h2 { "FieldLabel" }
             h3 { "Basic" }
             FormLayout { ExampleLabels { prefix: "field-label-basic" } }
-            h3 { "Showcase (without InfoTip)" }
+            h3 { "Showcase" }
             FormLayout {
                 ExampleLabels { prefix: "field-label-showcase" }
                 div {
-                    FieldLabel { label: "API key", input_id: "field-label-api-key", label_icon: rsx! {
+                    FieldLabel { label: "API key", input_id: "field-label-api-key", label_tooltip: "Your API key can be found in the developer settings", label_icon: rsx! {
                         svg { width: "16", height: "16", view_box: "0 0 24 24", stroke: "currentColor", fill: "none", "aria-hidden": "true",
                             path { d: "M6 10h12v10H6zM8 10V7a4 4 0 0 1 8 0v3" }
                         }
@@ -47,7 +47,7 @@ pub(super) fn FieldLabelExamples() -> Element {
             h3 { "Label arrangements" }
             FormLayout { default_optionality: FormOptionality::Required,
                 div {
-                    FieldLabel { label: "Search", input_id: "field-label-search", is_label_hidden: true, is_required: true,
+                    FieldLabel { label: "Search", input_id: "field-label-search", is_label_hidden: true, is_required: true, label_tooltip: "Use a name or catalog number",
                         description: rsx! { "Search the catalog" }, description_id: "field-label-search-description",
                     }
                     input { id: "field-label-search", r#type: "search", "aria-describedby": "field-label-search-description" }

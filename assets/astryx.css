@@ -2376,6 +2376,10 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-field__control-status:has(> [data-size="lg"]) { --_field-status-overlap: calc(var(--size-element-lg) / 2); }
   .astryx-field__control-status > .astryx-field-status[data-variant="attached"] { position: relative; z-index: -1; }
   .astryx-field-label__group { display: flex; flex-direction: column; }
+  .astryx-field-label__row { display: inline-flex; align-items: center; vertical-align: top; gap: var(--spacing-1); }
+  .astryx-field-label__row[data-label-hidden] { display: contents; }
+  .astryx-field-label__row > .astryx-field-label__help--hidden { align-self: flex-start; white-space: nowrap; }
+  .astryx-field-label__row > .astryx-field-label__help--hidden:not(:focus-visible) { position: absolute; clip: rect(0, 0, 0, 0); overflow: hidden; }
   .astryx-field-label__group[data-label-hidden] { display: contents; }
   .astryx-field-label {
     display: flex; align-items: center; gap: var(--spacing-1);
