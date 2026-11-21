@@ -2846,6 +2846,9 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-tooltip-text[data-hover-indication] { text-decoration: underline dotted; text-underline-offset: .2em; }
+  .astryx-tooltip-text:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+
   .astryx-toolbar { display: flex; align-items: center; justify-content: space-between; min-height: var(--size-element-sm); gap: var(--_toolbar-gap); }
   .astryx-toolbar[data-center] { flex-wrap: wrap; justify-content: normal; }
   .astryx-toolbar[aria-orientation="vertical"] { align-items: stretch; }
