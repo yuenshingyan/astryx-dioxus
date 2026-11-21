@@ -2125,6 +2125,16 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-button.astryx-thumbnail__remove-button::after { content: ""; position: absolute; inset: -2px; }
 }
 
+@layer astryx-base {
+  .astryx-timer__time {
+    display: inline;
+    font: inherit;
+    font-style: normal;
+    font-variant-numeric: tabular-nums;
+    color: inherit;
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

@@ -41,6 +41,7 @@ mod status_dot;
 mod text;
 mod theme;
 mod thumbnail;
+mod timer;
 mod tooltip;
 mod utils;
 mod v_stack;
@@ -118,6 +119,7 @@ pub use theme::{
     WordBreak,
 };
 pub use thumbnail::{Thumbnail, ThumbnailProps, ThumbnailRemoveVisibility};
+pub use timer::{Timer, TimerFormat, TimerProps};
 
 pub use utils::types::{Elevation, SizeValue, SizeValueError, SpacingStep};
 pub use v_stack::{VStack, VStackProps};
