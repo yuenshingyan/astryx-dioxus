@@ -36,6 +36,7 @@ pub(super) fn FieldExamples() -> Element {
                     input { id: "field-contact", style: CONTROL, "aria-describedby": "field-contact-desc", placeholder: "you@example.com" }
                 }
                 Field { label: "Password", input_id: "field-password", description: "At least 8 characters with one uppercase letter",
+                    label_tooltip: "Use a password you do not use for another account.", label_tooltip_name: "About password requirements",
                     input { id: "field-password", style: CONTROL, r#type: "password", "aria-describedby": "field-password-desc", placeholder: "Create a password" }
                 }
             }

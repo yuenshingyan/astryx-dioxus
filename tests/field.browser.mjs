@@ -25,6 +25,13 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Input.insertText', {text: '@example.com'});
   await waitFor(`!document.getElementById('field-email-status')`);
   assert.equal(await evaluate(`document.activeElement.id`), 'field-email');
+  const help = `document.querySelector('label[for="field-password"] + button')`;
+  await waitFor(`!!document[Symbol.for('astryx.dioxus.button.runtime')]?.records.get(${help})`);
+  assert.equal(await evaluate(`${help}.getAttribute('aria-label')`), 'About password requirements');
+  assert.equal(await evaluate(`document.getElementById('field-password').getAttribute('aria-describedby')`), 'field-password-desc');
+  await evaluate(`${help}.click()`);
+  await waitFor(`${help}.getAttribute('aria-expanded') === 'true'`);
+  assert.equal(await evaluate(`document.activeElement.id`), 'field-email');
   assert.deepEqual(exceptions, []);
   console.log('Field: label and description, attached and detached status, horizontal layout, and retained focus passed');
 });

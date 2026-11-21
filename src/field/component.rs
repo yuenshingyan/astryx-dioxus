@@ -42,6 +42,12 @@ pub fn Field(
     #[props(default)] is_required: bool,
     #[props(default)] is_disabled: bool,
     #[props(default)] label_icon: Option<Element>,
+    /// Short help revealed by a separate button next to the label.
+    #[props(default)]
+    label_tooltip: Option<String>,
+    /// Localized accessible name for the help button.
+    #[props(default)]
+    label_tooltip_name: Option<String>,
     #[props(default)] description: Option<String>,
     /// ID referenced by the control. Defaults to `<input_id>-desc`.
     #[props(default)]
@@ -66,7 +72,8 @@ pub fn Field(
         description.as_ref().map(|text| rsx! { "{text}" })
     };
     let label = rsx! { FieldLabel { label, input_id: input_id.clone(), label_id, is_group_label, is_label_hidden,
-        is_optional, is_required, is_disabled, label_icon, description: inline_description, description_id: description_id.clone(),
+        is_optional, is_required, is_disabled, label_icon, label_tooltip, label_tooltip_name,
+        description: inline_description, description_id: description_id.clone(),
     } };
     let variant = match status_variant {
         FieldStatusPlacement::Attached => FieldStatusVariant::ATTACHED,
