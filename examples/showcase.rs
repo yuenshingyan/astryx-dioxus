@@ -326,6 +326,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#table-header-examples", "TableHeader examples" }
                 " · "
+                a { href: "#table-footer-examples", "TableFooter examples" }
+                " · "
                 a { href: "#toggle-button-examples", "ToggleButton examples" }
                 " · "
                 a { href: "#toggle-button-group-examples", "ToggleButtonGroup examples" }

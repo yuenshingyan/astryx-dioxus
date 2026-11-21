@@ -61,6 +61,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - TopNavMegaMenuItem follows the desktop form of `TopNav/TopNavMegaMenuItem.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-mega-menu-item-port.md`.
 - TopNavMegaMenuFeaturedCard follows `TopNav/TopNavMegaMenuFeaturedCard.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-featured-card-port.md`.
 - TopNavHeading follows the non-menu forms of `TopNav/TopNavHeading.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-heading-port.md`.
+- TableFooter follows `Table/TableFooter.tsx` and its spec at the same pin. See `docs/table-footer-port.md`.
 - TableHeader follows `Table/TableHeader.tsx` and its spec at the same pin. See `docs/table-header-port.md`.
 - MobileNavToggle follows `MobileNav/MobileNavToggle.tsx`, the mobile state contract in `AppShell/AppShellMobileContext.tsx`, and both adapted catalog templates at the same pin. See `docs/mobile-nav-toggle-port.md`.
 - SideNavCollapseButton follows the controlled form of `SideNav/SideNavCollapseButton.tsx`, its spec, and both catalog templates at the same pin. See `docs/side-nav-collapse-button-port.md`.

@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::TableHeader;
+use astryx_dioxus::{TableFooter, TableHeader};
 
 #[component]
 pub(super) fn TableHeaderExamples() -> Element {
@@ -17,6 +17,22 @@ pub(super) fn TableHeaderExamples() -> Element {
                 }
                 tbody {
                     tr { td { style: "padding:8px 16px", "Documentation" } td { style: "padding:8px 16px", "In review" } }
+                }
+            }
+        }
+        section { id: "table-footer-examples", "data-astryx-theme": "neutral",
+            h2 { "TableFooter" }
+            table { style: "border-spacing:0;text-align:start",
+                caption { "Project hours" }
+                TableHeader {
+                    tr { th { scope: "col", "Project" } th { scope: "col", "Hours" } }
+                }
+                tbody {
+                    tr { th { scope: "row", "Documentation" } td { "8" } }
+                    tr { th { scope: "row", "Review" } td { "4" } }
+                }
+                TableFooter { id: "project-table-footer",
+                    tr { th { scope: "row", "Total" } td { "12" } }
                 }
             }
         }
