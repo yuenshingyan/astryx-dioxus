@@ -4,11 +4,12 @@ use dioxus::prelude::*;
 
 use crate::avatar::{AvatarShape, AvatarSize};
 
-#[derive(Clone, Copy, Default)]
+#[derive(Clone, Copy, Default, PartialEq, Eq)]
 pub(crate) struct AvatarGroupSettings {
     pub(crate) size: AvatarSize,
     pub(crate) shape: AvatarShape,
     pub(crate) overlap: u32,
+    pub(crate) owner: Option<usize>,
 }
 
 #[derive(Clone, Copy)]
