@@ -2682,6 +2682,23 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
+@layer astryx-base {
+  .astryx-command-palette-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-4);
+    padding-inline: var(--spacing-4);
+    padding-block: var(--spacing-2);
+    flex-shrink: 0;
+    font-family: var(--font-family-body);
+    font-size: var(--text-supporting-size);
+    line-height: var(--text-supporting-leading);
+    color: var(--color-text-secondary);
+  }
+  .astryx-command-palette-footer__hint { display: flex; align-items: center; gap: var(--spacing-1); }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

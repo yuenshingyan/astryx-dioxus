@@ -44,6 +44,8 @@ mod citation;
 mod clickable_card;
 #[path = "showcase/command_palette_empty.rs"]
 mod command_palette_empty;
+#[path = "showcase/command_palette_footer.rs"]
+mod command_palette_footer;
 #[path = "showcase/command_palette_group.rs"]
 mod command_palette_group;
 #[path = "showcase/divider.rs"]
@@ -162,6 +164,7 @@ use checkbox_indicator::CheckboxIndicatorExamples;
 use citation::CitationExamples;
 use clickable_card::ClickableCardExamples;
 use command_palette_empty::CommandPaletteEmptyExamples;
+use command_palette_footer::CommandPaletteFooterExamples;
 use command_palette_group::CommandPaletteGroupExamples;
 use divider::DividerExamples;
 use dropdown_menu_group::DropdownMenuGroupExamples;
@@ -363,6 +366,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#command-palette-group-examples", "CommandPaletteGroup examples" }
                 " · "
+                a { href: "#command-palette-footer-examples", "CommandPaletteFooter examples" }
+                " · "
                 a { href: "#check-indicator-examples", "CheckIndicator examples" }
                 " · "
                 a { href: "#radio-indicator-examples", "RadioIndicator examples" }
@@ -540,6 +545,7 @@ fn App() -> Element {
             CitationExamples {}
             CommandPaletteEmptyExamples {}
             CommandPaletteGroupExamples {}
+            CommandPaletteFooterExamples {}
             CheckIndicatorExamples {}
             RadioIndicatorExamples {}
             CheckboxIndicatorExamples {}
