@@ -2612,6 +2612,10 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-input-group { display: inline-flex; align-items: stretch; min-width: 0; background-color: transparent; height: var(--size-element-md); }
+  .astryx-input-group[data-size="sm"] { height: var(--size-element-sm); }
+  .astryx-input-group[data-size="lg"] { height: var(--size-element-lg); }
+  .astryx-input-group[aria-disabled="true"] { cursor: default; opacity: 0.5; }
   .astryx-input-group-text {
     display: flex;
     align-items: center;
@@ -2637,6 +2641,11 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     border-end-end-radius: var(--radius-element);
   }
 }
+
+.astryx-input-group > .astryx-button { height: 100%; }
+.astryx-input-group > .astryx-button:not(:first-child) { border-start-start-radius: 0; border-end-start-radius: 0; }
+.astryx-input-group > .astryx-button:not(:nth-last-child(1 of :not([popover], template, dialog))) { border-start-end-radius: 0; border-end-end-radius: 0; }
+.astryx-input-group > .astryx-button:focus-visible { z-index: 2; }
 
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {

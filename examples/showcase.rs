@@ -64,6 +64,8 @@ mod h_stack;
 mod heading;
 #[path = "showcase/icon_button.rs"]
 mod icon_button;
+#[path = "showcase/input_group.rs"]
+mod input_group;
 #[path = "showcase/input_group_text.rs"]
 mod input_group_text;
 #[path = "showcase/kbd.rs"]
@@ -166,6 +168,7 @@ use grid::{GridExamples, GridSpanExamples};
 use h_stack::HStackExamples;
 use heading::HeadingExamples;
 use icon_button::IconButtonExamples;
+use input_group::InputGroupExamples;
 use input_group_text::InputGroupTextExamples;
 use kbd::KbdExamples;
 use layout::LayoutExamples;
@@ -291,6 +294,8 @@ fn App() -> Element {
                 a { href: "#field-examples", "Field examples" }
                 " · "
                 a { href: "#input-group-text-examples", "InputGroupText examples" }
+                " · "
+                a { href: "#input-group-examples", "InputGroup examples" }
                 " · "
                 a { href: "#form-layout-examples", "FormLayout examples" }
                 " · "
@@ -493,6 +498,7 @@ fn App() -> Element {
             FieldLabelExamples {}
             FieldExamples {}
             InputGroupTextExamples {}
+            InputGroupExamples {}
             FormLayoutExamples {}
             KbdExamples {}
             SkeletonExamples {}

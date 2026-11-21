@@ -158,7 +158,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/side_nav/`: [SideNavHeading](docs/side-nav-heading-port.md) and [SideNavSection](docs/side-nav-section-port.md), with static and linked headings and named groups. [SideNavCollapseButton](docs/side-nav-collapse-button-port.md) supports caller-controlled collapse. Rail context and menu integration remain pending.
 - `src/nav_icon/`: [NavIcon](docs/nav-icon-port.md), a circular accent mark with caller-owned artwork and semantics.
 - `src/top_nav/`: [TopNavHeading](docs/top-nav-heading-port.md), [TopNavMegaMenuFeaturedCard](docs/top-nav-featured-card-port.md), and [TopNavMegaMenuItem](docs/top-nav-mega-menu-item-port.md). Parent menu and drawer integration remain pending.
-- `src/input_group/`: [InputGroupText](docs/input-group-text-port.md), with logical prefix and suffix styling. Parent InputGroup integration remains pending.
+- `src/input_group/`: [InputGroup](docs/input-group-port.md) and [InputGroupText](docs/input-group-text-port.md), with named rows and logical addon styling. Production input integration remains pending.
 - `src/citation/`: [Citation](docs/citation-port.md), with inline source labels and superscript references.
 - `src/breadcrumbs/`: [Breadcrumbs](docs/breadcrumbs-port.md) and [BreadcrumbItem](docs/breadcrumb-item-port.md), with named navigation trails and link, button, and current-page forms. Menu integration remains pending.
 - `src/token/`: [Token](docs/token-port.md), with static, clickable, and link forms and optional removal.
