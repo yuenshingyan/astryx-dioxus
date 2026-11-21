@@ -155,7 +155,9 @@ pub use metadata_list::{
 };
 pub use mobile_nav::{MobileNavToggle, MobileNavToggleProps};
 pub use nav_icon::{NavIcon, NavIconProps};
-pub use nav_menu::{NavHeadingMenuItem, NavHeadingMenuItemProps};
+pub use nav_menu::{
+    NavHeadingMenu, NavHeadingMenuItem, NavHeadingMenuItemProps, NavHeadingMenuProps,
+};
 pub use overlay::{
     Overlay, OverlayAlign, OverlayPosition, OverlayProps, OverlayScrimMode, OverlayShowOn,
 };
