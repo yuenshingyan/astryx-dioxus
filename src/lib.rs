@@ -57,7 +57,10 @@ pub use avatar::{
 };
 pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
 pub use blockquote::{Blockquote, BlockquoteCite};
-pub use breadcrumbs::{BreadcrumbItem, BreadcrumbItemProps};
+pub use breadcrumbs::{
+    BreadcrumbItem, BreadcrumbItemProps, Breadcrumbs, BreadcrumbsProps, BreadcrumbsVariant,
+    InvalidBreadcrumbsVariant,
+};
 pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, ButtonVariant};
 pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation};
 pub use card::{Card, CardVariant, InvalidCardVariant};

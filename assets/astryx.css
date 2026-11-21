@@ -2232,6 +2232,21 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-breadcrumbs { display: block; }
+  .astryx-breadcrumbs__list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--spacing-1);
+  }
+  .astryx-breadcrumb-item[data-variant="supporting"] {
+    --_breadcrumb-size: var(--text-supporting-size);
+    --_breadcrumb-leading: var(--text-supporting-leading);
+    --_breadcrumb-current-color: var(--color-text-secondary);
+  }
   .astryx-breadcrumb-item, .astryx-breadcrumb-item__content, .astryx-breadcrumb-item__separator {
     display: flex;
     align-items: center;
@@ -2259,7 +2274,7 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-breadcrumb-item__icon { display: flex; align-items: center; flex-shrink: 0; }
   .astryx-breadcrumb-item__separator { color: var(--color-text-secondary); padding-block: var(--spacing-1); user-select: none; }
   .astryx-breadcrumb-item:first-child > .astryx-breadcrumb-item__separator { display: none; }
-  .astryx-breadcrumb-item__separator:dir(rtl) > span { transform: scaleX(-1); }
+  .astryx-breadcrumb-item__separator:dir(rtl) > .astryx-breadcrumb-item__slash { transform: scaleX(-1); }
 }
 
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
