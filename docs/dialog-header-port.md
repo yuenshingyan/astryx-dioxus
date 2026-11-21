@@ -1,0 +1,7 @@
+# DialogHeader checkpoint
+
+`src/dialog/dialog_header.rs` composes LayoutHeader, a native level-two Heading, optional subtitle and action slots, and an optional ghost close button. The title can be referenced by `title_id` and receives mount focus unless `is_inline` is set. The close button requests `false`; the enclosing dialog owns visibility and dismissal. End-slot compensation uses logical edges and defaults to both axes when the close button is present.
+
+Source: Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`, `Dialog/DialogHeader.tsx` (`71670ee08eb74fb70bad676edde593c923578cf4`), its spec (`083f1ba305c9e53c357c3dc2c16bd23f2f9efdf6`), and both catalog templates. The showcase adapts the templates with inline Layouts and demonstrates explicit title naming in a separate probe. Parent Dialog context, autofocus after `showModal()`, modal focus return, and translation-provider integration remain pending; callers can supply a localized close label.
+
+All five standard Rust checks passed. SSR verified native heading markup, title ID, and inline focus opt-out. Chrome verified inline focus suppression, title focus on mount, the caller-linked dialog name in the accessibility tree, and the close action. DrawerHeader, LayoutHeader, and showcase navigation regressions passed. Published visual parity and manual assistive technology were not verified. The migration checklist remains open.

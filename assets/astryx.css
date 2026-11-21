@@ -2833,14 +2833,15 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
-  .astryx-drawer-header { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--spacing-3); }
-  .astryx-drawer-header-title-block {
+  :is(.astryx-drawer-header, .astryx-dialog-header) { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--spacing-3); }
+  :is(.astryx-drawer-header-title-block, .astryx-dialog-header-title-block) {
     display: flex; flex-direction: column; flex: 1; min-width: 0;
     margin-block: calc(var(--size-element-md) / 2 - var(--spacing-2) - var(--text-heading-2-size) * var(--text-heading-2-leading) / 2);
   }
-  :is(.astryx-drawer-header-start-content, .astryx-drawer-header-end-content) { display: flex; align-items: center; gap: var(--spacing-2); flex-shrink: 0; }
-  .astryx-drawer-header-end-content:is([data-compensation="all"], [data-compensation="inline"]) { margin-inline-end: calc(-1 * var(--spacing-2)); }
-  .astryx-drawer-header-end-content:is([data-compensation="all"], [data-compensation="block"]) { margin-block: calc(-1 * var(--spacing-2)); }
+  :is(.astryx-drawer-header-start-content, .astryx-drawer-header-end-content, .astryx-dialog-header-start-content, .astryx-dialog-header-end-content) { display: flex; align-items: center; gap: var(--spacing-2); flex-shrink: 0; }
+  :is(.astryx-drawer-header-end-content, .astryx-dialog-header-end-content):is([data-compensation="all"], [data-compensation="inline"]) { margin-inline-end: calc(-1 * var(--spacing-2)); }
+  :is(.astryx-drawer-header-end-content, .astryx-dialog-header-end-content):is([data-compensation="all"], [data-compensation="block"]) { margin-block: calc(-1 * var(--spacing-2)); }
+  .astryx-dialog-header-focus-title:focus { outline: none; }
 }
 
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
