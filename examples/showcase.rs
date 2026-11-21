@@ -1,7 +1,9 @@
 use std::future::Future;
 use std::pin::Pin;
 
-use astryx_dioxus::{Button, ButtonElevation, ButtonSize, ButtonType, ButtonVariant, STYLES};
+use astryx_dioxus::{
+    Button, ButtonElevation, ButtonSize, ButtonType, ButtonVariant, DropdownMenuDivider, STYLES,
+};
 use dioxus::prelude::*;
 
 #[path = "showcase/aspect_ratio.rs"]
@@ -230,6 +232,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#divider-examples", "Divider examples" }
                 " · "
+                a { href: "#dropdown-menu-divider-example", "DropdownMenuDivider example" }
+                " · "
                 a { href: "#field-status-examples", "FieldStatus examples" }
                 " · "
                 a { href: "#thumbnail-examples", "Thumbnail examples" }
@@ -395,6 +399,14 @@ fn App() -> Element {
             AvatarGroupOverflowExamples {}
             AvatarGroupExamples {}
             DividerExamples {}
+            section { id: "dropdown-menu-divider-example", "data-astryx-theme": "neutral",
+                h2 { "DropdownMenuDivider" }
+                div { style: "max-width:240px",
+                    div { "Edit" }
+                    DropdownMenuDivider { id: "dropdown-menu-divider-demo" }
+                    div { "Delete" }
+                }
+            }
             FieldStatusExamples {}
             KbdExamples {}
             SkeletonExamples {}
