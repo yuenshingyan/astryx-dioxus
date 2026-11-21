@@ -2170,6 +2170,38 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-empty-state[data-variant="compact"] > .astryx-empty-state__actions { flex-direction: column; }
 }
 
+@layer astryx-base {
+  .astryx-metadata-list-item__label,
+  .astryx-metadata-list-item__value {
+    color: var(--color-text-primary);
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+    margin: 0;
+    padding: 0;
+    min-height: 24px;
+    overflow-wrap: anywhere;
+  }
+  .astryx-metadata-list-item__label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+  }
+  .astryx-metadata-list-item--stacked {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-0-5);
+  }
+  .astryx-metadata-list-item--stacked > :is(dt, dd) { min-height: auto; }
+  .astryx-metadata-list-item__icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: var(--color-text-secondary);
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {
