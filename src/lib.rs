@@ -6,6 +6,7 @@ mod aspect_ratio;
 mod avatar;
 mod badge;
 mod blockquote;
+mod breadcrumbs;
 mod button;
 mod button_group;
 mod card;
@@ -56,6 +57,7 @@ pub use avatar::{
 };
 pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
 pub use blockquote::{Blockquote, BlockquoteCite};
+pub use breadcrumbs::{BreadcrumbItem, BreadcrumbItemProps};
 pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, ButtonVariant};
 pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation};
 pub use card::{Card, CardVariant, InvalidCardVariant};
