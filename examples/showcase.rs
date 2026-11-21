@@ -72,6 +72,8 @@ mod stack;
 mod status_dot;
 #[path = "showcase/text.rs"]
 mod text;
+#[path = "showcase/thumbnail.rs"]
+mod thumbnail;
 #[path = "showcase/typography_animation.rs"]
 mod typography_animation;
 #[path = "showcase/v_stack.rs"]
@@ -113,6 +115,7 @@ use spinner::SpinnerExamples;
 use stack::{StackExamples, StackItemExamples};
 use status_dot::StatusDotExamples;
 use text::TextExamples;
+use thumbnail::ThumbnailExamples;
 use v_stack::VStackExamples;
 use visually_hidden::VisuallyHiddenExamples;
 
@@ -189,6 +192,8 @@ fn App() -> Element {
                 a { href: "#divider-examples", "Divider examples" }
                 " · "
                 a { href: "#field-status-examples", "FieldStatus examples" }
+                " · "
+                a { href: "#thumbnail-examples", "Thumbnail examples" }
                 " · "
                 a { href: "#kbd-examples", "Kbd examples" }
                 " · "
@@ -335,6 +340,7 @@ fn App() -> Element {
             SkeletonExamples {}
             StatusDotExamples {}
             TextExamples {}
+            ThumbnailExamples {}
             HeadingExamples {}
             ProgressBarExamples {}
             BlockquoteExamples {}

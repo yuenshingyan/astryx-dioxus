@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+
+await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
+  await send('Network.enable');
+  await send('Network.setBlockedURLs', {urls: ['https://*']});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8131'});
+  const root = `document.getElementById('thumbnail-state')`;
+  const gallery = `document.getElementById('thumbnail-gallery')`;
+  const open = `${root}.querySelector('.astryx-thumbnail__open')`;
+  const cycle = () => evaluate(`document.getElementById('thumbnail-cycle').click()`);
+  await waitFor(`${root}?.querySelector('.astryx-thumbnail__placeholder')`);
+  await cycle();
+  await waitFor(`${root}.querySelector('img')?.naturalWidth === 64`);
+  assert.deepEqual(await evaluate(`[${root}.offsetWidth, ${root}.offsetHeight, ${root}.getAttribute('aria-label')]`), [64, 64, 'Test preview — Snowy mountain peaks']);
+  await evaluate(`${open}.focus(); ${open}.click()`);
+  await waitFor(`document.getElementById('thumbnail-opens').textContent === '1'`);
+  assert.equal(await evaluate(`getComputedStyle(${root}.querySelector('.astryx-thumbnail__remove')).opacity`), '1');
+  await evaluate(`${root}.querySelector('button').focus(); window.thumbnailOpen = ${open}`);
+  await cycle();
+  await waitFor(`${open}.getAttribute('aria-disabled') === 'true'`);
+  assert.equal(await evaluate(`${open} === window.thumbnailOpen && document.activeElement === window.thumbnailOpen`), true);
+  await send('Input.dispatchKeyEvent', {type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13});
+  await send('Input.dispatchKeyEvent', {type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13});
+  assert.equal(await evaluate(`document.getElementById('thumbnail-opens').textContent`), '1');
+  await waitFor(`document.querySelector('[data-astryx-live-region="polite"]')?.textContent.includes('Loading')`);
+  assert.equal(await evaluate(`!!${root}.querySelector('[role=progressbar]')`), false);
+  await evaluate(`${gallery}.querySelector('.astryx-thumbnail__open').click()`);
+  await waitFor(`${gallery}.textContent.includes('Selected: forest-night.jpg')`);
+  await evaluate(`${gallery}.querySelector('.astryx-thumbnail__remove button').click()`);
+  await waitFor(`${gallery}.querySelectorAll('.astryx-thumbnail').length === 3`);
+  assert.equal(await evaluate(`${gallery}.textContent.trim()`), 'Selected: forest-night.jpg');
+  assert.deepEqual(exceptions, []);
+  console.log('Thumbnail: offline imagery, error recovery, upload announcement, focus retention, and separate actions passed');
+});
