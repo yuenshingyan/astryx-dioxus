@@ -80,6 +80,8 @@ mod divider;
 mod drawer_header;
 #[path = "showcase/dropdown_menu_group.rs"]
 mod dropdown_menu_group;
+#[path = "showcase/dropdown_menu_radio_group.rs"]
+mod dropdown_menu_radio_group;
 #[path = "showcase/empty_state.rs"]
 mod empty_state;
 #[path = "showcase/field.rs"]
@@ -222,6 +224,7 @@ use dialog_header::DialogHeaderExamples;
 use divider::DividerExamples;
 use drawer_header::DrawerHeaderExamples;
 use dropdown_menu_group::DropdownMenuGroupExamples;
+use dropdown_menu_radio_group::DropdownMenuRadioGroupExamples;
 use empty_state::EmptyStateExamples;
 use field::FieldExamples;
 use field_label::FieldLabelExamples;
@@ -359,6 +362,8 @@ fn App() -> Element {
                 a { href: "#dropdown-menu-divider-example", "DropdownMenuDivider example" }
                 " · "
                 a { href: "#dropdown-menu-group-examples", "DropdownMenuGroup examples" }
+                " · "
+                a { href: "#dropdown-menu-radio-group-examples", "DropdownMenuRadioGroup examples" }
                 " · "
                 a { href: "#field-status-examples", "FieldStatus examples" }
                 " · "
@@ -606,6 +611,7 @@ fn App() -> Element {
             DrawerHeaderExamples {}
             DialogHeaderExamples {}
             DropdownMenuGroupExamples {}
+            DropdownMenuRadioGroupExamples {}
             section { id: "dropdown-menu-divider-example", "data-astryx-theme": "neutral",
                 h2 { "DropdownMenuDivider" }
                 div { style: "max-width:240px",

@@ -90,6 +90,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - SideNavHeading follows the non-menu forms of `SideNav/SideNavHeading.tsx`, its spec, and both catalog templates at the same pin. See `docs/side-nav-heading-port.md`.
 - MediaTheme follows `theme/MediaTheme.tsx`, its on-media tokens and automatic surface selection, and three catalog templates at the same pin. The offline images are pinned catalog assets. See `docs/media-theme-port.md`.
 - FormLayout follows `FormLayout/{FormLayout.tsx,FormLayoutContext.ts}`, its component spec, and five catalog arrangements at the same pin. See `docs/form-layout-port.md`.
+- DropdownMenuRadioGroup follows `DropdownMenu/DropdownMenuRadioGroup.tsx`, its spec, and the adapted Storybook sort arrangement at the same pin. See `docs/dropdown-menu-radio-group-port.md`.
 - DropdownMenuGroup follows `DropdownMenu/DropdownMenuGroup.tsx`, its spec, and both catalog arrangements at the same pin. See `docs/dropdown-menu-group-port.md`.
 - DropdownMenuDivider follows `DropdownMenu/DropdownMenuDivider.tsx` and its component spec at the same pin. See `docs/dropdown-menu-divider-port.md`.
 - ScrollableArea follows `ScrollableArea/ScrollableArea.tsx`, `useScrollableArea.ts`, and six catalog arrangements at the same pin. See `docs/scrollable-area-port.md`.
