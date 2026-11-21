@@ -2231,6 +2231,37 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
+@layer astryx-base {
+  .astryx-breadcrumb-item, .astryx-breadcrumb-item__content, .astryx-breadcrumb-item__separator {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+  }
+  .astryx-breadcrumb-item {
+    margin: 0;
+    font-size: var(--_breadcrumb-size, var(--text-body-size));
+    line-height: var(--_breadcrumb-leading, var(--text-body-leading));
+  }
+  .astryx-breadcrumb-item__content { color: var(--_breadcrumb-current-color, var(--color-text-primary)); font-weight: var(--font-weight-semibold); }
+  .astryx-breadcrumb-item__link {
+    background: transparent; border: 0; margin: 0; font: inherit;
+    padding: var(--spacing-1) 0; color: var(--color-text-secondary);
+    text-decoration: none; cursor: pointer;
+  }
+  .astryx-breadcrumb-item__link[aria-disabled="true"] { cursor: default; }
+  .astryx-breadcrumb-item__link:focus-visible {
+    outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+    outline-offset: var(--focus-outline-offset);
+  }
+  @media (hover: hover) {
+    .astryx-breadcrumb-item__link:not([aria-disabled="true"]):hover { text-decoration: underline; }
+  }
+  .astryx-breadcrumb-item__icon { display: flex; align-items: center; flex-shrink: 0; }
+  .astryx-breadcrumb-item__separator { color: var(--color-text-secondary); padding-block: var(--spacing-1); user-select: none; }
+  .astryx-breadcrumb-item:first-child > .astryx-breadcrumb-item__separator { display: none; }
+  .astryx-breadcrumb-item__separator:dir(rtl) > span { transform: scaleX(-1); }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

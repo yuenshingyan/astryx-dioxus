@@ -12,6 +12,8 @@ mod avatar_status_dot;
 mod badge;
 #[path = "showcase/blockquote.rs"]
 mod blockquote;
+#[path = "showcase/breadcrumb_item.rs"]
+mod breadcrumb_item;
 #[path = "showcase/button_contract.rs"]
 mod button_contract;
 #[path = "showcase/button_group.rs"]
@@ -95,6 +97,7 @@ use aspect_ratio::AspectRatioExamples;
 use avatar_status_dot::AvatarStatusDotExamples;
 use badge::BadgeExamples;
 use blockquote::BlockquoteExamples;
+use breadcrumb_item::BreadcrumbItemExamples;
 use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
@@ -213,6 +216,8 @@ fn App() -> Element {
                 a { href: "#timer-examples", "Timer examples" }
                 " · "
                 a { href: "#token-examples", "Token examples" }
+                " · "
+                a { href: "#breadcrumb-item-examples", "BreadcrumbItem examples" }
                 " · "
                 a { href: "#empty-state-examples", "EmptyState examples" }
                 " · "
@@ -370,6 +375,7 @@ fn App() -> Element {
             ThumbnailExamples {}
             TimerExamples {}
             TokenExamples {}
+            BreadcrumbItemExamples {}
             EmptyStateExamples {}
             HeadingExamples {}
             ProgressBarExamples {}
