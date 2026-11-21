@@ -61,6 +61,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - TopNavMegaMenuItem follows the desktop form of `TopNav/TopNavMegaMenuItem.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-mega-menu-item-port.md`.
 - TopNavMegaMenuFeaturedCard follows `TopNav/TopNavMegaMenuFeaturedCard.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-featured-card-port.md`.
 - TopNavHeading follows the non-menu forms of `TopNav/TopNavHeading.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-heading-port.md`.
+- TableHeaderCell follows the standalone form of `Table/TableHeaderCell.tsx` and its spec at the same pin. See `docs/table-header-cell-port.md`.
 - TableCell follows the standalone form of `Table/TableCell.tsx` and its spec at the same pin. See `docs/table-cell-port.md`.
 - TableBody follows `Table/TableBody.tsx` and its spec at the same pin. See `docs/table-body-port.md`.
 - TableFooter follows `Table/TableFooter.tsx` and its spec at the same pin. See `docs/table-footer-port.md`.
