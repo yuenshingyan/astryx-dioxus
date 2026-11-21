@@ -2711,6 +2711,23 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
+@layer astryx-base {
+  .astryx-command-palette-item {
+    display: flex; align-items: center; gap: var(--spacing-2); width: 100%; box-sizing: border-box;
+    padding-block: var(--spacing-2); padding-inline: var(--spacing-3);
+    border: 0; border-radius: var(--radius-inner); background-color: transparent;
+    font-family: var(--font-family-body); font-size: var(--text-label-size);
+    color: var(--color-text-primary); text-align: start; cursor: pointer; user-select: none;
+  }
+  .astryx-command-palette-item[data-highlighted] { background-color: var(--color-overlay-hover); }
+  .astryx-command-palette-item[data-selected] { background-color: var(--color-accent-muted); }
+  .astryx-command-palette-item[data-disabled] { opacity: 0.5; cursor: default; }
+  @media (hover: hover) {
+    .astryx-command-palette-item:hover:not([data-disabled]) { background-image: linear-gradient(var(--color-overlay-hover), var(--color-overlay-hover)); }
+  }
+  .astryx-command-palette-item:active:not([data-disabled]) { background-image: linear-gradient(var(--color-overlay-pressed), var(--color-overlay-pressed)); }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {
