@@ -92,6 +92,8 @@ mod scrollable_area;
 mod section;
 #[path = "showcase/selectable_card.rs"]
 mod selectable_card;
+#[path = "showcase/side_nav_collapse_button.rs"]
+mod side_nav_collapse_button;
 #[path = "showcase/side_nav_heading.rs"]
 mod side_nav_heading;
 #[path = "showcase/side_nav_section.rs"]
@@ -164,6 +166,7 @@ use radio_indicator::RadioIndicatorExamples;
 use scrollable_area::ScrollableAreaExamples;
 use section::SectionExamples;
 use selectable_card::SelectableCardExamples;
+use side_nav_collapse_button::SideNavCollapseButtonExamples;
 use side_nav_heading::SideNavHeadingExamples;
 use side_nav_section::SideNavSectionExamples;
 use skeleton::SkeletonExamples;
@@ -326,6 +329,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#side-nav-section-examples", "SideNavSection examples" }
                 " · "
+                a { href: "#side-nav-collapse-button-examples", "SideNavCollapseButton examples" }
+                " · "
                 a { href: "#top-nav-heading-examples", "TopNavHeading examples" }
                 " · "
                 a { href: "#nav-icon-examples", "NavIcon examples" }
@@ -483,6 +488,7 @@ fn App() -> Element {
             SectionExamples {}
             SideNavHeadingExamples {}
             SideNavSectionExamples {}
+            SideNavCollapseButtonExamples {}
             TopNavHeadingExamples {}
             NavIconExamples {}
             ScrollableAreaExamples {}
