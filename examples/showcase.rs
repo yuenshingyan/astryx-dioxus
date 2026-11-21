@@ -58,6 +58,8 @@ mod chat_tokenized_text;
 mod check_indicator;
 #[path = "showcase/checkbox_indicator.rs"]
 mod checkbox_indicator;
+#[path = "showcase/checkbox_input.rs"]
+mod checkbox_input;
 #[path = "showcase/citation.rs"]
 mod citation;
 #[path = "showcase/clickable_card.rs"]
@@ -223,6 +225,7 @@ use chat_system_message::ChatSystemMessageExamples;
 use chat_tokenized_text::ChatTokenizedTextExamples;
 use check_indicator::CheckIndicatorExamples;
 use checkbox_indicator::CheckboxIndicatorExamples;
+use checkbox_input::CheckboxInputExamples;
 use citation::CitationExamples;
 use clickable_card::ClickableCardExamples;
 use command_palette_empty::CommandPaletteEmptyExamples;
@@ -502,6 +505,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#checkbox-indicator-examples", "CheckboxIndicator examples" }
                 " · "
+                a { href: "#checkbox-input-examples", "CheckboxInput examples" }
+                " · "
                 a { href: "#section-examples", "Section examples" }
                 " · "
                 a { href: "#side-nav-heading-examples", "SideNavHeading examples" }
@@ -705,6 +710,7 @@ fn App() -> Element {
             CheckIndicatorExamples {}
             RadioIndicatorExamples {}
             CheckboxIndicatorExamples {}
+            CheckboxInputExamples {}
             SectionExamples {}
             SideNavHeadingExamples {}
             MobileNavToggleExamples {}

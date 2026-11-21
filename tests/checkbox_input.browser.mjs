@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+
+await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
+  await send('Network.enable');
+  await send('Network.setBlockedURLs', {urls: ['https://*']});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8199'});
+  const all = `document.getElementById('checkbox-select-all')`;
+  const blocked = `document.getElementById('checkbox-disabled')`;
+  await waitFor(`${all}?.indeterminate`);
+  assert.ok(await evaluate(`${blocked}.form === null && !${blocked}.hasAttribute('name')`));
+  await evaluate(`${blocked}.focus(); ${blocked}.click()`);
+  assert.ok(await evaluate(`document.activeElement === ${blocked} && !${blocked}.checked`));
+  await evaluate(`${all}.focus()`);
+  for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key: ' ', code: 'Space', windowsVirtualKeyCode: 32});
+  await waitFor(`${all}.checked && !${all}.indeterminate`);
+  assert.equal(await evaluate(`document.querySelectorAll('#checkbox-input-examples input:checked').length`), 6);
+  const {nodes} = await send('Accessibility.getFullAXTree');
+  assert.ok(nodes.some(node => node.role?.value === 'checkbox' && node.name?.value === 'Select all notifications'));
+  await evaluate(`document.getElementById('checkbox-unchecked').click()`);
+  await waitFor(`!document.getElementById('checkbox-unchecked').checked`);
+  assert.deepEqual(exceptions, []);
+  console.log('CheckboxInput: native mixed state, Space activation, controlled restore and disabled form exclusion passed');
+});

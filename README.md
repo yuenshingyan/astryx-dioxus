@@ -177,7 +177,8 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/timer/`: [Timer](docs/timer-port.md), with elapsed and clock formats and browser-driven duration updates.
 - `src/thumbnail/`: [Thumbnail](docs/thumbnail-port.md), with attachment preview states and separate Open and Remove actions.
 - `src/form_layout/`: [FormLayout](docs/form-layout-port.md), with responsive field arrangement and layer-scoped defaults. FieldLabel consumes the optionality default; input integration remains pending.
-- `src/field/`: [Field](docs/field-port.md) and [FieldLabel](docs/field-label-port.md), with native label and group-label forms and attached or detached status. InfoTip and tooltip-only status remain pending.
+- `src/field/`: [Field](docs/field-port.md) and [FieldLabel](docs/field-label-port.md), with native label and group-label forms and attached or detached status. Plain-text label help uses InfoTip; tooltip-only status remains pending.
+- `src/checkbox_input/`: [CheckboxInput](docs/checkbox-input-port.md), a controlled native checkbox with mixed state, a decorative indicator, and detached validation status.
 - `src/field_status/`: [FieldStatus](docs/field-status-port.md), with attached and detached validation messages and shared live announcements. Field control integration remains pending.
 - `src/dropdown_menu/`: [DropdownMenuDivider](docs/dropdown-menu-divider-port.md), [DropdownMenuGroup](docs/dropdown-menu-group-port.md), and [DropdownMenuRadioGroup](docs/dropdown-menu-radio-group-port.md). Popup and menu navigation integration remain pending.
 - `src/scrollable_area/`: [ScrollableArea](docs/scrollable-area-port.md), with a native viewport, logical scroll axes, and overflow-dependent keyboard access.
