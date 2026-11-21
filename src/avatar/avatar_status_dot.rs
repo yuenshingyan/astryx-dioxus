@@ -7,6 +7,7 @@ use std::fmt::{Display, Formatter};
 use dioxus::prelude::*;
 
 use super::avatar_size_context::AvatarSizeContext;
+use super::avatar_status_label_context::use_report_status_label;
 
 /// Open theme identifier for the status plate.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -136,11 +137,10 @@ pub fn AvatarStatusDot(
     attributes: Vec<Attribute>,
 ) -> Element {
     let geometry = Geometry::resolve(
-        try_consume_context::<AvatarSizeContext>()
-            .unwrap_or_default()
-            .0,
+        try_consume_context::<AvatarSizeContext>().map_or(36, |context| (context.0)()),
     );
     let label = label.filter(|name| !name.is_empty());
+    use_report_status_label(label.clone());
     let is_named = label.is_some();
     let attributes: Vec<_> = attributes
         .into_iter()
@@ -177,7 +177,7 @@ mod tests {
     fn avatar_size_selects_glyph_or_icon_until_a_layer_boundary() {
         #[component]
         fn Parent(size: u32, children: Element) -> Element {
-            use_context_provider(|| AvatarSizeContext(size));
+            use_context_provider(|| AvatarSizeContext(Signal::new(size)));
             children
         }
         let html = render_element(rsx! {

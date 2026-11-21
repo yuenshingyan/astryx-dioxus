@@ -53,7 +53,8 @@ mod visually_hidden;
 
 pub use aspect_ratio::{AspectRatio, AspectRatioFit, AspectRatioShape};
 pub use avatar::{
-    AvatarStatusDot, AvatarStatusDotProps, AvatarStatusDotVariant, InvalidAvatarStatusDotVariant,
+    Avatar, AvatarPixelSize, AvatarProps, AvatarShape, AvatarSize, AvatarStatusDot,
+    AvatarStatusDotProps, AvatarStatusDotVariant, AvatarTooltip, InvalidAvatarStatusDotVariant,
 };
 pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
 pub use blockquote::{Blockquote, BlockquoteCite};

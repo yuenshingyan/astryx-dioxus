@@ -152,6 +152,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/stack/`: Stack and its axis/wrap types, plus StackItem.
 - `src/h_stack/`: [HStack](docs/h-stack-port.md), the horizontal Stack wrapper with both original patterns.
 - `src/v_stack/`: [VStack](docs/v-stack-port.md), the vertical Stack wrapper with both original patterns.
+- `src/avatar/`: [Avatar](docs/avatar-port.md) and [AvatarStatusDot](docs/avatar-status-dot-port.md), with offline image examples and status-name composition. AvatarGroup integration remains pending.
 - `src/breadcrumbs/`: [Breadcrumbs](docs/breadcrumbs-port.md) and [BreadcrumbItem](docs/breadcrumb-item-port.md), with named navigation trails and link, button, and current-page forms. Menu integration remains pending.
 - `src/token/`: [Token](docs/token-port.md), with static, clickable, and link forms and optional removal.
 - `src/metadata_list/`: [MetadataList](docs/metadata-list-port.md) and [MetadataListItem](docs/metadata-list-item-port.md), with native description-list pairs, column layouts, and disclosure.

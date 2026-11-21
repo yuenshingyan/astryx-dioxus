@@ -1,10 +1,12 @@
 //! Avatar-owned size, scoped to the nearest layer.
 
+use dioxus::prelude::*;
+
 #[derive(Clone, Copy)]
-pub(crate) struct AvatarSizeContext(pub u32);
+pub(crate) struct AvatarSizeContext(pub Signal<u32>);
 
 impl Default for AvatarSizeContext {
     fn default() -> Self {
-        Self(36)
+        Self(Signal::new(36))
     }
 }
