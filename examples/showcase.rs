@@ -100,6 +100,8 @@ mod h_stack;
 mod heading;
 #[path = "showcase/icon_button.rs"]
 mod icon_button;
+#[path = "showcase/info_tip.rs"]
+mod info_tip;
 #[path = "showcase/input_group.rs"]
 mod input_group;
 #[path = "showcase/input_group_text.rs"]
@@ -242,6 +244,7 @@ use grid::{GridExamples, GridSpanExamples};
 use h_stack::HStackExamples;
 use heading::HeadingExamples;
 use icon_button::IconButtonExamples;
+use info_tip::InfoTipExamples;
 use input_group::InputGroupExamples;
 use input_group_text::InputGroupTextExamples;
 use kbd::KbdExamples;
@@ -426,6 +429,8 @@ fn App() -> Element {
                 a { href: "#syntax-theme-examples", "SyntaxTheme examples" }
                 " · "
                 a { href: "#tooltip-examples", "Tooltip examples" }
+                " · "
+                a { href: "#info-tip-examples", "InfoTip examples" }
                 " · "
                 a { href: "#overlay-examples", "Overlay examples" }
                 " · "
@@ -617,6 +622,7 @@ fn App() -> Element {
             MediaThemeExamples {}
             SyntaxThemeExamples {}
             TooltipExamples {}
+            InfoTipExamples {}
             OverlayExamples {}
             LayoutHeaderExamples {}
             LayoutFooterExamples {}

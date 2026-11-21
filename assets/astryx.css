@@ -2846,6 +2846,16 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-info-tip {
+    position: relative; display: inline-flex; align-items: center; justify-content: center;
+    vertical-align: middle; padding: var(--spacing-0-5); margin: 0; border: 0;
+    border-radius: var(--radius-full); background: transparent; cursor: pointer;
+    color: var(--color-icon-secondary); transition: color var(--duration-fast) var(--ease-standard);
+  }
+  .astryx-info-tip:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+  @media (hover: hover) { .astryx-info-tip:hover { color: var(--color-icon-primary); } }
+  @media (prefers-reduced-motion: reduce) { .astryx-info-tip { transition: none; } }
+
   .astryx-tooltip-text[data-hover-indication] { text-decoration: underline dotted; text-underline-offset: .2em; }
   .astryx-tooltip-text:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
 

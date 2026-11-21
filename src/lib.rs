@@ -35,6 +35,7 @@ mod i18n;
 mod icon;
 mod icon_button;
 mod indicator;
+mod info_tip;
 mod input_group;
 mod interactive_role_context;
 mod kbd;
@@ -151,6 +152,7 @@ pub use indicator::{
     CheckboxIndicatorProps, CheckboxIndicatorState, IndicatorSize, RadioIndicator,
     RadioIndicatorProps, RadioIndicatorState,
 };
+pub use info_tip::{InfoTip, InfoTipProps, InfoTipSize};
 pub use input_group::{InputGroup, InputGroupProps, InputGroupText, InputGroupTextProps};
 pub use interactive_role_context::{
     InteractiveRoleContext, InteractiveRoleProvider, use_interactive_role_context,
