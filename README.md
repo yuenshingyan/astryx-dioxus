@@ -162,6 +162,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/top_nav/`: [TopNavHeading](docs/top-nav-heading-port.md), [TopNavMegaMenuFeaturedCard](docs/top-nav-featured-card-port.md), and [TopNavMegaMenuItem](docs/top-nav-mega-menu-item-port.md). Parent menu and drawer integration remain pending.
 - `src/input_group/`: [InputGroup](docs/input-group-port.md) and [InputGroupText](docs/input-group-text-port.md), with named rows and logical addon styling. Production input integration remains pending.
 - `src/citation/`: [Citation](docs/citation-port.md), with inline source labels and superscript references.
+- `src/overlay/`: [Overlay](docs/overlay-port.md), with desktop reveal and controlled scrim visibility. Touch and OverlayRegion integration remain pending.
 - `src/typeahead/`: [TypeaheadItem](docs/typeahead-item-port.md), the standalone result presentation. Search host integration remains pending.
 - `src/command_palette/`: [CommandPaletteEmpty](docs/command-palette-empty-port.md), [CommandPaletteGroup](docs/command-palette-group-port.md), [CommandPaletteFooter](docs/command-palette-footer-port.md), [CommandPaletteList](docs/command-palette-list-port.md), and [CommandPaletteItem](docs/command-palette-item-port.md), with standalone result surfaces and keyboard guidance. Parent palette integration remains pending.
 - `src/breadcrumbs/`: [Breadcrumbs](docs/breadcrumbs-port.md) and [BreadcrumbItem](docs/breadcrumb-item-port.md), with named navigation trails and link, button, and current-page forms. Menu integration remains pending.

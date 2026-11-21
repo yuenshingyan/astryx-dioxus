@@ -41,6 +41,7 @@ mod link;
 mod metadata_list;
 mod mobile_nav;
 mod nav_icon;
+mod overlay;
 mod private_attributes;
 mod progress_bar;
 mod scrollable_area;
@@ -153,6 +154,9 @@ pub use metadata_list::{
 };
 pub use mobile_nav::{MobileNavToggle, MobileNavToggleProps};
 pub use nav_icon::{NavIcon, NavIconProps};
+pub use overlay::{
+    Overlay, OverlayAlign, OverlayPosition, OverlayProps, OverlayScrimMode, OverlayShowOn,
+};
 pub use progress_bar::{
     InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,
     ProgressBarVariant,

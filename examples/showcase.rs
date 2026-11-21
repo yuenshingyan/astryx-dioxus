@@ -102,6 +102,8 @@ mod metadata_list_item;
 mod mobile_nav_toggle;
 #[path = "showcase/nav_icon.rs"]
 mod nav_icon;
+#[path = "showcase/overlay.rs"]
+mod overlay;
 #[path = "showcase/progress_bar.rs"]
 mod progress_bar;
 #[path = "showcase/radio_indicator.rs"]
@@ -205,6 +207,7 @@ use metadata_list::MetadataListExamples;
 use metadata_list_item::MetadataListItemExamples;
 use mobile_nav_toggle::MobileNavToggleExamples;
 use nav_icon::NavIconExamples;
+use overlay::OverlayExamples;
 use progress_bar::ProgressBarExamples;
 use radio_indicator::RadioIndicatorExamples;
 use scrollable_area::ScrollableAreaExamples;
@@ -355,6 +358,8 @@ fn App() -> Element {
                 a { href: "#metadata-list-examples", "MetadataList examples" }
                 " · "
                 a { href: "#media-theme-examples", "MediaTheme examples" }
+                " · "
+                a { href: "#overlay-examples", "Overlay examples" }
                 " · "
                 a { href: "#kbd-examples", "Kbd examples" }
                 " · "
@@ -520,6 +525,7 @@ fn App() -> Element {
             MetadataListItemExamples {}
             MetadataListExamples {}
             MediaThemeExamples {}
+            OverlayExamples {}
             LayoutHeaderExamples {}
             LayoutFooterExamples {}
             LayoutContentExamples {}
