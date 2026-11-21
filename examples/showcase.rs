@@ -56,6 +56,8 @@ mod layout_header;
 mod layout_panel;
 #[path = "showcase/link.rs"]
 mod link;
+#[path = "showcase/metadata_list_item.rs"]
+mod metadata_list_item;
 #[path = "showcase/progress_bar.rs"]
 mod progress_bar;
 #[path = "showcase/radio_indicator.rs"]
@@ -111,6 +113,7 @@ use layout_footer::LayoutFooterExamples;
 use layout_header::LayoutHeaderExamples;
 use layout_panel::LayoutPanelExamples;
 use link::LinkExamples;
+use metadata_list_item::MetadataListItemExamples;
 use progress_bar::ProgressBarExamples;
 use radio_indicator::RadioIndicatorExamples;
 use section::SectionExamples;
@@ -204,6 +207,8 @@ fn App() -> Element {
                 a { href: "#timer-examples", "Timer examples" }
                 " · "
                 a { href: "#empty-state-examples", "EmptyState examples" }
+                " · "
+                a { href: "#metadata-list-item-examples", "MetadataListItem examples" }
                 " · "
                 a { href: "#kbd-examples", "Kbd examples" }
                 " · "
@@ -336,6 +341,7 @@ fn App() -> Element {
             ButtonGroupExamples {}
             IconButtonExamples {}
             LinkExamples {}
+            MetadataListItemExamples {}
             LayoutHeaderExamples {}
             LayoutFooterExamples {}
             LayoutContentExamples {}

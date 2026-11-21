@@ -152,6 +152,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/stack/`: Stack and its axis/wrap types, plus StackItem.
 - `src/h_stack/`: [HStack](docs/h-stack-port.md), the horizontal Stack wrapper with both original patterns.
 - `src/v_stack/`: [VStack](docs/v-stack-port.md), the vertical Stack wrapper with both original patterns.
+- `src/metadata_list/`: [MetadataListItem](docs/metadata-list-item-port.md), with native description-list pairs. The parent MetadataList remains pending.
 - `src/empty_state/`: [EmptyState](docs/empty-state-port.md), with native headings, compact layout, and shared rendered-text announcements.
 - `src/timer/`: [Timer](docs/timer-port.md), with elapsed and clock formats and browser-driven duration updates.
 - `src/thumbnail/`: [Thumbnail](docs/thumbnail-port.md), with attachment preview states and separate Open and Remove actions.

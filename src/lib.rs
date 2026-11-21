@@ -30,6 +30,7 @@ mod kbd;
 mod layer;
 mod layout;
 mod link;
+mod metadata_list;
 mod private_attributes;
 mod progress_bar;
 mod section;
@@ -98,6 +99,7 @@ pub use link::{
     LinkifyError, LinkifyMatch, LinkifyNode, LinkifyPattern, UseLinkifyOptions, linkify,
     use_link_component, use_linkify,
 };
+pub use metadata_list::{MetadataListItem, MetadataListItemProps};
 pub use progress_bar::{
     InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,
     ProgressBarVariant,
