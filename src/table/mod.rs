@@ -5,6 +5,7 @@ mod table_footer;
 mod table_header;
 mod table_header_cell;
 mod table_row;
+mod table_selection_toolbar;
 
 pub use component::{
     Table, TableDensity, TableDividers, TableProps, TableTextOverflow, TableVerticalAlign,
@@ -15,3 +16,6 @@ pub use table_footer::{TableFooter, TableFooterProps};
 pub use table_header::{TableHeader, TableHeaderProps};
 pub use table_header_cell::{TableHeaderCell, TableHeaderCellProps};
 pub use table_row::{TableRow, TableRowProps};
+pub use table_selection_toolbar::{
+    TableSelectionSummary, TableSelectionToolbar, TableSelectionToolbarProps,
+};
