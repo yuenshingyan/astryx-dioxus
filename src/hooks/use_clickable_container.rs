@@ -9,7 +9,6 @@ use dioxus::prelude::*;
 use web_sys::Element;
 
 /// Nested controls own their activation, including marked nested containers.
-#[cfg(target_arch = "wasm32")]
 pub(crate) const INTERACTIVE_SELECTORS: &str = "button,a,input,select,textarea,[role=button],[role=link],[role=checkbox],[role=radio],[role=switch],[role=tab],[role=menuitem],[role=option],[role=combobox],[role=listbox],[role=slider],[role=spinbutton],[data-pressable-container]";
 
 /// Renderer-neutral owner ref used by the native event adapter.

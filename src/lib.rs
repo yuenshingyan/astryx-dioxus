@@ -18,6 +18,7 @@ mod compatibility;
 mod divider;
 mod dropdown_menu;
 mod empty_state;
+mod field;
 mod field_status;
 mod form_layout;
 mod grid;
@@ -85,6 +86,7 @@ pub use dropdown_menu::{
     DropdownMenuDividerProps as ContextMenuDividerProps, DropdownMenuGroup, DropdownMenuGroupProps,
 };
 pub use empty_state::{EmptyState, EmptyStateProps};
+pub use field::{FieldLabel, FieldLabelProps};
 pub use field_status::{
     FieldStatus, FieldStatusProps, FieldStatusVariant, InputStatusType, InvalidFieldStatusVariant,
 };

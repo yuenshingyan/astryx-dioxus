@@ -46,6 +46,8 @@ mod divider;
 mod dropdown_menu_group;
 #[path = "showcase/empty_state.rs"]
 mod empty_state;
+#[path = "showcase/field_label.rs"]
+mod field_label;
 #[path = "showcase/field_status.rs"]
 mod field_status;
 #[path = "showcase/form_layout.rs"]
@@ -129,6 +131,7 @@ use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
 use dropdown_menu_group::DropdownMenuGroupExamples;
 use empty_state::EmptyStateExamples;
+use field_label::FieldLabelExamples;
 use field_status::FieldStatusExamples;
 use form_layout::FormLayoutExamples;
 use grid::{GridExamples, GridSpanExamples};
@@ -243,6 +246,8 @@ fn App() -> Element {
                 a { href: "#dropdown-menu-group-examples", "DropdownMenuGroup examples" }
                 " · "
                 a { href: "#field-status-examples", "FieldStatus examples" }
+                " · "
+                a { href: "#field-label-examples", "FieldLabel examples" }
                 " · "
                 a { href: "#form-layout-examples", "FormLayout examples" }
                 " · "
@@ -419,6 +424,7 @@ fn App() -> Element {
                 }
             }
             FieldStatusExamples {}
+            FieldLabelExamples {}
             FormLayoutExamples {}
             KbdExamples {}
             SkeletonExamples {}
