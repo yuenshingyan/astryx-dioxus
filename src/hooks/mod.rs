@@ -4,3 +4,4 @@ pub(crate) mod use_clickable_container;
 pub(crate) mod use_interactive_role;
 pub(crate) mod use_press_feedback;
 pub(crate) mod use_scroll_region_props;
+pub(crate) mod use_scrollable_area;
