@@ -166,7 +166,9 @@ pub use theme::{MediaTheme, MediaThemeFallback, MediaThemeMode, MediaThemeProps}
 pub use thumbnail::{Thumbnail, ThumbnailProps, ThumbnailRemoveVisibility};
 pub use timer::{Timer, TimerFormat, TimerProps};
 pub use token::{InvalidTokenColor, Token, TokenColor, TokenProps, TokenSize};
-pub use top_nav::{TopNavHeading, TopNavHeadingProps};
+pub use top_nav::{
+    TopNavHeading, TopNavHeadingProps, TopNavMegaMenuFeaturedCard, TopNavMegaMenuFeaturedCardProps,
+};
 
 pub use utils::types::{Elevation, SizeValue, SizeValueError, SpacingStep};
 pub use v_stack::{VStack, VStackProps};

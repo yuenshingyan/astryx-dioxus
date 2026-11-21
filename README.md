@@ -156,7 +156,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/avatar_group/`: [AvatarGroup](docs/avatar-group-port.md) and [AvatarGroupOverflow](docs/avatar-group-overflow-port.md), with shared member geometry and keyboard navigation.
 - `src/side_nav/`: [SideNavHeading](docs/side-nav-heading-port.md) and [SideNavSection](docs/side-nav-section-port.md), with static and linked headings and named groups. [SideNavCollapseButton](docs/side-nav-collapse-button-port.md) supports caller-controlled collapse. Rail context and menu integration remain pending.
 - `src/nav_icon/`: [NavIcon](docs/nav-icon-port.md), a circular accent mark with caller-owned artwork and semantics.
-- `src/top_nav/`: [TopNavHeading](docs/top-nav-heading-port.md), with static, logo-only, and linked forms. Parent and menu integration remain pending.
+- `src/top_nav/`: [TopNavHeading](docs/top-nav-heading-port.md) and [TopNavMegaMenuFeaturedCard](docs/top-nav-featured-card-port.md). Parent menu integration remains pending.
 - `src/breadcrumbs/`: [Breadcrumbs](docs/breadcrumbs-port.md) and [BreadcrumbItem](docs/breadcrumb-item-port.md), with named navigation trails and link, button, and current-page forms. Menu integration remains pending.
 - `src/token/`: [Token](docs/token-port.md), with static, clickable, and link forms and optional removal.
 - `src/metadata_list/`: [MetadataList](docs/metadata-list-port.md) and [MetadataListItem](docs/metadata-list-item-port.md), with native description-list pairs, column layouts, and disclosure.
