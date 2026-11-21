@@ -148,6 +148,8 @@ mod top_nav_featured_card;
 mod top_nav_heading;
 #[path = "showcase/top_nav_mega_menu_item.rs"]
 mod top_nav_mega_menu_item;
+#[path = "showcase/typeahead_item.rs"]
+mod typeahead_item;
 #[path = "showcase/typography_animation.rs"]
 mod typography_animation;
 #[path = "showcase/v_stack.rs"]
@@ -226,6 +228,7 @@ use token::TokenExamples;
 use top_nav_featured_card::TopNavFeaturedCardExamples;
 use top_nav_heading::TopNavHeadingExamples;
 use top_nav_mega_menu_item::TopNavMegaMenuItemExamples;
+use typeahead_item::TypeaheadItemExamples;
 use v_stack::VStackExamples;
 use visually_hidden::VisuallyHiddenExamples;
 
@@ -326,6 +329,8 @@ fn App() -> Element {
                 a { href: "#thumbnail-examples", "Thumbnail examples" }
                 " · "
                 a { href: "#timer-examples", "Timer examples" }
+                " · "
+                a { href: "#typeahead-item-examples", "TypeaheadItem examples" }
                 " · "
                 a { href: "#table-header-examples", "TableHeader examples" }
                 " · "
@@ -548,6 +553,7 @@ fn App() -> Element {
             TextExamples {}
             ThumbnailExamples {}
             TimerExamples {}
+            TypeaheadItemExamples {}
             TableHeaderExamples {}
             TableExamples {}
             ToggleButtonExamples {}

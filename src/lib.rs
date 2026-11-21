@@ -61,6 +61,7 @@ mod toggle_button;
 mod token;
 mod tooltip;
 mod top_nav;
+mod typeahead;
 mod utils;
 mod v_stack;
 mod visually_hidden;
@@ -200,6 +201,7 @@ pub use top_nav::{
     TopNavHeading, TopNavHeadingProps, TopNavMegaMenuFeaturedCard, TopNavMegaMenuFeaturedCardProps,
     TopNavMegaMenuItem, TopNavMegaMenuItemProps,
 };
+pub use typeahead::{TypeaheadItem, TypeaheadItemContent, TypeaheadItemProps};
 
 pub use utils::types::{Elevation, SizeValue, SizeValueError, SpacingStep};
 pub use v_stack::{VStack, VStackProps};
