@@ -2600,6 +2600,33 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
+@layer astryx-base {
+  .astryx-input-group-text {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    padding-inline: var(--spacing-2);
+    background-color: var(--color-background-muted);
+    font-family: var(--font-family-body);
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    unicode-bidi: isolate;
+    border: var(--border-width) solid var(--color-border-emphasized);
+    margin-inline-start: calc(-1 * var(--border-width));
+  }
+  .astryx-input-group-text:first-child {
+    margin-inline-start: 0;
+    border-start-start-radius: var(--radius-element);
+    border-end-start-radius: var(--radius-element);
+  }
+  .astryx-input-group-text:last-child {
+    border-start-end-radius: var(--radius-element);
+    border-end-end-radius: var(--radius-element);
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {
