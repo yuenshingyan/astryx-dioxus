@@ -2533,6 +2533,27 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
+@layer astryx {
+  .astryx-avatar--public { width: var(--_avatar-size); height: var(--_avatar-size); }
+  .astryx-avatar--public[data-shape="rounded"] { --_avatar-radius: var(--radius-element); }
+  .astryx-avatar--public[data-shape="square"] { --_avatar-radius: var(--radius-none); }
+  :is(a, button).astryx-avatar--public {
+    appearance: none; padding: 0; margin: 0; border: 0; background: transparent;
+    color: inherit; font: inherit; text-decoration: none; cursor: pointer;
+  }
+  .astryx-avatar--public[aria-disabled="true"] { cursor: default; }
+  .astryx-avatar__image { width: 100%; height: 100%; object-fit: cover; }
+  .astryx-avatar--public .astryx-avatar-fallback { font-size: calc(var(--_avatar-font-size) * .4); }
+  .astryx-avatar__status { position: absolute; bottom: 0; inset-inline-end: 0; transform: translate(25%, 25%); }
+  .astryx-avatar__status:dir(rtl) { transform: translate(-25%, 25%); }
+  .astryx-avatar[data-shape="circle"] > .astryx-avatar__status {
+    bottom: calc(var(--_avatar-size) * .1464466094);
+    inset-inline-end: calc(var(--_avatar-size) * .1464466094);
+    transform: translate(50%, 50%);
+  }
+  .astryx-avatar[data-shape="circle"] > .astryx-avatar__status:dir(rtl) { transform: translate(-50%, 50%); }
+}
+
 /* Private Toast demo: pinned Toast/ToastViewport layout, not a public port. */
 @layer astryx-components {
   .astryx-demo-toast-viewport {

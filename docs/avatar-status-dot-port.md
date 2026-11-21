@@ -4,7 +4,7 @@ The public dot renders independently of Avatar. A standalone dot uses Avatar's 3
 
 Source: Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`, `Avatar/AvatarStatusDot.tsx` (Git blob `8f4177c29864837815fbec80ac2f53f08d1a276a`). The source, spec, unit tests, stories, and both CLI templates were checked against the pinned Git tree.
 
-The original Showcase and Variants templates compose the dot inside the public Avatar. They and the status-label handoff into Avatar's accessible name remain pending the Avatar port. The demo shows the three standalone states rather than substituting a mock Avatar. The migration checklist remains open.
+The Showcase and Variants templates now use the public [Avatar](avatar-port.md). The standalone states remain available separately. The browser suite for Avatar verifies status-label updates and removal through a wrapper component. The migration checklist remains open.
 
 All five standard Rust checks passed. SSR tests verify size tiers, icon precedence, and the layer reset. Chrome verified standalone geometry, Neutral light/dark paint, mark shapes, accessible names, and showcase navigation. Published screenshot parity, other browsers, and manual assistive technology were not tested.
 
