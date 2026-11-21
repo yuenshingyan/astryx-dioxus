@@ -2762,6 +2762,20 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
+@layer astryx-base {
+  .astryx-typeahead-item { display: flex; align-items: center; gap: var(--spacing-2); min-height: 0; }
+  .astryx-typeahead-item[data-disabled] { opacity: 0.5; }
+  .astryx-typeahead-item__content { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .astryx-typeahead-item__label, .astryx-typeahead-item__description { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .astryx-typeahead-item__label {
+    font-size: var(--text-label-size);
+    line-height: var(--text-label-leading);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-text-primary);
+  }
+  .astryx-typeahead-item__description { font-size: var(--text-supporting-size); line-height: var(--text-supporting-leading); color: var(--color-text-secondary); }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {
