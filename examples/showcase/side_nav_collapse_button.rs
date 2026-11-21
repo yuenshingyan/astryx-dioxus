@@ -27,7 +27,7 @@ fn Rail(#[props(default)] has_heading: bool) -> Element {
                 if !collapsed() { SideNavHeading { heading: "Workspace" } }
                 SideNavSection { title: "Main", is_header_hidden: collapsed(), {links} }
             } else { {links} }
-            div { dir: if has_heading { "rtl" } else { "ltr" },
+            div {
                 SideNavCollapseButton { collapsible: config, size: ButtonSize::Small,
                     id: if has_heading { "collapse-workspace" } else { "collapse-basic" },
                     onclick: move |event: MouseEvent| { if cancel() { event.prevent_default(); } },
