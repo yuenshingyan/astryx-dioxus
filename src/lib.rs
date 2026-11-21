@@ -94,9 +94,9 @@ pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation
 pub use card::{Card, CardVariant, InvalidCardVariant};
 pub use center::{Center, CenterAxis, CenterProps};
 pub use chat::{
-    ChatMessageMetadata, ChatMessageMetadataProps, ChatMessageStatus, ChatSendButton,
-    ChatSendButtonProps, ChatSendButtonSize, ChatSystemMessage, ChatSystemMessageProps,
-    ChatSystemMessageVariant,
+    ChatDensity, ChatMessage, ChatMessageMetadata, ChatMessageMetadataProps, ChatMessageProps,
+    ChatMessageSender, ChatMessageStatus, ChatSendButton, ChatSendButtonProps, ChatSendButtonSize,
+    ChatSystemMessage, ChatSystemMessageProps, ChatSystemMessageVariant,
 };
 pub use citation::{Citation, CitationProps, CitationSource, CitationVariant};
 pub use clickable_card::{ClickableCard, ClickableCardError};

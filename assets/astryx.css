@@ -2845,6 +2845,38 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-chat-message {
+    --_chat-avatar-offset: 0px;
+    --_chat-message-gap: var(--spacing-2);
+    --_chat-body-gap: var(--spacing-1);
+    display: flex;
+    align-items: flex-start;
+    max-width: 100%;
+    gap: var(--_chat-message-gap);
+  }
+  .astryx-chat-message[data-density="compact"] { --_chat-message-gap: var(--spacing-1-5); --_chat-body-gap: var(--spacing-0-5); }
+  .astryx-chat-message[data-density="spacious"] { --_chat-message-gap: var(--spacing-3); --_chat-body-gap: var(--spacing-1-5); }
+  .astryx-chat-message:has([data-chat-name]) { --_chat-avatar-offset: var(--spacing-5); }
+  .astryx-chat-message[data-sender="user"] { flex-direction: row-reverse; }
+  .astryx-chat-message[data-sender="system"] { justify-content: center; }
+  :is(.astryx-chat-message__column, .astryx-chat-message__body) { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+  .astryx-chat-message__column { flex: 1; }
+  .astryx-chat-message__body { width: 100%; gap: var(--_chat-body-gap); }
+  .astryx-chat-message[data-sender="user"] > .astryx-chat-message__column,
+  .astryx-chat-message[data-sender="user"] > .astryx-chat-message__column > .astryx-chat-message__body { align-items: flex-end; }
+  .astryx-chat-message[data-sender="system"] > .astryx-chat-message__column { max-width: 90%; }
+  .astryx-chat-message[data-sender="system"] > .astryx-chat-message__column,
+  .astryx-chat-message[data-sender="system"] > .astryx-chat-message__column > .astryx-chat-message__body { align-items: center; }
+  .astryx-chat-message__avatar { flex-shrink: 0; margin-block-start: var(--_chat-avatar-offset); }
+  .astryx-chat-message__name {
+    font-size: var(--text-supporting-size);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    line-height: var(--text-supporting-leading);
+    margin-block-end: var(--spacing-1);
+  }
+  :is(.astryx-chat-message__avatar, .astryx-chat-message__name, .astryx-chat-message__metadata):empty { display: none; }
+
   .astryx-chat-message-metadata {
     display: flex;
     align-items: center;

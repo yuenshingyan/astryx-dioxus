@@ -1,5 +1,7 @@
 use dioxus::prelude::*;
 
+use super::chat_message::ChatMessageSender;
+use super::chat_message_context::ChatMessageContext;
 use crate::utils::is_renderable::is_renderable;
 use crate::{Icon, IconSize};
 
@@ -42,13 +44,16 @@ pub fn ChatMessageMetadata(
     /// Localized visible caption and title for the current delivery status.
     #[props(default)]
     status_label: Option<String>,
-    /// Reverses the visual row for a user message; DOM order stays unchanged.
+    /// Reverses the visual row outside ChatMessage, where no sender is inherited.
     #[props(default)]
     is_user: bool,
     #[props(default)] class: String,
     #[props(default)] style: String,
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
+    let is_user = try_consume_context::<ChatMessageContext>().map_or(is_user, |context| {
+        (context.0)().0 == ChatMessageSender::User
+    });
     let timestamp = timestamp.filter(is_renderable);
     let footer = footer.filter(is_renderable);
     if timestamp.is_none() && footer.is_none() && status.is_none() {
