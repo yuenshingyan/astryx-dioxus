@@ -1,6 +1,7 @@
 /* Adapted from Meta Astryx tokens and Button. See THIRD_PARTY_NOTICES.md. */
 :root {
   --color-accent: light-dark(#0064e0, #0171e3);
+  --color-accent-muted: light-dark(#0082fb33, #0082fb3f);
   --color-on-accent: #fff;
   --color-neutral: light-dark(rgba(5, 54, 89, 0.1), rgba(223, 226, 229, 0.2));
   --color-text-primary: light-dark(#0a1317, #dfe2e5);
@@ -187,6 +188,7 @@
   --color-text-disabled: light-dark(#919191, #525252);
   --color-icon-disabled: light-dark(#919191, #525252);
   --color-accent: light-dark(#1b1b1b, #f1f1f1);
+  --color-accent-muted: light-dark(#d4d4d4, #474747);
   --color-on-accent: light-dark(#fff, #111);
   --color-on-light: #111;
   --color-neutral: light-dark(#0000000f, #ffffff1a);
@@ -2566,6 +2568,36 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 @layer astryx-base {
   .astryx-toggle-button-group { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-1); max-width: 100%; }
   .astryx-toggle-button-group[data-orientation="vertical"] { flex-direction: column; flex-wrap: nowrap; align-items: stretch; }
+}
+
+@layer astryx-base {
+  .astryx-citation {
+    display: inline-flex; align-items: center; height: var(--spacing-5);
+    color: var(--color-text-secondary); font-size: var(--text-supporting-size);
+    line-height: var(--text-supporting-leading); text-decoration: none;
+    transition: background-color var(--duration-fast-max) var(--ease-standard), color var(--duration-fast-max) var(--ease-standard);
+  }
+  .astryx-citation[data-variant="label"] {
+    gap: var(--spacing-1); vertical-align: baseline; max-width: 15em; overflow: hidden;
+    font-weight: var(--text-supporting-weight); border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-element); padding-inline: var(--spacing-2); margin-inline-start: var(--spacing-0-5);
+  }
+  .astryx-citation[data-variant="label"][data-has-icon] { padding-inline-start: var(--spacing-0-5); }
+  .astryx-citation[data-variant="number"] {
+    justify-content: center; vertical-align: super; min-width: var(--spacing-5); padding-inline: var(--spacing-1);
+    font-weight: var(--font-weight-semibold); background-color: var(--color-accent-muted); border-radius: var(--radius-full);
+  }
+  .astryx-citation__text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .astryx-citation__icon {
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;
+    width: var(--spacing-4); height: var(--spacing-4); border-radius: var(--radius-full);
+    background: var(--color-background-surface); border: var(--border-width) solid var(--color-border);
+  }
+  .astryx-citation__icon img { width: var(--spacing-3); height: var(--spacing-3); }
+  @media (hover: hover) {
+    a.astryx-citation:hover:not([aria-disabled="true"]) { background-color: var(--color-overlay-hover); }
+    a.astryx-citation[data-variant="label"]:hover:not([aria-disabled="true"]) { color: var(--color-text-primary); }
+  }
 }
 
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
