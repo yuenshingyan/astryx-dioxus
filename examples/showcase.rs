@@ -8,6 +8,8 @@ use dioxus::prelude::*;
 mod aspect_ratio;
 #[path = "showcase/avatar.rs"]
 mod avatar;
+#[path = "showcase/avatar_group_overflow.rs"]
+mod avatar_group_overflow;
 #[path = "showcase/avatar_status_dot.rs"]
 mod avatar_status_dot;
 #[path = "showcase/badge.rs"]
@@ -99,6 +101,7 @@ mod visually_hidden;
 
 use aspect_ratio::AspectRatioExamples;
 use avatar::AvatarExamples;
+use avatar_group_overflow::AvatarGroupOverflowExamples;
 use avatar_status_dot::AvatarStatusDotExamples;
 use badge::BadgeExamples;
 use blockquote::BlockquoteExamples;
@@ -214,6 +217,8 @@ fn App() -> Element {
                 a { href: "#avatar-status-dot-examples", "AvatarStatusDot examples" }
                 " · "
                 a { href: "#avatar-examples", "Avatar examples" }
+                " · "
+                a { href: "#avatar-group-overflow-examples", "AvatarGroupOverflow examples" }
                 " · "
                 a { href: "#divider-examples", "Divider examples" }
                 " · "
@@ -377,6 +382,7 @@ fn App() -> Element {
             BadgeExamples {}
             AvatarStatusDotExamples {}
             AvatarExamples {}
+            AvatarGroupOverflowExamples {}
             DividerExamples {}
             FieldStatusExamples {}
             KbdExamples {}

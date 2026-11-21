@@ -63,7 +63,7 @@ impl AvatarSize {
             Self::Pixels(size) => size as u32,
         }
     }
-    fn selector(self) -> String {
+    pub(crate) fn selector(self) -> String {
         match self {
             Self::ExtraSmall => "xsm",
             Self::Small => "sm",
@@ -86,6 +86,16 @@ pub enum AvatarShape {
     Rounded,
     /// Square without corner rounding.
     Square,
+}
+
+impl AvatarShape {
+    pub(crate) const fn selector(self) -> &'static str {
+        match self {
+            Self::Circle => "circle",
+            Self::Rounded => "rounded",
+            Self::Square => "square",
+        }
+    }
 }
 
 /// Tooltip content for an avatar.
@@ -279,11 +289,7 @@ pub fn Avatar(
             ) && !matches!(attr.value, AttributeValue::None)
         })
         .collect();
-    let shape_name = match shape {
-        AvatarShape::Circle => "circle",
-        AvatarShape::Rounded => "rounded",
-        AvatarShape::Square => "square",
-    };
+    let shape_name = shape.selector();
     let size_name = size.selector();
     attrs.extend([
         Attribute::new(
