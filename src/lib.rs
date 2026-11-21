@@ -14,6 +14,7 @@ mod clickable_card;
 mod code;
 mod compatibility;
 mod divider;
+mod empty_state;
 mod field_status;
 mod grid;
 mod h_stack;
@@ -62,6 +63,7 @@ pub use code::{Code, CodeColor, CodeProps, CodeSize};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };
+pub use empty_state::{EmptyState, EmptyStateProps};
 pub use field_status::{
     FieldStatus, FieldStatusProps, FieldStatusVariant, InputStatusType, InvalidFieldStatusVariant,
 };

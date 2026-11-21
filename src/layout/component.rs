@@ -2,13 +2,13 @@
 
 use std::fmt::Write;
 
-use dioxus::core::{DynamicNode, TemplateNode, VNode};
 use dioxus::prelude::*;
 
 use super::layout_area_context::LayoutAreaContext;
 use super::layout_divider_context::LayoutDividerContext;
 use super::layout_slots_context::{LayoutSlots, LayoutSlotsContext};
 use super::padding::spacing_step_css;
+use crate::utils::is_renderable::is_renderable;
 use crate::utils::types::{SizeValue, SpacingStep};
 
 /// How Layout takes up vertical space.
@@ -21,23 +21,8 @@ pub enum LayoutHeight {
     Auto,
 }
 
-fn has_node(node: &VNode) -> bool {
-    node.template.roots.iter().any(|root| match root {
-        TemplateNode::Text { text } => !text.is_empty(),
-        TemplateNode::Dynamic { id } => match node.dynamic_root(*id) {
-            Some(DynamicNode::Placeholder(_)) | None => false,
-            Some(DynamicNode::Fragment(nodes)) => nodes.iter().any(has_node),
-            Some(DynamicNode::Text(text)) => !text.value.is_empty(),
-            _ => true,
-        },
-        _ => true,
-    })
-}
-
 fn has_slot(slot: &Option<Element>) -> bool {
-    // An error is not an empty slot; render it so the caller's boundary can handle it.
-    slot.as_ref()
-        .is_some_and(|node| node.as_ref().map_or(true, has_node))
+    slot.as_ref().is_some_and(is_renderable)
 }
 
 fn supports_alignment(width: &SizeValue) -> bool {
