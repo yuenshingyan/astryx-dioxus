@@ -90,6 +90,8 @@ mod scrollable_area;
 mod section;
 #[path = "showcase/selectable_card.rs"]
 mod selectable_card;
+#[path = "showcase/side_nav_heading.rs"]
+mod side_nav_heading;
 #[path = "showcase/skeleton.rs"]
 mod skeleton;
 #[path = "showcase/spinner.rs"]
@@ -155,6 +157,7 @@ use radio_indicator::RadioIndicatorExamples;
 use scrollable_area::ScrollableAreaExamples;
 use section::SectionExamples;
 use selectable_card::SelectableCardExamples;
+use side_nav_heading::SideNavHeadingExamples;
 use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
 use stack::{StackExamples, StackItemExamples};
@@ -310,6 +313,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#section-examples", "Section examples" }
                 " · "
+                a { href: "#side-nav-heading-examples", "SideNavHeading examples" }
+                " · "
                 a { href: "#scrollable-area-examples", "ScrollableArea examples" }
             }
             DocumentedButtonPatterns {}
@@ -461,6 +466,7 @@ fn App() -> Element {
             RadioIndicatorExamples {}
             CheckboxIndicatorExamples {}
             SectionExamples {}
+            SideNavHeadingExamples {}
             ScrollableAreaExamples {}
         }
     }

@@ -41,6 +41,7 @@ mod progress_bar;
 mod scrollable_area;
 mod section;
 mod selectable_card;
+mod side_nav;
 mod size_context;
 mod skeleton;
 mod spinner;
@@ -138,6 +139,7 @@ pub use scrollable_area::{
 };
 pub use section::{InvalidSectionVariant, Section, SectionDivider, SectionProps, SectionVariant};
 pub use selectable_card::{SelectableCard, SelectableCardError, SelectableCardProps};
+pub use side_nav::{SideNavHeading, SideNavHeadingProps};
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
 pub use skeleton::{Skeleton, SkeletonError, SkeletonLength, SkeletonRadius};
 pub use spinner::{Spinner, SpinnerError, SpinnerShade, SpinnerSize};
