@@ -41,6 +41,7 @@ mod link;
 mod metadata_list;
 mod mobile_nav;
 mod nav_icon;
+mod nav_menu;
 mod overlay;
 mod private_attributes;
 mod progress_bar;
@@ -154,6 +155,7 @@ pub use metadata_list::{
 };
 pub use mobile_nav::{MobileNavToggle, MobileNavToggleProps};
 pub use nav_icon::{NavIcon, NavIconProps};
+pub use nav_menu::{NavHeadingMenuItem, NavHeadingMenuItemProps};
 pub use overlay::{
     Overlay, OverlayAlign, OverlayPosition, OverlayProps, OverlayScrimMode, OverlayShowOn,
 };
