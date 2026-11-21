@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 use astryx_dioxus::{
-    TableBody, TableCell, TableCellScope, TableFooter, TableHeader, TableHeaderCell,
+    TableBody, TableCell, TableCellScope, TableFooter, TableHeader, TableHeaderCell, TableRow,
 };
 
 #[component]
@@ -12,13 +12,13 @@ pub(super) fn TableHeaderExamples() -> Element {
             table { style: "border-spacing:0;text-align:start",
                 caption { "Project status" }
                 TableHeader { id: "project-table-header",
-                    tr {
+                    TableRow {
                         TableHeaderCell { scope: TableCellScope::Column, style: "padding:8px 16px", "Project" }
                         TableHeaderCell { scope: TableCellScope::Column, style: "padding:8px 16px", "Status" }
                     }
                 }
                 TableBody {
-                    tr { td { style: "padding:8px 16px", "Documentation" } td { style: "padding:8px 16px", "In review" } }
+                    TableRow { td { style: "padding:8px 16px", "Documentation" } td { style: "padding:8px 16px", "In review" } }
                 }
             }
         }
@@ -27,14 +27,14 @@ pub(super) fn TableHeaderExamples() -> Element {
             table { style: "border-spacing:0;text-align:start",
                 caption { "Project hours" }
                 TableHeader {
-                    tr { th { scope: "col", "Project" } TableHeaderCell { id: "project-hours-column", scope: TableCellScope::Column, "Hours" } }
+                    TableRow { th { scope: "col", "Project" } TableHeaderCell { id: "project-hours-column", scope: TableCellScope::Column, "Hours" } }
                 }
                 TableBody { id: "project-table-body",
-                    tr { TableHeaderCell { id: "project-docs-row", scope: TableCellScope::Row, "Documentation" } TableCell { id: "project-hours-cell", headers: "project-docs-row project-hours-column", "8" } }
-                    tr { th { scope: "row", "Review" } TableCell { "4" } }
+                    TableRow { id: "project-hours-row", TableHeaderCell { id: "project-docs-row", scope: TableCellScope::Row, "Documentation" } TableCell { id: "project-hours-cell", headers: "project-docs-row project-hours-column", "8" } }
+                    TableRow { th { scope: "row", "Review" } TableCell { "4" } }
                 }
                 TableFooter { id: "project-table-footer",
-                    tr { th { scope: "row", "Total" } td { "12" } }
+                    TableRow { th { scope: "row", "Total" } td { "12" } }
                 }
             }
         }
