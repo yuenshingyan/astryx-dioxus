@@ -1,3 +1,4 @@
+mod chat_dictation_button;
 mod chat_layout;
 mod chat_layout_scroll_button;
 mod chat_message;
@@ -10,6 +11,9 @@ mod chat_system_message;
 
 mod use_chat_stream_scroll;
 
+pub use chat_dictation_button::{
+    ChatDictationButton, ChatDictationButtonProps, ChatDictationButtonSize, ChatDictationState,
+};
 pub use chat_layout::{ChatLayout, ChatLayoutProps, ChatLayoutScrollAction};
 pub use chat_layout_scroll_button::{ChatLayoutScrollButton, ChatLayoutScrollButtonProps};
 pub use chat_message::{ChatDensity, ChatMessage, ChatMessageProps, ChatMessageSender};
