@@ -46,6 +46,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - Thumbnail follows `Thumbnail/Thumbnail.tsx` and its five catalog templates at the same pin. The offline PNGs in `tests/fixtures/thumbnail/` come from the embedded gallery assets. See `docs/thumbnail-port.md`.
 - FieldStatus follows `FieldStatus/{FieldStatus.tsx,useFieldStatusAnnouncement.ts}`, the Core and Neutral status tokens and glyphs, and its two catalog templates at the same pin. See `docs/field-status-port.md`.
 - FieldLabel follows `Field/FieldLabel.tsx`, the field optionality and input-container hooks, and two catalog arrangements at the same pin. See `docs/field-label-port.md`.
+- TopNavHeading follows the non-menu forms of `TopNav/TopNavHeading.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-heading-port.md`.
 - SideNavHeading follows the non-menu forms of `SideNav/SideNavHeading.tsx`, its spec, and both catalog templates at the same pin. See `docs/side-nav-heading-port.md`.
 - MediaTheme follows `theme/MediaTheme.tsx`, its on-media tokens and automatic surface selection, and three catalog templates at the same pin. The offline images are pinned catalog assets. See `docs/media-theme-port.md`.
 - FormLayout follows `FormLayout/{FormLayout.tsx,FormLayoutContext.ts}`, its component spec, and five catalog arrangements at the same pin. See `docs/form-layout-port.md`.

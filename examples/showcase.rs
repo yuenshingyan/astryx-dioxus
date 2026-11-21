@@ -108,6 +108,8 @@ mod thumbnail;
 mod timer;
 #[path = "showcase/token.rs"]
 mod token;
+#[path = "showcase/top_nav_heading.rs"]
+mod top_nav_heading;
 #[path = "showcase/typography_animation.rs"]
 mod typography_animation;
 #[path = "showcase/v_stack.rs"]
@@ -166,6 +168,7 @@ use text::TextExamples;
 use thumbnail::ThumbnailExamples;
 use timer::TimerExamples;
 use token::TokenExamples;
+use top_nav_heading::TopNavHeadingExamples;
 use v_stack::VStackExamples;
 use visually_hidden::VisuallyHiddenExamples;
 
@@ -314,6 +317,8 @@ fn App() -> Element {
                 a { href: "#section-examples", "Section examples" }
                 " · "
                 a { href: "#side-nav-heading-examples", "SideNavHeading examples" }
+                " · "
+                a { href: "#top-nav-heading-examples", "TopNavHeading examples" }
                 " · "
                 a { href: "#scrollable-area-examples", "ScrollableArea examples" }
             }
@@ -467,6 +472,7 @@ fn App() -> Element {
             CheckboxIndicatorExamples {}
             SectionExamples {}
             SideNavHeadingExamples {}
+            TopNavHeadingExamples {}
             ScrollableAreaExamples {}
         }
     }
