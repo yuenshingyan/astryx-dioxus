@@ -2846,6 +2846,8 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-dropdown-menu-radio-group { display: flex; flex-direction: column; gap: var(--spacing-0-5); }
+
   .astryx-chat-tokenized-text { display: inline; }
   .astryx-chat-tokenized-text__token { display: inline-flex; align-items: center; height: 1lh; vertical-align: top; }
 
