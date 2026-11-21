@@ -2363,6 +2363,17 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-field { display: flex; flex-direction: column; isolation: isolate; min-width: 0; }
+  .astryx-field:not([data-label-hidden]) { gap: var(--spacing-1); }
+  .astryx-field[data-layout="horizontal-labels"] { display: contents; }
+  .astryx-field__aligned-label { padding-top: calc(var(--border-width) + var(--spacing-1)); }
+  .astryx-field__control-status {
+    display: flex; flex-direction: column; isolation: isolate; min-width: 0;
+    --_field-status-overlap: calc(var(--size-element-md) / 2);
+  }
+  .astryx-field__control-status:has(> [data-size="sm"]) { --_field-status-overlap: calc(var(--size-element-sm) / 2); }
+  .astryx-field__control-status:has(> [data-size="lg"]) { --_field-status-overlap: calc(var(--size-element-lg) / 2); }
+  .astryx-field__control-status > .astryx-field-status[data-variant="attached"] { position: relative; z-index: -1; }
   .astryx-field-label__group { display: flex; flex-direction: column; }
   .astryx-field-label__group[data-label-hidden] { display: contents; }
   .astryx-field-label {

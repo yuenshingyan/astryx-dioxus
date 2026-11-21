@@ -48,6 +48,8 @@ mod divider;
 mod dropdown_menu_group;
 #[path = "showcase/empty_state.rs"]
 mod empty_state;
+#[path = "showcase/field.rs"]
+mod field;
 #[path = "showcase/field_label.rs"]
 mod field_label;
 #[path = "showcase/field_status.rs"]
@@ -156,6 +158,7 @@ use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
 use dropdown_menu_group::DropdownMenuGroupExamples;
 use empty_state::EmptyStateExamples;
+use field::FieldExamples;
 use field_label::FieldLabelExamples;
 use field_status::FieldStatusExamples;
 use form_layout::FormLayoutExamples;
@@ -284,6 +287,8 @@ fn App() -> Element {
                 a { href: "#field-status-examples", "FieldStatus examples" }
                 " · "
                 a { href: "#field-label-examples", "FieldLabel examples" }
+                " · "
+                a { href: "#field-examples", "Field examples" }
                 " · "
                 a { href: "#input-group-text-examples", "InputGroupText examples" }
                 " · "
@@ -486,6 +491,7 @@ fn App() -> Element {
             }
             FieldStatusExamples {}
             FieldLabelExamples {}
+            FieldExamples {}
             InputGroupTextExamples {}
             FormLayoutExamples {}
             KbdExamples {}

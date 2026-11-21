@@ -1,0 +1,7 @@
+# Field checkpoint
+
+`src/field/component.rs` composes FieldLabel, a caller-owned control, and an optional attached or detached FieldStatus. The caller supplies the input ID and applies description references, required and disabled state, and validation semantics to the control. Field supplies default description and status IDs from the input ID. In horizontal-label FormLayout, the description and status move to the control column. Outside that layout, `width` sizes the whole field.
+
+Source: Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`, `Field/Field.tsx` (`23bcb0d562644e4d54d17568f2171bd92d63b7af`), its spec (`6a80f424509a533b4ed8dcd05f6b4809df1d14a5`), and four catalog templates. The showcase adapts those examples with native controls, including a horizontal-label arrangement. Label help, tooltip-only status and its announcement path, and production input integration remain pending.
+
+All five standard Rust checks passed. SSR verified description and status IDs, width, and hidden descriptions in horizontal-label mode. Chrome verified native label association, description activation, attached status stacking, the validation description in the accessibility tree, and retained focus. FieldLabel, FieldStatus, FormLayout, and showcase navigation regressions passed. Published visual parity and manual assistive technology were not verified; the migration checklist stays open.

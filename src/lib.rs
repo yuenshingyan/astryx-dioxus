@@ -92,7 +92,9 @@ pub use dropdown_menu::{
     DropdownMenuDividerProps as ContextMenuDividerProps, DropdownMenuGroup, DropdownMenuGroupProps,
 };
 pub use empty_state::{EmptyState, EmptyStateProps};
-pub use field::{FieldLabel, FieldLabelProps};
+pub use field::{
+    Field, FieldLabel, FieldLabelProps, FieldProps, FieldStatusInput, FieldStatusPlacement,
+};
 pub use field_status::{
     FieldStatus, FieldStatusProps, FieldStatusVariant, InputStatusType, InvalidFieldStatusVariant,
 };
