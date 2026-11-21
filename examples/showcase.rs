@@ -54,6 +54,8 @@ mod command_palette_item;
 mod command_palette_list;
 #[path = "showcase/divider.rs"]
 mod divider;
+#[path = "showcase/drawer_header.rs"]
+mod drawer_header;
 #[path = "showcase/dropdown_menu_group.rs"]
 mod dropdown_menu_group;
 #[path = "showcase/empty_state.rs"]
@@ -185,6 +187,7 @@ use command_palette_group::CommandPaletteGroupExamples;
 use command_palette_item::CommandPaletteItemExamples;
 use command_palette_list::CommandPaletteListExamples;
 use divider::DividerExamples;
+use drawer_header::DrawerHeaderExamples;
 use dropdown_menu_group::DropdownMenuGroupExamples;
 use empty_state::EmptyStateExamples;
 use field::FieldExamples;
@@ -315,6 +318,8 @@ fn App() -> Element {
                 a { href: "#avatar-group-examples", "AvatarGroup examples" }
                 " · "
                 a { href: "#divider-examples", "Divider examples" }
+                " · "
+                a { href: "#drawer-header-examples", "DrawerHeader examples" }
                 " · "
                 a { href: "#dropdown-menu-divider-example", "DropdownMenuDivider example" }
                 " · "
@@ -543,6 +548,7 @@ fn App() -> Element {
             AvatarGroupOverflowExamples {}
             AvatarGroupExamples {}
             DividerExamples {}
+            DrawerHeaderExamples {}
             DropdownMenuGroupExamples {}
             section { id: "dropdown-menu-divider-example", "data-astryx-theme": "neutral",
                 h2 { "DropdownMenuDivider" }

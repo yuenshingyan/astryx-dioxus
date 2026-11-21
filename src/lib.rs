@@ -19,6 +19,7 @@ mod code;
 mod command_palette;
 mod compatibility;
 mod divider;
+mod drawer;
 mod dropdown_menu;
 mod empty_state;
 mod field;
@@ -101,6 +102,7 @@ pub use command_palette::{
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };
+pub use drawer::{DrawerHeader, DrawerHeaderEdgeCompensation, DrawerHeaderProps};
 pub use dropdown_menu::{
     DropdownMenuDivider, DropdownMenuDivider as BreadcrumbMenuDivider,
     DropdownMenuDivider as ContextMenuDivider, DropdownMenuDividerProps,
