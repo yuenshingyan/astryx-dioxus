@@ -177,7 +177,9 @@ pub use stack::{
 pub use status_dot::{
     InvalidStatusDotVariant, StatusDot, StatusDotError, StatusDotIcon, StatusDotVariant,
 };
-pub use table::{TableFooter, TableFooterProps, TableHeader, TableHeaderProps};
+pub use table::{
+    TableBody, TableBodyProps, TableFooter, TableFooterProps, TableHeader, TableHeaderProps,
+};
 pub use text::{Text, TextTag, Truncation, use_truncation};
 pub use theme::{
     InvalidTextName, TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap,
