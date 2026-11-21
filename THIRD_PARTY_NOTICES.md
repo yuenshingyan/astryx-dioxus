@@ -33,6 +33,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - CheckboxIndicator follows `Indicator/CheckboxIndicator.tsx` and the Indicator family contract at the same pin. See `docs/checkbox-indicator-port.md`.
 - RadioIndicator follows `Indicator/RadioIndicator.tsx` and `Indicator/indicator.markers.stylex.ts` at the same pin. See `docs/radio-indicator-port.md`.
 - VisuallyHidden follows `VisuallyHidden/VisuallyHidden.tsx`, its specification, and all four original templates at the same pin. See `docs/visually-hidden-port.md`.
+- MetadataList follows `MetadataList/MetadataList.tsx`, its component spec, and five catalog templates at the same pin. See `docs/metadata-list-port.md`.
 - MetadataListItem follows `MetadataList/MetadataListItem.tsx`, its component spec, and two catalog templates at the same pin. See `docs/metadata-list-item-port.md`.
 - EmptyState follows `EmptyState/EmptyState.tsx`, its component spec, and four catalog templates at the same pin. See `docs/empty-state-port.md`.
 - Timer follows `Timer/Timer.tsx`, its component spec, and four catalog templates at the same pin. See `docs/timer-port.md`.
