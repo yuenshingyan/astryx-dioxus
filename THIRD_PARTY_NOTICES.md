@@ -48,6 +48,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - FieldLabel follows `Field/FieldLabel.tsx`, the field optionality and input-container hooks, and two catalog arrangements at the same pin. See `docs/field-label-port.md`.
 - NavIcon follows `NavIcon/NavIcon.tsx`, its spec, and both catalog templates at the same pin. The showcase adapts fallback glyphs from `Icon/defaultIcons.tsx`. See `docs/nav-icon-port.md`.
 - TopNavHeading follows the non-menu forms of `TopNav/TopNavHeading.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-heading-port.md`.
+- SideNavSection follows `SideNav/SideNavSection.tsx`, its spec, and both catalog templates at the same pin. See `docs/side-nav-section-port.md`.
 - SideNavHeading follows the non-menu forms of `SideNav/SideNavHeading.tsx`, its spec, and both catalog templates at the same pin. See `docs/side-nav-heading-port.md`.
 - MediaTheme follows `theme/MediaTheme.tsx`, its on-media tokens and automatic surface selection, and three catalog templates at the same pin. The offline images are pinned catalog assets. See `docs/media-theme-port.md`.
 - FormLayout follows `FormLayout/{FormLayout.tsx,FormLayoutContext.ts}`, its component spec, and five catalog arrangements at the same pin. See `docs/form-layout-port.md`.

@@ -94,6 +94,8 @@ mod section;
 mod selectable_card;
 #[path = "showcase/side_nav_heading.rs"]
 mod side_nav_heading;
+#[path = "showcase/side_nav_section.rs"]
+mod side_nav_section;
 #[path = "showcase/skeleton.rs"]
 mod skeleton;
 #[path = "showcase/spinner.rs"]
@@ -163,6 +165,7 @@ use scrollable_area::ScrollableAreaExamples;
 use section::SectionExamples;
 use selectable_card::SelectableCardExamples;
 use side_nav_heading::SideNavHeadingExamples;
+use side_nav_section::SideNavSectionExamples;
 use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
 use stack::{StackExamples, StackItemExamples};
@@ -321,6 +324,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#side-nav-heading-examples", "SideNavHeading examples" }
                 " · "
+                a { href: "#side-nav-section-examples", "SideNavSection examples" }
+                " · "
                 a { href: "#top-nav-heading-examples", "TopNavHeading examples" }
                 " · "
                 a { href: "#nav-icon-examples", "NavIcon examples" }
@@ -477,6 +482,7 @@ fn App() -> Element {
             CheckboxIndicatorExamples {}
             SectionExamples {}
             SideNavHeadingExamples {}
+            SideNavSectionExamples {}
             TopNavHeadingExamples {}
             NavIconExamples {}
             ScrollableAreaExamples {}
