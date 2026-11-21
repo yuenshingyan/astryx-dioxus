@@ -162,6 +162,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/top_nav/`: [TopNavHeading](docs/top-nav-heading-port.md), [TopNavMegaMenuFeaturedCard](docs/top-nav-featured-card-port.md), and [TopNavMegaMenuItem](docs/top-nav-mega-menu-item-port.md). Parent menu and drawer integration remain pending.
 - `src/input_group/`: [InputGroup](docs/input-group-port.md) and [InputGroupText](docs/input-group-text-port.md), with named rows and logical addon styling. Production input integration remains pending.
 - `src/citation/`: [Citation](docs/citation-port.md), with inline source labels and superscript references.
+- `src/chat/`: [ChatSystemMessage](docs/chat-system-message-port.md), with centered notices and labeled date dividers. ChatMessageList integration remains pending.
 - `src/dialog/`: [DialogHeader](docs/dialog-header-port.md), with title focus and optional close action. Modal Dialog integration remains pending.
 - `src/drawer/`: [DrawerHeader](docs/drawer-header-port.md), with a title, action slots, and optional close button. The Drawer container remains pending.
 - `src/nav_menu/`: [NavHeadingMenu](docs/nav-heading-menu-port.md) and [NavHeadingMenuItem](docs/nav-heading-menu-item-port.md), with inline keyboard navigation and link and action rows. Heading popover integration remains pending.
