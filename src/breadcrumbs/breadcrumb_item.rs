@@ -3,6 +3,7 @@
 use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
+use super::component::BreadcrumbContext;
 use crate::link::{LinkComponentType, LinkRenderProps, use_link_component};
 use crate::utils::disabled_interaction::{cancel_disabled_click, cancel_disabled_key};
 use crate::utils::is_renderable::is_renderable;
@@ -44,6 +45,9 @@ pub fn BreadcrumbItem(
     const MARKER: &str = "data-astryx-breadcrumb-item";
     let id = format!("breadcrumb-item-{}", current_scope_id().0);
     let renderer = use_link_component(render_link);
+    let settings = try_consume_context::<BreadcrumbContext>()
+        .map(|context| (context.0)())
+        .unwrap_or_default();
     let mut controller = use_signal(|| None::<document::Eval>);
     use_drop(move || {
         if let Some(eval) = *controller.peek() {
@@ -96,13 +100,13 @@ pub fn BreadcrumbItem(
         .filter(|attr| {
             !matches!(
                 attr.name,
-                "class" | "style" | MARKER | "data-current" | "onmounted"
+                "class" | "style" | MARKER | "data-current" | "data-variant" | "onmounted"
             )
         })
         .collect();
     rsx! {
         li { class: "astryx-breadcrumb-item {class}", style: (!style.is_empty()).then_some(style),
-            "data-astryx-breadcrumb-item": id, "data-current": state,
+            "data-astryx-breadcrumb-item": id, "data-current": state, "data-variant": settings.variant.as_str(),
             onmounted: move |event| {
                 if let Some(previous) = *controller.peek() { let _ = previous.send(false); }
                 let eval = document::eval(include_str!("breadcrumb_current.js"));
@@ -111,7 +115,10 @@ pub fn BreadcrumbItem(
                 if let Some(callback) = onmounted { callback.call(event); }
             },
             ..attributes,
-            span { class: "astryx-breadcrumb-item__separator", "aria-hidden": "true", span { "/" } }
+            span { class: "astryx-breadcrumb-item__separator", "aria-hidden": "true",
+                if let Some(separator) = settings.separator { {separator} }
+                else { span { class: "astryx-breadcrumb-item__slash", "/" } }
+            }
             {label}
         }
     }

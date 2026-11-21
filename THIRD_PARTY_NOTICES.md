@@ -33,6 +33,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - CheckboxIndicator follows `Indicator/CheckboxIndicator.tsx` and the Indicator family contract at the same pin. See `docs/checkbox-indicator-port.md`.
 - RadioIndicator follows `Indicator/RadioIndicator.tsx` and `Indicator/indicator.markers.stylex.ts` at the same pin. See `docs/radio-indicator-port.md`.
 - VisuallyHidden follows `VisuallyHidden/VisuallyHidden.tsx`, its specification, and all four original templates at the same pin. See `docs/visually-hidden-port.md`.
+- Breadcrumbs follows `Breadcrumbs/Breadcrumbs.tsx`, its component spec, and the five non-menu catalog arrangements at the same pin. See `docs/breadcrumbs-port.md`.
 - BreadcrumbItem follows the non-menu forms of `Breadcrumbs/BreadcrumbItem.tsx`, its component spec, and two catalog templates at the same pin. See `docs/breadcrumb-item-port.md`.
 - Token follows `Token/{Token.tsx,TokenLink.tsx}`, its component spec, and six catalog templates at the same pin. See `docs/token-port.md`.
 - MetadataList follows `MetadataList/MetadataList.tsx`, its component spec, and five catalog templates at the same pin. See `docs/metadata-list-port.md`.
