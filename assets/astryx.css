@@ -2846,6 +2846,9 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-chat-tokenized-text { display: inline; }
+  .astryx-chat-tokenized-text__token { display: inline-flex; align-items: center; height: 1lh; vertical-align: top; }
+
   .astryx-chat-dictation-button { position: relative; display: inline-flex; align-items: center; justify-content: center; isolation: isolate; --_dictation-height: 18px; --_dictation-width: 2.5px; --_dictation-gap: 2px; }
   .astryx-chat-dictation-button[data-size="sm"] { --_dictation-height: 14px; --_dictation-width: 2px; --_dictation-gap: 1.5px; }
   .astryx-chat-dictation-button__meter { position: absolute; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 1; gap: var(--_dictation-gap); height: var(--_dictation-height); }

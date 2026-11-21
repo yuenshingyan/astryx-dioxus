@@ -52,6 +52,8 @@ mod chat_message_metadata;
 mod chat_send_button;
 #[path = "showcase/chat_system_message.rs"]
 mod chat_system_message;
+#[path = "showcase/chat_tokenized_text.rs"]
+mod chat_tokenized_text;
 #[path = "showcase/check_indicator.rs"]
 mod check_indicator;
 #[path = "showcase/checkbox_indicator.rs"]
@@ -206,6 +208,7 @@ use chat_message_list::ChatMessageListExamples;
 use chat_message_metadata::ChatMessageMetadataExamples;
 use chat_send_button::ChatSendButtonExamples;
 use chat_system_message::ChatSystemMessageExamples;
+use chat_tokenized_text::ChatTokenizedTextExamples;
 use check_indicator::CheckIndicatorExamples;
 use checkbox_indicator::CheckboxIndicatorExamples;
 use citation::CitationExamples;
@@ -431,6 +434,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#chat-dictation-button-examples", "ChatDictationButton examples" }
                 " · "
+                a { href: "#chat-tokenized-text-examples", "ChatTokenizedText examples" }
+                " · "
                 a { href: "#aspect-ratio-examples", "AspectRatio examples" }
                 " · "
                 a { href: "#stack-examples", "Stack examples" }
@@ -643,6 +648,7 @@ fn App() -> Element {
             ChatLayoutScrollButtonExamples {}
             ChatLayoutExamples {}
             ChatDictationButtonExamples {}
+            ChatTokenizedTextExamples {}
             ClickableCardExamples {}
             SelectableCardExamples {}
             AspectRatioExamples {}
