@@ -1,5 +1,6 @@
 pub(crate) mod use_announce;
 pub(crate) mod use_announce_rendered_text;
+pub(crate) mod use_auto_media_mode;
 pub(crate) mod use_clickable_container;
 pub(crate) mod use_input_container;
 pub(crate) mod use_interactive_role;
