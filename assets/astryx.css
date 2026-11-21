@@ -2808,6 +2808,11 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-nav-heading-menu { display: flex; flex-direction: column; gap: var(--spacing-0-5); min-width: 200px; }
+  .astryx-nav-heading-menu[data-size="sm"] { min-width: 160px; }
+  .astryx-nav-heading-menu[data-size="lg"] { min-width: 240px; }
+  .astryx-nav-heading-menu-item[data-size="sm"] { padding-block: var(--spacing-1); }
+  .astryx-nav-heading-menu-item[data-size="lg"] { padding: var(--spacing-3); }
   .astryx-nav-heading-menu-item {
     box-sizing: border-box; display: flex; align-items: center; gap: var(--spacing-2); width: 100%;
     padding: var(--spacing-2); border: 0; border-radius: var(--radius-element);

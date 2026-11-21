@@ -5,6 +5,8 @@ use crate::link::{render_navigation_anchor_with_click, use_link_component};
 use crate::utils::safe_url::is_safe_url;
 use crate::{IconDefaultSizeProvider, IconSize};
 
+use super::nav_heading_menu::NavHeadingMenuContext;
+
 /// A navigation menu row. The surrounding menu owns keyboard navigation and dismissal.
 #[component]
 pub fn NavHeadingMenuItem(
@@ -39,6 +41,9 @@ pub fn NavHeadingMenuItem(
     attributes: Vec<Attribute>,
 ) -> Element {
     let renderer = use_link_component(None);
+    let size = try_consume_context::<NavHeadingMenuContext>()
+        .map(|context| (context.0)())
+        .unwrap_or_default();
     let is_disabled = is_disabled || href.as_deref().is_some_and(|url| !is_safe_url(url));
     let activate = on_select.filter(|_| !is_disabled);
     let is_link = href.is_some();
@@ -69,7 +74,7 @@ pub fn NavHeadingMenuItem(
         ),
         Attribute::new("role", "menuitem", None, false),
         Attribute::new("tabindex", "-1", None, false),
-        Attribute::new("data-size", "md", None, false),
+        Attribute::new("data-size", size.as_str(), None, false),
     ]);
     if is_disabled {
         attributes.push(Attribute::new("aria-disabled", "true", None, false));
