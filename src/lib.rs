@@ -44,6 +44,7 @@ mod text;
 mod theme;
 mod thumbnail;
 mod timer;
+mod token;
 mod tooltip;
 mod utils;
 mod v_stack;
@@ -127,6 +128,7 @@ pub use theme::{
 };
 pub use thumbnail::{Thumbnail, ThumbnailProps, ThumbnailRemoveVisibility};
 pub use timer::{Timer, TimerFormat, TimerProps};
+pub use token::{InvalidTokenColor, Token, TokenColor, TokenProps, TokenSize};
 
 pub use utils::types::{Elevation, SizeValue, SizeValueError, SpacingStep};
 pub use v_stack::{VStack, VStackProps};

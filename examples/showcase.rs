@@ -82,6 +82,8 @@ mod text;
 mod thumbnail;
 #[path = "showcase/timer.rs"]
 mod timer;
+#[path = "showcase/token.rs"]
+mod token;
 #[path = "showcase/typography_animation.rs"]
 mod typography_animation;
 #[path = "showcase/v_stack.rs"]
@@ -128,6 +130,7 @@ use status_dot::StatusDotExamples;
 use text::TextExamples;
 use thumbnail::ThumbnailExamples;
 use timer::TimerExamples;
+use token::TokenExamples;
 use v_stack::VStackExamples;
 use visually_hidden::VisuallyHiddenExamples;
 
@@ -208,6 +211,8 @@ fn App() -> Element {
                 a { href: "#thumbnail-examples", "Thumbnail examples" }
                 " · "
                 a { href: "#timer-examples", "Timer examples" }
+                " · "
+                a { href: "#token-examples", "Token examples" }
                 " · "
                 a { href: "#empty-state-examples", "EmptyState examples" }
                 " · "
@@ -364,6 +369,7 @@ fn App() -> Element {
             TextExamples {}
             ThumbnailExamples {}
             TimerExamples {}
+            TokenExamples {}
             EmptyStateExamples {}
             HeadingExamples {}
             ProgressBarExamples {}
