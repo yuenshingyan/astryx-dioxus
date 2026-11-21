@@ -210,10 +210,14 @@ pub use table::{
 };
 pub use text::{Text, TextTag, Truncation, use_truncation};
 pub use theme::{
+    InvalidSyntaxColor, MediaTheme, MediaThemeFallback, MediaThemeMode, MediaThemeProps,
+    SyntaxColor, SyntaxTheme, SyntaxThemeDefinition, SyntaxThemePreset, SyntaxThemeProps,
+    SyntaxTokenValue,
+};
+pub use theme::{
     InvalidTextName, TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap,
     WordBreak,
 };
-pub use theme::{MediaTheme, MediaThemeFallback, MediaThemeMode, MediaThemeProps};
 pub use thumbnail::{Thumbnail, ThumbnailProps, ThumbnailRemoveVisibility};
 pub use timer::{Timer, TimerFormat, TimerProps};
 pub use toggle_button::{

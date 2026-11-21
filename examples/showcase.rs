@@ -156,6 +156,8 @@ mod spinner;
 mod stack;
 #[path = "showcase/status_dot.rs"]
 mod status_dot;
+#[path = "showcase/syntax_theme.rs"]
+mod syntax_theme;
 #[path = "showcase/table.rs"]
 mod table;
 #[path = "showcase/table_header.rs"]
@@ -262,6 +264,7 @@ use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
 use stack::{StackExamples, StackItemExamples};
 use status_dot::StatusDotExamples;
+use syntax_theme::SyntaxThemeExamples;
 use table::TableExamples;
 use table_header::TableHeaderExamples;
 use text::TextExamples;
@@ -406,6 +409,8 @@ fn App() -> Element {
                 a { href: "#metadata-list-examples", "MetadataList examples" }
                 " · "
                 a { href: "#media-theme-examples", "MediaTheme examples" }
+                " · "
+                a { href: "#syntax-theme-examples", "SyntaxTheme examples" }
                 " · "
                 a { href: "#overlay-examples", "Overlay examples" }
                 " · "
@@ -595,6 +600,7 @@ fn App() -> Element {
             MetadataListItemExamples {}
             MetadataListExamples {}
             MediaThemeExamples {}
+            SyntaxThemeExamples {}
             OverlayExamples {}
             LayoutHeaderExamples {}
             LayoutFooterExamples {}
