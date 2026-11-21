@@ -179,7 +179,7 @@ pub use status_dot::{
 };
 pub use table::{
     TableBody, TableBodyProps, TableCell, TableCellProps, TableCellScope, TableFooter,
-    TableFooterProps, TableHeader, TableHeaderProps,
+    TableFooterProps, TableHeader, TableHeaderCell, TableHeaderCellProps, TableHeaderProps,
 };
 pub use text::{Text, TextTag, Truncation, use_truncation};
 pub use theme::{
