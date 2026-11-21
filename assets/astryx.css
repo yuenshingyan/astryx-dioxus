@@ -2845,6 +2845,24 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-chat-message-metadata {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    margin-block-start: var(--spacing-1);
+    font-size: var(--text-supporting-size);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--text-supporting-leading);
+    color: var(--color-text-secondary);
+  }
+  .astryx-chat-message-metadata[data-user="true"] { flex-direction: row-reverse; }
+  .astryx-chat-message-metadata__status { display: inline-flex; align-items: center; gap: var(--spacing-1); }
+  .astryx-chat-message-metadata__status[data-status="error"] { color: var(--color-text-error); }
+  @keyframes astryx-chat-message-sending { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+  @media (prefers-reduced-motion: no-preference) {
+    .astryx-chat-message-metadata__status[data-status="sending"] { animation: astryx-chat-message-sending 1.5s ease-in-out infinite; }
+  }
+
   .astryx-chat-send-button { border-radius: var(--_button-radius, var(--radius-full)); flex-shrink: 0; }
 
   .astryx-chat-system-message[data-variant="default"] {
