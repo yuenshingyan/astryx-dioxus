@@ -1,15 +1,15 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::{Avatar, AvatarGroupOverflow, AvatarSize};
+use astryx_dioxus::{Avatar, AvatarGroup, AvatarGroupOverflow, AvatarSize};
 
 #[component]
 fn OverflowRow(count: i64, #[props(default)] custom_text: bool) -> Element {
     rsx! {
-        div { style: "display:flex;align-items:center;gap:4px",
+        AvatarGroup { size: AvatarSize::Large,
             for name in ["Alex Daniels", "Ann Smith", "Carol Davis"] {
-                Avatar { key: "{name}", name, size: AvatarSize::Large }
+                Avatar { key: "{name}", name }
             }
-            AvatarGroupOverflow { count, style: "--_avatar-overflow-size:48px", children: custom_text.then(|| rsx! { "12+" }) }
+            AvatarGroupOverflow { count, children: custom_text.then(|| rsx! { "12+" }) }
         }
     }
 }

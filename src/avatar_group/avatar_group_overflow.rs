@@ -86,6 +86,7 @@ pub fn AvatarGroupOverflow(
                     | "data-size"
                     | "data-shape"
                     | "data-avatar-item"
+                    | "data-astryx-avatar-group-member"
                     | "data-astryx-feedback-id"
                     | "data-astryx-container-press"
             ) && !(attr.name == "role" && matches!(attr.value, AttributeValue::None))
@@ -103,7 +104,7 @@ pub fn AvatarGroupOverflow(
     if let Some(on_click) = on_click {
         return rsx! { button {
             r#type: "button", class: classes, style, "data-size": size, "data-shape": shape,
-            "aria-label": label, "data-avatar-item": "", "data-astryx-container-press": "true",
+            "aria-label": label, "data-avatar-item": "", "data-astryx-avatar-group-member": settings.owner.map(|owner| owner.to_string()), "data-astryx-container-press": "true",
             "data-astryx-feedback-id": id, onmounted: mounted, onclick: move |_| on_click.call(()),
             ..attributes, {content}
         } };

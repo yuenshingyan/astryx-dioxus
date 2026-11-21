@@ -7,6 +7,7 @@ use dioxus::prelude::*;
 
 use super::avatar_size_context::AvatarSizeContext;
 use super::avatar_status_label_context::AvatarStatusLabelContext;
+use crate::avatar_group::avatar_group_context::avatar_group_settings;
 use crate::hooks::use_press_feedback::{PressFeedbackConfig, use_feedback_controller};
 use crate::link::{LinkComponentType, LinkRenderProps, use_link_component};
 use crate::utils::disabled_interaction::{cancel_disabled_click, cancel_disabled_key};
@@ -212,6 +213,13 @@ pub fn Avatar(
     #[props(extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 ) -> Element {
+    let group = avatar_group_settings();
+    let is_grouped = group.owner.is_some();
+    let (size, shape) = if is_grouped {
+        (group.size, group.shape)
+    } else {
+        (size, shape)
+    };
     let pixels = size.pixels();
     let mut size_ctx = use_context_provider(|| AvatarSizeContext(Signal::new(pixels)));
     if *size_ctx.0.peek() != pixels {
@@ -286,6 +294,8 @@ pub fn Avatar(
                     | "data-size"
                     | "data-shape"
                     | "data-astryx-feedback-id"
+                    | "data-avatar-item"
+                    | "data-astryx-avatar-group-member"
             ) && !matches!(attr.value, AttributeValue::None)
         })
         .collect();
@@ -294,7 +304,14 @@ pub fn Avatar(
     attrs.extend([
         Attribute::new(
             "class",
-            format!("astryx-avatar astryx-avatar--public {class}"),
+            format!(
+                "astryx-avatar astryx-avatar--public {}{class}",
+                if is_grouped {
+                    "astryx-avatar--grouped "
+                } else {
+                    ""
+                }
+            ),
             None,
             false,
         ),
@@ -308,6 +325,17 @@ pub fn Avatar(
         Attribute::new("data-shape", shape_name, None, false),
         Attribute::new("data-astryx-feedback-id", id, None, false),
     ]);
+    if is_link || is_button {
+        attrs.push(Attribute::new("data-avatar-item", "", None, false));
+        if let Some(owner) = group.owner {
+            attrs.push(Attribute::new(
+                "data-astryx-avatar-group-member",
+                owner.to_string(),
+                None,
+                false,
+            ));
+        }
+    }
     if !has_name && let Some(name) = accessible_name {
         attrs.push(Attribute::new("aria-label", name, None, false));
     }
@@ -327,7 +355,7 @@ pub fn Avatar(
         if !has_hidden && !has_derived_name {
             attrs.push(Attribute::new("aria-hidden", "true", None, false));
         }
-        if !has_tabindex && has_tooltip {
+        if !has_tabindex && has_tooltip && !is_grouped {
             attrs.push(Attribute::new("tabindex", "0", None, false));
         }
     }
