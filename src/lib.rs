@@ -36,6 +36,7 @@ mod layer;
 mod layout;
 mod link;
 mod metadata_list;
+mod nav_icon;
 mod private_attributes;
 mod progress_bar;
 mod scrollable_area;
@@ -130,6 +131,7 @@ pub use metadata_list::{
     MetadataList, MetadataListColumns, MetadataListItem, MetadataListItemProps,
     MetadataListLabelConfig, MetadataListLabelPosition, MetadataListOrientation, MetadataListProps,
 };
+pub use nav_icon::{NavIcon, NavIconProps};
 pub use progress_bar::{
     InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,
     ProgressBarVariant,
