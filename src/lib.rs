@@ -64,6 +64,7 @@ mod thumbnail;
 mod timer;
 mod toggle_button;
 mod token;
+mod toolbar;
 mod tooltip;
 mod top_nav;
 mod typeahead;
@@ -225,6 +226,7 @@ pub use toggle_button::{
     ToggleButtonProps,
 };
 pub use token::{InvalidTokenColor, Token, TokenColor, TokenProps, TokenSize};
+pub use toolbar::{Toolbar, ToolbarOrientation, ToolbarProps};
 pub use top_nav::{
     TopNavHeading, TopNavHeadingProps, TopNavMegaMenuFeaturedCard, TopNavMegaMenuFeaturedCardProps,
     TopNavMegaMenuItem, TopNavMegaMenuItemProps,
