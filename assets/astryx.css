@@ -2552,6 +2552,17 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-top-nav-mega-menu-item__description { font-size: var(--text-supporting-size); line-height: var(--text-supporting-leading); font-weight: var(--font-weight-normal); color: var(--color-text-secondary); }
 }
 
+.astryx-toggle-button[data-is-pressed="true"] { background-color: var(--color-overlay-pressed); }
+.astryx-toggle-button__label { display: inline-flex; flex-direction: column; align-items: center; max-width: 100%; }
+.astryx-toggle-button__visible { max-width: 100%; overflow: clip; overflow-clip-margin: 2px; text-overflow: ellipsis; }
+.astryx-toggle-button[data-is-pressed="true"] .astryx-toggle-button__visible,
+.astryx-toggle-button__reserve { font-weight: var(--font-weight-semibold); }
+.astryx-toggle-button__reserve { display: block; max-width: 100%; height: 0; overflow: hidden; visibility: hidden; pointer-events: none; }
+@media (forced-colors: active) {
+  .astryx-toggle-button[data-is-pressed="true"] { forced-color-adjust: none; background-color: Highlight; color: HighlightText; }
+  .astryx-toggle-button[data-is-pressed="true"]:focus-visible { outline-color: ButtonText; }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

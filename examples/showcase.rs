@@ -112,6 +112,8 @@ mod text;
 mod thumbnail;
 #[path = "showcase/timer.rs"]
 mod timer;
+#[path = "showcase/toggle_button.rs"]
+mod toggle_button;
 #[path = "showcase/token.rs"]
 mod token;
 #[path = "showcase/top_nav_featured_card.rs"]
@@ -180,6 +182,7 @@ use status_dot::StatusDotExamples;
 use text::TextExamples;
 use thumbnail::ThumbnailExamples;
 use timer::TimerExamples;
+use toggle_button::ToggleButtonExamples;
 use token::TokenExamples;
 use top_nav_featured_card::TopNavFeaturedCardExamples;
 use top_nav_heading::TopNavHeadingExamples;
@@ -278,6 +281,8 @@ fn App() -> Element {
                 a { href: "#thumbnail-examples", "Thumbnail examples" }
                 " · "
                 a { href: "#timer-examples", "Timer examples" }
+                " · "
+                a { href: "#toggle-button-examples", "ToggleButton examples" }
                 " · "
                 a { href: "#token-examples", "Token examples" }
                 " · "
@@ -473,6 +478,7 @@ fn App() -> Element {
             TextExamples {}
             ThumbnailExamples {}
             TimerExamples {}
+            ToggleButtonExamples {}
             TokenExamples {}
             BreadcrumbItemExamples {}
             BreadcrumbsExamples {}
