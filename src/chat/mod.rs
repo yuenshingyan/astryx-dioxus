@@ -1,3 +1,4 @@
+mod chat_composer_token;
 mod chat_dictation_button;
 mod chat_layout;
 mod chat_layout_scroll_button;
@@ -9,7 +10,11 @@ mod chat_message_metadata;
 mod chat_send_button;
 mod chat_system_message;
 
+mod chat_tokenized_text;
 mod use_chat_stream_scroll;
+
+pub use chat_composer_token::ChatComposerToken;
+pub use chat_tokenized_text::{ChatTokenizedText, ChatTokenizedTextProps};
 
 pub use chat_dictation_button::{
     ChatDictationButton, ChatDictationButtonProps, ChatDictationButtonSize, ChatDictationState,
