@@ -35,6 +35,7 @@ mod link;
 mod metadata_list;
 mod private_attributes;
 mod progress_bar;
+mod scrollable_area;
 mod section;
 mod selectable_card;
 mod size_context;
@@ -117,6 +118,10 @@ pub use metadata_list::{
 pub use progress_bar::{
     InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,
     ProgressBarVariant,
+};
+pub use scrollable_area::{
+    ScrollAxis, ScrollOverscroll, ScrollableArea, ScrollableAreaProps, ScrollableAreaRole,
+    ScrollableAreaStickyContainment,
 };
 pub use section::{InvalidSectionVariant, Section, SectionDivider, SectionProps, SectionVariant};
 pub use selectable_card::{SelectableCard, SelectableCardError, SelectableCardProps};

@@ -74,6 +74,8 @@ mod metadata_list_item;
 mod progress_bar;
 #[path = "showcase/radio_indicator.rs"]
 mod radio_indicator;
+#[path = "showcase/scrollable_area.rs"]
+mod scrollable_area;
 #[path = "showcase/section.rs"]
 mod section;
 #[path = "showcase/selectable_card.rs"]
@@ -136,6 +138,7 @@ use metadata_list::MetadataListExamples;
 use metadata_list_item::MetadataListItemExamples;
 use progress_bar::ProgressBarExamples;
 use radio_indicator::RadioIndicatorExamples;
+use scrollable_area::ScrollableAreaExamples;
 use section::SectionExamples;
 use selectable_card::SelectableCardExamples;
 use skeleton::SkeletonExamples;
@@ -282,6 +285,8 @@ fn App() -> Element {
                 a { href: "#checkbox-indicator-examples", "CheckboxIndicator examples" }
                 " · "
                 a { href: "#section-examples", "Section examples" }
+                " · "
+                a { href: "#scrollable-area-examples", "ScrollableArea examples" }
             }
             DocumentedButtonPatterns {}
             section { "aria-labelledby": "variants-heading",
@@ -420,6 +425,7 @@ fn App() -> Element {
             RadioIndicatorExamples {}
             CheckboxIndicatorExamples {}
             SectionExamples {}
+            ScrollableAreaExamples {}
         }
     }
 }
