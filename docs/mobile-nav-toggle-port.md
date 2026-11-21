@@ -1,0 +1,7 @@
+# MobileNavToggle checkpoint
+
+`src/mobile_nav/mobile_nav_toggle.rs` delegates to an icon-only ghost Button. It renders only when the shell reports mobile navigation is available. The shell owns open state and the controlled panel ID; the toggle reflects them in `aria-expanded` and `aria-controls`. The default icon and label can be replaced. The toggle requests the state change before invoking the caller's click handler.
+
+Source: Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`, `MobileNav/MobileNavToggle.tsx` (`2d59c2db2c303a775b7baf90d274f7fd58be3073`), `AppShell/AppShellMobileContext.tsx` (`85797885c66432598681eea0c75f9258009dfd9b`), and both catalog templates. The AppShell module owns the reactive provider for the subset of shell state consumed by the toggle. Both examples use a caller-controlled inline navigation panel instead of the unported drawer. Automatic breakpoint detection, production AppShell and drawer integration, and translation-provider integration remain open.
+
+All five standard Rust checks passed. SSR verified visibility gating, the default name, and shell ownership of the state attributes. Chrome verified keyboard activation, retained focus, expanded state in the accessibility tree, and both example names. SideNavSection and showcase navigation regressions passed. Published visual parity and manual assistive technology were not verified; the checklist remains open.
