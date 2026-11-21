@@ -81,7 +81,7 @@ pub use dropdown_menu::{
     DropdownMenuDivider, DropdownMenuDivider as BreadcrumbMenuDivider,
     DropdownMenuDivider as ContextMenuDivider, DropdownMenuDividerProps,
     DropdownMenuDividerProps as BreadcrumbMenuDividerProps,
-    DropdownMenuDividerProps as ContextMenuDividerProps,
+    DropdownMenuDividerProps as ContextMenuDividerProps, DropdownMenuGroup, DropdownMenuGroupProps,
 };
 pub use empty_state::{EmptyState, EmptyStateProps};
 pub use field_status::{

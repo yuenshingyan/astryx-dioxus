@@ -1133,6 +1133,15 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 @layer astryx-base {
   .astryx-divider { box-sizing: border-box; align-items: center; }
   .astryx-dropdown-menu-divider { margin-block: var(--spacing-1); }
+  .astryx-dropdown-menu-section-heading {
+    padding-block: var(--spacing-1);
+    padding-inline: var(--spacing-2);
+    font-family: var(--font-family-body);
+    font-size: var(--text-supporting-size);
+    line-height: var(--text-supporting-leading);
+    color: var(--color-text-secondary);
+    user-select: none;
+  }
   .astryx-divider[data-orientation="horizontal"] { display: flex; width: 100%; }
   .astryx-divider[data-orientation="vertical"] { display: inline-flex; flex-direction: column; height: 100%; }
   .astryx-divider__line { flex-grow: 1; flex-shrink: 1; }
