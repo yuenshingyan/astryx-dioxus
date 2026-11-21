@@ -114,6 +114,8 @@ mod thumbnail;
 mod timer;
 #[path = "showcase/toggle_button.rs"]
 mod toggle_button;
+#[path = "showcase/toggle_button_group.rs"]
+mod toggle_button_group;
 #[path = "showcase/token.rs"]
 mod token;
 #[path = "showcase/top_nav_featured_card.rs"]
@@ -183,6 +185,7 @@ use text::TextExamples;
 use thumbnail::ThumbnailExamples;
 use timer::TimerExamples;
 use toggle_button::ToggleButtonExamples;
+use toggle_button_group::ToggleButtonGroupExamples;
 use token::TokenExamples;
 use top_nav_featured_card::TopNavFeaturedCardExamples;
 use top_nav_heading::TopNavHeadingExamples;
@@ -283,6 +286,8 @@ fn App() -> Element {
                 a { href: "#timer-examples", "Timer examples" }
                 " · "
                 a { href: "#toggle-button-examples", "ToggleButton examples" }
+                " · "
+                a { href: "#toggle-button-group-examples", "ToggleButtonGroup examples" }
                 " · "
                 a { href: "#token-examples", "Token examples" }
                 " · "
@@ -479,6 +484,7 @@ fn App() -> Element {
             ThumbnailExamples {}
             TimerExamples {}
             ToggleButtonExamples {}
+            ToggleButtonGroupExamples {}
             TokenExamples {}
             BreadcrumbItemExamples {}
             BreadcrumbsExamples {}

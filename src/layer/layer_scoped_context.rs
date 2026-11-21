@@ -19,6 +19,7 @@ use crate::layout::layout_slots_context::{LayoutSlots, LayoutSlotsContext};
 use crate::metadata_list::metadata_list_context::MetadataListContext;
 use crate::size_context::{ElementSize, SizeContext};
 use crate::text::text_clamp_context::TextClampContext;
+use crate::toggle_button::ToggleButtonGroupContext;
 
 /// Starts a new layer's surface-context scope without adding a DOM element.
 ///
@@ -50,5 +51,6 @@ pub fn LayerContentBoundary(children: Element) -> Element {
     });
     use_context_provider(|| ButtonEnvironmentContext(Signal::new(ButtonEnvironment::default())));
     use_context_provider(|| TextClampContext(Signal::new(false)));
+    use_context_provider(ToggleButtonGroupContext::empty);
     children
 }

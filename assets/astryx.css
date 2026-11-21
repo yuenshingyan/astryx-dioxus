@@ -2563,6 +2563,11 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-toggle-button[data-is-pressed="true"]:focus-visible { outline-color: ButtonText; }
 }
 
+@layer astryx-base {
+  .astryx-toggle-button-group { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-1); max-width: 100%; }
+  .astryx-toggle-button-group[data-orientation="vertical"] { flex-direction: column; flex-wrap: nowrap; align-items: stretch; }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

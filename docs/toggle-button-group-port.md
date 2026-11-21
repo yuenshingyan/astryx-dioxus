@@ -1,0 +1,7 @@
+# ToggleButtonGroup checkpoint
+
+`src/toggle_button/toggle_button_group.rs` provides a named group with controlled single or multiple selection. Single selection can be cleared by activating the selected member again. A toggle with a `value` uses the nearest group's selection; a toggle without one keeps its own pressed state. Group size is a default, group disabled state cannot be overridden by a child, and group context stops at a layer boundary. Horizontal groups wrap; vertical groups stack.
+
+Source: Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`, `ToggleButton/ToggleButtonGroup.tsx` (`d28b172725a95cb0c8225b9d10bdd79cc9997e0e`), its spec (`5db6d4fd1bf2eb3d93994aa24cb76232e2caf67c`), and the single- and multi-select catalog arrangements (`159ca8097155fb24462c65de4bc2a0151bd8e622`). The showcase adapts these arrangements with text glyphs. Group-level touch slide-to-select and its hit-area behavior remain unported; individual Button activation remains available. Published visual parity and manual assistive technology were not verified. The checklist remains open.
+
+All five standard Rust checks passed. SSR verified group-owned naming and layer isolation. Chrome verified single deselection, multiple selection, keyboard activation, retained focus, size overrides, disabled inheritance, and the accessible group name. Standalone ToggleButton and showcase navigation regressions passed.

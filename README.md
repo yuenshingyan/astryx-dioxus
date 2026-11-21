@@ -148,7 +148,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/aspect_ratio/`: CSS-only ratio box and fit slot; child semantics and operations stay caller-owned.
 - `src/badge/`, `src/button/`, `src/button_group/`, `src/card/`, `src/clickable_card/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
 - `src/blockquote/`: semantic quote and bare attribution; no layout/typography dependency.
-- `src/toggle_button/`: [ToggleButton](docs/toggle-button-port.md), with standalone controlled state. Group and asynchronous action integration remain pending.
+- `src/toggle_button/`: [ToggleButton](docs/toggle-button-port.md) and [ToggleButtonGroup](docs/toggle-button-group-port.md), with controlled single and multiple selection. Group touch tracking and asynchronous toggle actions remain pending.
 - `src/selectable_card/`: controlled Card selection and its private native input context; not a completed Lab group migration.
 - `src/stack/`: Stack and its axis/wrap types, plus StackItem.
 - `src/h_stack/`: [HStack](docs/h-stack-port.md), the horizontal Stack wrapper with both original patterns.

@@ -47,6 +47,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - FieldStatus follows `FieldStatus/{FieldStatus.tsx,useFieldStatusAnnouncement.ts}`, the Core and Neutral status tokens and glyphs, and its two catalog templates at the same pin. See `docs/field-status-port.md`.
 - FieldLabel follows `Field/FieldLabel.tsx`, the field optionality and input-container hooks, and two catalog arrangements at the same pin. See `docs/field-label-port.md`.
 - NavIcon follows `NavIcon/NavIcon.tsx`, its spec, and both catalog templates at the same pin. The showcase adapts fallback glyphs from `Icon/defaultIcons.tsx`. See `docs/nav-icon-port.md`.
+- ToggleButtonGroup follows `ToggleButton/ToggleButtonGroup.tsx`, its spec, and the single- and multi-select catalog arrangements at the same pin. See `docs/toggle-button-group-port.md`.
 - ToggleButton follows the standalone form of `ToggleButton/ToggleButton.tsx`, its spec, and adapted catalog examples at the same pin. See `docs/toggle-button-port.md`.
 - TopNavMegaMenuItem follows the desktop form of `TopNav/TopNavMegaMenuItem.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-mega-menu-item-port.md`.
 - TopNavMegaMenuFeaturedCard follows `TopNav/TopNavMegaMenuFeaturedCard.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-featured-card-port.md`.

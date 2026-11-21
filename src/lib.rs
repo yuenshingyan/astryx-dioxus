@@ -166,7 +166,10 @@ pub use theme::{
 pub use theme::{MediaTheme, MediaThemeFallback, MediaThemeMode, MediaThemeProps};
 pub use thumbnail::{Thumbnail, ThumbnailProps, ThumbnailRemoveVisibility};
 pub use timer::{Timer, TimerFormat, TimerProps};
-pub use toggle_button::{ToggleButton, ToggleButtonProps};
+pub use toggle_button::{
+    ToggleButton, ToggleButtonGroup, ToggleButtonGroupProps, ToggleButtonGroupSelection,
+    ToggleButtonProps,
+};
 pub use token::{InvalidTokenColor, Token, TokenColor, TokenProps, TokenSize};
 pub use top_nav::{
     TopNavHeading, TopNavHeadingProps, TopNavMegaMenuFeaturedCard, TopNavMegaMenuFeaturedCardProps,
