@@ -2135,6 +2135,41 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
+@layer astryx-base {
+  .astryx-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--spacing-4);
+    padding-block: var(--spacing-8);
+    padding-inline: var(--spacing-6);
+  }
+  .astryx-empty-state[data-variant="compact"] { gap: var(--spacing-2); padding: var(--spacing-4); }
+  .astryx-empty-state__text { display: flex; flex-direction: column; align-items: center; max-width: 360px; }
+  .astryx-empty-state-title {
+    margin: 0;
+    font-family: inherit;
+    font-size: var(--text-large-size);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--text-large-leading);
+    color: var(--color-text-primary);
+  }
+  .astryx-empty-state-title[data-variant="compact"] { font-size: var(--text-label-size); }
+  .astryx-empty-state-description {
+    margin: 0;
+    font-family: inherit;
+    font-size: var(--text-body-size);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--text-body-leading);
+    color: var(--color-text-secondary);
+  }
+  .astryx-empty-state-description[data-variant="compact"] { font-size: var(--text-supporting-size); }
+  .astryx-empty-state__actions { display: flex; align-items: center; gap: var(--spacing-2); margin-top: var(--spacing-1); }
+  .astryx-empty-state[data-variant="compact"] > .astryx-empty-state__actions { flex-direction: column; }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

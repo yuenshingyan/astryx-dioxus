@@ -30,6 +30,8 @@ mod checkbox_indicator;
 mod clickable_card;
 #[path = "showcase/divider.rs"]
 mod divider;
+#[path = "showcase/empty_state.rs"]
+mod empty_state;
 #[path = "showcase/field_status.rs"]
 mod field_status;
 #[path = "showcase/grid.rs"]
@@ -96,6 +98,7 @@ use check_indicator::CheckIndicatorExamples;
 use checkbox_indicator::CheckboxIndicatorExamples;
 use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
+use empty_state::EmptyStateExamples;
 use field_status::FieldStatusExamples;
 use grid::{GridExamples, GridSpanExamples};
 use h_stack::HStackExamples;
@@ -199,6 +202,8 @@ fn App() -> Element {
                 a { href: "#thumbnail-examples", "Thumbnail examples" }
                 " · "
                 a { href: "#timer-examples", "Timer examples" }
+                " · "
+                a { href: "#empty-state-examples", "EmptyState examples" }
                 " · "
                 a { href: "#kbd-examples", "Kbd examples" }
                 " · "
@@ -347,6 +352,7 @@ fn App() -> Element {
             TextExamples {}
             ThumbnailExamples {}
             TimerExamples {}
+            EmptyStateExamples {}
             HeadingExamples {}
             ProgressBarExamples {}
             BlockquoteExamples {}
