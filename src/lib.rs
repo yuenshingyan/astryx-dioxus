@@ -18,6 +18,7 @@ mod clickable_card;
 mod code;
 mod command_palette;
 mod compatibility;
+mod dialog;
 mod divider;
 mod drawer;
 mod dropdown_menu;
@@ -99,6 +100,7 @@ pub use command_palette::{
     CommandPaletteGroup, CommandPaletteGroupProps, CommandPaletteItem, CommandPaletteItemProps,
     CommandPaletteList, CommandPaletteListProps,
 };
+pub use dialog::{DialogHeader, DialogHeaderEdgeCompensation, DialogHeaderProps};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };
