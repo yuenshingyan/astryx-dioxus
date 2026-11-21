@@ -3,6 +3,7 @@
 use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
+use crate::InfoTip;
 use crate::form_layout::FormOptionality;
 use crate::form_layout::form_layout_context::FormLayoutContext;
 use crate::hooks::use_input_container::use_input_container;
@@ -36,6 +37,12 @@ pub fn FieldLabel(
     /// Leading artwork.
     #[props(default)]
     label_icon: Option<Element>,
+    /// Short help revealed by a separate InfoTip button.
+    #[props(default)]
+    label_tooltip: Option<String>,
+    /// Localized name of the help button; defaults to “More information about {label}”.
+    #[props(default)]
+    label_tooltip_name: Option<String>,
     /// Supporting content, kept separate from the control's accessible name.
     #[props(default)]
     description: Option<Element>,
@@ -80,6 +87,7 @@ pub fn FieldLabel(
             ) && !(attr.name == "id" && label_id.is_some())
         })
         .collect();
+    let help_name = label_tooltip_name.unwrap_or_else(|| format!("More information about {label}"));
     let content = rsx! {
         if let Some(icon) = label_icon.filter(is_renderable) { {icon} }
         {label}
@@ -92,12 +100,27 @@ pub fn FieldLabel(
         rsx! { label { class: classes, id: label_id, r#for: input_id, style: (!style.is_empty()).then_some(style),
         "data-label-hidden": is_label_hidden.then_some("true"), "data-disabled": is_disabled.then_some("true"), ..attributes, {content} } }
     };
+    let label_with_help = if let Some(help) = label_tooltip.filter(|help| !help.trim().is_empty()) {
+        let help_class = if is_label_hidden {
+            "astryx-field-label__help--hidden"
+        } else {
+            ""
+        };
+        rsx! {
+            span { class: "astryx-field-label__row", "data-label-hidden": is_label_hidden.then_some("true"),
+                {label}
+                InfoTip { content: help, label: help_name, class: help_class }
+            }
+        }
+    } else {
+        label
+    };
     let Some(description) = description.filter(is_renderable) else {
-        return label;
+        return label_with_help;
     };
     rsx! {
         div { class: "astryx-field-label__group", "data-label-hidden": is_label_hidden.then_some("true"),
-            {label}
+            {label_with_help}
             span { class: "astryx-field-label__description", id: description_id,
                 "data-label-hidden": is_label_hidden.then_some("true"), "data-forwards-click": can_forward.then_some("true"),
                 "data-astryx-input-description": id, onmounted: mount_description, {description} }
