@@ -83,7 +83,9 @@ pub use center::{Center, CenterAxis, CenterProps};
 pub use citation::{Citation, CitationProps, CitationSource, CitationVariant};
 pub use clickable_card::{ClickableCard, ClickableCardError};
 pub use code::{Code, CodeColor, CodeProps, CodeSize};
-pub use command_palette::{CommandPaletteEmpty, CommandPaletteEmptyProps};
+pub use command_palette::{
+    CommandPaletteEmpty, CommandPaletteEmptyProps, CommandPaletteGroup, CommandPaletteGroupProps,
+};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };
