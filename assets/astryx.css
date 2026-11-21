@@ -2647,6 +2647,23 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 .astryx-input-group > .astryx-button:not(:nth-last-child(1 of :not([popover], template, dialog))) { border-start-end-radius: 0; border-end-end-radius: 0; }
 .astryx-input-group > .astryx-button:focus-visible { z-index: 2; }
 
+@layer astryx-base {
+  .astryx-command-palette-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: var(--spacing-8);
+    padding-inline: var(--spacing-4);
+    font-family: var(--font-family-body);
+    font-size: var(--text-supporting-size);
+    line-height: var(--text-supporting-leading);
+    color: var(--color-text-secondary);
+    text-align: center;
+    overflow-wrap: anywhere;
+    --_astryx-text-overflow-wrap: anywhere;
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

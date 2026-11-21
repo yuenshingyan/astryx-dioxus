@@ -42,6 +42,8 @@ mod checkbox_indicator;
 mod citation;
 #[path = "showcase/clickable_card.rs"]
 mod clickable_card;
+#[path = "showcase/command_palette_empty.rs"]
+mod command_palette_empty;
 #[path = "showcase/divider.rs"]
 mod divider;
 #[path = "showcase/dropdown_menu_group.rs"]
@@ -157,6 +159,7 @@ use check_indicator::CheckIndicatorExamples;
 use checkbox_indicator::CheckboxIndicatorExamples;
 use citation::CitationExamples;
 use clickable_card::ClickableCardExamples;
+use command_palette_empty::CommandPaletteEmptyExamples;
 use divider::DividerExamples;
 use dropdown_menu_group::DropdownMenuGroupExamples;
 use empty_state::EmptyStateExamples;
@@ -353,6 +356,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#citation-examples", "Citation examples" }
                 " · "
+                a { href: "#command-palette-empty-examples", "CommandPaletteEmpty examples" }
+                " · "
                 a { href: "#check-indicator-examples", "CheckIndicator examples" }
                 " · "
                 a { href: "#radio-indicator-examples", "RadioIndicator examples" }
@@ -528,6 +533,7 @@ fn App() -> Element {
             VisuallyHiddenExamples {}
             CenterExamples {}
             CitationExamples {}
+            CommandPaletteEmptyExamples {}
             CheckIndicatorExamples {}
             RadioIndicatorExamples {}
             CheckboxIndicatorExamples {}
