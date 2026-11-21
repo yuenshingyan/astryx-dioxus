@@ -52,6 +52,7 @@ mod skeleton;
 mod spinner;
 mod stack;
 mod status_dot;
+mod table;
 mod text;
 mod theme;
 mod thumbnail;
@@ -176,6 +177,7 @@ pub use stack::{
 pub use status_dot::{
     InvalidStatusDotVariant, StatusDot, StatusDotError, StatusDotIcon, StatusDotVariant,
 };
+pub use table::{TableHeader, TableHeaderProps};
 pub use text::{Text, TextTag, Truncation, use_truncation};
 pub use theme::{
     InvalidTextName, TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap,
