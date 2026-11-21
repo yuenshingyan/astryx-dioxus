@@ -74,6 +74,8 @@ mod layout_header;
 mod layout_panel;
 #[path = "showcase/link.rs"]
 mod link;
+#[path = "showcase/media_theme.rs"]
+mod media_theme;
 #[path = "showcase/metadata_list.rs"]
 mod metadata_list;
 #[path = "showcase/metadata_list_item.rs"]
@@ -145,6 +147,7 @@ use layout_footer::LayoutFooterExamples;
 use layout_header::LayoutHeaderExamples;
 use layout_panel::LayoutPanelExamples;
 use link::LinkExamples;
+use media_theme::MediaThemeExamples;
 use metadata_list::MetadataListExamples;
 use metadata_list_item::MetadataListItemExamples;
 use progress_bar::ProgressBarExamples;
@@ -266,6 +269,8 @@ fn App() -> Element {
                 a { href: "#metadata-list-item-examples", "MetadataListItem examples" }
                 " · "
                 a { href: "#metadata-list-examples", "MetadataList examples" }
+                " · "
+                a { href: "#media-theme-examples", "MediaTheme examples" }
                 " · "
                 a { href: "#kbd-examples", "Kbd examples" }
                 " · "
@@ -402,6 +407,7 @@ fn App() -> Element {
             LinkExamples {}
             MetadataListItemExamples {}
             MetadataListExamples {}
+            MediaThemeExamples {}
             LayoutHeaderExamples {}
             LayoutFooterExamples {}
             LayoutContentExamples {}

@@ -154,6 +154,7 @@ pub use theme::{
     InvalidTextName, TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap,
     WordBreak,
 };
+pub use theme::{MediaTheme, MediaThemeFallback, MediaThemeMode, MediaThemeProps};
 pub use thumbnail::{Thumbnail, ThumbnailProps, ThumbnailRemoveVisibility};
 pub use timer::{Timer, TimerFormat, TimerProps};
 pub use token::{InvalidTokenColor, Token, TokenColor, TokenProps, TokenSize};

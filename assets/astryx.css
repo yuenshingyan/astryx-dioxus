@@ -2797,16 +2797,16 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
-/* theme/MediaTheme and onMediaTokens: private info-Toast content slice. */
-.astryx-demo-toast-media { display: contents; }
-.astryx-demo-toast-media[data-astryx-media="light"] {
+/* theme/MediaTheme and onMediaTokens. */
+:is(.astryx-media-theme, .astryx-demo-toast-media) { display: contents; }
+:is(.astryx-media-theme, .astryx-demo-toast-media)[data-astryx-media="light"] {
   color-scheme: light;
   --color-text-primary: var(--color-on-light);
   --color-icon-primary: var(--color-on-light);
   --color-accent: var(--color-on-light);
   color: var(--color-text-primary);
 }
-.astryx-demo-toast-media[data-astryx-media="dark"] {
+:is(.astryx-media-theme, .astryx-demo-toast-media)[data-astryx-media="dark"] {
   color-scheme: dark;
   --color-text-primary: var(--color-on-dark);
   --color-icon-primary: var(--color-on-dark);
