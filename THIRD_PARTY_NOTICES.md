@@ -45,6 +45,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - Timer follows `Timer/Timer.tsx`, its component spec, and four catalog templates at the same pin. See `docs/timer-port.md`.
 - Thumbnail follows `Thumbnail/Thumbnail.tsx` and its five catalog templates at the same pin. The offline PNGs in `tests/fixtures/thumbnail/` come from the embedded gallery assets. See `docs/thumbnail-port.md`.
 - FieldStatus follows `FieldStatus/{FieldStatus.tsx,useFieldStatusAnnouncement.ts}`, the Core and Neutral status tokens and glyphs, and its two catalog templates at the same pin. See `docs/field-status-port.md`.
+- FieldLabel follows `Field/FieldLabel.tsx`, the field optionality and input-container hooks, and two catalog arrangements at the same pin. See `docs/field-label-port.md`.
 - FormLayout follows `FormLayout/{FormLayout.tsx,FormLayoutContext.ts}`, its component spec, and five catalog arrangements at the same pin. See `docs/form-layout-port.md`.
 - DropdownMenuGroup follows `DropdownMenu/DropdownMenuGroup.tsx`, its spec, and both catalog arrangements at the same pin. See `docs/dropdown-menu-group-port.md`.
 - DropdownMenuDivider follows `DropdownMenu/DropdownMenuDivider.tsx` and its component spec at the same pin. See `docs/dropdown-menu-divider-port.md`.
