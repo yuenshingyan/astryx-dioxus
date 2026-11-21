@@ -94,7 +94,8 @@ pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation
 pub use card::{Card, CardVariant, InvalidCardVariant};
 pub use center::{Center, CenterAxis, CenterProps};
 pub use chat::{
-    ChatDensity, ChatMessage, ChatMessageMetadata, ChatMessageMetadataProps, ChatMessageProps,
+    ChatDensity, ChatMessage, ChatMessageBubble, ChatMessageBubbleGroup, ChatMessageBubbleProps,
+    ChatMessageBubbleVariant, ChatMessageMetadata, ChatMessageMetadataProps, ChatMessageProps,
     ChatMessageSender, ChatMessageStatus, ChatSendButton, ChatSendButtonProps, ChatSendButtonSize,
     ChatSystemMessage, ChatSystemMessageProps, ChatSystemMessageVariant,
 };

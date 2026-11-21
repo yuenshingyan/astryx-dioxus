@@ -1,13 +1,14 @@
 use dioxus::prelude::*;
 
 use astryx_dioxus::{
-    Avatar, ChatDensity, ChatMessage, ChatMessageMetadata, ChatMessageSender, ChatMessageStatus,
+    Avatar, ChatDensity, ChatMessage, ChatMessageBubble, ChatMessageBubbleVariant,
+    ChatMessageMetadata, ChatMessageSender, ChatMessageStatus,
 };
 
 #[component]
 fn Bubble(children: Element, #[props(default)] is_ghost: bool) -> Element {
     rsx! {
-        div { style: if is_ghost { "padding:8px 12px" } else { "padding:8px 12px;border-radius:12px;background:var(--color-background-muted)" }, {children} }
+        ChatMessageBubble { variant: if is_ghost { ChatMessageBubbleVariant::Ghost } else { ChatMessageBubbleVariant::Filled }, {children} }
     }
 }
 
@@ -17,7 +18,7 @@ pub(super) fn ChatMessageExamples() -> Element {
     rsx! {
         section { id: "chat-message-examples",
             h2 { "ChatMessage" }
-            p { "Static transcript previews use simple styled blocks in place of ChatMessageBubble." }
+            p { "Static transcript previews use ChatMessageBubble without a ChatMessageList." }
             div { style: "max-width:500px;display:grid;gap:8px",
                 h3 { "Showcase" }
                 ChatMessage { sender: ChatMessageSender::User, id: "chat-message-user",
