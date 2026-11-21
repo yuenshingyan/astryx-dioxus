@@ -33,6 +33,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - CheckboxIndicator follows `Indicator/CheckboxIndicator.tsx` and the Indicator family contract at the same pin. See `docs/checkbox-indicator-port.md`.
 - RadioIndicator follows `Indicator/RadioIndicator.tsx` and `Indicator/indicator.markers.stylex.ts` at the same pin. See `docs/radio-indicator-port.md`.
 - VisuallyHidden follows `VisuallyHidden/VisuallyHidden.tsx`, its specification, and all four original templates at the same pin. See `docs/visually-hidden-port.md`.
+- Timer follows `Timer/Timer.tsx`, its component spec, and four catalog templates at the same pin. See `docs/timer-port.md`.
 - Thumbnail follows `Thumbnail/Thumbnail.tsx` and its five catalog templates at the same pin. The offline PNGs in `tests/fixtures/thumbnail/` come from the embedded gallery assets. See `docs/thumbnail-port.md`.
 - FieldStatus follows `FieldStatus/{FieldStatus.tsx,useFieldStatusAnnouncement.ts}`, the Core and Neutral status tokens and glyphs, and its two catalog templates at the same pin. See `docs/field-status-port.md`.
 - Layout follows `Layout/Layout.tsx`, the Layout spec, and its seven catalog templates at the same pin. See `docs/layout-port.md`.

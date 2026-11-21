@@ -74,6 +74,8 @@ mod status_dot;
 mod text;
 #[path = "showcase/thumbnail.rs"]
 mod thumbnail;
+#[path = "showcase/timer.rs"]
+mod timer;
 #[path = "showcase/typography_animation.rs"]
 mod typography_animation;
 #[path = "showcase/v_stack.rs"]
@@ -116,6 +118,7 @@ use stack::{StackExamples, StackItemExamples};
 use status_dot::StatusDotExamples;
 use text::TextExamples;
 use thumbnail::ThumbnailExamples;
+use timer::TimerExamples;
 use v_stack::VStackExamples;
 use visually_hidden::VisuallyHiddenExamples;
 
@@ -194,6 +197,8 @@ fn App() -> Element {
                 a { href: "#field-status-examples", "FieldStatus examples" }
                 " · "
                 a { href: "#thumbnail-examples", "Thumbnail examples" }
+                " · "
+                a { href: "#timer-examples", "Timer examples" }
                 " · "
                 a { href: "#kbd-examples", "Kbd examples" }
                 " · "
@@ -341,6 +346,7 @@ fn App() -> Element {
             StatusDotExamples {}
             TextExamples {}
             ThumbnailExamples {}
+            TimerExamples {}
             HeadingExamples {}
             ProgressBarExamples {}
             BlockquoteExamples {}
