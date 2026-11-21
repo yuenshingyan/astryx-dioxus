@@ -118,6 +118,8 @@ mod token;
 mod top_nav_featured_card;
 #[path = "showcase/top_nav_heading.rs"]
 mod top_nav_heading;
+#[path = "showcase/top_nav_mega_menu_item.rs"]
+mod top_nav_mega_menu_item;
 #[path = "showcase/typography_animation.rs"]
 mod typography_animation;
 #[path = "showcase/v_stack.rs"]
@@ -181,6 +183,7 @@ use timer::TimerExamples;
 use token::TokenExamples;
 use top_nav_featured_card::TopNavFeaturedCardExamples;
 use top_nav_heading::TopNavHeadingExamples;
+use top_nav_mega_menu_item::TopNavMegaMenuItemExamples;
 use v_stack::VStackExamples;
 use visually_hidden::VisuallyHiddenExamples;
 
@@ -337,6 +340,8 @@ fn App() -> Element {
                 a { href: "#top-nav-heading-examples", "TopNavHeading examples" }
                 " · "
                 a { href: "#top-nav-featured-card-examples", "TopNavMegaMenuFeaturedCard examples" }
+                " · "
+                a { href: "#top-nav-mega-menu-item-examples", "TopNavMegaMenuItem examples" }
                 " · "
                 a { href: "#nav-icon-examples", "NavIcon examples" }
                 " · "
@@ -496,6 +501,7 @@ fn App() -> Element {
             SideNavCollapseButtonExamples {}
             TopNavHeadingExamples {}
             TopNavFeaturedCardExamples {}
+            TopNavMegaMenuItemExamples {}
             NavIconExamples {}
             ScrollableAreaExamples {}
         }
