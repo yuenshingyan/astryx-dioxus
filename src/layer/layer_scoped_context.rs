@@ -8,6 +8,7 @@ use crate::avatar_group::avatar_group_context::AvatarGroupContext;
 use crate::breadcrumbs::component::{BreadcrumbContext, BreadcrumbSettings};
 use crate::button_group::button_group_context::{ButtonGroupContext, ConnectedButtonGroupContext};
 use crate::compatibility::{ButtonEnvironment, ButtonEnvironmentContext};
+use crate::form_layout::form_layout_context::{FormLayoutContext, FormLayoutSettings};
 use crate::icon::{IconDefaultSizeContext, IconSize};
 use crate::input_group::input_group_internal_context::{
     InputGroupInternalContext, InputGroupInternalState,
@@ -33,6 +34,7 @@ pub fn LayerContentBoundary(children: Element) -> Element {
     use_context_provider(AvatarSizeContext::default);
     use_context_provider(|| AvatarStatusLabelContext(None));
     use_context_provider(|| BreadcrumbContext(Signal::new(BreadcrumbSettings::default())));
+    use_context_provider(|| FormLayoutContext::new(FormLayoutSettings::default()));
     use_context_provider(LayoutAreaContext::default);
     use_context_provider(|| LayoutDividerContext(Signal::new(false)));
     use_context_provider(|| LayoutSlotsContext(Signal::new(LayoutSlots::default())));

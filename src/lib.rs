@@ -19,6 +19,7 @@ mod divider;
 mod dropdown_menu;
 mod empty_state;
 mod field_status;
+mod form_layout;
 mod grid;
 mod h_stack;
 mod heading;
@@ -86,6 +87,9 @@ pub use dropdown_menu::{
 pub use empty_state::{EmptyState, EmptyStateProps};
 pub use field_status::{
     FieldStatus, FieldStatusProps, FieldStatusVariant, InputStatusType, InvalidFieldStatusVariant,
+};
+pub use form_layout::{
+    EntryErrorBehavior, FormLayout, FormLayoutDirection, FormLayoutProps, FormOptionality,
 };
 pub use grid::{
     Grid, GridAlignment, GridColumns, GridProps, GridRepeat, GridSpan, GridSpanColumns,

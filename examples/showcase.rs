@@ -48,6 +48,8 @@ mod dropdown_menu_group;
 mod empty_state;
 #[path = "showcase/field_status.rs"]
 mod field_status;
+#[path = "showcase/form_layout.rs"]
+mod form_layout;
 #[path = "showcase/grid.rs"]
 mod grid;
 #[path = "showcase/h_stack.rs"]
@@ -128,6 +130,7 @@ use divider::DividerExamples;
 use dropdown_menu_group::DropdownMenuGroupExamples;
 use empty_state::EmptyStateExamples;
 use field_status::FieldStatusExamples;
+use form_layout::FormLayoutExamples;
 use grid::{GridExamples, GridSpanExamples};
 use h_stack::HStackExamples;
 use heading::HeadingExamples;
@@ -240,6 +243,8 @@ fn App() -> Element {
                 a { href: "#dropdown-menu-group-examples", "DropdownMenuGroup examples" }
                 " · "
                 a { href: "#field-status-examples", "FieldStatus examples" }
+                " · "
+                a { href: "#form-layout-examples", "FormLayout examples" }
                 " · "
                 a { href: "#thumbnail-examples", "Thumbnail examples" }
                 " · "
@@ -414,6 +419,7 @@ fn App() -> Element {
                 }
             }
             FieldStatusExamples {}
+            FormLayoutExamples {}
             KbdExamples {}
             SkeletonExamples {}
             StatusDotExamples {}

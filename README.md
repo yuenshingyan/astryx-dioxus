@@ -160,6 +160,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/empty_state/`: [EmptyState](docs/empty-state-port.md), with native headings, compact layout, and shared rendered-text announcements.
 - `src/timer/`: [Timer](docs/timer-port.md), with elapsed and clock formats and browser-driven duration updates.
 - `src/thumbnail/`: [Thumbnail](docs/thumbnail-port.md), with attachment preview states and separate Open and Remove actions.
+- `src/form_layout/`: [FormLayout](docs/form-layout-port.md), with responsive field arrangement and layer-scoped defaults. Field and input integration remains pending.
 - `src/field_status/`: [FieldStatus](docs/field-status-port.md), with attached and detached validation messages and shared live announcements. Field control integration remains pending.
 - `src/dropdown_menu/`: [DropdownMenuDivider](docs/dropdown-menu-divider-port.md) and [DropdownMenuGroup](docs/dropdown-menu-group-port.md). Popup and menu navigation integration remain pending.
 - `src/scrollable_area/`: [ScrollableArea](docs/scrollable-area-port.md), with a native viewport, logical scroll axes, and overflow-dependent keyboard access.
