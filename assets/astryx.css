@@ -2807,6 +2807,26 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
+@layer astryx-base {
+  .astryx-nav-heading-menu-item {
+    box-sizing: border-box; display: flex; align-items: center; gap: var(--spacing-2); width: 100%;
+    padding: var(--spacing-2); border: 0; border-radius: var(--radius-element);
+    font-family: var(--font-family-body); font-size: var(--text-label-size);
+    color: var(--color-text-primary); background-color: transparent; text-align: start;
+    text-decoration: none; user-select: none; cursor: pointer;
+  }
+  .astryx-nav-heading-menu-item__content { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .astryx-nav-heading-menu-item__icon { display: flex; flex-shrink: 0; color: var(--color-icon-secondary); }
+  .astryx-nav-heading-menu-item__label, .astryx-nav-heading-menu-item__description { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .astryx-nav-heading-menu-item__label { font-size: var(--text-body-size); line-height: var(--text-body-leading); }
+  .astryx-nav-heading-menu-item__description { font-size: var(--text-supporting-size); line-height: var(--text-supporting-leading); color: var(--color-text-secondary); }
+  .astryx-nav-heading-menu-item[aria-disabled="true"] { opacity: 0.5; cursor: default; }
+  .astryx-nav-heading-menu-item:focus { background-color: var(--color-overlay-hover); }
+  @media (hover: hover) {
+    .astryx-nav-heading-menu-item:hover:not([aria-disabled="true"]) { background-color: var(--color-overlay-hover); }
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

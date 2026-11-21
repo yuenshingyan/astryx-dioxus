@@ -100,6 +100,8 @@ mod metadata_list;
 mod metadata_list_item;
 #[path = "showcase/mobile_nav_toggle.rs"]
 mod mobile_nav_toggle;
+#[path = "showcase/nav_heading_menu_item.rs"]
+mod nav_heading_menu_item;
 #[path = "showcase/nav_icon.rs"]
 mod nav_icon;
 #[path = "showcase/overlay.rs"]
@@ -206,6 +208,7 @@ use media_theme::MediaThemeExamples;
 use metadata_list::MetadataListExamples;
 use metadata_list_item::MetadataListItemExamples;
 use mobile_nav_toggle::MobileNavToggleExamples;
+use nav_heading_menu_item::NavHeadingMenuItemExamples;
 use nav_icon::NavIconExamples;
 use overlay::OverlayExamples;
 use progress_bar::ProgressBarExamples;
@@ -427,6 +430,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#nav-icon-examples", "NavIcon examples" }
                 " · "
+                a { href: "#nav-heading-menu-item-examples", "NavHeadingMenuItem examples" }
+                " · "
                 a { href: "#scrollable-area-examples", "ScrollableArea examples" }
             }
             DocumentedButtonPatterns {}
@@ -601,6 +606,7 @@ fn App() -> Element {
             TopNavFeaturedCardExamples {}
             TopNavMegaMenuItemExamples {}
             NavIconExamples {}
+            NavHeadingMenuItemExamples {}
             ScrollableAreaExamples {}
         }
     }
