@@ -13,6 +13,7 @@ use crate::input_group::input_group_internal_context::{
 use crate::layout::layout_area_context::LayoutAreaContext;
 use crate::layout::layout_divider_context::LayoutDividerContext;
 use crate::layout::layout_slots_context::{LayoutSlots, LayoutSlotsContext};
+use crate::metadata_list::metadata_list_context::MetadataListContext;
 use crate::size_context::{ElementSize, SizeContext};
 use crate::text::text_clamp_context::TextClampContext;
 
@@ -30,6 +31,9 @@ pub fn LayerContentBoundary(children: Element) -> Element {
     use_context_provider(LayoutAreaContext::default);
     use_context_provider(|| LayoutDividerContext(Signal::new(false)));
     use_context_provider(|| LayoutSlotsContext(Signal::new(LayoutSlots::default())));
+    use_context_provider(|| MetadataListContext {
+        is_stacked: Signal::new(false),
+    });
     use_context_provider(|| SizeContext(Signal::new(ElementSize::Medium)));
     use_context_provider(|| IconDefaultSizeContext(Signal::new(IconSize::Medium)));
     use_context_provider(|| ButtonGroupContext(Signal::new(None)));

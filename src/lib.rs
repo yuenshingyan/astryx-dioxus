@@ -99,7 +99,10 @@ pub use link::{
     LinkifyError, LinkifyMatch, LinkifyNode, LinkifyPattern, UseLinkifyOptions, linkify,
     use_link_component, use_linkify,
 };
-pub use metadata_list::{MetadataListItem, MetadataListItemProps};
+pub use metadata_list::{
+    MetadataList, MetadataListColumns, MetadataListItem, MetadataListItemProps,
+    MetadataListLabelConfig, MetadataListLabelPosition, MetadataListOrientation, MetadataListProps,
+};
 pub use progress_bar::{
     InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,
     ProgressBarVariant,

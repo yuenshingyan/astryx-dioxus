@@ -2202,6 +2202,35 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
+@layer astryx-base {
+  .astryx-metadata-list { display: flex; flex-direction: column; }
+  .astryx-metadata-list__title { margin-block-end: var(--spacing-3); }
+  .astryx-metadata-list__items { margin: 0; padding: 0; }
+  .astryx-metadata-list__items--inline {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--spacing-2) var(--spacing-4);
+    align-items: baseline;
+  }
+  .astryx-metadata-list__items--stacked { display: grid; grid-template-columns: 1fr; gap: var(--spacing-3); }
+  .astryx-metadata-list__items--multi { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--spacing-4); }
+  .astryx-metadata-list__items--horizontal { display: flex; flex-wrap: wrap; gap: var(--spacing-4); }
+  .astryx-metadata-list__toggle {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    padding: var(--spacing-2) 0;
+    cursor: pointer;
+    color: var(--color-text-accent);
+    font-family: inherit;
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+    font-weight: var(--font-weight-medium);
+    text-align: start;
+    align-self: flex-start;
+  }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

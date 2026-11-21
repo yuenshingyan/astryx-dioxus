@@ -5,19 +5,24 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
   await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8134'});
-  await waitFor(`!!document.querySelector('#metadata-project > dd a')`);
+  await waitFor(`!!document.querySelector('#metadata-project > dl > dd a')`);
   assert.deepEqual(await evaluate(`['metadata-deployment','metadata-project'].map(id => {
-    const list = document.getElementById(id);
+    const list = document.querySelector('#' + id + ' > dl');
     return [...list.children].map(node => node.tagName);
   })`), [Array.from({length: 8}, (_, i) => i % 2 ? 'DD' : 'DT'), Array.from({length: 12}, (_, i) => i % 2 ? 'DD' : 'DT')]);
   assert.deepEqual(await evaluate(`(() => {
     const term = document.querySelector('[data-testid="metadata-environment-label"]');
     const value = document.querySelector('[data-testid="metadata-environment-value"]');
+    const textTop = node => {
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      return range.getBoundingClientRect().top;
+    };
     return [term.textContent, value.textContent, term.nextElementSibling === value,
-      term.getBoundingClientRect().top === value.getBoundingClientRect().top,
+      Math.abs(textTop(term) - textTop(value)) <= 1 / 64,
       getComputedStyle(term).minHeight, getComputedStyle(value).marginInlineStart];
   })()`), ['Environment', 'Production', true, true, '24px', '0px']);
-  await evaluate(`window.metadataOwner = document.querySelector('#metadata-project > dd a'); metadataOwner.focus()`);
+  await evaluate(`window.metadataOwner = document.querySelector('#metadata-project > dl > dd a'); metadataOwner.focus()`);
   assert.equal(await evaluate(`document.activeElement === metadataOwner && metadataOwner.textContent === 'Alice Johnson'`), true);
   const {nodes} = await send('Accessibility.getFullAXTree');
   assert.ok(nodes.some(node => !node.ignored && ['term','DescriptionListTerm'].includes(node.role?.value) && node.name?.value === 'Environment'));
