@@ -48,6 +48,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - Field follows `Field/Field.tsx`, its spec, and four adapted catalog templates at the same pin. See `docs/field-port.md`.
 - FieldLabel follows `Field/FieldLabel.tsx`, the field optionality and input-container hooks, and two catalog arrangements at the same pin. See `docs/field-label-port.md`.
 - NavIcon follows `NavIcon/NavIcon.tsx`, its spec, and both catalog templates at the same pin. The showcase adapts fallback glyphs from `Icon/defaultIcons.tsx`. See `docs/nav-icon-port.md`.
+- ChatSendButton follows `Chat/ChatSendButton.tsx`, its spec, and four adapted catalog templates at the same pin. See `docs/chat-send-button-port.md`.
 - ChatSystemMessage follows `Chat/ChatSystemMessage.tsx`, its spec, and four adapted catalog templates at the same pin. See `docs/chat-system-message-port.md`.
 - DialogHeader follows `Dialog/DialogHeader.tsx`, its spec, and both adapted catalog templates at the same pin. See `docs/dialog-header-port.md`.
 - DrawerHeader follows `Drawer/DrawerHeader.tsx`, its spec, and three adapted catalog templates at the same pin. See `docs/drawer-header-port.md`.

@@ -34,6 +34,8 @@ mod button_patterns;
 mod card;
 #[path = "showcase/center.rs"]
 mod center;
+#[path = "showcase/chat_send_button.rs"]
+mod chat_send_button;
 #[path = "showcase/chat_system_message.rs"]
 mod chat_system_message;
 #[path = "showcase/check_indicator.rs"]
@@ -181,6 +183,7 @@ use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
 use card::CardExamples;
 use center::CenterExamples;
+use chat_send_button::ChatSendButtonExamples;
 use chat_system_message::ChatSystemMessageExamples;
 use check_indicator::CheckIndicatorExamples;
 use checkbox_indicator::CheckboxIndicatorExamples;
@@ -391,6 +394,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#chat-system-message-examples", "ChatSystemMessage examples" }
                 " · "
+                a { href: "#chat-send-button-examples", "ChatSendButton examples" }
+                " · "
                 a { href: "#aspect-ratio-examples", "AspectRatio examples" }
                 " · "
                 a { href: "#stack-examples", "Stack examples" }
@@ -595,6 +600,7 @@ fn App() -> Element {
             BlockquoteExamples {}
             CardExamples {}
             ChatSystemMessageExamples {}
+            ChatSendButtonExamples {}
             ClickableCardExamples {}
             SelectableCardExamples {}
             AspectRatioExamples {}

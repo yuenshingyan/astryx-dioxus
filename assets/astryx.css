@@ -2845,6 +2845,8 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-chat-send-button { border-radius: var(--_button-radius, var(--radius-full)); flex-shrink: 0; }
+
   .astryx-chat-system-message[data-variant="default"] {
     display: flex;
     align-items: center;
