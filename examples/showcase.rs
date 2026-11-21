@@ -178,6 +178,8 @@ mod toggle_button_group;
 mod token;
 #[path = "showcase/toolbar.rs"]
 mod toolbar;
+#[path = "showcase/tooltip.rs"]
+mod tooltip;
 #[path = "showcase/top_nav_featured_card.rs"]
 mod top_nav_featured_card;
 #[path = "showcase/top_nav_heading.rs"]
@@ -279,6 +281,7 @@ use toggle_button::ToggleButtonExamples;
 use toggle_button_group::ToggleButtonGroupExamples;
 use token::TokenExamples;
 use toolbar::ToolbarExamples;
+use tooltip::TooltipExamples;
 use top_nav_featured_card::TopNavFeaturedCardExamples;
 use top_nav_heading::TopNavHeadingExamples;
 use top_nav_mega_menu_item::TopNavMegaMenuItemExamples;
@@ -421,6 +424,8 @@ fn App() -> Element {
                 a { href: "#media-theme-examples", "MediaTheme examples" }
                 " · "
                 a { href: "#syntax-theme-examples", "SyntaxTheme examples" }
+                " · "
+                a { href: "#tooltip-examples", "Tooltip examples" }
                 " · "
                 a { href: "#overlay-examples", "Overlay examples" }
                 " · "
@@ -611,6 +616,7 @@ fn App() -> Element {
             MetadataListExamples {}
             MediaThemeExamples {}
             SyntaxThemeExamples {}
+            TooltipExamples {}
             OverlayExamples {}
             LayoutHeaderExamples {}
             LayoutFooterExamples {}
