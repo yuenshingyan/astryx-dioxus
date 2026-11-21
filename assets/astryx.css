@@ -2362,8 +2362,7 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
 }
 
-/* Private exact-pattern slices, not standalone Token/Avatar/StackItem APIs.
-   Source: Token/Token.tsx, Avatar/Avatar.tsx, Stack/stackItem.stylex.ts. */
+/* Token and retained Avatar/Stack pattern styles. */
 @layer astryx {
   .astryx-token {
     display: inline-flex;
@@ -2391,6 +2390,49 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     white-space: nowrap;
     min-width: 0;
     unicode-bidi: isolate;
+  }
+  .astryx-token[data-size="sm"] { height: calc(var(--size-element-sm) - 8px); }
+  .astryx-token[data-size="lg"] { height: calc(var(--size-element-lg) - 8px); }
+  .astryx-token[data-color]:not([data-color="default"]) { background: transparent; color: inherit; }
+  .astryx-token[data-color="red"] { background: var(--color-background-red); color: var(--color-text-red); }
+  .astryx-token[data-color="orange"] { background: var(--color-background-orange); color: var(--color-text-orange); }
+  .astryx-token[data-color="yellow"] { background: var(--color-background-yellow); color: var(--color-text-yellow); }
+  .astryx-token[data-color="green"] { background: var(--color-background-green); color: var(--color-text-green); }
+  .astryx-token[data-color="teal"] { background: var(--color-background-teal); color: var(--color-text-teal); }
+  .astryx-token[data-color="cyan"] { background: var(--color-background-cyan); color: var(--color-text-cyan); }
+  .astryx-token[data-color="blue"] { background: var(--color-background-blue); color: var(--color-text-blue); }
+  .astryx-token[data-color="purple"] { background: var(--color-background-purple); color: var(--color-text-purple); }
+  .astryx-token[data-color="pink"] { background: var(--color-background-pink); color: var(--color-text-pink); }
+  .astryx-token[data-color="gray"] { background: var(--color-background-gray); color: var(--color-text-gray); }
+  .astryx-token[data-disabled="disabled"] { opacity: .5; pointer-events: none; }
+  .astryx-token[data-interactive="true"] { cursor: pointer; }
+  .astryx-token__label--hidden { position: absolute; width: 1px; height: 1px; margin: -1px; clip-path: inset(50%); }
+  .astryx-token__action, .astryx-token__remove {
+    appearance: none; background: none; border: 0; color: inherit; font: inherit;
+    text-decoration: none; padding: 0; cursor: inherit;
+  }
+  .astryx-token__action { display: flex; align-items: center; min-width: 0; overflow: hidden; outline: none; }
+  .astryx-token__remove {
+    position: relative; display: inline-flex; justify-content: center; align-items: center;
+    width: 16px; height: 16px; flex-shrink: 0; border-radius: var(--radius-full);
+    margin-inline-end: calc(-1 * var(--spacing-1)); cursor: pointer;
+  }
+  .astryx-token__remove::after { content: ""; position: absolute; inset: -4px; }
+  .astryx-token:focus-visible, .astryx-token:has(> .astryx-token__action:focus-visible), .astryx-token__remove:focus-visible {
+    outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+    outline-offset: var(--focus-outline-offset);
+  }
+  .astryx-token__remove:focus-visible { outline-offset: -2px; }
+  @media (hover: hover) {
+    .astryx-token[data-interactive="true"]:hover { background-image: linear-gradient(var(--color-overlay-hover), var(--color-overlay-hover)); }
+    .astryx-token__remove:hover { background: var(--color-overlay-hover); }
+  }
+  @media (pointer: fine) {
+    .astryx-token[data-interactive="true"]:active { background-image: linear-gradient(var(--color-overlay-pressed), var(--color-overlay-pressed)); }
+  }
+  .astryx-token[data-interactive="true"][data-astryx-press] {
+    --_token-press: color-mix(in srgb, var(--color-overlay-pressed) calc(var(--_astryx-press-strength, 0) * 100%), transparent);
+    background-image: linear-gradient(var(--_token-press), var(--_token-press));
   }
   .astryx-stack-item { min-width: 0; min-height: 0; }
   .astryx-stack-item:not([data-size="fill"]) { flex-grow: 0; flex-shrink: 0; }

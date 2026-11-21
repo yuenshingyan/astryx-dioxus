@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+
+await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
+  await send('Network.enable');
+  await send('Network.setBlockedURLs', {urls: ['https://*']});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8136'});
+  const token = id => `document.getElementById('token-${id}')`;
+  const message = `document.getElementById('token-message').textContent`;
+  await waitFor(`${token('action')}?.querySelector('button')`);
+  await evaluate(`${token('action')}.click()`);
+  await waitFor(`${message} === 'Activated'`);
+  await evaluate(`${token('action')}.querySelector('.astryx-token__remove').click()`);
+  await waitFor(`${message} === 'Removed'`);
+  await evaluate(`${token('action')}.querySelectorAll('button')[1].click()`);
+  await waitFor(`${message} === 'Nested'`);
+  await evaluate(`${token('disabled')}.querySelector('button').focus()`);
+  assert.equal(await evaluate(`document.activeElement.getAttribute('aria-disabled')`), 'true');
+  await send('Input.dispatchKeyEvent', {type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13, text: '\r'});
+  await send('Input.dispatchKeyEvent', {type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13});
+  await evaluate(`${token('disabled')}.querySelector('.astryx-token__remove').click()`);
+  assert.equal(await evaluate(message), 'Nested');
+  assert.equal(await evaluate(`${token('link')}.querySelector('a').nextElementSibling.matches('button')`), true);
+  await evaluate(`${token('link')}.click()`);
+  await waitFor(`${message} === 'Navigated' && location.hash === '#token-examples'`);
+  await evaluate(`${token('link')}.querySelector('button').click()`);
+  await waitFor(`${message} === 'Removed link'`);
+  assert.equal(await evaluate(`new Set([...document.querySelectorAll('#token-examples [data-color]')].map(node => node.dataset.color)).size`), 11);
+  assert.deepEqual(exceptions, []);
+  console.log('Token: built-in tones, separate activation and removal, disabled focus, and link delegation passed');
+});
