@@ -94,10 +94,11 @@ pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation
 pub use card::{Card, CardVariant, InvalidCardVariant};
 pub use center::{Center, CenterAxis, CenterProps};
 pub use chat::{
-    ChatDensity, ChatMessage, ChatMessageBubble, ChatMessageBubbleGroup, ChatMessageBubbleProps,
-    ChatMessageBubbleVariant, ChatMessageList, ChatMessageListAlign, ChatMessageListProps,
-    ChatMessageMetadata, ChatMessageMetadataProps, ChatMessageProps, ChatMessageSender,
-    ChatMessageStatus, ChatSendButton, ChatSendButtonProps, ChatSendButtonSize, ChatSystemMessage,
+    ChatDensity, ChatLayoutScrollButton, ChatLayoutScrollButtonProps, ChatMessage,
+    ChatMessageBubble, ChatMessageBubbleGroup, ChatMessageBubbleProps, ChatMessageBubbleVariant,
+    ChatMessageList, ChatMessageListAlign, ChatMessageListProps, ChatMessageMetadata,
+    ChatMessageMetadataProps, ChatMessageProps, ChatMessageSender, ChatMessageStatus,
+    ChatSendButton, ChatSendButtonProps, ChatSendButtonSize, ChatSystemMessage,
     ChatSystemMessageProps, ChatSystemMessageVariant,
 };
 pub use citation::{Citation, CitationProps, CitationSource, CitationVariant};

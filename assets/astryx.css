@@ -2846,6 +2846,36 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-chat-layout-scroll-button__wrapper { display: flex; justify-content: center; padding-block-end: var(--spacing-3); }
+  .astryx-chat-layout-scroll-button {
+    contain: layout style;
+    overflow: hidden;
+    border-radius: var(--radius-full);
+    background-color: var(--color-background-popover, light-dark(#fff, #28292c));
+    box-shadow: var(--shadow-med);
+    height: var(--size-element-md);
+    max-width: var(--size-element-md);
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity var(--duration-fast-max) var(--ease-standard),
+      transform var(--duration-fast-max) var(--ease-standard),
+      max-width var(--duration-fast-max) var(--ease-standard),
+      visibility var(--duration-fast-max) var(--ease-standard);
+  }
+  .astryx-chat-layout-scroll-button[data-visible] { opacity: 1; pointer-events: auto; visibility: visible; }
+  .astryx-chat-layout-scroll-button[data-visible][data-expanded] { max-width: 200px; }
+  .astryx-chat-layout-scroll-button .astryx-chat-layout-scroll-button__action {
+    --_button-radius: var(--radius-full);
+    white-space: nowrap;
+    padding-inline: var(--spacing-2);
+  }
+  .astryx-chat-layout-scroll-button[data-expanded] .astryx-chat-layout-scroll-button__action { padding-inline-end: var(--spacing-3); }
+  .astryx-chat-layout-scroll-button__action:focus-visible { outline-offset: calc(-1 * var(--focus-outline-width)); }
+  @media (prefers-reduced-motion: reduce) {
+    .astryx-chat-layout-scroll-button { transition-duration: 0s; }
+  }
+
   :is(.astryx-chat-message-list, .astryx-chat-message-list__inner) { display: flex; flex-direction: column; flex: 1; min-height: 0; }
   .astryx-chat-message-list:focus-visible {
     outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
