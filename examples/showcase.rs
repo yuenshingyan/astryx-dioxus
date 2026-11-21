@@ -38,6 +38,8 @@ mod center;
 mod check_indicator;
 #[path = "showcase/checkbox_indicator.rs"]
 mod checkbox_indicator;
+#[path = "showcase/citation.rs"]
+mod citation;
 #[path = "showcase/clickable_card.rs"]
 mod clickable_card;
 #[path = "showcase/divider.rs"]
@@ -147,6 +149,7 @@ use card::CardExamples;
 use center::CenterExamples;
 use check_indicator::CheckIndicatorExamples;
 use checkbox_indicator::CheckboxIndicatorExamples;
+use citation::CitationExamples;
 use clickable_card::ClickableCardExamples;
 use divider::DividerExamples;
 use dropdown_menu_group::DropdownMenuGroupExamples;
@@ -333,6 +336,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#center-examples", "Center examples" }
                 " · "
+                a { href: "#citation-examples", "Citation examples" }
+                " · "
                 a { href: "#check-indicator-examples", "CheckIndicator examples" }
                 " · "
                 a { href: "#radio-indicator-examples", "RadioIndicator examples" }
@@ -504,6 +509,7 @@ fn App() -> Element {
             VStackExamples {}
             VisuallyHiddenExamples {}
             CenterExamples {}
+            CitationExamples {}
             CheckIndicatorExamples {}
             RadioIndicatorExamples {}
             CheckboxIndicatorExamples {}
