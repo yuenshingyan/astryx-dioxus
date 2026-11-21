@@ -162,6 +162,8 @@ mod syntax_theme;
 mod table;
 #[path = "showcase/table_header.rs"]
 mod table_header;
+#[path = "showcase/table_selection_toolbar.rs"]
+mod table_selection_toolbar;
 #[path = "showcase/text.rs"]
 mod text;
 #[path = "showcase/thumbnail.rs"]
@@ -269,6 +271,7 @@ use status_dot::StatusDotExamples;
 use syntax_theme::SyntaxThemeExamples;
 use table::TableExamples;
 use table_header::TableHeaderExamples;
+use table_selection_toolbar::TableSelectionToolbarExamples;
 use text::TextExamples;
 use thumbnail::ThumbnailExamples;
 use timer::TimerExamples;
@@ -394,6 +397,8 @@ fn App() -> Element {
                 a { href: "#table-footer-examples", "TableBody and TableFooter examples" }
                 " · "
                 a { href: "#table-examples", "Table examples" }
+                " · "
+                a { href: "#table-selection-toolbar-examples", "TableSelectionToolbar examples" }
                 " · "
                 a { href: "#toggle-button-examples", "ToggleButton examples" }
                 " · "
@@ -646,6 +651,7 @@ fn App() -> Element {
             TypeaheadItemExamples {}
             TableHeaderExamples {}
             TableExamples {}
+            TableSelectionToolbarExamples {}
             ToggleButtonExamples {}
             ToolbarExamples {}
             ToggleButtonGroupExamples {}

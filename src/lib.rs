@@ -206,7 +206,8 @@ pub use status_dot::{
 pub use table::{
     Table, TableBody, TableBodyProps, TableCell, TableCellProps, TableCellScope, TableDensity,
     TableDividers, TableFooter, TableFooterProps, TableHeader, TableHeaderCell,
-    TableHeaderCellProps, TableHeaderProps, TableProps, TableRow, TableRowProps, TableTextOverflow,
+    TableHeaderCellProps, TableHeaderProps, TableProps, TableRow, TableRowProps,
+    TableSelectionSummary, TableSelectionToolbar, TableSelectionToolbarProps, TableTextOverflow,
     TableVerticalAlign,
 };
 pub use text::{Text, TextTag, Truncation, use_truncation};
