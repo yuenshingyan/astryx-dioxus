@@ -2846,6 +2846,17 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  :is(.astryx-chat-message-list, .astryx-chat-message-list__inner) { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  .astryx-chat-message-list:focus-visible {
+    outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+    outline-offset: calc(-1 * var(--focus-outline-width));
+  }
+  .astryx-chat-message-list__inner { gap: var(--spacing-4); padding: var(--spacing-4); }
+  .astryx-chat-message-list[data-density="compact"] > .astryx-chat-message-list__inner { gap: var(--spacing-2); padding: var(--spacing-2) var(--spacing-3); }
+  .astryx-chat-message-list[data-density="spacious"] > .astryx-chat-message-list__inner { gap: var(--spacing-6); padding: var(--spacing-6); }
+  .astryx-chat-message-list__spacer { flex: 1; min-height: 0; }
+  .astryx-chat-message-list__empty { display: flex; align-items: center; justify-content: center; flex: 1; min-height: 0; }
+
   .astryx-chat-message {
     --_chat-avatar-offset: 0px;
     --_chat-message-gap: var(--spacing-2);

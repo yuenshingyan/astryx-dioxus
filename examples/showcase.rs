@@ -38,6 +38,8 @@ mod center;
 mod chat_message;
 #[path = "showcase/chat_message_bubble.rs"]
 mod chat_message_bubble;
+#[path = "showcase/chat_message_list.rs"]
+mod chat_message_list;
 #[path = "showcase/chat_message_metadata.rs"]
 mod chat_message_metadata;
 #[path = "showcase/chat_send_button.rs"]
@@ -191,6 +193,7 @@ use card::CardExamples;
 use center::CenterExamples;
 use chat_message::ChatMessageExamples;
 use chat_message_bubble::ChatMessageBubbleExamples;
+use chat_message_list::ChatMessageListExamples;
 use chat_message_metadata::ChatMessageMetadataExamples;
 use chat_send_button::ChatSendButtonExamples;
 use chat_system_message::ChatSystemMessageExamples;
@@ -411,6 +414,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#chat-message-bubble-examples", "ChatMessageBubble examples" }
                 " · "
+                a { href: "#chat-message-list-examples", "ChatMessageList examples" }
+                " · "
                 a { href: "#aspect-ratio-examples", "AspectRatio examples" }
                 " · "
                 a { href: "#stack-examples", "Stack examples" }
@@ -619,6 +624,7 @@ fn App() -> Element {
             ChatMessageMetadataExamples {}
             ChatMessageExamples {}
             ChatMessageBubbleExamples {}
+            ChatMessageListExamples {}
             ClickableCardExamples {}
             SelectableCardExamples {}
             AspectRatioExamples {}
