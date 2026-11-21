@@ -2846,6 +2846,17 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-toolbar { display: flex; align-items: center; justify-content: space-between; min-height: var(--size-element-sm); gap: var(--_toolbar-gap); }
+  .astryx-toolbar[data-center] { flex-wrap: wrap; justify-content: normal; }
+  .astryx-toolbar[aria-orientation="vertical"] { align-items: stretch; }
+  .astryx-toolbar[aria-orientation="vertical"]:not([data-center]) { flex-direction: column; }
+  :is(.astryx-toolbar__start, .astryx-toolbar__center, .astryx-toolbar__end) { display: flex; align-items: center; gap: var(--_toolbar-gap); }
+  .astryx-toolbar__center { justify-content: center; flex: 1000 1 min-content; min-width: 0; max-width: max-content; }
+  .astryx-toolbar__end { justify-content: flex-end; }
+  .astryx-toolbar:not([data-center]) > .astryx-toolbar__start:only-child { flex: 1; }
+  .astryx-toolbar:not([data-center]) > .astryx-toolbar__end:only-child { margin-inline-start: auto; }
+  .astryx-toolbar[data-center] > :is(.astryx-toolbar__start, .astryx-toolbar__end) { flex: 1 1 0; min-width: fit-content; flex-wrap: wrap; }
+
   .astryx-dropdown-menu-radio-group { display: flex; flex-direction: column; gap: var(--spacing-0-5); }
 
   .astryx-chat-tokenized-text { display: inline; }
