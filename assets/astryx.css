@@ -1132,6 +1132,7 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 
 @layer astryx-base {
   .astryx-divider { box-sizing: border-box; align-items: center; }
+  .astryx-dropdown-menu-divider { margin-block: var(--spacing-1); }
   .astryx-divider[data-orientation="horizontal"] { display: flex; width: 100%; }
   .astryx-divider[data-orientation="vertical"] { display: inline-flex; flex-direction: column; height: 100%; }
   .astryx-divider__line { flex-grow: 1; flex-shrink: 1; }

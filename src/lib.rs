@@ -16,6 +16,7 @@ mod clickable_card;
 mod code;
 mod compatibility;
 mod divider;
+mod dropdown_menu;
 mod empty_state;
 mod field_status;
 mod grid;
@@ -75,6 +76,12 @@ pub use clickable_card::{ClickableCard, ClickableCardError};
 pub use code::{Code, CodeColor, CodeProps, CodeSize};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
+};
+pub use dropdown_menu::{
+    DropdownMenuDivider, DropdownMenuDivider as BreadcrumbMenuDivider,
+    DropdownMenuDivider as ContextMenuDivider, DropdownMenuDividerProps,
+    DropdownMenuDividerProps as BreadcrumbMenuDividerProps,
+    DropdownMenuDividerProps as ContextMenuDividerProps,
 };
 pub use empty_state::{EmptyState, EmptyStateProps};
 pub use field_status::{
