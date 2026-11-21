@@ -2,12 +2,17 @@ use dioxus::prelude::*;
 
 use crate::{Button, ButtonElevation, ButtonSize, ButtonVariant};
 
-/// Controlled, standalone toggle with a persistent pressed state.
+use super::toggle_button_group::ToggleButtonGroupContext;
+
+/// Controlled toggle with a persistent pressed state.
 #[component]
 pub fn ToggleButton(
     /// Visible label, or accessible name if the button is icon-only.
     label: String,
-    /// Current caller-owned pressed state.
+    /// Selection identifier in the nearest ToggleButtonGroup.
+    #[props(default)]
+    value: Option<String>,
+    /// Current caller-owned pressed state outside group selection.
     #[props(default)]
     is_pressed: bool,
     /// Receives the requested state and original click event.
@@ -56,6 +61,11 @@ pub fn ToggleButton(
     #[props(extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 ) -> Element {
+    let group = try_consume_context::<ToggleButtonGroupContext>().and_then(|context| (context.0)());
+    let member = group.as_ref().zip(value.as_deref());
+    let is_pressed = member.map_or(is_pressed, |(group, value)| group.selection.contains(value));
+    let size = size.or_else(|| group.as_ref().and_then(|group| group.size));
+    let is_disabled = is_disabled || group.as_ref().is_some_and(|group| group.is_disabled);
     let icon = if is_pressed {
         pressed_icon.or(icon)
     } else {
@@ -84,6 +94,11 @@ pub fn ToggleButton(
             onclick: move |event: MouseEvent| {
                 let was_allowed = event.default_action_enabled();
                 if let Some(handler) = onclick { handler.call(event.clone()); }
+                if let Some((group, value)) = group.as_ref().zip(value.as_deref()) {
+                    group.selection.toggle(value);
+                    event.prevent_default();
+                    return;
+                }
                 if (!was_allowed || event.default_action_enabled()) && let Some(handler) = on_pressed_change {
                     handler.call((!is_pressed, event));
                 }
