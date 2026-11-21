@@ -2,10 +2,15 @@
 // See THIRD_PARTY_NOTICES.md.
 
 mod media_theme;
+mod syntax;
 /// Shared typography contracts owned by the upstream theme module.
 pub mod types;
 
 pub use media_theme::{MediaTheme, MediaThemeFallback, MediaThemeMode, MediaThemeProps};
+pub use syntax::{
+    InvalidSyntaxColor, SyntaxColor, SyntaxTheme, SyntaxThemeDefinition, SyntaxThemePreset,
+    SyntaxThemeProps, SyntaxTokenValue,
+};
 
 pub use types::{
     InvalidTextName, TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap,
