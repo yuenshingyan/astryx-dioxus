@@ -15,6 +15,7 @@ mod center;
 mod citation;
 mod clickable_card;
 mod code;
+mod command_palette;
 mod compatibility;
 mod divider;
 mod dropdown_menu;
@@ -82,6 +83,7 @@ pub use center::{Center, CenterAxis, CenterProps};
 pub use citation::{Citation, CitationProps, CitationSource, CitationVariant};
 pub use clickable_card::{ClickableCard, ClickableCardError};
 pub use code::{Code, CodeColor, CodeProps, CodeSize};
+pub use command_palette::{CommandPaletteEmpty, CommandPaletteEmptyProps};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };
