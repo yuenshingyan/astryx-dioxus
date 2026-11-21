@@ -4,6 +4,7 @@
 
 mod aspect_ratio;
 mod avatar;
+mod avatar_group;
 mod badge;
 mod blockquote;
 mod breadcrumbs;
@@ -56,6 +57,7 @@ pub use avatar::{
     Avatar, AvatarPixelSize, AvatarProps, AvatarShape, AvatarSize, AvatarStatusDot,
     AvatarStatusDotProps, AvatarStatusDotVariant, AvatarTooltip, InvalidAvatarStatusDotVariant,
 };
+pub use avatar_group::{AvatarGroupOverflow, AvatarGroupOverflowProps};
 pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
 pub use blockquote::{Blockquote, BlockquoteCite};
 pub use breadcrumbs::{

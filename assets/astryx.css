@@ -2554,6 +2554,47 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-avatar[data-shape="circle"] > .astryx-avatar__status:dir(rtl) { transform: translate(-50%, 50%); }
 }
 
+@layer astryx {
+  .astryx-avatar-group-overflow {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    height: calc(var(--_avatar-overflow-size) + 4px);
+    min-width: calc(var(--_avatar-overflow-size) + 4px);
+    margin-inline-start: var(--_avatar-group-overlap);
+    padding: 0 var(--spacing-2);
+    border: 2px solid var(--color-background-surface);
+    border-radius: var(--radius-full);
+    background-color: var(--color-background-surface);
+    background-image: linear-gradient(var(--_avatar-overflow-overlay, transparent), var(--_avatar-overflow-overlay, transparent)),
+      linear-gradient(var(--color-neutral), var(--color-neutral));
+    color: var(--color-text-secondary);
+    font-family: var(--font-family-body);
+    font-weight: var(--font-weight-medium);
+    font-size: max(var(--text-supporting-size), calc(var(--_avatar-overflow-size) * .35));
+    user-select: none;
+  }
+  .astryx-avatar-group-overflow[data-shape="rounded"] { border-radius: var(--radius-element); }
+  .astryx-avatar-group-overflow[data-shape="square"] { border-radius: var(--radius-none); }
+  button.astryx-avatar-group-overflow:not(:disabled,[aria-disabled="true"]) { cursor: pointer; }
+  button.astryx-avatar-group-overflow:focus-visible {
+    outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+    outline-offset: var(--focus-outline-offset);
+  }
+  @media (hover: hover) {
+    button.astryx-avatar-group-overflow:not(:disabled,[aria-disabled="true"]):hover { --_avatar-overflow-overlay: var(--color-overlay-hover); }
+  }
+  @media (pointer: fine) {
+    button.astryx-avatar-group-overflow:not(:disabled,[aria-disabled="true"]):active { --_avatar-overflow-overlay: var(--color-overlay-pressed); }
+  }
+  button.astryx-avatar-group-overflow:not(:disabled,[aria-disabled="true"])[data-astryx-press] {
+    --_avatar-overflow-overlay: color-mix(in srgb, var(--color-overlay-pressed) calc(var(--_astryx-press-strength, 0) * 100%), transparent);
+  }
+}
+
 /* Private Toast demo: pinned Toast/ToastViewport layout, not a public port. */
 @layer astryx-components {
   .astryx-demo-toast-viewport {
