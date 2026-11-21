@@ -27,10 +27,17 @@ pub(super) fn InputGroupTextExamples() -> Element {
                 InputGroupText { ".com" }
             }
             h3 { "RTL group" }
-            div { id: "input-group-text-rtl", dir: "rtl", role: "group", "aria-label": "Website, RTL", style: ROW,
-                InputGroupText { "https://" }
-                input { "aria-label": "URL", placeholder: "example", style: INPUT }
-                InputGroupText { span { dir: "ltr", ".com" } }
+            div { dir: "rtl",
+                div { id: "input-group-text-rtl-url", dir: "ltr", role: "group", "aria-label": "Website in RTL layout", style: ROW,
+                    InputGroupText { "https://" }
+                    input { "aria-label": "URL", placeholder: "example", style: INPUT }
+                    InputGroupText { ".com" }
+                }
+                div { id: "input-group-text-rtl", role: "group", "aria-label": "السعر", style: ROW,
+                    InputGroupText { "السعر" }
+                    input { "aria-label": "المبلغ", placeholder: "0.00", style: INPUT }
+                    InputGroupText { "USD" }
+                }
             }
         }
     }
