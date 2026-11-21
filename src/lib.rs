@@ -2,6 +2,7 @@
 //!
 //! Include [`STYLES`] once using `document::Style` in your application root.
 
+mod app_shell;
 mod aspect_ratio;
 mod avatar;
 mod avatar_group;
@@ -38,6 +39,7 @@ mod layer;
 mod layout;
 mod link;
 mod metadata_list;
+mod mobile_nav;
 mod nav_icon;
 mod private_attributes;
 mod progress_bar;
@@ -62,6 +64,10 @@ mod utils;
 mod v_stack;
 mod visually_hidden;
 
+pub use app_shell::{
+    AppShellMobileContext, AppShellMobileProvider, AppShellMobileProviderProps,
+    AppShellMobileState, use_app_shell_mobile,
+};
 pub use aspect_ratio::{AspectRatio, AspectRatioFit, AspectRatioShape};
 pub use avatar::{
     Avatar, AvatarPixelSize, AvatarProps, AvatarShape, AvatarSize, AvatarStatusDot,
@@ -143,6 +149,7 @@ pub use metadata_list::{
     MetadataList, MetadataListColumns, MetadataListItem, MetadataListItemProps,
     MetadataListLabelConfig, MetadataListLabelPosition, MetadataListOrientation, MetadataListProps,
 };
+pub use mobile_nav::{MobileNavToggle, MobileNavToggleProps};
 pub use nav_icon::{NavIcon, NavIconProps};
 pub use progress_bar::{
     InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,

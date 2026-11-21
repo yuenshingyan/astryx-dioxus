@@ -98,6 +98,8 @@ mod media_theme;
 mod metadata_list;
 #[path = "showcase/metadata_list_item.rs"]
 mod metadata_list_item;
+#[path = "showcase/mobile_nav_toggle.rs"]
+mod mobile_nav_toggle;
 #[path = "showcase/nav_icon.rs"]
 mod nav_icon;
 #[path = "showcase/progress_bar.rs"]
@@ -195,6 +197,7 @@ use link::LinkExamples;
 use media_theme::MediaThemeExamples;
 use metadata_list::MetadataListExamples;
 use metadata_list_item::MetadataListItemExamples;
+use mobile_nav_toggle::MobileNavToggleExamples;
 use nav_icon::NavIconExamples;
 use progress_bar::ProgressBarExamples;
 use radio_indicator::RadioIndicatorExamples;
@@ -388,6 +391,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#side-nav-heading-examples", "SideNavHeading examples" }
                 " · "
+                a { href: "#mobile-nav-toggle-examples", "MobileNavToggle examples" }
+                " · "
                 a { href: "#side-nav-section-examples", "SideNavSection examples" }
                 " · "
                 a { href: "#side-nav-collapse-button-examples", "SideNavCollapseButton examples" }
@@ -563,6 +568,7 @@ fn App() -> Element {
             CheckboxIndicatorExamples {}
             SectionExamples {}
             SideNavHeadingExamples {}
+            MobileNavToggleExamples {}
             SideNavSectionExamples {}
             SideNavCollapseButtonExamples {}
             TopNavHeadingExamples {}
