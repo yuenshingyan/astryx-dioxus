@@ -80,6 +80,8 @@ mod media_theme;
 mod metadata_list;
 #[path = "showcase/metadata_list_item.rs"]
 mod metadata_list_item;
+#[path = "showcase/nav_icon.rs"]
+mod nav_icon;
 #[path = "showcase/progress_bar.rs"]
 mod progress_bar;
 #[path = "showcase/radio_indicator.rs"]
@@ -154,6 +156,7 @@ use link::LinkExamples;
 use media_theme::MediaThemeExamples;
 use metadata_list::MetadataListExamples;
 use metadata_list_item::MetadataListItemExamples;
+use nav_icon::NavIconExamples;
 use progress_bar::ProgressBarExamples;
 use radio_indicator::RadioIndicatorExamples;
 use scrollable_area::ScrollableAreaExamples;
@@ -320,6 +323,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#top-nav-heading-examples", "TopNavHeading examples" }
                 " · "
+                a { href: "#nav-icon-examples", "NavIcon examples" }
+                " · "
                 a { href: "#scrollable-area-examples", "ScrollableArea examples" }
             }
             DocumentedButtonPatterns {}
@@ -473,6 +478,7 @@ fn App() -> Element {
             SectionExamples {}
             SideNavHeadingExamples {}
             TopNavHeadingExamples {}
+            NavIconExamples {}
             ScrollableAreaExamples {}
         }
     }

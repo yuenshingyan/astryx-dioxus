@@ -2385,6 +2385,20 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-nav-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--size-element-md);
+    height: var(--size-element-md);
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+}
+
+@layer astryx-base {
   .astryx-side-nav-heading {
     box-sizing: border-box;
     display: flex;
