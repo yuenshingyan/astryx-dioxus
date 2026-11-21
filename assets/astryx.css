@@ -2846,6 +2846,38 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-chat-layout {
+    position: relative; display: flex; flex-direction: column; flex: 1; min-height: 0;
+    container-type: inline-size; overflow: hidden auto;
+    --_chat-dock-inline: var(--spacing-3); --_chat-dock-end: var(--spacing-3);
+    --_chat-dock-cap: 100%; --_chat-blur-height: 100px; --_chat-blur-fade: 36px;
+  }
+  .astryx-chat-layout[data-density="compact"] {
+    --_chat-dock-inline: var(--spacing-2); --_chat-dock-end: var(--spacing-2);
+    --_chat-blur-height: 80px; --_chat-blur-fade: 24px;
+  }
+  .astryx-chat-layout[data-density="spacious"] {
+    --_chat-dock-inline: var(--spacing-4); --_chat-dock-cap: 800px;
+    --_chat-blur-height: 120px; --_chat-blur-fade: 48px;
+  }
+  .astryx-chat-layout__messages {
+    box-sizing: border-box; display: flex; flex-direction: column; flex: 1 0 auto;
+    margin-inline: auto; width: 100%; max-width: var(--_chat-dock-cap); padding-block-end: var(--spacing-6);
+  }
+  .astryx-chat-layout[data-density="spacious"] > .astryx-chat-layout__messages { padding-inline: var(--spacing-4); }
+  .astryx-chat-layout__empty { display: flex; align-items: center; justify-content: center; flex: 1; min-height: 200px; }
+  .astryx-chat-layout__dock { position: sticky; inset-block-end: 0; z-index: 0; isolation: isolate; pointer-events: none; flex-shrink: 0; }
+  .astryx-chat-layout__blur {
+    position: absolute; inset-block-end: 0; inset-inline: 0; pointer-events: none;
+    backdrop-filter: blur(12px); height: var(--_chat-blur-height);
+    mask-image: linear-gradient(to bottom, transparent, black var(--_chat-blur-fade));
+  }
+  .astryx-chat-layout__composer {
+    position: relative; z-index: 1; pointer-events: auto;
+    padding-inline: var(--_chat-dock-inline); padding-block-end: var(--_chat-dock-end);
+  }
+  .astryx-chat-layout__composer-inner { margin-inline: auto; width: 100%; max-width: var(--_chat-dock-cap); }
+
   .astryx-chat-layout-scroll-button__wrapper { display: flex; justify-content: center; padding-block-end: var(--spacing-3); }
   .astryx-chat-layout-scroll-button {
     contain: layout style;
