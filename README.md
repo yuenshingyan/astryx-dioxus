@@ -183,7 +183,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/field/`: [Field](docs/field-port.md) and [FieldLabel](docs/field-label-port.md), with native label and group-label forms and attached or detached status. Plain-text label help uses InfoTip; tooltip-only status remains pending.
 - `src/collapsible/`: [Collapsible](docs/collapsible-port.md), and [CollapsibleGroup](docs/collapsible-group-port.md), with disclosure focus return and single or multiple selection. Layout animation remains open.
 - `src/text_area/`: [TextArea](docs/text-area-port.md), a controlled native multiline field. Grapheme counting and async state remain open.
-- `src/text_input/`: [TextInput](docs/text-input-port.md), a controlled native single-line field. InputGroup integration and the clear action remain open.
+- `src/text_input/`: [TextInput](docs/text-input-port.md), a controlled native single-line field. Includes an opt-in [clear action](docs/input-clear-button-port.md). InputGroup integration remains open.
 - `src/checkbox_input/`: [CheckboxInput](docs/checkbox-input-port.md), a controlled native checkbox with mixed state, a decorative indicator, and detached validation status.
 - `src/checkbox_list/`: [CheckboxList](docs/checkbox-list-port.md) and [CheckboxListItem](docs/checkbox-list-item-port.md), a named group and individually controlled checkbox rows. Collection mode remains open.
 - `src/radio_list/`: [RadioList](docs/radio-list-port.md), a named group for caller-owned radios or controlled [RadioListItem](docs/radio-list-item-port.md) rows. Whole-row click delegation and disabled-reason help remain pending.

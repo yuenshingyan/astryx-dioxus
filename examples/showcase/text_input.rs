@@ -7,6 +7,8 @@ use astryx_dioxus::{
 #[component]
 pub(super) fn TextInputExamples() -> Element {
     let mut name = use_signal(String::new);
+    let mut search = use_signal(String::new);
+    let mut filter = use_signal(|| "Design systems".to_owned());
     rsx! {
         section { id: "text-input-examples",
             h2 { "TextInput" }
@@ -19,10 +21,15 @@ pub(super) fn TextInputExamples() -> Element {
                 status: FieldStatusInput { status_type: InputStatusType::Error, message: Some("Enter a valid email address.".into()), message_id: None },
                 status_variant: FieldStatusPlacement::Detached,
             }
+            h3 { "Search" }
+            TextInput { id: "project-search", label: "Search field", value: search(), input_type: TextInputType::Search,
+                placeholder: "Search projects…", has_clear: true, on_change: move |value| search.set(value) }
+            TextInput { id: "project-filter", label: "Search field with value", value: filter(), input_type: TextInputType::Search,
+                placeholder: "Filter…", has_clear: true, on_change: move |value| filter.set(value) }
             h3 { "States" }
             form { id: "text-input-form",
-                TextInput { id: "disabled-text-input", label: "Disabled field", value: "Unavailable", is_disabled: true, html_name: "disabled" }
-                TextInput { label: "Read-only field", value: "Reference", is_read_only: true, html_name: "reference" }
+                TextInput { id: "disabled-text-input", label: "Disabled field", value: "Unavailable", is_disabled: true, has_clear: true, html_name: "disabled" }
+                TextInput { label: "Read-only field", value: "Reference", is_read_only: true, has_clear: true, html_name: "reference" }
             }
         }
     }
