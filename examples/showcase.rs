@@ -88,6 +88,8 @@ mod command_palette_input;
 mod command_palette_item;
 #[path = "showcase/command_palette_list.rs"]
 mod command_palette_list;
+#[path = "showcase/context_menu_item.rs"]
+mod context_menu_item;
 #[path = "showcase/dialog_header.rs"]
 mod dialog_header;
 #[path = "showcase/divider.rs"]
@@ -290,6 +292,7 @@ use command_palette_group::CommandPaletteGroupExamples;
 use command_palette_input::CommandPaletteInputExamples;
 use command_palette_item::CommandPaletteItemExamples;
 use command_palette_list::CommandPaletteListExamples;
+use context_menu_item::ContextMenuItemExamples;
 use dialog_header::DialogHeaderExamples;
 use divider::DividerExamples;
 use drawer_header::DrawerHeaderExamples;
@@ -471,6 +474,8 @@ fn App() -> Element {
                 a { href: "#dropdown-menu-checkbox-item-examples", "DropdownMenuCheckboxItem examples" }
                 " · "
                 a { href: "#dropdown-menu-item-examples", "DropdownMenuItem examples" }
+                " · "
+                a { href: "#context-menu-item-examples", "ContextMenuItem examples" }
                 " · "
                 a { href: "#field-status-examples", "FieldStatus examples" }
                 " · "
@@ -777,6 +782,7 @@ fn App() -> Element {
             DropdownMenuRadioGroupExamples {}
             DropdownMenuCheckboxItemExamples {}
             DropdownMenuItemExamples {}
+            ContextMenuItemExamples {}
             section { id: "dropdown-menu-divider-example", "data-astryx-theme": "neutral",
                 h2 { "DropdownMenuDivider" }
                 div { style: "max-width:240px",
