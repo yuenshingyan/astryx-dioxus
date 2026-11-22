@@ -128,7 +128,8 @@ pub use dropdown_menu::{
     DropdownMenuDivider as ContextMenuDivider, DropdownMenuDividerProps,
     DropdownMenuDividerProps as BreadcrumbMenuDividerProps,
     DropdownMenuDividerProps as ContextMenuDividerProps, DropdownMenuGroup, DropdownMenuGroupProps,
-    DropdownMenuRadioGroup, DropdownMenuRadioGroupProps,
+    DropdownMenuRadioGroup, DropdownMenuRadioGroupProps, DropdownMenuRadioItem,
+    DropdownMenuRadioItemProps,
 };
 pub use empty_state::{EmptyState, EmptyStateProps};
 pub use field::{
