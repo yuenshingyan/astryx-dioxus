@@ -34,6 +34,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - AvatarGroupOverflow follows `AvatarGroup/AvatarGroupOverflow.tsx`, its component spec, and three catalog templates at the same pin. See `docs/avatar-group-overflow-port.md`.
 - AvatarStatusDot follows `Avatar/AvatarStatusDot.tsx` and `Avatar/AvatarSizeContext.ts` at the same pin. See `docs/avatar-status-dot-port.md`.
 - RadioListItem follows `RadioList/RadioListItem.tsx` and its spec at the same pin. See `docs/radio-list-item-port.md`.
+- Collapsible follows `Collapsible/Collapsible.tsx`, its spec, and the Without Card arrangement at the same pin. See `docs/collapsible-port.md`.
 - The LinkProvider showcase adapts `LinkProvider/LinkProviderCustomLink.tsx` at the same pin. See `docs/link-provider-port.md`.
 - TextArea follows `TextArea/TextArea.tsx`, its spec, and three adapted catalog arrangements at the same pin. See `docs/text-area-port.md`.
 - RadioList follows the group layout and field composition in `RadioList/RadioList.tsx`, its spec, and two adapted catalog arrangements at the same pin. See `docs/radio-list-port.md`.

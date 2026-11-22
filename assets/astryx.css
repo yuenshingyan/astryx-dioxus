@@ -2375,6 +2375,26 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-field__control-status:has(> [data-size="sm"]) { --_field-status-overlap: calc(var(--size-element-sm) / 2); }
   .astryx-field__control-status:has(> [data-size="lg"]) { --_field-status-overlap: calc(var(--size-element-lg) / 2); }
   .astryx-field__control-status > .astryx-field-status[data-variant="attached"] { position: relative; z-index: -1; }
+  .astryx-collapsible { width: 100%; }
+  .astryx-collapsible-trigger {
+    display: flex; align-items: center; box-sizing: border-box; width: 100%;
+    border: 0; padding: 0; background: transparent; color: var(--color-text-primary);
+    font-family: var(--font-family-body); font-size: var(--text-large-size);
+    font-weight: var(--font-weight-semibold); text-align: start; cursor: pointer;
+  }
+  .astryx-collapsible-trigger:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+  .astryx-collapsible-trigger[aria-disabled="true"] { opacity: .5; cursor: default; }
+  .astryx-collapsible-trigger__label { flex-grow: 1; text-box: trim-both cap alphabetic; }
+  .astryx-collapsible-chevron { display: inline-grid; place-items: center; flex: none; inline-size: 1em; block-size: 1em; transition: rotate var(--duration-fast) var(--ease-standard); }
+  .astryx-collapsible-trigger[data-chevron-position="end"][aria-expanded="true"] > .astryx-collapsible-chevron { rotate: 180deg; }
+  .astryx-collapsible-trigger[data-chevron-position="start"] > .astryx-collapsible-chevron { margin-inline-end: var(--spacing-2); }
+  .astryx-collapsible-trigger[data-chevron-position="start"]:dir(rtl) > .astryx-collapsible-chevron svg { scale: -1 1; }
+  .astryx-collapsible-trigger[data-chevron-position="start"][aria-expanded="true"] > .astryx-collapsible-chevron { rotate: 90deg; }
+  .astryx-collapsible-trigger[data-chevron-position="start"][aria-expanded="true"]:dir(rtl) > .astryx-collapsible-chevron { rotate: -90deg; }
+  .astryx-collapsible-content { padding-block-start: var(--spacing-1); color: var(--color-text-primary); font-family: var(--font-family-body); font-size: var(--text-body-size); font-weight: var(--text-body-weight); line-height: var(--text-body-leading); }
+  .astryx-collapsible-content[hidden] { display: none; }
+  @media (prefers-reduced-motion: reduce) { .astryx-collapsible-chevron { transition: none; } }
+
   .astryx-text-area {
     position: relative; --_textarea-inline-padding: var(--spacing-2); --_textarea-border: var(--color-border-emphasized);
     border: var(--border-width) solid var(--_textarea-border); border-radius: var(--radius-element);
