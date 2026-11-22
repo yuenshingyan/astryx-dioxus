@@ -1,5 +1,6 @@
 mod chat_composer_drawer;
 mod chat_composer_token;
+mod chat_composer_token_element;
 mod chat_dictation_button;
 mod chat_layout;
 mod chat_layout_scroll_button;
@@ -16,6 +17,7 @@ mod chat_tool_calls;
 mod use_chat_stream_scroll;
 
 pub use chat_composer_token::ChatComposerToken;
+pub use chat_composer_token_element::{ChatComposerTokenElement, ChatComposerTokenElementProps};
 pub use chat_tokenized_text::{ChatTokenizedText, ChatTokenizedTextProps};
 pub use chat_tool_calls::{
     ChatToolCallItem, ChatToolCallStatus, ChatToolCalls, ChatToolCallsProps,
