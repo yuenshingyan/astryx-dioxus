@@ -2887,6 +2887,24 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-list__header { margin-block-end: var(--spacing-2); }
   .astryx-list { margin: 0; padding-inline-start: 0; list-style: none; display: flex; flex-direction: column; gap: var(--spacing-0-5); overflow-inline: clip; }
   .astryx-list[data-dividers] { gap: 0; }
+  .astryx-list-item.astryx-list-item--flush { --_item-inset-inline: 0px; }
+  .astryx-list-item--outset {
+    margin-inline-start: max(var(--container-padding-inline-start, 0px) - var(--_item-inset-inline), 0px);
+    margin-inline-end: max(var(--container-padding-inline-end, 0px) - var(--_item-inset-inline), 0px);
+  }
+  .astryx-list-item--bleed {
+    padding-inline-start: max(var(--container-padding-inline-start, 0px), var(--_item-inset-inline));
+    padding-inline-end: max(var(--container-padding-inline-end, 0px), var(--_item-inset-inline));
+  }
+  .astryx-list-item:is(.astryx-list-item--divided, .astryx-list-item--bleed) { border-radius: 0; }
+  .astryx-list-item--divided:not(:last-child) { border-block-end: var(--border-width) solid var(--color-border); }
+  .astryx-list[data-list-style="decimal"] > .astryx-list-item { grid-column: 1 / -1; }
+  .astryx-list-item:has(> .astryx-list-item__marker) { counter-increment: astryx-list; }
+  .astryx-list-item__marker { display: flex; align-items: center; justify-content: center; flex: none; inline-size: var(--spacing-4); color: var(--color-text-primary); }
+  .astryx-list-item__marker:is([data-kind="disc"], [data-kind="circle"])::before { content: ""; box-sizing: border-box; inline-size: 6px; block-size: 6px; border-radius: 50%; border: 1px solid currentColor; }
+  .astryx-list-item__marker[data-kind="disc"]::before { background: currentColor; }
+  .astryx-list-item__marker[data-kind="decimal"] { inline-size: auto; min-inline-size: var(--spacing-4); justify-content: flex-end; font-variant-numeric: tabular-nums; }
+  .astryx-list-item__marker[data-kind="decimal"]::before { content: counter(astryx-list) "."; }
   .astryx-list:is([data-edge="outset"], [data-edge="bleed"]) {
     margin-inline-start: calc(-1 * var(--container-padding-inline-start, 0px));
     margin-inline-end: calc(-1 * var(--container-padding-inline-end, 0px));

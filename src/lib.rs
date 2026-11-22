@@ -174,7 +174,7 @@ pub use link::{
     LinkifyError, LinkifyMatch, LinkifyNode, LinkifyPattern, UseLinkifyOptions, linkify,
     use_link_component, use_linkify,
 };
-pub use list::{List, ListDensity, ListEdge, ListMarkerStyle, ListProps};
+pub use list::{List, ListDensity, ListEdge, ListItem, ListItemProps, ListMarkerStyle, ListProps};
 pub use metadata_list::{
     MetadataList, MetadataListColumns, MetadataListItem, MetadataListItemProps,
     MetadataListLabelConfig, MetadataListLabelPosition, MetadataListOrientation, MetadataListProps,
