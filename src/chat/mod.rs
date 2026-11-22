@@ -11,10 +11,14 @@ mod chat_send_button;
 mod chat_system_message;
 
 mod chat_tokenized_text;
+mod chat_tool_calls;
 mod use_chat_stream_scroll;
 
 pub use chat_composer_token::ChatComposerToken;
 pub use chat_tokenized_text::{ChatTokenizedText, ChatTokenizedTextProps};
+pub use chat_tool_calls::{
+    ChatToolCallItem, ChatToolCallStatus, ChatToolCalls, ChatToolCallsProps,
+};
 
 pub use chat_dictation_button::{
     ChatDictationButton, ChatDictationButtonProps, ChatDictationButtonSize, ChatDictationState,
