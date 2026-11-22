@@ -36,6 +36,8 @@ mod button_patterns;
 mod card;
 #[path = "showcase/center.rs"]
 mod center;
+#[path = "showcase/chat_composer_drawer.rs"]
+mod chat_composer_drawer;
 #[path = "showcase/chat_dictation_button.rs"]
 mod chat_dictation_button;
 #[path = "showcase/chat_layout.rs"]
@@ -256,6 +258,7 @@ use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
 use card::CardExamples;
 use center::CenterExamples;
+use chat_composer_drawer::ChatComposerDrawerExamples;
 use chat_dictation_button::ChatDictationButtonExamples;
 use chat_layout::ChatLayoutExamples;
 use chat_layout_scroll_button::ChatLayoutScrollButtonExamples;
@@ -550,6 +553,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#chat-dictation-button-examples", "ChatDictationButton examples" }
                 " · "
+                a { href: "#chat-composer-drawer-examples", "ChatComposerDrawer examples" }
+                " · "
                 a { href: "#chat-tokenized-text-examples", "ChatTokenizedText examples" }
                 " · "
                 a { href: "#chat-tool-calls-examples", "ChatToolCalls examples" }
@@ -804,6 +809,7 @@ fn App() -> Element {
             ChatLayoutScrollButtonExamples {}
             ChatLayoutExamples {}
             ChatDictationButtonExamples {}
+            ChatComposerDrawerExamples {}
             ChatTokenizedTextExamples {}
             ChatToolCallsExamples {}
             ClickableCardExamples {}
