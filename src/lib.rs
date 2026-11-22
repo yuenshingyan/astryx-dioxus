@@ -68,6 +68,7 @@ mod status_dot;
 mod table;
 mod text;
 mod text_area;
+mod text_input;
 mod theme;
 mod thumbnail;
 mod timer;
@@ -235,6 +236,7 @@ pub use table::{
 };
 pub use text::{Text, TextTag, Truncation, use_truncation};
 pub use text_area::{TextArea, TextAreaProps};
+pub use text_input::{TextInput, TextInputProps, TextInputType};
 pub use theme::{
     InvalidSyntaxColor, MediaTheme, MediaThemeFallback, MediaThemeMode, MediaThemeProps,
     SyntaxColor, SyntaxTheme, SyntaxThemeDefinition, SyntaxThemePreset, SyntaxThemeProps,
