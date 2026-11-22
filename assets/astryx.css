@@ -2430,6 +2430,8 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     .astryx-banner:is([data-status="info"], [data-status="success"], [data-status="warning"], [data-status="error"]) { outline: 1px solid CanvasText; outline-offset: -1px; }
   }
 
+  .astryx-tab-list { display: flex; align-items: center; gap: var(--spacing-0-5); overflow-x: auto; padding: var(--spacing-1); }
+  .astryx-tab-list[data-divider] { border-block-end: var(--border-width) solid var(--color-border); --_tab-indicator-bottom: calc(-1 * var(--spacing-1) - 1px); }
   .astryx-tab { position: relative; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; gap: var(--spacing-1); min-block-size: var(--size-element-md); padding: 0 var(--spacing-3); border: 0; border-radius: var(--radius-element); background: transparent; color: var(--color-text-secondary); font: inherit; font-size: var(--text-label-size); line-height: var(--text-label-leading); text-decoration: none; white-space: nowrap; cursor: pointer; }
   .astryx-tab[data-size="sm"] { min-block-size: var(--size-element-sm); }
   .astryx-tab[data-size="lg"] { min-block-size: var(--size-element-lg); }
