@@ -128,8 +128,8 @@ pub use collapsible::{
 };
 pub use command_palette::{
     CommandPaletteEmpty, CommandPaletteEmptyProps, CommandPaletteFooter, CommandPaletteFooterProps,
-    CommandPaletteGroup, CommandPaletteGroupProps, CommandPaletteItem, CommandPaletteItemProps,
-    CommandPaletteList, CommandPaletteListProps,
+    CommandPaletteGroup, CommandPaletteGroupProps, CommandPaletteInput, CommandPaletteInputProps,
+    CommandPaletteItem, CommandPaletteItemProps, CommandPaletteList, CommandPaletteListProps,
 };
 pub use dialog::{DialogHeader, DialogHeaderEdgeCompensation, DialogHeaderProps};
 pub use divider::{
