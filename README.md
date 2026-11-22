@@ -181,7 +181,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/thumbnail/`: [Thumbnail](docs/thumbnail-port.md), with attachment preview states and separate Open and Remove actions.
 - `src/form_layout/`: [FormLayout](docs/form-layout-port.md), with responsive field arrangement and layer-scoped defaults. FieldLabel consumes the optionality default; input integration remains pending.
 - `src/field/`: [Field](docs/field-port.md) and [FieldLabel](docs/field-label-port.md), with native label and group-label forms and attached or detached status. Plain-text label help uses InfoTip; tooltip-only status remains pending.
-- `src/collapsible/`: [Collapsible](docs/collapsible-port.md), with standalone disclosure and focus return. Group ownership and layout animation remain open.
+- `src/collapsible/`: [Collapsible](docs/collapsible-port.md), and [CollapsibleGroup](docs/collapsible-group-port.md), with disclosure focus return and single or multiple selection. Layout animation remains open.
 - `src/text_area/`: [TextArea](docs/text-area-port.md), a controlled native multiline field. Grapheme counting and async state remain open.
 - `src/checkbox_input/`: [CheckboxInput](docs/checkbox-input-port.md), a controlled native checkbox with mixed state, a decorative indicator, and detached validation status.
 - `src/checkbox_list/`: [CheckboxList](docs/checkbox-list-port.md) and [CheckboxListItem](docs/checkbox-list-item-port.md), a named group and individually controlled checkbox rows. Collection mode remains open.

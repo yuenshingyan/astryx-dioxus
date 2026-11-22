@@ -1,6 +1,8 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::{Collapsible, CollapsibleChevronPosition, Divider};
+use astryx_dioxus::{
+    Collapsible, CollapsibleChevronPosition, CollapsibleGroup, CollapsibleGroupValue, Divider,
+};
 
 #[component]
 pub(super) fn CollapsibleExamples() -> Element {
@@ -21,6 +23,21 @@ pub(super) fn CollapsibleExamples() -> Element {
                 Divider {}
                 Collapsible { id: "rollback-disclosure", trigger: rsx! { "Rollback" }, is_disabled: true,
                     p { "Previous build 4,181 expires in 19h." }
+                }
+            }
+            h3 { "Single accordion" }
+            CollapsibleGroup { id: "single-accordion", has_dividers: true,
+                default_value: CollapsibleGroupValue::Single(Some("general".into())),
+                Collapsible { id: "accordion-general", value: "general", trigger: rsx! { "General" }, p { "Manage general settings." } }
+                Collapsible { id: "accordion-privacy", value: "privacy", trigger: rsx! { "Privacy" }, p { "Manage profile visibility." } }
+                Collapsible { value: "notifications", trigger: rsx! { "Notifications" }, p { "Choose notification preferences." } }
+            }
+            h3 { "Multiple accordion" }
+            div { id: "multiple-accordion",
+                CollapsibleGroup { default_value: CollapsibleGroupValue::Multiple(vec!["features".into()]),
+                    Collapsible { value: "features", trigger: rsx! { "Features" }, p { "Explore included features." } }
+                    Collapsible { value: "pricing", trigger: rsx! { "Pricing" }, p { "Compare plans." } }
+                    Collapsible { value: "integrations", trigger: rsx! { "Integrations" }, p { "Connect other tools." } }
                 }
             }
             h3 { "Controlled leading chevron" }
