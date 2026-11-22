@@ -39,6 +39,7 @@ mod indicator;
 mod info_tip;
 mod input_group;
 mod interactive_role_context;
+mod item;
 mod kbd;
 mod layer;
 mod layout;
@@ -160,6 +161,7 @@ pub use input_group::{InputGroup, InputGroupProps, InputGroupText, InputGroupTex
 pub use interactive_role_context::{
     InteractiveRoleContext, InteractiveRoleProvider, use_interactive_role_context,
 };
+pub use item::{Item, ItemAlign, ItemDensity, ItemLabel, ItemLayout, ItemProps, ItemTag};
 pub use kbd::{Kbd, KbdError, KbdText};
 pub use layer::{LayerContentBoundary, LayerPlacement};
 pub use layout::{

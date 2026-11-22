@@ -2857,6 +2857,30 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-item {
+    --_item-inset-inline: var(--spacing-2);
+    position: relative; box-sizing: border-box; display: flex; align-items: center;
+    gap: var(--spacing-2); text-align: start; border-radius: var(--radius-element);
+    padding: var(--spacing-2) var(--_item-inset-inline);
+  }
+  .astryx-item[data-density="compact"] { padding-block: var(--spacing-1); }
+  .astryx-item[data-density="spacious"] { --_item-inset-inline: var(--spacing-3); padding-block: var(--spacing-3); }
+  .astryx-item[data-align="start"] { align-items: flex-start; }
+  .astryx-item[data-align="first-line"] { align-items: baseline; }
+  .astryx-item__content { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .astryx-item[data-layout="inline"] > .astryx-item__content { flex-direction: row; align-items: center; gap: var(--spacing-1); }
+  .astryx-item[data-layout="inline"] .astryx-item__label { flex-shrink: 0; max-width: 100%; }
+  .astryx-item__label { color: var(--_item-label-color, var(--color-text-primary)); font-size: var(--text-body-size); line-height: var(--text-body-leading); }
+  .astryx-item__description { color: var(--_item-description-color, var(--color-text-secondary)); font-size: var(--text-supporting-size); line-height: var(--text-supporting-leading); min-width: 0; }
+  .astryx-item :is(.astryx-item__label, .astryx-item__description)[data-clamp="single"] { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .astryx-item :is(.astryx-item__label, .astryx-item__description)[data-clamp="multi"] { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; }
+  :is(.astryx-item__start, .astryx-item__end) { display: flex; flex: 0 0 auto; }
+  .astryx-item__end { margin-inline-start: auto; }
+  .astryx-item[data-align="first-line"] > :is(.astryx-item__start, .astryx-item__end) { align-items: center; }
+  .astryx-item[data-align="first-line"] > :is(.astryx-item__start, .astryx-item__end)::before {
+    content: "\200B" / ""; inline-size: 0; overflow: hidden; font-size: var(--text-body-size); line-height: var(--text-body-leading);
+  }
+
   .astryx-list__wrapper { display: flex; flex-direction: column; }
   .astryx-list__header { margin-block-end: var(--spacing-2); }
   .astryx-list { margin: 0; padding-inline-start: 0; list-style: none; display: flex; flex-direction: column; gap: var(--spacing-0-5); overflow-inline: clip; }

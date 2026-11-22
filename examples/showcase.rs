@@ -108,6 +108,8 @@ mod info_tip;
 mod input_group;
 #[path = "showcase/input_group_text.rs"]
 mod input_group_text;
+#[path = "showcase/item.rs"]
+mod item;
 #[path = "showcase/kbd.rs"]
 mod kbd;
 #[path = "showcase/layout.rs"]
@@ -252,6 +254,7 @@ use icon_button::IconButtonExamples;
 use info_tip::InfoTipExamples;
 use input_group::InputGroupExamples;
 use input_group_text::InputGroupTextExamples;
+use item::ItemExamples;
 use kbd::KbdExamples;
 use layout::LayoutExamples;
 use layout_content::LayoutContentExamples;
@@ -353,6 +356,8 @@ fn App() -> Element {
                 a { href: "#link-examples", "Link examples" }
                 " · "
                 a { href: "#list-examples", "List examples" }
+                " · "
+                a { href: "#item-examples", "Item examples" }
                 " · "
                 a { href: "#layout-header-examples", "LayoutHeader examples" }
                 " · "
@@ -628,6 +633,7 @@ fn App() -> Element {
             IconButtonExamples {}
             LinkExamples {}
             ListExamples {}
+            ItemExamples {}
             MetadataListItemExamples {}
             MetadataListExamples {}
             MediaThemeExamples {}

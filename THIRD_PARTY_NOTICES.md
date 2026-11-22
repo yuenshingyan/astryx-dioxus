@@ -40,6 +40,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - Breadcrumbs follows `Breadcrumbs/Breadcrumbs.tsx`, its component spec, and the five non-menu catalog arrangements at the same pin. See `docs/breadcrumbs-port.md`.
 - BreadcrumbItem follows the non-menu forms of `Breadcrumbs/BreadcrumbItem.tsx`, its component spec, and two catalog templates at the same pin. See `docs/breadcrumb-item-port.md`.
 - Token follows `Token/{Token.tsx,TokenLink.tsx}`, its component spec, and six catalog templates at the same pin. See `docs/token-port.md`.
+- Item follows the static row path in `Item/Item.tsx` and its spec at the same pin. See `docs/item-port.md`.
 - List follows the static container path in `List/List.tsx`, its context and spec, and two adapted catalog arrangements at the same pin. See `docs/list-port.md`.
 - MetadataList follows `MetadataList/MetadataList.tsx`, its component spec, and five catalog templates at the same pin. See `docs/metadata-list-port.md`.
 - MetadataListItem follows `MetadataList/MetadataListItem.tsx`, its component spec, and two catalog templates at the same pin. See `docs/metadata-list-item-port.md`.
