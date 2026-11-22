@@ -154,6 +154,8 @@ mod mobile_nav_toggle;
 mod nav_heading_menu_item;
 #[path = "showcase/nav_icon.rs"]
 mod nav_icon;
+#[path = "showcase/outline.rs"]
+mod outline;
 #[path = "showcase/overlay.rs"]
 mod overlay;
 #[path = "showcase/progress_bar.rs"]
@@ -309,6 +311,7 @@ use metadata_list_item::MetadataListItemExamples;
 use mobile_nav_toggle::MobileNavToggleExamples;
 use nav_heading_menu_item::NavHeadingMenuItemExamples;
 use nav_icon::NavIconExamples;
+use outline::OutlineExamples;
 use overlay::OverlayExamples;
 use progress_bar::ProgressBarExamples;
 use radio_indicator::RadioIndicatorExamples;
@@ -552,6 +555,8 @@ fn App() -> Element {
                 a { href: "#stack-item-examples", "StackItem examples" }
                 " · "
                 a { href: "#grid-examples", "Grid examples" }
+                " · "
+                a { href: "#outline-examples", "Outline examples" }
                 " · "
                 a { href: "#resize-handle-examples", "ResizeHandle examples" }
                 " · "
@@ -797,6 +802,7 @@ fn App() -> Element {
             StackExamples {}
             StackItemExamples {}
             GridExamples {}
+            OutlineExamples {}
             ResizeHandleExamples {}
             GridSpanExamples {}
             HStackExamples {}
