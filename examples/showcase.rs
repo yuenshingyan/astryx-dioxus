@@ -76,6 +76,8 @@ mod command_palette_empty;
 mod command_palette_footer;
 #[path = "showcase/command_palette_group.rs"]
 mod command_palette_group;
+#[path = "showcase/command_palette_input.rs"]
+mod command_palette_input;
 #[path = "showcase/command_palette_item.rs"]
 mod command_palette_item;
 #[path = "showcase/command_palette_list.rs"]
@@ -264,6 +266,7 @@ use collapsible::CollapsibleExamples;
 use command_palette_empty::CommandPaletteEmptyExamples;
 use command_palette_footer::CommandPaletteFooterExamples;
 use command_palette_group::CommandPaletteGroupExamples;
+use command_palette_input::CommandPaletteInputExamples;
 use command_palette_item::CommandPaletteItemExamples;
 use command_palette_list::CommandPaletteListExamples;
 use dialog_header::DialogHeaderExamples;
@@ -558,6 +561,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#command-palette-group-examples", "CommandPaletteGroup examples" }
                 " · "
+                a { href: "#command-palette-input-examples", "CommandPaletteInput examples" }
+                " · "
                 a { href: "#command-palette-footer-examples", "CommandPaletteFooter examples" }
                 " · "
                 a { href: "#command-palette-list-examples", "CommandPaletteList examples" }
@@ -789,6 +794,7 @@ fn App() -> Element {
             CitationExamples {}
             CommandPaletteEmptyExamples {}
             CommandPaletteGroupExamples {}
+            CommandPaletteInputExamples {}
             CommandPaletteFooterExamples {}
             CommandPaletteListExamples {}
             CommandPaletteItemExamples {}
