@@ -1,10 +1,11 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::DropdownMenuRadioGroup;
+use astryx_dioxus::{DropdownMenuRadioGroup, DropdownMenuRadioItem};
 
 #[component]
 pub(super) fn DropdownMenuRadioGroupExamples() -> Element {
     let mut sort = use_signal(|| "newest".to_owned());
+    let mut menu_sort = use_signal(|| "newest".to_owned());
     rsx! {
         section { id: "dropdown-menu-radio-group-examples",
             h2 { "DropdownMenuRadioGroup" }
@@ -20,6 +21,15 @@ pub(super) fn DropdownMenuRadioGroupExamples() -> Element {
                         }
                         " {label}"
                     }
+                }
+            }
+            h3 { "Radio menu rows" }
+            p { "Inline pointer preview; popup and keyboard navigation are not wired." }
+            div { role: "menu", "aria-label": "Sort reports", style: "max-width:320px",
+                DropdownMenuRadioGroup { label: "Sort order", value: menu_sort(), on_change: move |value| menu_sort.set(value),
+                    DropdownMenuRadioItem { id: "sort-newest", value: "newest", label: "Newest first" }
+                    DropdownMenuRadioItem { id: "sort-oldest", value: "oldest", label: "Oldest first", description: Some("Earlier reports first".into()) }
+                    DropdownMenuRadioItem { id: "sort-name", value: "name", label: "Name", is_disabled: true }
                 }
             }
         }
