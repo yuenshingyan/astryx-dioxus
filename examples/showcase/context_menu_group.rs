@@ -1,9 +1,12 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::{ContextMenuDivider, ContextMenuGroup, ContextMenuItem};
+use astryx_dioxus::{
+    ContextMenuCheckboxItem, ContextMenuDivider, ContextMenuGroup, ContextMenuItem,
+};
 
 #[component]
 pub(super) fn ContextMenuGroupExamples() -> Element {
+    let mut show_details = use_signal(|| false);
     rsx! {
         section { id: "context-menu-group-examples",
             h2 { "ContextMenuGroup" }
@@ -16,6 +19,9 @@ pub(super) fn ContextMenuGroupExamples() -> Element {
                 ContextMenuDivider {}
                 ContextMenuGroup {
                     ContextMenuItem { label: "Copy link" }
+                    ContextMenuCheckboxItem { id: "context-menu-checkbox-details", label: "Show details",
+                        value: show_details(), on_change: move |checked| show_details.set(checked),
+                    }
                 }
             }
         }
