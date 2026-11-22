@@ -2402,6 +2402,29 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-collapsible-content[hidden] { display: none; }
   @media (prefers-reduced-motion: reduce) { .astryx-collapsible-chevron { transition: none; } }
 
+  .astryx-text-input {
+    --_text-input-height: var(--size-element-md); --_text-input-border: var(--color-border-emphasized);
+    display: flex; align-items: center; box-sizing: border-box; min-width: 0; height: var(--_text-input-height);
+    border: var(--border-width) solid var(--_text-input-border); border-radius: var(--radius-element);
+    background: var(--color-background-surface); color: var(--color-text-primary);
+  }
+  .astryx-text-input[data-size="sm"] { --_text-input-height: var(--size-element-sm); }
+  .astryx-text-input[data-size="lg"] { --_text-input-height: var(--size-element-lg); }
+  .astryx-text-input[data-status="error"] { --_text-input-border: var(--color-text-error); }
+  .astryx-text-input[data-status="warning"] { --_text-input-border: var(--color-text-warning); }
+  .astryx-text-input[data-status="success"] { --_text-input-border: var(--color-text-success); }
+  .astryx-text-input[data-disabled] { color: var(--color-text-disabled); background: var(--color-background-muted); }
+  .astryx-text-input:focus-within { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); }
+  .astryx-text-input-control {
+    flex: 1; box-sizing: border-box; min-width: 0; height: 100%; border: 0; border-radius: inherit;
+    outline: none; padding: 0 var(--spacing-2); background: transparent; color: inherit;
+    font-family: var(--font-family-body); font-size: var(--text-body-size); line-height: var(--text-body-leading);
+  }
+  .astryx-text-input-control::placeholder { color: var(--color-text-secondary); }
+  .astryx-text-input[data-disabled] > .astryx-text-input-control { cursor: default; }
+  .astryx-text-input__icon { display: flex; flex: none; margin-inline-start: var(--spacing-2); color: var(--color-icon-secondary); pointer-events: none; }
+  .astryx-text-input__icon + .astryx-text-input-control { border-start-start-radius: 0; border-end-start-radius: 0; }
+
   .astryx-text-area {
     position: relative; --_textarea-inline-padding: var(--spacing-2); --_textarea-border: var(--color-border-emphasized);
     border: var(--border-width) solid var(--_textarea-border); border-radius: var(--radius-element);

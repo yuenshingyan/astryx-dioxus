@@ -190,6 +190,8 @@ mod table_selection_toolbar;
 mod text;
 #[path = "showcase/text_area.rs"]
 mod text_area;
+#[path = "showcase/text_input.rs"]
+mod text_input;
 #[path = "showcase/thumbnail.rs"]
 mod thumbnail;
 #[path = "showcase/timer.rs"]
@@ -311,6 +313,7 @@ use table_header::TableHeaderExamples;
 use table_selection_toolbar::TableSelectionToolbarExamples;
 use text::TextExamples;
 use text_area::TextAreaExamples;
+use text_input::TextInputExamples;
 use thumbnail::ThumbnailExamples;
 use timer::TimerExamples;
 use toggle_button::ToggleButtonExamples;
@@ -432,6 +435,8 @@ fn App() -> Element {
                 a { href: "#field-examples", "Field examples" }
                 " · "
                 a { href: "#text-area-examples", "TextArea examples" }
+                " · "
+                a { href: "#text-input-examples", "TextInput examples" }
                 " · "
                 a { href: "#input-group-text-examples", "InputGroupText examples" }
                 " · "
@@ -713,6 +718,7 @@ fn App() -> Element {
             FieldLabelExamples {}
             FieldExamples {}
             TextAreaExamples {}
+            TextInputExamples {}
             InputGroupTextExamples {}
             InputGroupExamples {}
             FormLayoutExamples {}
