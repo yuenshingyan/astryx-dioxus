@@ -111,7 +111,7 @@ pub use chat::{
     ChatSystemMessageProps, ChatSystemMessageVariant, ChatTokenizedText, ChatTokenizedTextProps,
 };
 pub use checkbox_input::{CheckboxInput, CheckboxInputProps};
-pub use checkbox_list::{CheckboxList, CheckboxListProps};
+pub use checkbox_list::{CheckboxList, CheckboxListItem, CheckboxListItemProps, CheckboxListProps};
 pub use citation::{Citation, CitationProps, CitationSource, CitationVariant};
 pub use clickable_card::{ClickableCard, ClickableCardError};
 pub use code::{Code, CodeColor, CodeProps, CodeSize};

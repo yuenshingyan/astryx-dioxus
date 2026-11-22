@@ -16,6 +16,14 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key: ' ', code: 'Space', windowsVirtualKeyCode: 32});
   await waitFor(`${input}.dataset.checked === 'true'`);
   assert.ok(await evaluate(`${input} === document.activeElement && ${group}.querySelectorAll(':checked').length === 2`));
+  const states = `document.getElementById('checkbox-list-item-states')`;
+  await waitFor(`${states}.querySelector('input').indeterminate`);
+  const updated = await send('Accessibility.getFullAXTree');
+  assert.ok(updated.nodes.some(node => !node.ignored && node.role?.value === 'checkbox' && node.name?.value === 'Team access' && node.description?.value === 'Some teams have access'));
+  const guest = `${states}.querySelectorAll('input')[1]`;
+  await evaluate(`${guest}.click()`);
+  assert.ok(await evaluate(`!${guest}.checked && ${guest}.getAttribute('aria-disabled') === 'true'`));
+  assert.equal(await evaluate(`${states}.querySelectorAll('li[tabindex]').length`), 0);
   assert.deepEqual(exceptions, []);
   console.log('CheckboxList: named group, descriptions, native list, and keyboard selection passed');
 });

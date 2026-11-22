@@ -15,6 +15,12 @@ pub fn CheckboxInput(
     #[props(default)] id: Option<String>,
     #[props(default)] html_name: Option<String>,
     #[props(default)] description: Option<String>,
+    /// ID references for additional descriptions owned by the caller.
+    #[props(default)]
+    described_by: Option<String>,
+    /// ID references for a visible label owned by a composite control.
+    #[props(default)]
+    labelled_by: Option<String>,
     #[props(default)] status: Option<FieldStatusInput>,
     #[props(default)] is_disabled: bool,
     #[props(default)] is_read_only: bool,
@@ -40,11 +46,13 @@ pub fn CheckboxInput(
         ))
     });
     let described_by = [
+        described_by.as_deref(),
         description_id.as_deref(),
         status.as_ref().map(|(_, _, id)| id.as_str()),
     ]
     .into_iter()
     .flatten()
+    .flat_map(str::split_whitespace)
     .collect::<Vec<_>>()
     .join(" ");
     let mut controller = use_signal(|| None::<document::Eval>);
@@ -63,7 +71,7 @@ pub fn CheckboxInput(
                         "aria-checked": is_mixed.then_some("mixed"), "aria-disabled": is_disabled.then_some("true"),
                         "aria-readonly": is_read_only.then_some("true"),
                         "aria-invalid": (is_error || is_required).then(|| is_error.to_string()),
-                        "aria-describedby": (!described_by.is_empty()).then_some(described_by),
+                        "aria-describedby": (!described_by.is_empty()).then_some(described_by), "aria-labelledby": labelled_by,
                         onmounted: move |_| {
                             if let Some(eval) = *controller.peek() { let _ = eval.send(()); }
                             let eval = document::eval(include_str!("sync_checkbox.js"));

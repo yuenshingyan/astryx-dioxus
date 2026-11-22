@@ -1,7 +1,8 @@
 use dioxus::prelude::*;
 
 use astryx_dioxus::{
-    CheckboxIndicatorState, CheckboxInput, CheckboxList, FieldStatusInput, InputStatusType,
+    Badge, CheckboxIndicatorState, CheckboxList, CheckboxListItem, FieldStatusInput,
+    InputStatusType,
 };
 
 #[component]
@@ -10,20 +11,25 @@ pub(super) fn CheckboxListExamples() -> Element {
     rsx! {
         section { id: "checkbox-list-examples",
             h2 { "CheckboxList" }
-            p { "CheckboxInput rows manage selection in the caller." }
+            p { "CheckboxListItem rows use caller-owned selection." }
             CheckboxList { id: "notification-preferences", label: "Notification preferences",
                 description: "Choose how you would like to be notified",
                 status: FieldStatusInput { status_type: InputStatusType::Warning, message: Some("SMS availability varies by region.".into()), message_id: None },
                 for (index, (label, description)) in [
                     ("Email", "Weekly digest every Monday"), ("Push notification", "Instant alerts on your device"), ("SMS", "Standard messaging rates apply"),
                 ].into_iter().enumerate() {
-                    li { key: "{label}",
-                        CheckboxInput { label, description,
-                            value: if preferences.read()[index] { CheckboxIndicatorState::Checked } else { CheckboxIndicatorState::Unchecked },
-                            on_change: move |checked| preferences.write()[index] = checked,
-                        }
+                    CheckboxListItem { key: "{label}", label, description: Some(description.into()),
+                        is_checked: if preferences.read()[index] { CheckboxIndicatorState::Checked } else { CheckboxIndicatorState::Unchecked },
+                        on_check: move |checked| preferences.write()[index] = checked,
                     }
                 }
+            }
+            h3 { "CheckboxListItem states" }
+            CheckboxList { label: "Access options", id: "checkbox-list-item-states",
+                CheckboxListItem { label: rsx! { strong { "Team access" } }, description: Some("Some teams have access".into()),
+                    is_checked: CheckboxIndicatorState::Indeterminate, end_content: rsx! { Badge { label: "Partial" } },
+                }
+                CheckboxListItem { label: "Guest access", is_disabled: true }
             }
         }
     }
