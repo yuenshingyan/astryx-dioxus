@@ -94,6 +94,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - ToggleButton follows the standalone form of `ToggleButton/ToggleButton.tsx`, its spec, and adapted catalog examples at the same pin. See `docs/toggle-button-port.md`.
 - TopNavMegaMenuItem follows the desktop form of `TopNav/TopNavMegaMenuItem.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-mega-menu-item-port.md`.
 - TopNavMegaMenuFeaturedCard follows `TopNav/TopNavMegaMenuFeaturedCard.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-featured-card-port.md`.
+- TopNavItem follows the horizontal mode of `TopNav/TopNavItem.tsx`, its spec, and the adapted showcase at the same pin. See `docs/top-nav-item-port.md`.
 - TopNavHeading follows the non-menu forms of `TopNav/TopNavHeading.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-heading-port.md`.
 - InfoTip follows `InfoTip/InfoTip.tsx`, its spec, and three adapted catalog arrangements at the same pin. See `docs/info-tip-port.md`.
 - Tooltip's inline-text path follows `Tooltip/Tooltip.tsx`, its spec, and the inline-text catalog arrangement at the same pin. See `docs/tooltip-inline-port.md`.
