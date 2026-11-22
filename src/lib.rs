@@ -195,7 +195,9 @@ pub use progress_bar::{
     InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,
     ProgressBarVariant,
 };
-pub use radio_list::{RadioList, RadioListOrientation, RadioListProps};
+pub use radio_list::{
+    RadioList, RadioListItem, RadioListItemProps, RadioListOrientation, RadioListProps,
+};
 pub use scrollable_area::{
     ScrollAxis, ScrollOverscroll, ScrollableArea, ScrollableAreaProps, ScrollableAreaRole,
     ScrollableAreaStickyContainment,

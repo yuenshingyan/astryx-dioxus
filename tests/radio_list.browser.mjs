@@ -18,6 +18,11 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key: 'ArrowRight', code: 'ArrowRight', windowsVirtualKeyCode: 39});
   await waitFor(`${group}.querySelectorAll('input')[2].checked && document.activeElement === ${group}.querySelectorAll('input')[2]`);
   assert.equal(await evaluate(`${group}.querySelectorAll('input:checked').length`), 1);
+  await waitFor(`${group}.querySelectorAll('input')[2].dataset.radioChecked === 'true'`);
+  const updated = await send('Accessibility.getFullAXTree');
+  assert.ok(updated.nodes.some(node => !node.ignored && node.role?.value === 'radio' && node.name?.value === 'Large' && node.description?.value === 'Extra room'));
+  await evaluate(`${group}.querySelector('input:disabled').click()`);
+  assert.equal(await evaluate(`${group}.querySelector('input:checked').value`), 'Large');
   assert.deepEqual(exceptions, []);
   console.log('RadioList: group name and description, layout, and native radio navigation passed');
 });

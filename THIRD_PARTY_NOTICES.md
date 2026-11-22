@@ -33,6 +33,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - AvatarGroup follows `AvatarGroup/AvatarGroup.tsx`, its component spec, and both showcase templates at the same pin. See `docs/avatar-group-port.md`.
 - AvatarGroupOverflow follows `AvatarGroup/AvatarGroupOverflow.tsx`, its component spec, and three catalog templates at the same pin. See `docs/avatar-group-overflow-port.md`.
 - AvatarStatusDot follows `Avatar/AvatarStatusDot.tsx` and `Avatar/AvatarSizeContext.ts` at the same pin. See `docs/avatar-status-dot-port.md`.
+- RadioListItem follows `RadioList/RadioListItem.tsx` and its spec at the same pin. See `docs/radio-list-item-port.md`.
 - RadioList follows the group layout and field composition in `RadioList/RadioList.tsx`, its spec, and two adapted catalog arrangements at the same pin. See `docs/radio-list-port.md`.
 - CheckboxListItem follows the standalone path in `CheckboxList/CheckboxListItem.tsx` and its spec at the same pin. See `docs/checkbox-list-item-port.md`.
 - CheckboxList follows the caller-owned rows path in `CheckboxList/CheckboxList.tsx`, its spec, and the adapted notification-preferences arrangement at the same pin. See `docs/checkbox-list-port.md`.
