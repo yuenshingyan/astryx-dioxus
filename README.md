@@ -172,6 +172,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/command_palette/`: [CommandPaletteEmpty](docs/command-palette-empty-port.md), [CommandPaletteGroup](docs/command-palette-group-port.md), [CommandPaletteFooter](docs/command-palette-footer-port.md), [CommandPaletteList](docs/command-palette-list-port.md), and [CommandPaletteItem](docs/command-palette-item-port.md), with standalone result surfaces and keyboard guidance. Parent palette integration remains pending.
 - `src/breadcrumbs/`: [Breadcrumbs](docs/breadcrumbs-port.md) and [BreadcrumbItem](docs/breadcrumb-item-port.md), with named navigation trails and link, button, and current-page forms. Menu integration remains pending.
 - `src/token/`: [Token](docs/token-port.md), with static, clickable, and link forms and optional removal.
+- `src/list/`: [List](docs/list-port.md), with static ordered and unordered containers. ListItem, animated layout, and reordering remain pending.
 - `src/metadata_list/`: [MetadataList](docs/metadata-list-port.md) and [MetadataListItem](docs/metadata-list-item-port.md), with native description-list pairs, column layouts, and disclosure.
 - `src/empty_state/`: [EmptyState](docs/empty-state-port.md), with native headings, compact layout, and shared rendered-text announcements.
 - `src/timer/`: [Timer](docs/timer-port.md), with elapsed and clock formats and browser-driven duration updates.
