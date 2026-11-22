@@ -2402,6 +2402,30 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-collapsible-content[hidden] { display: none; }
   @media (prefers-reduced-motion: reduce) { .astryx-collapsible-chevron { transition: none; } }
 
+  .astryx-switch-field { display: grid; gap: var(--spacing-1); }
+  .astryx-switch-field__row { display: flex; align-items: center; gap: var(--spacing-2); }
+  .astryx-switch-field__row[data-spread] { justify-content: space-between; }
+  .astryx-switch-field__row[data-position="start"] > .astryx-switch-control { order: 1; }
+  .astryx-switch-field__row[data-label-hidden] { gap: 0; }
+  .astryx-switch-control { position: relative; display: inline-grid; flex: none; inline-size: 40px; block-size: 24px; --_switch-padding: 3px; --_switch-off: 16px; --_switch-on: 20px; }
+  .astryx-switch-control[data-size="sm"] { inline-size: 32px; block-size: 20px; --_switch-padding: 2px; --_switch-off: 14px; --_switch-on: 16px; }
+  .astryx-switch-control > input { position: absolute; z-index: 1; inset: 0; inline-size: 100%; block-size: 100%; margin: 0; opacity: 0; cursor: pointer; }
+  .astryx-switch-control > input[aria-disabled="true"] { cursor: default; }
+  .astryx-switch { display: block; position: relative; box-sizing: border-box; border: 1px solid transparent; border-radius: var(--radius-full); background: var(--color-background-gray); }
+  .astryx-switch-thumb { position: absolute; inset-block: 0; margin-block: auto; inset-inline-start: var(--_switch-padding); inline-size: var(--_switch-off); block-size: var(--_switch-off); border-radius: var(--radius-full); background: var(--color-background-surface); }
+  .astryx-switch-control > input:checked + .astryx-switch { background: var(--color-accent); }
+  .astryx-switch-control > input:checked + .astryx-switch > .astryx-switch-thumb { inset-inline-start: auto; inset-inline-end: 1px; inline-size: var(--_switch-on); block-size: var(--_switch-on); }
+  .astryx-switch-control > input:focus-visible + .astryx-switch { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+  .astryx-switch-control > input[aria-disabled="true"] + .astryx-switch { opacity: .5; }
+  @media (forced-colors: active) {
+    .astryx-switch { forced-color-adjust: none; background: Canvas; border-color: CanvasText; }
+    .astryx-switch-thumb { background: CanvasText; }
+    .astryx-switch-control > input:checked + .astryx-switch { background: Highlight; border-color: Highlight; }
+    .astryx-switch-control > input:checked + .astryx-switch > .astryx-switch-thumb { background: HighlightText; }
+    .astryx-switch-control > input[aria-disabled="true"] + .astryx-switch { opacity: 1; border-color: GrayText; }
+    .astryx-switch-control > input:focus-visible + .astryx-switch { outline-color: CanvasText; }
+  }
+
   .astryx-text-input {
     --_text-input-height: var(--size-element-md); --_text-input-border: var(--color-border-emphasized);
     display: flex; align-items: center; box-sizing: border-box; min-width: 0; height: var(--_text-input-height);

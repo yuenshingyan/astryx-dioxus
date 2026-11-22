@@ -65,6 +65,7 @@ mod skeleton;
 mod spinner;
 mod stack;
 mod status_dot;
+mod switch;
 mod table;
 mod text;
 mod text_area;
@@ -227,6 +228,7 @@ pub use stack::{
 pub use status_dot::{
     InvalidStatusDotVariant, StatusDot, StatusDotError, StatusDotIcon, StatusDotVariant,
 };
+pub use switch::{Switch, SwitchLabelPosition, SwitchLabelSpacing, SwitchProps};
 pub use table::{
     Table, TableBody, TableBodyProps, TableCell, TableCellProps, TableCellScope, TableDensity,
     TableDividers, TableFooter, TableFooterProps, TableHeader, TableHeaderCell,

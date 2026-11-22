@@ -178,6 +178,8 @@ mod spinner;
 mod stack;
 #[path = "showcase/status_dot.rs"]
 mod status_dot;
+#[path = "showcase/switch.rs"]
+mod switch;
 #[path = "showcase/syntax_theme.rs"]
 mod syntax_theme;
 #[path = "showcase/table.rs"]
@@ -307,6 +309,7 @@ use skeleton::SkeletonExamples;
 use spinner::SpinnerExamples;
 use stack::{StackExamples, StackItemExamples};
 use status_dot::StatusDotExamples;
+use switch::SwitchExamples;
 use syntax_theme::SyntaxThemeExamples;
 use table::TableExamples;
 use table_header::TableHeaderExamples;
@@ -558,6 +561,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#checkbox-input-examples", "CheckboxInput examples" }
                 " · "
+                a { href: "#switch-examples", "Switch examples" }
+                " · "
                 a { href: "#checkbox-list-examples", "CheckboxList examples" }
                 " · "
                 a { href: "#radio-list-examples", "RadioList examples" }
@@ -775,6 +780,7 @@ fn App() -> Element {
             RadioIndicatorExamples {}
             CheckboxIndicatorExamples {}
             CheckboxInputExamples {}
+            SwitchExamples {}
             CheckboxListExamples {}
             RadioListExamples {}
             SectionExamples {}
