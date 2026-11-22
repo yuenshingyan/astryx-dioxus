@@ -161,7 +161,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/side_nav/`: [SideNavHeading](docs/side-nav-heading-port.md) and [SideNavSection](docs/side-nav-section-port.md), with static and linked headings and named groups. [SideNavCollapseButton](docs/side-nav-collapse-button-port.md) supports caller-controlled collapse. [SideNavItem](docs/side-nav-item-port.md) supports expanded-rail leaf links and actions. Rail context and menu integration remain pending.
 - `src/outline/`: [Outline](docs/outline-port.md), a table of contents with native fragment links and a caller-controlled current location. Scroll-spy remains open.
 - `src/pagination/`: [Pagination](docs/pagination-port.md), with controlled Pages and Compact variants. Page-size selection and table integration remain open.
-- `src/tab_list/`: [Tab](docs/tab-port.md), with caller-owned selection and navigation or panel semantics. TabList integration remains open.
+- `src/tab_list/`: [Tab](docs/tab-port.md), and [TabList](docs/tab-list-port.md), with controlled selection, navigation or panel semantics, and arrow-key focus. Overflow treatments remain open.
 - `src/nav_icon/`: [NavIcon](docs/nav-icon-port.md), a circular accent mark with caller-owned artwork and semantics.
 - `src/top_nav/`: [TopNavHeading](docs/top-nav-heading-port.md), [TopNavItem](docs/top-nav-item-port.md), [TopNavMegaMenuFeaturedCard](docs/top-nav-featured-card-port.md), and [TopNavMegaMenuItem](docs/top-nav-mega-menu-item-port.md). Parent menu and drawer integration remain pending.
 - `src/input_group/`: [InputGroup](docs/input-group-port.md) and [InputGroupText](docs/input-group-text-port.md), with named rows and logical addon styling. Production input integration remains pending.

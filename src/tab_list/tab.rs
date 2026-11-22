@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 
+use super::tab_list_context::TabListContext;
 use crate::link::{LinkComponentType, render_navigation_anchor_with_click, use_link_component};
 use crate::utils::disabled_interaction::{cancel_disabled_click, cancel_disabled_key};
 use crate::utils::is_renderable::is_renderable;
@@ -37,6 +38,18 @@ pub fn Tab(
     #[props(default)] on_select: Option<EventHandler<String>>,
 ) -> Element {
     let renderer = use_link_component(render_link);
+    let context = try_consume_context::<TabListContext>().map(|context| (context.0)());
+    let is_selected = context
+        .as_ref()
+        .map_or(is_selected, |state| state.value == value);
+    let mode = match context.as_ref() {
+        Some(state) if !state.is_panel_list => TabMode::Navigation,
+        Some(_) if mode == TabMode::Navigation => TabMode::Panel {
+            panel_id: String::new(),
+        },
+        _ => mode,
+    };
+    let on_select = context.map(|state| state.on_change).or(on_select);
     let href = if mode == TabMode::Navigation {
         href
     } else {
