@@ -191,7 +191,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/layout/`: [Layout](docs/layout-port.md), [LayoutContent](docs/layout-content-port.md), LayoutHeader, LayoutFooter, [LayoutPanel](docs/layout-panel-port.md), and shared padding helpers. Panel resize integration remains pending.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
-- `src/link/`: Link, shared renderer/provider types, target/rel handling, and linkification.
+- `src/link/`: Link, [LinkProvider](docs/link-provider-port.md), shared renderer types, target/rel handling, and linkification.
 - `src/text/`, `src/theme/`: Text typography and truncation support, upstream-owned type definitions, [MediaTheme](docs/media-theme-port.md), and [SyntaxTheme](docs/syntax-theme-port.md) for scoped syntax palettes. The standalone Theme checklist remains independent.
 - `src/hooks/`, `src/tooltip/`: shared press/tooltip renderer bridges under their source owners, plus [Tooltip’s inline-text path](docs/tooltip-inline-port.md).
 - `src/info_tip/`: [InfoTip](docs/info-tip-port.md), a native button that previews and pins plain-text help.

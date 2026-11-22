@@ -130,6 +130,8 @@ mod layout_header;
 mod layout_panel;
 #[path = "showcase/link.rs"]
 mod link;
+#[path = "showcase/link_provider.rs"]
+mod link_provider;
 #[path = "showcase/list.rs"]
 mod list;
 #[path = "showcase/media_theme.rs"]
@@ -277,6 +279,7 @@ use layout_footer::LayoutFooterExamples;
 use layout_header::LayoutHeaderExamples;
 use layout_panel::LayoutPanelExamples;
 use link::LinkExamples;
+use link_provider::LinkProviderExamples;
 use list::ListExamples;
 use media_theme::MediaThemeExamples;
 use metadata_list::MetadataListExamples;
@@ -372,6 +375,8 @@ fn App() -> Element {
                 a { href: "#icon-button-examples", "IconButton examples" }
                 " · "
                 a { href: "#link-examples", "Link examples" }
+                " · "
+                a { href: "#link-provider-examples", "LinkProvider examples" }
                 " · "
                 a { href: "#list-examples", "List examples" }
                 " · "
@@ -662,6 +667,7 @@ fn App() -> Element {
             ButtonGroupExamples {}
             IconButtonExamples {}
             LinkExamples {}
+            LinkProviderExamples {}
             ListExamples {}
             ItemExamples {}
             SelectorOptionExamples {}
