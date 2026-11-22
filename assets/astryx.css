@@ -77,7 +77,10 @@
   --spacing-3: 0.75rem;
   --spacing-4: 1rem;
   --spacing-5: 1.25rem;
+  --spacing-12: 3rem;
+  --spacing-11: 2.75rem;
   --spacing-8: 2rem;
+  --spacing-7: 1.75rem;
   --spacing-6: 1.5rem;
   --spacing-10: 2.5rem;
   --size-element-sm: 28px;
@@ -2426,6 +2429,18 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   @media (forced-colors: active) {
     .astryx-banner:is([data-status="info"], [data-status="success"], [data-status="warning"], [data-status="error"]) { outline: 1px solid CanvasText; outline-offset: -1px; }
   }
+
+  .astryx-outline__list { display: grid; gap: var(--spacing-0-5); margin: 0; padding: 0; list-style: none; border-inline-start: 2px solid var(--color-border); }
+  .astryx-outline-item { position: relative; display: flex; margin-inline-start: var(--spacing-0-5); padding: var(--spacing-2) var(--spacing-2) var(--spacing-2) var(--spacing-3); padding-inline-start: var(--spacing-3); border-radius: var(--radius-element); color: var(--color-text-secondary); text-decoration: none; font-size: var(--text-body-size); line-height: var(--text-body-leading); }
+  .astryx-outline[data-density="compact"] .astryx-outline-item { padding-block: var(--spacing-1); }
+  .astryx-outline-item[data-indent="2"] { padding-inline-start: var(--spacing-7); }
+  .astryx-outline-item[data-indent="3"] { padding-inline-start: var(--spacing-11); }
+  .astryx-outline-item[data-indent="4"] { padding-inline-start: var(--spacing-12); }
+  .astryx-outline-item > span { min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .astryx-outline-item[aria-current] { color: var(--color-text-primary); font-weight: var(--font-weight-semibold); }
+  .astryx-outline-item[aria-current]::before { content: ""; position: absolute; inset-block: 0; inset-inline-start: calc(-2px - var(--spacing-0-5)); border-inline-start: 2px solid currentColor; }
+  .astryx-outline-item:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+  @media (hover: hover) { .astryx-outline-item:hover { color: var(--color-text-primary); background: var(--color-overlay-hover); } }
 
   .astryx-resize-handle { display: grid; place-items: center; position: relative; flex: none; inline-size: 12px; align-self: stretch; }
   .astryx-resize-handle[aria-orientation="horizontal"] { inline-size: auto; block-size: 12px; }

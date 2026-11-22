@@ -52,6 +52,7 @@ mod metadata_list;
 mod mobile_nav;
 mod nav_icon;
 mod nav_menu;
+mod outline;
 mod overlay;
 mod private_attributes;
 mod progress_bar;
@@ -200,6 +201,7 @@ pub use nav_icon::{NavIcon, NavIconProps};
 pub use nav_menu::{
     NavHeadingMenu, NavHeadingMenuItem, NavHeadingMenuItemProps, NavHeadingMenuProps,
 };
+pub use outline::{Outline, OutlineDensity, OutlineItem, OutlineProps};
 pub use overlay::{
     Overlay, OverlayAlign, OverlayPosition, OverlayProps, OverlayScrimMode, OverlayShowOn,
 };

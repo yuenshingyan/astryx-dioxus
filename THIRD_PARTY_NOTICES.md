@@ -65,6 +65,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - Field follows `Field/Field.tsx`, its spec, and four adapted catalog templates at the same pin. See `docs/field-port.md`.
 - FieldLabel follows `Field/FieldLabel.tsx`, the field optionality and input-container hooks, and two catalog arrangements at the same pin. See `docs/field-label-port.md`.
 - NavIcon follows `NavIcon/NavIcon.tsx`, its spec, and both catalog templates at the same pin. The showcase adapts fallback glyphs from `Icon/defaultIcons.tsx`. See `docs/nav-icon-port.md`.
+- Outline follows the fragment navigation and visual indentation in `Outline/Outline.tsx`, its spec, and the adapted showcase at the same pin. See `docs/outline-port.md`.
 - ResizeHandle adapts the keyboard and separator behavior in `Resizable/ResizeHandle.tsx` at the same pin. See `docs/resize-handle-port.md`.
 - ChatToolCalls follows `Chat/ChatToolCalls.tsx`, its spec, and the adapted showcase at the same pin. See `docs/chat-tool-calls-port.md`.
 - ChatTokenizedText follows `Chat/ChatTokenizedText.tsx`, its spec, and three catalog templates at the same pin. See `docs/chat-tokenized-text-port.md`.
