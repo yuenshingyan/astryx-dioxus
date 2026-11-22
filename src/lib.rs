@@ -43,6 +43,7 @@ mod kbd;
 mod layer;
 mod layout;
 mod link;
+mod list;
 mod metadata_list;
 mod mobile_nav;
 mod nav_icon;
@@ -170,6 +171,7 @@ pub use link::{
     LinkifyError, LinkifyMatch, LinkifyNode, LinkifyPattern, UseLinkifyOptions, linkify,
     use_link_component, use_linkify,
 };
+pub use list::{List, ListDensity, ListEdge, ListMarkerStyle, ListProps};
 pub use metadata_list::{
     MetadataList, MetadataListColumns, MetadataListItem, MetadataListItemProps,
     MetadataListLabelConfig, MetadataListLabelPosition, MetadataListOrientation, MetadataListProps,

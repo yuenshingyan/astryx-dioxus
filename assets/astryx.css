@@ -2857,6 +2857,20 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-list__wrapper { display: flex; flex-direction: column; }
+  .astryx-list__header { margin-block-end: var(--spacing-2); }
+  .astryx-list { margin: 0; padding-inline-start: 0; list-style: none; display: flex; flex-direction: column; gap: var(--spacing-0-5); overflow-inline: clip; }
+  .astryx-list[data-dividers] { gap: 0; }
+  .astryx-list:is([data-edge="outset"], [data-edge="bleed"]) {
+    margin-inline-start: calc(-1 * var(--container-padding-inline-start, 0px));
+    margin-inline-end: calc(-1 * var(--container-padding-inline-end, 0px));
+    inline-size: calc(100% + var(--container-padding-inline-start, 0px) + var(--container-padding-inline-end, 0px));
+  }
+  @supports (grid-template-columns: subgrid) {
+    .astryx-list[data-list-style="decimal"] { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: var(--spacing-2); }
+  }
+  @media (pointer: coarse) { .astryx-list { isolation: isolate; } }
+
   .astryx-info-tip {
     position: relative; display: inline-flex; align-items: center; justify-content: center;
     vertical-align: middle; padding: var(--spacing-0-5); margin: 0; border: 0;
