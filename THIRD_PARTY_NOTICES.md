@@ -33,6 +33,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - AvatarGroup follows `AvatarGroup/AvatarGroup.tsx`, its component spec, and both showcase templates at the same pin. See `docs/avatar-group-port.md`.
 - AvatarGroupOverflow follows `AvatarGroup/AvatarGroupOverflow.tsx`, its component spec, and three catalog templates at the same pin. See `docs/avatar-group-overflow-port.md`.
 - AvatarStatusDot follows `Avatar/AvatarStatusDot.tsx` and `Avatar/AvatarSizeContext.ts` at the same pin. See `docs/avatar-status-dot-port.md`.
+- CheckboxList follows the caller-owned rows path in `CheckboxList/CheckboxList.tsx`, its spec, and the adapted notification-preferences arrangement at the same pin. See `docs/checkbox-list-port.md`.
 - CheckboxInput follows `CheckboxInput/CheckboxInput.tsx`, its spec, and four adapted catalog arrangements at the same pin. See `docs/checkbox-input-port.md`.
 - CheckboxIndicator follows `Indicator/CheckboxIndicator.tsx` and the Indicator family contract at the same pin. See `docs/checkbox-indicator-port.md`.
 - RadioIndicator follows `Indicator/RadioIndicator.tsx` and `Indicator/indicator.markers.stylex.ts` at the same pin. See `docs/radio-indicator-port.md`.
