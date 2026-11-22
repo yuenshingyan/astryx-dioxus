@@ -214,6 +214,8 @@ mod tooltip;
 mod top_nav_featured_card;
 #[path = "showcase/top_nav_heading.rs"]
 mod top_nav_heading;
+#[path = "showcase/top_nav_item.rs"]
+mod top_nav_item;
 #[path = "showcase/top_nav_mega_menu_item.rs"]
 mod top_nav_mega_menu_item;
 #[path = "showcase/typeahead_item.rs"]
@@ -329,6 +331,7 @@ use toolbar::ToolbarExamples;
 use tooltip::TooltipExamples;
 use top_nav_featured_card::TopNavFeaturedCardExamples;
 use top_nav_heading::TopNavHeadingExamples;
+use top_nav_item::TopNavItemExamples;
 use top_nav_mega_menu_item::TopNavMegaMenuItemExamples;
 use typeahead_item::TypeaheadItemExamples;
 use v_stack::VStackExamples;
@@ -584,6 +587,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#top-nav-heading-examples", "TopNavHeading examples" }
                 " · "
+                a { href: "#top-nav-item-examples", "TopNavItem examples" }
+                " · "
                 a { href: "#top-nav-featured-card-examples", "TopNavMegaMenuFeaturedCard examples" }
                 " · "
                 a { href: "#top-nav-mega-menu-item-examples", "TopNavMegaMenuItem examples" }
@@ -795,6 +800,7 @@ fn App() -> Element {
             SideNavSectionExamples {}
             SideNavCollapseButtonExamples {}
             TopNavHeadingExamples {}
+            TopNavItemExamples {}
             TopNavFeaturedCardExamples {}
             TopNavMegaMenuItemExamples {}
             NavIconExamples {}

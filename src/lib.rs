@@ -260,8 +260,8 @@ pub use token::{InvalidTokenColor, Token, TokenColor, TokenProps, TokenSize};
 pub use toolbar::{Toolbar, ToolbarOrientation, ToolbarProps};
 pub use tooltip::{Tooltip, TooltipProps};
 pub use top_nav::{
-    TopNavHeading, TopNavHeadingProps, TopNavMegaMenuFeaturedCard, TopNavMegaMenuFeaturedCardProps,
-    TopNavMegaMenuItem, TopNavMegaMenuItemProps,
+    TopNavHeading, TopNavHeadingProps, TopNavItem, TopNavItemProps, TopNavMegaMenuFeaturedCard,
+    TopNavMegaMenuFeaturedCardProps, TopNavMegaMenuItem, TopNavMegaMenuItemProps,
 };
 pub use typeahead::{TypeaheadItem, TypeaheadItemContent, TypeaheadItemProps};
 

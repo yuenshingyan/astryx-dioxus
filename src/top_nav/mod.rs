@@ -4,7 +4,9 @@ mod top_nav_mega_menu_item;
 
 pub use top_nav_mega_menu_item::{TopNavMegaMenuItem, TopNavMegaMenuItemProps};
 
+mod top_nav_item;
 pub use top_nav_heading::{TopNavHeading, TopNavHeadingProps};
+pub use top_nav_item::{TopNavItem, TopNavItemProps};
 pub use top_nav_mega_menu_featured_card::{
     TopNavMegaMenuFeaturedCard, TopNavMegaMenuFeaturedCardProps,
 };
