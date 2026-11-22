@@ -146,8 +146,10 @@ pub use dropdown_menu::{
     DropdownMenuCheckboxItem, DropdownMenuCheckboxItemProps, DropdownMenuDivider,
     DropdownMenuDivider as BreadcrumbMenuDivider, DropdownMenuDivider as ContextMenuDivider,
     DropdownMenuDividerProps, DropdownMenuDividerProps as BreadcrumbMenuDividerProps,
-    DropdownMenuDividerProps as ContextMenuDividerProps, DropdownMenuGroup, DropdownMenuGroupProps,
-    DropdownMenuItem, DropdownMenuItem as ContextMenuItem, DropdownMenuItemProps,
+    DropdownMenuDividerProps as ContextMenuDividerProps, DropdownMenuGroup,
+    DropdownMenuGroup as ContextMenuGroup, DropdownMenuGroupProps,
+    DropdownMenuGroupProps as ContextMenuGroupProps, DropdownMenuItem,
+    DropdownMenuItem as ContextMenuItem, DropdownMenuItemProps,
     DropdownMenuItemProps as ContextMenuItemProps, DropdownMenuItemVariant, DropdownMenuRadioGroup,
     DropdownMenuRadioGroupProps, DropdownMenuRadioItem, DropdownMenuRadioItemProps,
 };
