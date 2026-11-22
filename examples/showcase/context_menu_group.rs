@@ -2,11 +2,13 @@ use dioxus::prelude::*;
 
 use astryx_dioxus::{
     ContextMenuCheckboxItem, ContextMenuDivider, ContextMenuGroup, ContextMenuItem,
+    ContextMenuRadioGroup, DropdownMenuRadioItem,
 };
 
 #[component]
 pub(super) fn ContextMenuGroupExamples() -> Element {
     let mut show_details = use_signal(|| false);
+    let mut sort = use_signal(|| "recent".to_owned());
     rsx! {
         section { id: "context-menu-group-examples",
             h2 { "ContextMenuGroup" }
@@ -17,6 +19,10 @@ pub(super) fn ContextMenuGroupExamples() -> Element {
                     ContextMenuItem { label: "Duplicate" }
                 }
                 ContextMenuDivider {}
+                ContextMenuRadioGroup { label: "Sort documents", value: sort(), on_change: move |value| sort.set(value),
+                    DropdownMenuRadioItem { id: "context-menu-sort-recent", label: "Recent first", value: "recent" }
+                    DropdownMenuRadioItem { id: "context-menu-sort-name", label: "By name", value: "name" }
+                }
                 ContextMenuGroup {
                     ContextMenuItem { label: "Copy link" }
                     ContextMenuCheckboxItem { id: "context-menu-checkbox-details", label: "Show details",

@@ -153,7 +153,9 @@ pub use dropdown_menu::{
     DropdownMenuGroupProps as ContextMenuGroupProps, DropdownMenuItem,
     DropdownMenuItem as ContextMenuItem, DropdownMenuItemProps,
     DropdownMenuItemProps as ContextMenuItemProps, DropdownMenuItemVariant, DropdownMenuRadioGroup,
-    DropdownMenuRadioGroupProps, DropdownMenuRadioItem, DropdownMenuRadioItemProps,
+    DropdownMenuRadioGroup as ContextMenuRadioGroup, DropdownMenuRadioGroupProps,
+    DropdownMenuRadioGroupProps as ContextMenuRadioGroupProps, DropdownMenuRadioItem,
+    DropdownMenuRadioItemProps,
 };
 pub use empty_state::{EmptyState, EmptyStateProps};
 pub use field::{
