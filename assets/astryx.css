@@ -2881,6 +2881,8 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     content: "\200B" / ""; inline-size: 0; overflow: hidden; font-size: var(--text-body-size); line-height: var(--text-body-leading);
   }
 
+  .astryx-item.astryx-selector-option { --_item-inset-inline: 0px; padding-block: 0; min-width: 0; border-radius: 0; }
+
   .astryx-list__wrapper { display: flex; flex-direction: column; }
   .astryx-list__header { margin-block-end: var(--spacing-2); }
   .astryx-list { margin: 0; padding-inline-start: 0; list-style: none; display: flex; flex-direction: column; gap: var(--spacing-0-5); overflow-inline: clip; }
