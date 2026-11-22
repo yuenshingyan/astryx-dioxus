@@ -1,0 +1,7 @@
+# TextArea checkpoint
+
+`src/text_area/` composes Field with a native vertically resizable textarea. It supports caller-controlled text, configurable rows and size, optional start icon, native UTF-16 length limits, and linked field descriptions and status. A disabled field is focusable but read-only and omitted from form data; a read-only field still submits.
+
+Sources at Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`: `TextArea/TextArea.tsx` (`03620f0362599897d75f8a6175021f28cce24c2e`) and the spec (`5b3934c97253e8f0065dc798201f7ef19490eb46`). The showcase adapts Description, States, and Validation. Grapheme counting and announcements, async state, disabled-reason help, and the remaining catalog arrangements are open.
+
+All five Rust checks and three Chrome suites passed. SSR verified the initial multiline content and native length limit. Chrome verified multiline editing, retained focus, label and description associations, and form submission behavior. Published visual parity and spoken output were not verified; the checklist remains open.

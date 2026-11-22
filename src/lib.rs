@@ -66,6 +66,7 @@ mod stack;
 mod status_dot;
 mod table;
 mod text;
+mod text_area;
 mod theme;
 mod thumbnail;
 mod timer;
@@ -228,6 +229,7 @@ pub use table::{
     TableVerticalAlign,
 };
 pub use text::{Text, TextTag, Truncation, use_truncation};
+pub use text_area::{TextArea, TextAreaProps};
 pub use theme::{
     InvalidSyntaxColor, MediaTheme, MediaThemeFallback, MediaThemeMode, MediaThemeProps,
     SyntaxColor, SyntaxTheme, SyntaxThemeDefinition, SyntaxThemePreset, SyntaxThemeProps,

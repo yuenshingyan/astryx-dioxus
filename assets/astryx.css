@@ -2375,6 +2375,29 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-field__control-status:has(> [data-size="sm"]) { --_field-status-overlap: calc(var(--size-element-sm) / 2); }
   .astryx-field__control-status:has(> [data-size="lg"]) { --_field-status-overlap: calc(var(--size-element-lg) / 2); }
   .astryx-field__control-status > .astryx-field-status[data-variant="attached"] { position: relative; z-index: -1; }
+  .astryx-text-area {
+    position: relative; --_textarea-inline-padding: var(--spacing-2); --_textarea-border: var(--color-border-emphasized);
+    border: var(--border-width) solid var(--_textarea-border); border-radius: var(--radius-element);
+    background: var(--color-background-surface);
+  }
+  .astryx-text-area[data-status="error"] { --_textarea-border: var(--color-text-error); }
+  .astryx-text-area[data-status="warning"] { --_textarea-border: var(--color-text-warning); }
+  .astryx-text-area[data-status="success"] { --_textarea-border: var(--color-text-success); }
+  .astryx-text-area[data-disabled] { color: var(--color-text-disabled); background: var(--color-background-muted); }
+  .astryx-text-area:focus-within { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); }
+  .astryx-text-area-control {
+    display: block; box-sizing: border-box; width: 100%; min-width: 0;
+    border: 0; border-radius: inherit; outline: none; background: transparent;
+    padding: var(--spacing-1) var(--_textarea-inline-padding); resize: vertical;
+    font-family: var(--font-family-body); font-size: var(--text-body-size); line-height: var(--text-body-leading);
+    color: var(--color-text-primary);
+  }
+  .astryx-text-area[data-size="lg"] > .astryx-text-area-control { padding-block: var(--spacing-2); }
+  .astryx-text-area-control::placeholder { color: var(--color-text-secondary); }
+  .astryx-text-area[data-disabled] > .astryx-text-area-control { color: inherit; cursor: default; }
+  .astryx-text-area[data-has-icon] > .astryx-text-area-control { padding-inline-start: calc(var(--_textarea-inline-padding) + var(--spacing-6)); }
+  .astryx-text-area__icon { position: absolute; inset-block-start: var(--spacing-2); inset-inline-start: var(--_textarea-inline-padding); display: flex; color: var(--color-icon-secondary); pointer-events: none; }
+
   .astryx-radio-list { display: flex; flex-direction: column; gap: var(--spacing-2); }
   .astryx-radio-list[data-orientation="horizontal"] { flex-direction: row; gap: var(--spacing-5); }
   .astryx-item.astryx-radio-list-item { --_item-inset-inline: 0px; padding-block: 0; border-radius: 0; }

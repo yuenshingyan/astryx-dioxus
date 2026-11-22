@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+
+await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
+  await send('Network.enable');
+  await send('Network.setBlockedURLs', {urls: ['https://*']});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8211'});
+  const input = `document.getElementById('description-area')`;
+  await waitFor(`${input}?.value === 'Initial description'`);
+  assert.deepEqual(await evaluate(`[${input}.rows, getComputedStyle(${input}).resize, ${input}.labels[0].textContent.trim()]`), [3, 'vertical', 'Description']);
+  await evaluate(`${input}.focus(); ${input}.setSelectionRange(${input}.value.length, ${input}.value.length)`);
+  await send('Input.insertText', {text: '\nSecond line'});
+  await waitFor(`document.getElementById('description-preview').textContent.endsWith('Second line')`);
+  assert.equal(await evaluate(`${input}.value`), 'Initial description\nSecond line');
+  assert.ok(await evaluate(`document.activeElement === ${input}`));
+  assert.deepEqual(await evaluate(`Array.from(new FormData(document.getElementById('text-area-form')))`), [['reference', 'Reference notes']]);
+  await evaluate(`document.getElementById('disabled-area').focus()`);
+  await send('Input.insertText', {text: 'blocked'});
+  assert.deepEqual(await evaluate(`[document.activeElement.id, document.activeElement.value, document.activeElement.getAttribute('aria-disabled')]`), ['disabled-area', 'Unavailable', 'true']);
+  const {nodes} = await send('Accessibility.getFullAXTree');
+  const error = nodes.find(node => !node.ignored && node.role?.value === 'textbox' && node.name?.value.startsWith('Error message'));
+  assert.match(error?.description?.value ?? '', /Explain the issue.*Enter a description/);
+  assert.deepEqual(exceptions, []);
+  console.log('TextArea: multiline editing, label/description, and read-only/disabled form semantics passed');
+});
