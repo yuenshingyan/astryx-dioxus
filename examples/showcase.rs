@@ -80,6 +80,8 @@ mod dialog_header;
 mod divider;
 #[path = "showcase/drawer_header.rs"]
 mod drawer_header;
+#[path = "showcase/dropdown_menu_checkbox_item.rs"]
+mod dropdown_menu_checkbox_item;
 #[path = "showcase/dropdown_menu_group.rs"]
 mod dropdown_menu_group;
 #[path = "showcase/dropdown_menu_radio_group.rs"]
@@ -242,6 +244,7 @@ use command_palette_list::CommandPaletteListExamples;
 use dialog_header::DialogHeaderExamples;
 use divider::DividerExamples;
 use drawer_header::DrawerHeaderExamples;
+use dropdown_menu_checkbox_item::DropdownMenuCheckboxItemExamples;
 use dropdown_menu_group::DropdownMenuGroupExamples;
 use dropdown_menu_radio_group::DropdownMenuRadioGroupExamples;
 use empty_state::EmptyStateExamples;
@@ -397,6 +400,8 @@ fn App() -> Element {
                 a { href: "#dropdown-menu-group-examples", "DropdownMenuGroup examples" }
                 " · "
                 a { href: "#dropdown-menu-radio-group-examples", "DropdownMenuRadioGroup examples" }
+                " · "
+                a { href: "#dropdown-menu-checkbox-item-examples", "DropdownMenuCheckboxItem examples" }
                 " · "
                 a { href: "#field-status-examples", "FieldStatus examples" }
                 " · "
@@ -663,6 +668,7 @@ fn App() -> Element {
             DialogHeaderExamples {}
             DropdownMenuGroupExamples {}
             DropdownMenuRadioGroupExamples {}
+            DropdownMenuCheckboxItemExamples {}
             section { id: "dropdown-menu-divider-example", "data-astryx-theme": "neutral",
                 h2 { "DropdownMenuDivider" }
                 div { style: "max-width:240px",

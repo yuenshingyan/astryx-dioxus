@@ -124,9 +124,9 @@ pub use divider::{
 };
 pub use drawer::{DrawerHeader, DrawerHeaderEdgeCompensation, DrawerHeaderProps};
 pub use dropdown_menu::{
-    DropdownMenuDivider, DropdownMenuDivider as BreadcrumbMenuDivider,
-    DropdownMenuDivider as ContextMenuDivider, DropdownMenuDividerProps,
-    DropdownMenuDividerProps as BreadcrumbMenuDividerProps,
+    DropdownMenuCheckboxItem, DropdownMenuCheckboxItemProps, DropdownMenuDivider,
+    DropdownMenuDivider as BreadcrumbMenuDivider, DropdownMenuDivider as ContextMenuDivider,
+    DropdownMenuDividerProps, DropdownMenuDividerProps as BreadcrumbMenuDividerProps,
     DropdownMenuDividerProps as ContextMenuDividerProps, DropdownMenuGroup, DropdownMenuGroupProps,
     DropdownMenuRadioGroup, DropdownMenuRadioGroupProps, DropdownMenuRadioItem,
     DropdownMenuRadioItemProps,
