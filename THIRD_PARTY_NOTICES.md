@@ -72,6 +72,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - ResizeHandle adapts the keyboard and separator behavior in `Resizable/ResizeHandle.tsx` at the same pin. See `docs/resize-handle-port.md`.
 - ChatComposerDrawer follows `Chat/ChatComposerDrawer.tsx`, its spec, and the adapted Collapsible arrangement at the same pin. See `docs/chat-composer-drawer-port.md`.
 - ChatToolCalls follows `Chat/ChatToolCalls.tsx`, its spec, and the adapted showcase at the same pin. See `docs/chat-tool-calls-port.md`.
+- ChatComposerTokenElement follows the helper in `Chat/ChatComposerInput.tsx`, its spec, and two adapted stories at the same pin. See `docs/chat-composer-token-element-port.md`.
 - ChatTokenizedText follows `Chat/ChatTokenizedText.tsx`, its spec, and three catalog templates at the same pin. See `docs/chat-tokenized-text-port.md`.
 - ChatDictationButton follows `Chat/ChatDictationButton.tsx`, its spec, and both adapted catalog templates at the same pin. See `docs/chat-dictation-button-port.md`.
 - ChatLayout follows `Chat/ChatLayout.tsx`, its spec, and both adapted catalog templates at the same pin. See `docs/chat-layout-port.md`.

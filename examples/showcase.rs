@@ -38,6 +38,8 @@ mod card;
 mod center;
 #[path = "showcase/chat_composer_drawer.rs"]
 mod chat_composer_drawer;
+#[path = "showcase/chat_composer_token_element.rs"]
+mod chat_composer_token_element;
 #[path = "showcase/chat_dictation_button.rs"]
 mod chat_dictation_button;
 #[path = "showcase/chat_layout.rs"]
@@ -263,6 +265,7 @@ use button_patterns::DocumentedButtonPatterns;
 use card::CardExamples;
 use center::CenterExamples;
 use chat_composer_drawer::ChatComposerDrawerExamples;
+use chat_composer_token_element::ChatComposerTokenElementExamples;
 use chat_dictation_button::ChatDictationButtonExamples;
 use chat_layout::ChatLayoutExamples;
 use chat_layout_scroll_button::ChatLayoutScrollButtonExamples;
@@ -563,6 +566,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#chat-tokenized-text-examples", "ChatTokenizedText examples" }
                 " · "
+                a { href: "#chat-composer-token-element-examples", "ChatComposerTokenElement examples" }
+                " · "
                 a { href: "#chat-tool-calls-examples", "ChatToolCalls examples" }
                 " · "
                 a { href: "#aspect-ratio-examples", "AspectRatio examples" }
@@ -821,6 +826,7 @@ fn App() -> Element {
             ChatDictationButtonExamples {}
             ChatComposerDrawerExamples {}
             ChatTokenizedTextExamples {}
+            ChatComposerTokenElementExamples {}
             ChatToolCallsExamples {}
             ClickableCardExamples {}
             SelectableCardExamples {}
