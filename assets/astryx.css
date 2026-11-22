@@ -2375,7 +2375,14 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-field__control-status:has(> [data-size="sm"]) { --_field-status-overlap: calc(var(--size-element-sm) / 2); }
   .astryx-field__control-status:has(> [data-size="lg"]) { --_field-status-overlap: calc(var(--size-element-lg) / 2); }
   .astryx-field__control-status > .astryx-field-status[data-variant="attached"] { position: relative; z-index: -1; }
+  .astryx-collapsible-group { display: flex; flex-direction: column; }
   .astryx-collapsible { width: 100%; }
+  .astryx-collapsible[data-divided]:not(:first-child) { border-block-start: var(--border-width) solid var(--color-border); }
+  .astryx-collapsible[data-density="compact"] { --_collapsible-padding: var(--spacing-1); }
+  .astryx-collapsible[data-density="balanced"] { --_collapsible-padding: var(--spacing-2); }
+  .astryx-collapsible[data-density="spacious"] { --_collapsible-padding: var(--spacing-3); }
+  .astryx-collapsible[data-density] > .astryx-collapsible-trigger { padding-block: var(--_collapsible-padding); }
+  .astryx-collapsible[data-density] > .astryx-collapsible-content { padding-block-end: var(--_collapsible-padding); }
   .astryx-collapsible-trigger {
     display: flex; align-items: center; box-sizing: border-box; width: 100%;
     border: 0; padding: 0; background: transparent; color: var(--color-text-primary);

@@ -1,6 +1,9 @@
 use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
+use super::collapsible_group_context::{
+    CollapsibleGroupDensity, CollapsibleGroupPresentationContext, GroupPresentation,
+};
 use super::use_collapsible::use_collapsible;
 use crate::{Icon, IconSize};
 
@@ -24,12 +27,22 @@ pub fn Collapsible(
     #[props(default = true)] default_is_open: bool,
     #[props(default)] is_disabled: bool,
     #[props(default)] on_open_change: Option<EventHandler<bool>>,
+    /// Identifier used by the nearest CollapsibleGroup, when present.
+    #[props(default)]
+    value: Option<String>,
     #[props(default)] chevron_position: CollapsibleChevronPosition,
     #[props(default)] class: String,
     #[props(default)] style: String,
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
-    let (is_expanded, mut toggle) = use_collapsible(is_open, default_is_open, on_open_change);
+    let (is_expanded, mut toggle) =
+        use_collapsible(is_open, default_is_open, on_open_change, value);
+    let presentation = try_consume_context::<CollapsibleGroupPresentationContext>()
+        .and_then(|context| (context.0)());
+    let density = presentation
+        .and_then(|presentation| presentation.density)
+        .map(CollapsibleGroupDensity::as_str);
+    let has_dividers = presentation.is_some_and(|presentation| presentation.has_dividers);
     let id = use_hook(|| format!("astryx-collapsible-{}-content", current_scope_id().0));
     let mut trigger_node = use_signal(|| None::<MountedEvent>);
     let mut has_panel_focus = use_signal(|| false);
@@ -58,7 +71,7 @@ pub fn Collapsible(
         }
     };
     rsx! {
-        div { class: format!("astryx-collapsible {class}"), style, ..attributes,
+        div { class: format!("astryx-collapsible {class}"), style, "data-density": density, "data-divided": has_dividers.then_some("true"), ..attributes,
             button { class: "astryx-collapsible-trigger", r#type: "button",
                 "aria-controls": id.clone(), "aria-expanded": is_expanded.to_string(),
                 "aria-disabled": is_disabled.then_some("true"), tabindex: is_disabled.then_some(-1),
@@ -75,8 +88,16 @@ pub fn Collapsible(
             div { class: "astryx-collapsible-content", id, hidden: !is_expanded,
                 onfocusin: move |_| has_panel_focus.set(true),
                 onfocusout: move |_| has_panel_focus.set(false),
-                div { {children} }
+                div { CollapsibleGroupPresentationReset { {children} } }
             }
         }
     }
+}
+
+#[component]
+fn CollapsibleGroupPresentationReset(children: Element) -> Element {
+    use_context_provider(|| {
+        CollapsibleGroupPresentationContext(Signal::new(None::<GroupPresentation>))
+    });
+    children
 }

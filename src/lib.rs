@@ -118,7 +118,10 @@ pub use checkbox_list::{CheckboxList, CheckboxListItem, CheckboxListItemProps, C
 pub use citation::{Citation, CitationProps, CitationSource, CitationVariant};
 pub use clickable_card::{ClickableCard, ClickableCardError};
 pub use code::{Code, CodeColor, CodeProps, CodeSize};
-pub use collapsible::{Collapsible, CollapsibleChevronPosition, CollapsibleProps};
+pub use collapsible::{
+    Collapsible, CollapsibleChevronPosition, CollapsibleGroup, CollapsibleGroupDensity,
+    CollapsibleGroupProps, CollapsibleGroupValue, CollapsibleProps,
+};
 pub use command_palette::{
     CommandPaletteEmpty, CommandPaletteEmptyProps, CommandPaletteFooter, CommandPaletteFooterProps,
     CommandPaletteGroup, CommandPaletteGroupProps, CommandPaletteItem, CommandPaletteItemProps,
