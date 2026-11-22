@@ -178,6 +178,8 @@ mod section;
 mod selectable_card;
 #[path = "showcase/selector_option.rs"]
 mod selector_option;
+#[path = "showcase/side_nav.rs"]
+mod side_nav;
 #[path = "showcase/side_nav_collapse_button.rs"]
 mod side_nav_collapse_button;
 #[path = "showcase/side_nav_heading.rs"]
@@ -331,6 +333,7 @@ use scrollable_area::ScrollableAreaExamples;
 use section::SectionExamples;
 use selectable_card::SelectableCardExamples;
 use selector_option::SelectorOptionExamples;
+use side_nav::SideNavExamples;
 use side_nav_collapse_button::SideNavCollapseButtonExamples;
 use side_nav_heading::SideNavHeadingExamples;
 use side_nav_item::SideNavItemExamples;
@@ -622,6 +625,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#side-nav-item-examples", "SideNavItem examples" }
                 " · "
+                a { href: "#side-nav-examples", "SideNav examples" }
+                " · "
                 a { href: "#mobile-nav-toggle-examples", "MobileNavToggle examples" }
                 " · "
                 a { href: "#side-nav-section-examples", "SideNavSection examples" }
@@ -849,6 +854,7 @@ fn App() -> Element {
             SectionExamples {}
             SideNavHeadingExamples {}
             SideNavItemExamples {}
+            SideNavExamples {}
             MobileNavToggleExamples {}
             SideNavSectionExamples {}
             SideNavCollapseButtonExamples {}

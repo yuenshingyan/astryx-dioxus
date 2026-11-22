@@ -225,9 +225,9 @@ pub use section::{InvalidSectionVariant, Section, SectionDivider, SectionProps, 
 pub use selectable_card::{SelectableCard, SelectableCardError, SelectableCardProps};
 pub use selector::{SelectorOption, SelectorOptionProps};
 pub use side_nav::{
-    SideNavCollapseButton, SideNavCollapseButtonProps, SideNavControlledCollapsible,
-    SideNavHeading, SideNavHeadingProps, SideNavItem, SideNavItemProps, SideNavSection,
-    SideNavSectionProps,
+    SideNav, SideNavCollapseButton, SideNavCollapseButtonProps, SideNavControlledCollapsible,
+    SideNavHeading, SideNavHeadingProps, SideNavItem, SideNavItemProps, SideNavProps,
+    SideNavSection, SideNavSectionProps,
 };
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
 pub use skeleton::{Skeleton, SkeletonError, SkeletonLength, SkeletonRadius};
