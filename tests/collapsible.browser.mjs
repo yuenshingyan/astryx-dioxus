@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+
+await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
+  await send('Network.enable');
+  await send('Network.setBlockedURLs', {urls: ['https://*']});
+  await send('Emulation.setEmulatedMedia', {features: [{name: 'prefers-reduced-motion', value: 'reduce'}]});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8213'});
+  const trigger = id => `document.querySelector('#${id} > button')`;
+  const panel = t => `document.getElementById(${t}.getAttribute('aria-controls'))`;
+  const deployment = trigger('deployment-disclosure');
+  const controlled = trigger('controlled-disclosure');
+  const disabled = trigger('rollback-disclosure');
+  await waitFor(`${deployment}?.getAttribute('aria-expanded') === 'true'`);
+  await evaluate(`${panel(deployment)}.querySelector('input').value = 'retained'; ${deployment}.focus()`);
+  await send('Input.dispatchKeyEvent', {type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13, text: '\r'});
+  await send('Input.dispatchKeyEvent', {type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13});
+  await waitFor(`${panel(deployment)}.hidden`);
+  assert.equal(await evaluate(`${deployment}.getAttribute('aria-expanded')`), 'false');
+  await evaluate(`${deployment}.click()`);
+  await waitFor(`!${panel(deployment)}.hidden`);
+  assert.equal(await evaluate(`${panel(deployment)}.querySelector('input').value`), 'retained');
+  await evaluate(`${disabled}.click()`);
+  assert.deepEqual(await evaluate(`[${disabled}.getAttribute('aria-disabled'), ${disabled}.tabIndex, ${panel(disabled)}.hidden]`), ['true', -1, false]);
+  await evaluate(`${panel(controlled)}.querySelector('input').focus(); ${panel(controlled)}.querySelector('button').click()`);
+  await waitFor(`${panel(controlled)}.hidden && document.activeElement === ${controlled}`);
+  const chevron = `${controlled}.querySelector('.astryx-collapsible-chevron')`;
+  assert.equal(await evaluate(`getComputedStyle(${chevron}.querySelector('svg')).scale`), '-1 1');
+  assert.equal(await evaluate(`getComputedStyle(${chevron}).transitionDuration`), '0s');
+  const {nodes} = await send('Accessibility.getFullAXTree');
+  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'button' && node.name?.value === 'Deployment details'));
+  assert.ok(!nodes.some(node => !node.ignored && node.name?.value === 'Deployment reference'));
+  assert.deepEqual(exceptions, []);
+  console.log('Collapsible: keyboard toggle, retained content, controlled focus return, disabled state, and RTL passed');
+});

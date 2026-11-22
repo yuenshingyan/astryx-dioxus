@@ -66,6 +66,8 @@ mod checkbox_list;
 mod citation;
 #[path = "showcase/clickable_card.rs"]
 mod clickable_card;
+#[path = "showcase/collapsible.rs"]
+mod collapsible;
 #[path = "showcase/command_palette_empty.rs"]
 mod command_palette_empty;
 #[path = "showcase/command_palette_footer.rs"]
@@ -247,6 +249,7 @@ use checkbox_input::CheckboxInputExamples;
 use checkbox_list::CheckboxListExamples;
 use citation::CitationExamples;
 use clickable_card::ClickableCardExamples;
+use collapsible::CollapsibleExamples;
 use command_palette_empty::CommandPaletteEmptyExamples;
 use command_palette_footer::CommandPaletteFooterExamples;
 use command_palette_group::CommandPaletteGroupExamples;
@@ -490,6 +493,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#card-examples", "Card examples" }
                 " · "
+                a { href: "#collapsible-examples", "Collapsible examples" }
+                " · "
                 a { href: "#chat-system-message-examples", "ChatSystemMessage examples" }
                 " · "
                 a { href: "#chat-send-button-examples", "ChatSendButton examples" }
@@ -732,6 +737,7 @@ fn App() -> Element {
             ProgressBarExamples {}
             BlockquoteExamples {}
             CardExamples {}
+            CollapsibleExamples {}
             ChatSystemMessageExamples {}
             ChatSendButtonExamples {}
             ChatMessageMetadataExamples {}
