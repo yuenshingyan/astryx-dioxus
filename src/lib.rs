@@ -54,6 +54,7 @@ mod nav_icon;
 mod nav_menu;
 mod outline;
 mod overlay;
+mod pagination;
 mod private_attributes;
 mod progress_bar;
 mod radio_list;
@@ -205,6 +206,7 @@ pub use outline::{Outline, OutlineDensity, OutlineItem, OutlineProps};
 pub use overlay::{
     Overlay, OverlayAlign, OverlayPosition, OverlayProps, OverlayScrimMode, OverlayShowOn,
 };
+pub use pagination::{Pagination, PaginationProps, PaginationVariant};
 pub use progress_bar::{
     InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,
     ProgressBarVariant,

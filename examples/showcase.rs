@@ -158,6 +158,8 @@ mod nav_icon;
 mod outline;
 #[path = "showcase/overlay.rs"]
 mod overlay;
+#[path = "showcase/pagination.rs"]
+mod pagination;
 #[path = "showcase/progress_bar.rs"]
 mod progress_bar;
 #[path = "showcase/radio_indicator.rs"]
@@ -313,6 +315,7 @@ use nav_heading_menu_item::NavHeadingMenuItemExamples;
 use nav_icon::NavIconExamples;
 use outline::OutlineExamples;
 use overlay::OverlayExamples;
+use pagination::PaginationExamples;
 use progress_bar::ProgressBarExamples;
 use radio_indicator::RadioIndicatorExamples;
 use radio_list::RadioListExamples;
@@ -557,6 +560,8 @@ fn App() -> Element {
                 a { href: "#grid-examples", "Grid examples" }
                 " · "
                 a { href: "#outline-examples", "Outline examples" }
+                " · "
+                a { href: "#pagination-examples", "Pagination examples" }
                 " · "
                 a { href: "#resize-handle-examples", "ResizeHandle examples" }
                 " · "
@@ -803,6 +808,7 @@ fn App() -> Element {
             StackItemExamples {}
             GridExamples {}
             OutlineExamples {}
+            PaginationExamples {}
             ResizeHandleExamples {}
             GridSpanExamples {}
             HStackExamples {}

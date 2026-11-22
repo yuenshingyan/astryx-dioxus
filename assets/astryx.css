@@ -2430,6 +2430,10 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     .astryx-banner:is([data-status="info"], [data-status="success"], [data-status="warning"], [data-status="error"]) { outline: 1px solid CanvasText; outline-offset: -1px; }
   }
 
+  .astryx-pagination { display: flex; align-items: center; flex-wrap: wrap; gap: var(--spacing-1); }
+  .astryx-pagination__summary { padding-inline: var(--spacing-2); color: var(--color-text-secondary); font-size: var(--text-supporting-size); }
+  .astryx-pagination .astryx-button[aria-current="page"] { background-color: var(--color-neutral); }
+  @media (forced-colors: active) { .astryx-pagination .astryx-button[aria-current="page"] { outline: 1px solid Highlight; } }
   .astryx-outline__list { display: grid; gap: var(--spacing-0-5); margin: 0; padding: 0; list-style: none; border-inline-start: 2px solid var(--color-border); }
   .astryx-outline-item { position: relative; display: flex; margin-inline-start: var(--spacing-0-5); padding: var(--spacing-2) var(--spacing-2) var(--spacing-2) var(--spacing-3); padding-inline-start: var(--spacing-3); border-radius: var(--radius-element); color: var(--color-text-secondary); text-decoration: none; font-size: var(--text-body-size); line-height: var(--text-body-leading); }
   .astryx-outline[data-density="compact"] .astryx-outline-item { padding-block: var(--spacing-1); }
