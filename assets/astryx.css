@@ -2939,14 +2939,14 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-toolbar:not([data-center]) > .astryx-toolbar__end:only-child { margin-inline-start: auto; }
   .astryx-toolbar[data-center] > :is(.astryx-toolbar__start, .astryx-toolbar__end) { flex: 1 1 0; min-width: fit-content; flex-wrap: wrap; }
 
-  .astryx-item:is(.astryx-dropdown-menu-radio-item, .astryx-dropdown-menu-checkbox-item) {
+  .astryx-item.astryx-dropdown-menu-item {
     width: 100%;
     border-radius: max(0px, calc(var(--_dropdown-menu-radius, var(--spacing-2)) - var(--_dropdown-menu-padding, var(--spacing-1))));
     cursor: pointer;
   }
-  :is(.astryx-dropdown-menu-radio-item, .astryx-dropdown-menu-checkbox-item)[aria-disabled="true"] { opacity: .5; cursor: default; }
-  :is(.astryx-dropdown-menu-radio-item, .astryx-dropdown-menu-checkbox-item):focus { background-color: var(--color-overlay-hover); }
-  :is(.astryx-dropdown-menu-radio-item, .astryx-dropdown-menu-checkbox-item):focus-visible {
+  .astryx-dropdown-menu-item[aria-disabled="true"] { opacity: .5; cursor: default; }
+  .astryx-dropdown-menu-item:focus { background-color: var(--color-overlay-hover); }
+  .astryx-dropdown-menu-item:focus-visible {
     outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
     outline-offset: calc(-1 * var(--focus-outline-width));
   }
@@ -2954,6 +2954,16 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   @media (pointer: coarse) {
     .astryx-dropdown-menu-radio-item > .astryx-dropdown-menu-radio,
     .astryx-dropdown-menu-checkbox-item > .astryx-dropdown-menu-checkbox { order: 1; margin-inline-start: auto; }
+  }
+
+  .astryx-item.astryx-dropdown-menu-item--action { padding-block: var(--spacing-1-5); font-family: var(--font-family-body); }
+  .astryx-dropdown-menu-item--action[data-variant="destructive"] {
+    color: var(--color-text-error);
+    --_item-label-color: var(--color-text-error);
+    --_item-description-color: var(--color-text-error);
+  }
+  @media (hover: hover) {
+    .astryx-dropdown-menu-item--action:active:not([aria-disabled]) { background-color: var(--color-overlay-pressed); }
   }
 
   .astryx-dropdown-menu-radio-group { display: flex; flex-direction: column; gap: var(--spacing-0-5); }
