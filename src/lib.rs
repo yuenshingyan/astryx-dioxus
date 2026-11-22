@@ -271,8 +271,9 @@ pub use token::{InvalidTokenColor, Token, TokenColor, TokenProps, TokenSize};
 pub use toolbar::{Toolbar, ToolbarOrientation, ToolbarProps};
 pub use tooltip::{Tooltip, TooltipProps};
 pub use top_nav::{
-    TopNavHeading, TopNavHeadingProps, TopNavItem, TopNavItemProps, TopNavMegaMenuFeaturedCard,
-    TopNavMegaMenuFeaturedCardProps, TopNavMegaMenuItem, TopNavMegaMenuItemProps,
+    TopNav, TopNavHeading, TopNavHeadingProps, TopNavItem, TopNavItemProps,
+    TopNavMegaMenuFeaturedCard, TopNavMegaMenuFeaturedCardProps, TopNavMegaMenuItem,
+    TopNavMegaMenuItemProps, TopNavProps,
 };
 pub use typeahead::{TypeaheadItem, TypeaheadItemContent, TypeaheadItemProps};
 
