@@ -14,6 +14,7 @@ mod button_group;
 mod card;
 mod center;
 mod chat;
+mod checkbox_input;
 mod citation;
 mod clickable_card;
 mod code;
@@ -105,6 +106,7 @@ pub use chat::{
     ChatSendButton, ChatSendButtonProps, ChatSendButtonSize, ChatSystemMessage,
     ChatSystemMessageProps, ChatSystemMessageVariant, ChatTokenizedText, ChatTokenizedTextProps,
 };
+pub use checkbox_input::{CheckboxInput, CheckboxInputProps};
 pub use citation::{Citation, CitationProps, CitationSource, CitationVariant};
 pub use clickable_card::{ClickableCard, ClickableCardError};
 pub use code::{Code, CodeColor, CodeProps, CodeSize};
