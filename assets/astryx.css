@@ -2424,6 +2424,9 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-text-input[data-disabled] > .astryx-text-input-control { cursor: default; }
   .astryx-text-input__icon { display: flex; flex: none; margin-inline-start: var(--spacing-2); color: var(--color-icon-secondary); pointer-events: none; }
   .astryx-text-input__icon + .astryx-text-input-control { border-start-start-radius: 0; border-end-start-radius: 0; }
+  .astryx-text-input[data-has-clear] > .astryx-text-input-control::-webkit-search-cancel-button { display: none; }
+  .astryx-text-input > .astryx-input-clear-button { flex: none; height: 20px; margin-inline-end: var(--spacing-1); }
+  .astryx-input-clear-icon { color: var(--color-icon-secondary); }
 
   .astryx-text-area {
     position: relative; --_textarea-inline-padding: var(--spacing-2); --_textarea-border: var(--color-border-emphasized);

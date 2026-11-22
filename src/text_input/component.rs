@@ -1,6 +1,7 @@
 use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
+use crate::field::input_clear_button::InputClearButton;
 use crate::form_layout::form_layout_context::{FormLayoutContext, FormOptionality};
 use crate::utils::is_renderable::is_renderable;
 use crate::{
@@ -58,6 +59,9 @@ pub fn TextInput(
     #[props(default)] is_read_only: bool,
     #[props(default)] has_spell_check: Option<bool>,
     #[props(default)] has_auto_focus: bool,
+    /// Offers a clear action for nonempty, editable values.
+    #[props(default)]
+    has_clear: bool,
     #[props(default)] size: Option<ElementSize>,
     #[props(default)] width: Option<SizeValue>,
     #[props(default)] class: String,
@@ -91,12 +95,15 @@ pub fn TextInput(
             }));
     let start_icon = start_icon.filter(is_renderable);
     let name = if is_disabled { None } else { html_name };
+    let should_show_clear = has_clear && !value.is_empty() && !is_disabled && !is_read_only;
+    let clear_label = format!("Clear {label}");
+    let mut input_node = use_signal(|| None::<MountedEvent>);
     rsx! {
         Field { class: format!("astryx-text-input-field {class}"), style, width,
             label, input_id: id, description, description_id, label_tooltip, status, status_variant,
             is_label_hidden, is_required, is_optional, is_disabled,
             div { class: "astryx-text-input", "data-size": size, "data-status": severity.map(InputStatusType::as_str),
-                "data-disabled": is_disabled.then_some("true"),
+                "data-disabled": is_disabled.then_some("true"), "data-has-clear": has_clear.then_some("true"),
                 if let Some(icon) = start_icon {
                     span { class: "astryx-text-input__icon", "aria-hidden": "true", {icon} }
                 }
@@ -108,10 +115,22 @@ pub fn TextInput(
                     "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
                     "aria-describedby": (!descriptions.is_empty()).then_some(descriptions),
                     value,
+                    onmounted: move |event| input_node.set(Some(event)),
                     onkeydown: move |event| { if is_disabled && event.key() == Key::Enter { event.prevent_default(); } },
                     oninput: move |event| {
                         if !is_disabled && !is_read_only && let Some(handler) = on_change { handler.call(event.value()); }
                     },
+                }
+                if should_show_clear {
+                    InputClearButton { label: clear_label,
+                        onclick: move |_| {
+                            let input = input_node.peek().clone();
+                            if let Some(handler) = on_change { handler.call(String::new()); }
+                            if let Some(input) = input {
+                                spawn(async move { let _ = input.data().set_focus(true).await; });
+                            }
+                        },
+                    }
                 }
             }
         }
