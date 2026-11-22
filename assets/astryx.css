@@ -2402,6 +2402,31 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-collapsible-content[hidden] { display: none; }
   @media (prefers-reduced-motion: reduce) { .astryx-collapsible-chevron { transition: none; } }
 
+  .astryx-banner-root[data-container="card"] { border-radius: var(--radius-container); }
+  .astryx-banner-root[data-elevation="low"] { box-shadow: var(--shadow-low); }
+  .astryx-banner-root[data-elevation="med"] { box-shadow: var(--shadow-med); }
+  .astryx-banner-root[data-elevation="high"] { box-shadow: var(--shadow-high); }
+  .astryx-banner {
+    display: flex; align-items: flex-start; flex-wrap: wrap; border-radius: inherit;
+    gap: var(--spacing-3) var(--spacing-2); padding: var(--spacing-3) var(--spacing-4);
+    background: var(--_banner-fill, transparent); color: var(--_banner-ink, var(--color-text-primary));
+  }
+  .astryx-banner[data-status="info"] { --_banner-fill: light-dark(#0082fb33, #0082fb3f); --_banner-ink: var(--color-text-blue); }
+  .astryx-banner[data-status="success"] { --_banner-fill: var(--color-success-muted); --_banner-ink: var(--color-on-success-muted); }
+  .astryx-banner[data-status="warning"] { --_banner-fill: var(--color-warning-muted); --_banner-ink: var(--color-on-warning-muted); }
+  .astryx-banner[data-status="error"] { --_banner-fill: var(--color-error-muted); --_banner-ink: var(--color-on-error-muted); }
+  .astryx-banner[data-centered] { align-items: center; }
+  .astryx-banner-icon { display: flex; flex: none; }
+  .astryx-banner-message { flex: 1; min-width: 0; overflow-wrap: anywhere; --_astryx-text-overflow-wrap: anywhere; }
+  .astryx-banner[data-has-action] > .astryx-banner-message { flex-basis: 8rem; }
+  .astryx-banner-title { font-size: var(--text-label-size); font-weight: var(--font-weight-semibold); line-height: var(--text-label-leading); }
+  .astryx-banner-description { font-size: var(--text-supporting-size); line-height: var(--text-supporting-leading); }
+  .astryx-banner-actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: var(--spacing-2); max-width: 100%; margin-inline-start: auto; margin-block: calc(var(--spacing-2) - var(--spacing-3)); color: var(--color-text-primary); }
+  .astryx-banner-dismiss { --color-text-primary: var(--_banner-ink, inherit); }
+  @media (forced-colors: active) {
+    .astryx-banner:is([data-status="info"], [data-status="success"], [data-status="warning"], [data-status="error"]) { outline: 1px solid CanvasText; outline-offset: -1px; }
+  }
+
   .astryx-switch-field { display: grid; gap: var(--spacing-1); }
   .astryx-switch-field__row { display: flex; align-items: center; gap: var(--spacing-2); }
   .astryx-switch-field__row[data-spread] { justify-content: space-between; }

@@ -7,6 +7,7 @@ mod aspect_ratio;
 mod avatar;
 mod avatar_group;
 mod badge;
+mod banner;
 mod blockquote;
 mod breadcrumbs;
 mod button;
@@ -96,6 +97,7 @@ pub use avatar_group::{
     AvatarGroup, AvatarGroupOverflow, AvatarGroupOverflowProps, AvatarGroupProps,
 };
 pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
+pub use banner::{Banner, BannerContainer, BannerProps, BannerStatus, InvalidBannerIdentifier};
 pub use blockquote::{Blockquote, BlockquoteCite};
 pub use breadcrumbs::{
     BreadcrumbItem, BreadcrumbItemProps, Breadcrumbs, BreadcrumbsProps, BreadcrumbsVariant,

@@ -18,6 +18,8 @@ mod avatar_group_overflow;
 mod avatar_status_dot;
 #[path = "showcase/badge.rs"]
 mod badge;
+#[path = "showcase/banner.rs"]
+mod banner;
 #[path = "showcase/blockquote.rs"]
 mod blockquote;
 #[path = "showcase/breadcrumb_item.rs"]
@@ -229,6 +231,7 @@ use avatar_group::AvatarGroupExamples;
 use avatar_group_overflow::AvatarGroupOverflowExamples;
 use avatar_status_dot::AvatarStatusDotExamples;
 use badge::BadgeExamples;
+use banner::BannerExamples;
 use blockquote::BlockquoteExamples;
 use breadcrumb_item::BreadcrumbItemExamples;
 use breadcrumbs::BreadcrumbsExamples;
@@ -406,6 +409,8 @@ fn App() -> Element {
                 a { href: "#spinner-examples", "Spinner examples" }
                 " · "
                 a { href: "#badge-examples", "Badge examples" }
+                " · "
+                a { href: "#banner-examples", "Banner examples" }
                 " · "
                 a { href: "#avatar-status-dot-examples", "AvatarStatusDot examples" }
                 " · "
@@ -700,6 +705,7 @@ fn App() -> Element {
             LayoutExamples {}
             SpinnerExamples {}
             BadgeExamples {}
+            BannerExamples {}
             AvatarStatusDotExamples {}
             AvatarExamples {}
             AvatarGroupOverflowExamples {}
