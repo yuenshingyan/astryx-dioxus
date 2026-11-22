@@ -2663,6 +2663,26 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-side-nav-item {
+    display: flex; align-items: center; gap: var(--spacing-2); inline-size: 100%; box-sizing: border-box;
+    min-block-size: var(--size-element-md); padding: 0 var(--spacing-2); border: 0; border-radius: var(--radius-element);
+    background: transparent; color: var(--color-text-primary); text-align: start; text-decoration: none;
+    font-family: inherit; font-size: var(--text-label-size); line-height: var(--text-label-leading); cursor: pointer;
+  }
+  .astryx-side-nav-item[data-size="sm"] { min-block-size: var(--size-element-sm); padding-inline: var(--spacing-1); }
+  .astryx-side-nav-item[data-size="lg"] { min-block-size: var(--size-element-lg); }
+  .astryx-side-nav-item__icon, .astryx-side-nav-item__end { display: flex; flex: none; }
+  .astryx-side-nav-item__label { flex: 1; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .astryx-side-nav-item[aria-current="page"] { background: var(--color-neutral); font-weight: var(--font-weight-medium); }
+  @media (hover: hover) { .astryx-side-nav-item:not([aria-disabled], [aria-current]):hover { background: var(--color-background-muted); } }
+  .astryx-side-nav-item:not([aria-disabled], [aria-current]):active { background: var(--color-overlay-pressed); }
+  .astryx-side-nav-item[aria-disabled="true"] { color: var(--color-text-disabled); cursor: default; }
+  .astryx-side-nav-item:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+  @media (forced-colors: active) {
+    .astryx-side-nav-item[aria-current="page"] { background: Highlight; color: HighlightText; }
+    .astryx-side-nav-item[aria-disabled="true"] { color: GrayText; }
+  }
+
   .astryx-side-nav-section { display: flex; flex-direction: column; padding-block: var(--spacing-1); }
   .astryx-side-nav-section__header {
     display: flex;
