@@ -196,6 +196,8 @@ mod status_dot;
 mod switch;
 #[path = "showcase/syntax_theme.rs"]
 mod syntax_theme;
+#[path = "showcase/tab.rs"]
+mod tab;
 #[path = "showcase/table.rs"]
 mod table;
 #[path = "showcase/table_header.rs"]
@@ -334,6 +336,7 @@ use stack::{StackExamples, StackItemExamples};
 use status_dot::StatusDotExamples;
 use switch::SwitchExamples;
 use syntax_theme::SyntaxThemeExamples;
+use tab::TabExamples;
 use table::TableExamples;
 use table_header::TableHeaderExamples;
 use table_selection_toolbar::TableSelectionToolbarExamples;
@@ -562,6 +565,8 @@ fn App() -> Element {
                 a { href: "#outline-examples", "Outline examples" }
                 " · "
                 a { href: "#pagination-examples", "Pagination examples" }
+                " · "
+                a { href: "#tab-examples", "Tab examples" }
                 " · "
                 a { href: "#resize-handle-examples", "ResizeHandle examples" }
                 " · "
@@ -809,6 +814,7 @@ fn App() -> Element {
             GridExamples {}
             OutlineExamples {}
             PaginationExamples {}
+            TabExamples {}
             ResizeHandleExamples {}
             GridSpanExamples {}
             HStackExamples {}

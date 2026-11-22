@@ -2430,6 +2430,25 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     .astryx-banner:is([data-status="info"], [data-status="success"], [data-status="warning"], [data-status="error"]) { outline: 1px solid CanvasText; outline-offset: -1px; }
   }
 
+  .astryx-tab { position: relative; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; gap: var(--spacing-1); min-block-size: var(--size-element-md); padding: 0 var(--spacing-3); border: 0; border-radius: var(--radius-element); background: transparent; color: var(--color-text-secondary); font: inherit; font-size: var(--text-label-size); line-height: var(--text-label-leading); text-decoration: none; white-space: nowrap; cursor: pointer; }
+  .astryx-tab[data-size="sm"] { min-block-size: var(--size-element-sm); }
+  .astryx-tab[data-size="lg"] { min-block-size: var(--size-element-lg); }
+  .astryx-tab__icon, .astryx-tab__end { display: inline-flex; align-items: center; }
+  .astryx-tab__label { display: inline-grid; }
+  .astryx-tab__label > span { grid-area: 1 / 1; }
+  .astryx-tab__sizer { visibility: hidden; font-weight: var(--font-weight-semibold); }
+  .astryx-tab:is([aria-current], [aria-selected="true"]) { color: var(--color-text-primary); font-weight: var(--font-weight-semibold); }
+  .astryx-tab-indicator { position: absolute; inset-inline: var(--spacing-3); inset-block-end: var(--_tab-indicator-bottom, -1px); block-size: 2px; border-radius: var(--radius-full); pointer-events: none; }
+  .astryx-tab:is([aria-current], [aria-selected="true"]) > .astryx-tab-indicator { background: var(--color-accent); }
+  @media (hover: hover) { .astryx-tab:not([aria-disabled]):hover { background: var(--color-overlay-hover); } }
+  .astryx-tab:not([aria-disabled]):active { background: var(--color-overlay-pressed); }
+  .astryx-tab[aria-disabled] { color: var(--color-text-disabled); cursor: default; }
+  .astryx-tab:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+  @media (forced-colors: active) {
+    .astryx-tab:is([aria-current], [aria-selected="true"]) > .astryx-tab-indicator { border-block-end: 2px solid Highlight; }
+    .astryx-tab[aria-disabled] { color: GrayText; }
+  }
+
   .astryx-pagination { display: flex; align-items: center; flex-wrap: wrap; gap: var(--spacing-1); }
   .astryx-pagination__summary { padding-inline: var(--spacing-2); color: var(--color-text-secondary); font-size: var(--text-supporting-size); }
   .astryx-pagination .astryx-button[aria-current="page"] { background-color: var(--color-neutral); }
