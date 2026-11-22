@@ -226,6 +226,8 @@ mod token;
 mod toolbar;
 #[path = "showcase/tooltip.rs"]
 mod tooltip;
+#[path = "showcase/top_nav.rs"]
+mod top_nav;
 #[path = "showcase/top_nav_featured_card.rs"]
 mod top_nav_featured_card;
 #[path = "showcase/top_nav_heading.rs"]
@@ -353,6 +355,7 @@ use toggle_button_group::ToggleButtonGroupExamples;
 use token::TokenExamples;
 use toolbar::ToolbarExamples;
 use tooltip::TooltipExamples;
+use top_nav::TopNavExamples;
 use top_nav_featured_card::TopNavFeaturedCardExamples;
 use top_nav_heading::TopNavHeadingExamples;
 use top_nav_item::TopNavItemExamples;
@@ -629,6 +632,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#top-nav-item-examples", "TopNavItem examples" }
                 " · "
+                a { href: "#top-nav-examples", "TopNav examples" }
+                " · "
                 a { href: "#top-nav-featured-card-examples", "TopNavMegaMenuFeaturedCard examples" }
                 " · "
                 a { href: "#top-nav-mega-menu-item-examples", "TopNavMegaMenuItem examples" }
@@ -849,6 +854,7 @@ fn App() -> Element {
             SideNavCollapseButtonExamples {}
             TopNavHeadingExamples {}
             TopNavItemExamples {}
+            TopNavExamples {}
             TopNavFeaturedCardExamples {}
             TopNavMegaMenuItemExamples {}
             NavIconExamples {}

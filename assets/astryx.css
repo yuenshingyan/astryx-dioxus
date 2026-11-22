@@ -2647,6 +2647,14 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-top-nav { display: flex; flex-wrap: wrap; align-items: center; inline-size: 100%; box-sizing: border-box; padding: var(--spacing-2); }
+  .astryx-top-nav__leading, .astryx-top-nav__end[data-balanced] { flex: 1 1 0%; min-inline-size: fit-content; }
+  .astryx-top-nav__leading, .astryx-top-nav__start, .astryx-top-nav__end { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-1); }
+  .astryx-top-nav__leading { gap: var(--spacing-4); }
+  .astryx-top-nav__heading { display: flex; align-items: center; }
+  .astryx-top-nav__center { display: flex; align-items: center; justify-content: center; gap: var(--spacing-1); flex: 1000 1 min-content; min-inline-size: 0; max-inline-size: max-content; }
+  .astryx-top-nav__end { justify-content: flex-end; margin-inline-start: auto; max-inline-size: 100%; }
+
   .astryx-top-nav-item {
     display: inline-flex; align-items: center; gap: var(--spacing-2); padding: var(--spacing-1-5) var(--spacing-3);
     background: transparent; border: 0; border-radius: var(--radius-element); color: var(--color-text-secondary);
