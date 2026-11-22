@@ -162,6 +162,8 @@ mod progress_bar;
 mod radio_indicator;
 #[path = "showcase/radio_list.rs"]
 mod radio_list;
+#[path = "showcase/resize_handle.rs"]
+mod resize_handle;
 #[path = "showcase/scrollable_area.rs"]
 mod scrollable_area;
 #[path = "showcase/section.rs"]
@@ -311,6 +313,7 @@ use overlay::OverlayExamples;
 use progress_bar::ProgressBarExamples;
 use radio_indicator::RadioIndicatorExamples;
 use radio_list::RadioListExamples;
+use resize_handle::ResizeHandleExamples;
 use scrollable_area::ScrollableAreaExamples;
 use section::SectionExamples;
 use selectable_card::SelectableCardExamples;
@@ -549,6 +552,8 @@ fn App() -> Element {
                 a { href: "#stack-item-examples", "StackItem examples" }
                 " · "
                 a { href: "#grid-examples", "Grid examples" }
+                " · "
+                a { href: "#resize-handle-examples", "ResizeHandle examples" }
                 " · "
                 a { href: "#grid-span-examples", "GridSpan examples" }
                 " · "
@@ -792,6 +797,7 @@ fn App() -> Element {
             StackExamples {}
             StackItemExamples {}
             GridExamples {}
+            ResizeHandleExamples {}
             GridSpanExamples {}
             HStackExamples {}
             VStackExamples {}

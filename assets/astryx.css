@@ -2427,6 +2427,16 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     .astryx-banner:is([data-status="info"], [data-status="success"], [data-status="warning"], [data-status="error"]) { outline: 1px solid CanvasText; outline-offset: -1px; }
   }
 
+  .astryx-resize-handle { display: grid; place-items: center; position: relative; flex: none; inline-size: 12px; align-self: stretch; }
+  .astryx-resize-handle[aria-orientation="horizontal"] { inline-size: auto; block-size: 12px; }
+  .astryx-resize-handle[data-divider]::before { content: ""; position: absolute; inset-block: 0; inset-inline-start: 50%; border-inline-start: var(--border-width) solid var(--color-border); }
+  .astryx-resize-handle[data-divider][aria-orientation="horizontal"]::before { inset: 50% 0 auto; border-inline-start: 0; border-block-start: var(--border-width) solid var(--color-border); }
+  .astryx-resize-handle-pill { position: relative; inline-size: 6px; block-size: 24px; border-radius: var(--radius-full); background: var(--color-border-emphasized); }
+  .astryx-resize-handle[aria-orientation="horizontal"] > .astryx-resize-handle-pill { inline-size: 24px; block-size: 6px; }
+  .astryx-resize-handle[data-auto-hide]:not(:hover, :focus-visible) > .astryx-resize-handle-pill { visibility: hidden; }
+  .astryx-resize-handle:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); }
+  @media (forced-colors: active) { .astryx-resize-handle-pill { border: 1px solid CanvasText; } }
+
   .astryx-switch-field { display: grid; gap: var(--spacing-1); }
   .astryx-switch-field__row { display: flex; align-items: center; gap: var(--spacing-2); }
   .astryx-switch-field__row[data-spread] { justify-content: space-between; }
