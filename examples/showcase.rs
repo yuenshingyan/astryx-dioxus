@@ -150,6 +150,8 @@ mod scrollable_area;
 mod section;
 #[path = "showcase/selectable_card.rs"]
 mod selectable_card;
+#[path = "showcase/selector_option.rs"]
+mod selector_option;
 #[path = "showcase/side_nav_collapse_button.rs"]
 mod side_nav_collapse_button;
 #[path = "showcase/side_nav_heading.rs"]
@@ -275,6 +277,7 @@ use radio_indicator::RadioIndicatorExamples;
 use scrollable_area::ScrollableAreaExamples;
 use section::SectionExamples;
 use selectable_card::SelectableCardExamples;
+use selector_option::SelectorOptionExamples;
 use side_nav_collapse_button::SideNavCollapseButtonExamples;
 use side_nav_heading::SideNavHeadingExamples;
 use side_nav_section::SideNavSectionExamples;
@@ -358,6 +361,8 @@ fn App() -> Element {
                 a { href: "#list-examples", "List examples" }
                 " · "
                 a { href: "#item-examples", "Item examples" }
+                " · "
+                a { href: "#selector-option-examples", "SelectorOption examples" }
                 " · "
                 a { href: "#layout-header-examples", "LayoutHeader examples" }
                 " · "
@@ -634,6 +639,7 @@ fn App() -> Element {
             LinkExamples {}
             ListExamples {}
             ItemExamples {}
+            SelectorOptionExamples {}
             MetadataListItemExamples {}
             MetadataListExamples {}
             MediaThemeExamples {}

@@ -55,6 +55,7 @@ mod progress_bar;
 mod scrollable_area;
 mod section;
 mod selectable_card;
+mod selector;
 mod side_nav;
 mod size_context;
 mod skeleton;
@@ -196,6 +197,7 @@ pub use scrollable_area::{
 };
 pub use section::{InvalidSectionVariant, Section, SectionDivider, SectionProps, SectionVariant};
 pub use selectable_card::{SelectableCard, SelectableCardError, SelectableCardProps};
+pub use selector::{SelectorOption, SelectorOptionProps};
 pub use side_nav::{
     SideNavCollapseButton, SideNavCollapseButtonProps, SideNavControlledCollapsible,
     SideNavHeading, SideNavHeadingProps, SideNavSection, SideNavSectionProps,
