@@ -37,6 +37,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - CollapsibleGroup follows `Collapsible/CollapsibleGroup.tsx`, its context and spec, and the Single and Multiple Accordion arrangements at the same pin. See `docs/collapsible-group-port.md`.
 - Collapsible follows `Collapsible/Collapsible.tsx`, its spec, and the Without Card arrangement at the same pin. See `docs/collapsible-port.md`.
 - The LinkProvider showcase adapts `LinkProvider/LinkProviderCustomLink.tsx` at the same pin. See `docs/link-provider-port.md`.
+- Switch follows `Switch/Switch.tsx`, its spec, and three adapted catalog arrangements at the same pin. See `docs/switch-port.md`.
 - The TextInput clear action follows `Field/InputClearButton.tsx` and the Search arrangement at the same pin. See `docs/input-clear-button-port.md`.
 - TextInput follows `TextInput/TextInput.tsx`, its spec, and parts of three catalog arrangements at the same pin. See `docs/text-input-port.md`.
 - TextArea follows `TextArea/TextArea.tsx`, its spec, and three adapted catalog arrangements at the same pin. See `docs/text-area-port.md`.
