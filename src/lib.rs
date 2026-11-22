@@ -217,7 +217,8 @@ pub use selectable_card::{SelectableCard, SelectableCardError, SelectableCardPro
 pub use selector::{SelectorOption, SelectorOptionProps};
 pub use side_nav::{
     SideNavCollapseButton, SideNavCollapseButtonProps, SideNavControlledCollapsible,
-    SideNavHeading, SideNavHeadingProps, SideNavSection, SideNavSectionProps,
+    SideNavHeading, SideNavHeadingProps, SideNavItem, SideNavItemProps, SideNavSection,
+    SideNavSectionProps,
 };
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
 pub use skeleton::{Skeleton, SkeletonError, SkeletonLength, SkeletonRadius};
