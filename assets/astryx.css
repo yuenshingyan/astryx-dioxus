@@ -2375,6 +2375,8 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-field__control-status:has(> [data-size="sm"]) { --_field-status-overlap: calc(var(--size-element-sm) / 2); }
   .astryx-field__control-status:has(> [data-size="lg"]) { --_field-status-overlap: calc(var(--size-element-lg) / 2); }
   .astryx-field__control-status > .astryx-field-status[data-variant="attached"] { position: relative; z-index: -1; }
+  .astryx-radio-list { display: flex; flex-direction: column; gap: var(--spacing-2); }
+  .astryx-radio-list[data-orientation="horizontal"] { flex-direction: row; gap: var(--spacing-5); }
   .astryx-checkbox-list-item--selected { background-color: var(--color-accent-muted); }
   .astryx-checkbox-list-item__description { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .astryx-checkbox-input__row { display: flex; align-items: center; gap: var(--spacing-2); }

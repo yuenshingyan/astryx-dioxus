@@ -150,6 +150,8 @@ mod overlay;
 mod progress_bar;
 #[path = "showcase/radio_indicator.rs"]
 mod radio_indicator;
+#[path = "showcase/radio_list.rs"]
+mod radio_list;
 #[path = "showcase/scrollable_area.rs"]
 mod scrollable_area;
 #[path = "showcase/section.rs"]
@@ -283,6 +285,7 @@ use nav_icon::NavIconExamples;
 use overlay::OverlayExamples;
 use progress_bar::ProgressBarExamples;
 use radio_indicator::RadioIndicatorExamples;
+use radio_list::RadioListExamples;
 use scrollable_area::ScrollableAreaExamples;
 use section::SectionExamples;
 use selectable_card::SelectableCardExamples;
@@ -537,6 +540,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#checkbox-list-examples", "CheckboxList examples" }
                 " · "
+                a { href: "#radio-list-examples", "RadioList examples" }
+                " · "
                 a { href: "#section-examples", "Section examples" }
                 " · "
                 a { href: "#side-nav-heading-examples", "SideNavHeading examples" }
@@ -747,6 +752,7 @@ fn App() -> Element {
             CheckboxIndicatorExamples {}
             CheckboxInputExamples {}
             CheckboxListExamples {}
+            RadioListExamples {}
             SectionExamples {}
             SideNavHeadingExamples {}
             MobileNavToggleExamples {}
