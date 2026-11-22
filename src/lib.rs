@@ -56,6 +56,7 @@ mod overlay;
 mod private_attributes;
 mod progress_bar;
 mod radio_list;
+mod resizable;
 mod scrollable_area;
 mod section;
 mod selectable_card;
@@ -209,6 +210,7 @@ pub use progress_bar::{
 pub use radio_list::{
     RadioList, RadioListItem, RadioListItemProps, RadioListOrientation, RadioListProps,
 };
+pub use resizable::{ResizeDirection, ResizeHandle, ResizeHandleProps};
 pub use scrollable_area::{
     ScrollAxis, ScrollOverscroll, ScrollableArea, ScrollableAreaProps, ScrollableAreaRole,
     ScrollableAreaStickyContainment,
