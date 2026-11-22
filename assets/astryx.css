@@ -2721,6 +2721,14 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-side-nav { display: flex; flex-direction: column; box-sizing: border-box; inline-size: 260px; max-inline-size: 100%; block-size: 100%; overflow: hidden; background-color: inherit; }
+  .astryx-side-nav__top, .astryx-side-nav__bottom { display: flex; flex-direction: column; flex-shrink: 0; padding: var(--spacing-2); gap: var(--spacing-2); background-color: inherit; }
+  .astryx-side-nav__bottom { margin-block-start: auto; padding-block-start: var(--spacing-1); }
+  .astryx-side-nav__footer-row { display: flex; align-items: center; gap: var(--spacing-1); }
+  .astryx-side-nav__scrollable { flex: 1; min-block-size: 0; overflow: hidden auto; padding: var(--spacing-2); }
+  .astryx-side-nav__scrollable[data-has-top] { padding-block-start: var(--spacing-1); }
+  .astryx-side-nav__scrollable[data-has-bottom] { padding-block-end: var(--spacing-1); }
+
   .astryx-side-nav-item {
     display: flex; align-items: center; gap: var(--spacing-2); inline-size: 100%; box-sizing: border-box;
     min-block-size: var(--size-element-md); padding: 0 var(--spacing-2); border: 0; border-radius: var(--radius-element);
