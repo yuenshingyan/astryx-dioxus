@@ -3151,6 +3151,21 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 
   .astryx-dropdown-menu-radio-group { display: flex; flex-direction: column; gap: var(--spacing-0-5); }
 
+  .astryx-chat-tool-calls { min-inline-size: 0; }
+  .astryx-chat-tool-calls__row { display: flex; align-items: center; gap: var(--spacing-1-5); box-sizing: border-box; inline-size: 100%; min-block-size: 24px; padding: var(--spacing-0-5) 0; font: inherit; font-size: var(--text-supporting-size); line-height: var(--text-supporting-leading); color: var(--color-text-secondary); text-align: start; }
+  button.astryx-chat-tool-calls__row { cursor: pointer; border: 0; border-radius: var(--radius-element); background: transparent; }
+  @media (hover: hover) { button.astryx-chat-tool-calls__row:hover { background: var(--color-overlay-hover); } }
+  button.astryx-chat-tool-calls__row:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+  .astryx-chat-tool-calls__name, .astryx-chat-tool-calls__target { min-inline-size: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .astryx-chat-tool-calls__name { font-family: var(--font-family-code); font-weight: var(--font-weight-medium); }
+  .astryx-chat-tool-calls__target { flex-shrink: 10; }
+  .astryx-chat-tool-calls__status { display: inline-grid; place-items: center; position: relative; inline-size: 16px; block-size: 16px; flex: none; }
+  .astryx-chat-tool-calls__status[data-status="complete"], .astryx-chat-tool-calls__added { color: var(--color-text-success); }
+  .astryx-chat-tool-calls__status[data-status="error"], .astryx-chat-tool-calls__removed { color: var(--color-text-error); }
+  .astryx-chat-tool-calls__count { flex: none; margin-inline-start: auto; }
+  .astryx-chat-tool-calls__chevron { inline-size: 16px; block-size: 16px; flex: none; }
+  .astryx-chat-tool-calls__row[aria-expanded="true"] > .astryx-chat-tool-calls__chevron { rotate: 180deg; }
+  .astryx-chat-tool-calls__detail { padding-inline-start: var(--spacing-5); }
   .astryx-chat-tokenized-text { display: inline; }
   .astryx-chat-tokenized-text__token { display: inline-flex; align-items: center; height: 1lh; vertical-align: top; }
 

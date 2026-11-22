@@ -116,6 +116,7 @@ pub use chat::{
     ChatMessageMetadataProps, ChatMessageProps, ChatMessageSender, ChatMessageStatus,
     ChatSendButton, ChatSendButtonProps, ChatSendButtonSize, ChatSystemMessage,
     ChatSystemMessageProps, ChatSystemMessageVariant, ChatTokenizedText, ChatTokenizedTextProps,
+    ChatToolCallItem, ChatToolCallStatus, ChatToolCalls, ChatToolCallsProps,
 };
 pub use checkbox_input::{CheckboxInput, CheckboxInputProps};
 pub use checkbox_list::{CheckboxList, CheckboxListItem, CheckboxListItemProps, CheckboxListProps};
