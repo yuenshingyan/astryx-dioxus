@@ -124,6 +124,8 @@ mod field;
 mod field_label;
 #[path = "showcase/field_status.rs"]
 mod field_status;
+#[path = "showcase/file_input.rs"]
+mod file_input;
 #[path = "showcase/form_layout.rs"]
 mod form_layout;
 #[path = "showcase/grid.rs"]
@@ -334,6 +336,7 @@ use empty_state::EmptyStateExamples;
 use field::FieldExamples;
 use field_label::FieldLabelExamples;
 use field_status::FieldStatusExamples;
+use file_input::FileInputExamples;
 use form_layout::FormLayoutExamples;
 use grid::{GridExamples, GridSpanExamples};
 use h_stack::HStackExamples;
@@ -528,6 +531,8 @@ fn App() -> Element {
                 a { href: "#field-label-examples", "FieldLabel examples" }
                 " · "
                 a { href: "#field-examples", "Field examples" }
+                " · "
+                a { href: "#file-input-examples", "FileInput examples" }
                 " · "
                 a { href: "#text-area-examples", "TextArea examples" }
                 " · "
@@ -860,6 +865,7 @@ fn App() -> Element {
             FieldStatusExamples {}
             FieldLabelExamples {}
             FieldExamples {}
+            FileInputExamples {}
             TextAreaExamples {}
             TextInputExamples {}
             InputGroupTextExamples {}

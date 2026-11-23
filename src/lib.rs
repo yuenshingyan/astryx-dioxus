@@ -32,6 +32,7 @@ mod dropdown_menu;
 mod empty_state;
 mod field;
 mod field_status;
+mod file_input;
 mod form_layout;
 mod grid;
 mod h_stack;
@@ -177,6 +178,7 @@ pub use field::{
 pub use field_status::{
     FieldStatus, FieldStatusProps, FieldStatusVariant, InputStatusType, InvalidFieldStatusVariant,
 };
+pub use file_input::{FileInput, FileInputProps};
 pub use form_layout::{
     EntryErrorBehavior, FormLayout, FormLayoutDirection, FormLayoutProps, FormOptionality,
 };
