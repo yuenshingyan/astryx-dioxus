@@ -21,6 +21,7 @@ mod checkbox_list;
 mod citation;
 mod clickable_card;
 mod code;
+mod code_block;
 mod collapsible;
 mod command_palette;
 mod compatibility;
@@ -132,6 +133,7 @@ pub use checkbox_list::{CheckboxList, CheckboxListItem, CheckboxListItemProps, C
 pub use citation::{Citation, CitationProps, CitationSource, CitationVariant};
 pub use clickable_card::{ClickableCard, ClickableCardError};
 pub use code::{Code, CodeColor, CodeProps, CodeSize};
+pub use code_block::{CodeBlock, CodeBlockProps};
 pub use collapsible::{
     Collapsible, CollapsibleChevronPosition, CollapsibleGroup, CollapsibleGroupDensity,
     CollapsibleGroupProps, CollapsibleGroupValue, CollapsibleProps,

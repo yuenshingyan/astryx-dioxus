@@ -78,6 +78,8 @@ mod checkbox_list;
 mod citation;
 #[path = "showcase/clickable_card.rs"]
 mod clickable_card;
+#[path = "showcase/code_block.rs"]
+mod code_block;
 #[path = "showcase/collapsible.rs"]
 mod collapsible;
 #[path = "showcase/command_palette_empty.rs"]
@@ -307,6 +309,7 @@ use checkbox_input::CheckboxInputExamples;
 use checkbox_list::CheckboxListExamples;
 use citation::CitationExamples;
 use clickable_card::ClickableCardExamples;
+use code_block::CodeBlockExamples;
 use collapsible::CollapsibleExamples;
 use command_palette_empty::CommandPaletteEmptyExamples;
 use command_palette_footer::CommandPaletteFooterExamples;
@@ -538,6 +541,8 @@ fn App() -> Element {
                 a { href: "#timer-examples", "Timer examples" }
                 " · "
                 a { href: "#timestamp-examples", "Timestamp examples" }
+                " · "
+                a { href: "#code-block-examples", "Code Block examples" }
                 " · "
                 a { href: "#typeahead-item-examples", "TypeaheadItem examples" }
                 " · "
@@ -862,6 +867,7 @@ fn App() -> Element {
             ThumbnailExamples {}
             TimerExamples {}
             TimestampExamples {}
+            CodeBlockExamples {}
             TypeaheadItemExamples {}
             TableHeaderExamples {}
             TableExamples {}
