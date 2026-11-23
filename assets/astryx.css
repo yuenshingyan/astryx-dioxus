@@ -1,5 +1,6 @@
 /* Adapted from Meta Astryx tokens and Button. See THIRD_PARTY_NOTICES.md. */
 :root, :where(.astryx-theme:is([data-astryx-theme="core"], [data-astryx-theme="astryx"], [data-astryx-theme="neutral"])) {
+  --color-background-body: light-dark(#f1f4f7, #111112);
   --color-accent: light-dark(#0064e0, #0171e3);
   --color-accent-muted: light-dark(#0082fb33, #0082fb3f);
   --color-on-accent: #fff;
@@ -2724,6 +2725,16 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-app-shell { position: relative; display: flex; flex-direction: column; overflow: clip; background: var(--color-background-body); }
+  .astryx-app-shell[data-height="fill"] { block-size: 100dvh; }
+  .astryx-app-shell[data-height="auto"] { min-block-size: 100dvh; }
+  .astryx-app-shell:is([data-variant="surface"], [data-variant="section"]) { background: var(--color-background-surface); }
+  .astryx-app-shell[data-variant="elevated"] .astryx-app-shell-main { background: var(--color-background-surface); }
+  .astryx-app-shell-skip:not(:focus) { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .astryx-app-shell-skip:focus { position: absolute; z-index: 2; inset: var(--spacing-2) auto auto var(--spacing-2); padding: var(--spacing-2) var(--spacing-4); background: var(--color-background-surface); color: var(--color-text-primary); }
+  .astryx-app-shell:dir(rtl) > .astryx-app-shell-skip:focus { inset: var(--spacing-2) var(--spacing-2) auto auto; }
+  .astryx-app-shell-main:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: calc(-1 * var(--focus-outline-width)); }
+
   .astryx-mobile-nav { position: fixed; inset: 0; margin: 0; padding: 0; border: 0; inline-size: 100%; block-size: 100%; max-inline-size: none; max-block-size: none; overflow: clip; background: transparent; }
   .astryx-mobile-nav::backdrop { background: var(--color-scrim, rgb(0 0 0 / 40%)); }
   .astryx-mobile-nav__drawer { position: absolute; inset-block: 0; inset-inline-start: 0; display: flex; flex-direction: column; inline-size: min(var(--_mobile-nav-width), 100%); background: var(--color-background-surface); color: var(--color-text-primary); outline: none; }
