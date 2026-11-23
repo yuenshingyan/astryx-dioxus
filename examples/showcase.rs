@@ -98,6 +98,8 @@ mod command_palette_list;
 mod context_menu_group;
 #[path = "showcase/context_menu_item.rs"]
 mod context_menu_item;
+#[path = "showcase/date_input.rs"]
+mod date_input;
 #[path = "showcase/dialog.rs"]
 mod dialog;
 #[path = "showcase/dialog_header.rs"]
@@ -327,6 +329,7 @@ use command_palette_item::CommandPaletteItemExamples;
 use command_palette_list::CommandPaletteListExamples;
 use context_menu_group::ContextMenuGroupExamples;
 use context_menu_item::ContextMenuItemExamples;
+use date_input::DateInputExamples;
 use dialog::DialogExamples;
 use dialog_header::DialogHeaderExamples;
 use divider::DividerExamples;
@@ -547,6 +550,8 @@ fn App() -> Element {
                 a { href: "#number-input-examples", "NumberInput examples" }
                 " · "
                 a { href: "#time-input-examples", "TimeInput examples" }
+                " · "
+                a { href: "#date-input-examples", "DateInput examples" }
                 " · "
                 a { href: "#input-group-text-examples", "InputGroupText examples" }
                 " · "
@@ -880,6 +885,7 @@ fn App() -> Element {
             TextInputExamples {}
             NumberInputExamples {}
             TimeInputExamples {}
+            DateInputExamples {}
             InputGroupTextExamples {}
             InputGroupExamples {}
             FormLayoutExamples {}

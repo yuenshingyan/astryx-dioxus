@@ -187,6 +187,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/timestamp/`: [Timestamp](docs/timestamp-port.md), with deterministic absolute UTC formats. Localized and relative formats remain open.
 - `src/thumbnail/`: [Thumbnail](docs/thumbnail-port.md), with attachment preview states and separate Open and Remove actions.
 - `src/form_layout/`: [FormLayout](docs/form-layout-port.md), with responsive field arrangement and layer-scoped defaults. FieldLabel consumes the optionality default; input integration remains pending.
+- `src/date_input/`: [Date Input](docs/date-input-port.md), with native Gregorian date entry and form validation. Custom and adaptive calendar presentations remain open.
 - `src/time_input/`: [Time Input](docs/time-input-port.md), with native time entry and form validation. Custom presentation remains open.
 - `src/number_input/`: [Number Input](docs/number-input-port.md), with native numeric editing and form validation. Formatted values and custom steppers remain open.
 - `src/file_input/`: [File Input](docs/file-input-port.md), with a native picker and form behavior. Dropzone and controlled selection remain open.
