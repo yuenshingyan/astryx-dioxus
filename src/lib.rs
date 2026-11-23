@@ -262,9 +262,9 @@ pub use text::{Text, TextTag, Truncation, use_truncation};
 pub use text_area::{TextArea, TextAreaProps};
 pub use text_input::{TextInput, TextInputProps, TextInputType};
 pub use theme::{
-    InvalidSyntaxColor, MediaTheme, MediaThemeFallback, MediaThemeMode, MediaThemeProps,
-    SyntaxColor, SyntaxTheme, SyntaxThemeDefinition, SyntaxThemePreset, SyntaxThemeProps,
-    SyntaxTokenValue,
+    InvalidSyntaxColor, InvalidThemeName, MediaTheme, MediaThemeFallback, MediaThemeMode,
+    MediaThemeProps, SyntaxColor, SyntaxTheme, SyntaxThemeDefinition, SyntaxThemePreset,
+    SyntaxThemeProps, SyntaxTokenValue, Theme, ThemeMode, ThemeName, ThemeProps,
 };
 pub use theme::{
     InvalidTextName, TextColor, TextDisplay, TextJustify, TextSize, TextType, TextWeight, TextWrap,

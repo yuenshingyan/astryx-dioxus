@@ -199,7 +199,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/layer/`: the LayerContentBoundary surface-context utility; not a completed Layer/Popover component.
 - `src/size_context/`: Astryx's shared size context/provider.
 - `src/link/`: Link, [LinkProvider](docs/link-provider-port.md), shared renderer types, target/rel handling, and linkification.
-- `src/text/`, `src/theme/`: Text typography and truncation support, upstream-owned type definitions, [MediaTheme](docs/media-theme-port.md), and [SyntaxTheme](docs/syntax-theme-port.md) for scoped syntax palettes. The standalone Theme checklist remains independent.
+- `src/text/`, `src/theme/`: Text typography and truncation support, upstream-owned type definitions, [MediaTheme](docs/media-theme-port.md), and [SyntaxTheme](docs/syntax-theme-port.md) for scoped syntax palettes. [Theme](docs/theme-port.md) provides stylesheet-backed scopes; root and portal synchronization remain open.
 - `src/hooks/`, `src/tooltip/`: shared press/tooltip renderer bridges under their source owners, plus [Tooltip’s inline-text path](docs/tooltip-inline-port.md).
 - `src/info_tip/`: [InfoTip](docs/info-tip-port.md), a native button that previews and pins plain-text help.
 - `src/motion/`: shared internal timing tables, not a public Motion migration.

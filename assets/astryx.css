@@ -1,5 +1,5 @@
 /* Adapted from Meta Astryx tokens and Button. See THIRD_PARTY_NOTICES.md. */
-:root {
+:root, :where(.astryx-theme:is([data-astryx-theme="core"], [data-astryx-theme="astryx"], [data-astryx-theme="neutral"])) {
   --color-accent: light-dark(#0064e0, #0171e3);
   --color-accent-muted: light-dark(#0082fb33, #0082fb3f);
   --color-on-accent: #fff;
@@ -170,6 +170,9 @@
   --shadow-med: 0 1px 2px light-dark(#0000001a, #00000033), 0 2px 12px light-dark(#0000001a, #00000033);
   --shadow-high: 0 2px 2px light-dark(#0000001a, #00000033), 0 8px 24px light-dark(#0000001a, #0000004d);
 }
+
+.astryx-theme { display: contents; color: var(--color-text-primary); font-family: var(--font-family-body); }
+.astryx-theme[data-astryx-theme="core"] { --_button-radius: initial; }
 
 /* Opt into the catalog's brand theme without replacing the core token defaults. */
 [data-astryx-theme="astryx"] {
