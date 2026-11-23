@@ -66,6 +66,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - Thumbnail follows `Thumbnail/Thumbnail.tsx` and its five catalog templates at the same pin. The offline PNGs in `tests/fixtures/thumbnail/` come from the embedded gallery assets. See `docs/thumbnail-port.md`.
 - FieldStatus follows `FieldStatus/{FieldStatus.tsx,useFieldStatusAnnouncement.ts}`, the Core and Neutral status tokens and glyphs, and its two catalog templates at the same pin. See `docs/field-status-port.md`.
 - Field follows `Field/Field.tsx`, its spec, and four adapted catalog templates at the same pin. See `docs/field-port.md`.
+- Time Input follows the native presentation in `TimeInput/TimeInput.tsx`, its spec, and the adapted Time showcase at the same pin. See `docs/time-input-port.md`.
 - Number Input follows `NumberInput/NumberInput.tsx`, its spec, and the adapted Quantity showcase at the same pin. See `docs/number-input-port.md`.
 - File Input follows the picker mode in `FileInput/FileInput.tsx`, its spec, and the adapted Upload file showcase at the same pin. See `docs/file-input-port.md`.
 - FieldLabel follows `Field/FieldLabel.tsx`, the field optionality and input-container hooks, and two catalog arrangements at the same pin. See `docs/field-label-port.md`.
