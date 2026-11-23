@@ -183,6 +183,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/metadata_list/`: [MetadataList](docs/metadata-list-port.md) and [MetadataListItem](docs/metadata-list-item-port.md), with native description-list pairs, column layouts, and disclosure.
 - `src/empty_state/`: [EmptyState](docs/empty-state-port.md), with native headings, compact layout, and shared rendered-text announcements.
 - `src/timer/`: [Timer](docs/timer-port.md), with elapsed and clock formats and browser-driven duration updates.
+- `src/code_block/`: [Code Block](docs/code-block-port.md), with plain source, a line gutter, and copy feedback. Syntax highlighting and diff remain open.
 - `src/timestamp/`: [Timestamp](docs/timestamp-port.md), with deterministic absolute UTC formats. Localized and relative formats remain open.
 - `src/thumbnail/`: [Thumbnail](docs/thumbnail-port.md), with attachment preview states and separate Open and Remove actions.
 - `src/form_layout/`: [FormLayout](docs/form-layout-port.md), with responsive field arrangement and layer-scoped defaults. FieldLabel consumes the optionality default; input integration remains pending.
