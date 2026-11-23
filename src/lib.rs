@@ -175,6 +175,7 @@ pub use grid::{
 pub use h_stack::{HStack, HStackProps};
 pub use heading::{Heading, HeadingLevel, HeadingProps, HeadingType, InvalidHeadingLevel};
 pub use hooks::use_interactive_role::{InteractiveRole, use_interactive_role};
+pub use i18n::{InternationalizationProvider, InternationalizationProviderProps, MessagesByLocale};
 pub use icon::{
     Icon, IconDefaultSizeContext, IconDefaultSizeProvider, IconEntry, IconRequest, IconSize,
     InvalidIconName, get_extended_icon, register_icons, use_icon_size,

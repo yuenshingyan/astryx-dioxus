@@ -130,6 +130,8 @@ mod info_tip;
 mod input_group;
 #[path = "showcase/input_group_text.rs"]
 mod input_group_text;
+#[path = "showcase/internationalization_provider.rs"]
+mod internationalization_provider;
 #[path = "showcase/item.rs"]
 mod item;
 #[path = "showcase/kbd.rs"]
@@ -315,6 +317,7 @@ use icon_button::IconButtonExamples;
 use info_tip::InfoTipExamples;
 use input_group::InputGroupExamples;
 use input_group_text::InputGroupTextExamples;
+use internationalization_provider::InternationalizationProviderExamples;
 use item::ItemExamples;
 use kbd::KbdExamples;
 use layout::LayoutExamples;
@@ -592,6 +595,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#pagination-examples", "Pagination examples" }
                 " · "
+                a { href: "#internationalization-examples", "InternationalizationProvider examples" }
+                " · "
                 a { href: "#tab-examples", "Tab examples" }
                 " · "
                 a { href: "#resize-handle-examples", "ResizeHandle examples" }
@@ -848,6 +853,7 @@ fn App() -> Element {
             GridExamples {}
             OutlineExamples {}
             PaginationExamples {}
+            InternationalizationProviderExamples {}
             TabExamples {}
             ResizeHandleExamples {}
             GridSpanExamples {}

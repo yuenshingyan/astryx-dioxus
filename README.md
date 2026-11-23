@@ -205,7 +205,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/motion/`: shared internal timing tables, not a public Motion migration.
 - `src/visually_hidden/`: [VisuallyHidden](docs/visually-hidden-port.md), with fixed clipping, custom roots, and the four original patterns.
 - `src/interactive_role_context/`, `src/utils/`: inherited role, shared navigation policy, text-direction and platform-detection adapters; no combined control environment.
-- `src/i18n/`: the required server-safe strong-RTL predicate, not a completed internationalization runtime.
+- `src/i18n/`: the server-safe strong-RTL predicate and [InternationalizationProvider](docs/internationalization-provider-port.md) for scoped plain-text catalogs. Rich catalogs, direction and calendar context remain open.
 - `src/input_group/`: the input-owned internal state contract used by existing controls; not a completed InputGroup component.
 - `src/compatibility/`: adapters for provisional public APIs only. Core components resolve independent upstream-owned contexts instead of a combined Button environment.
 - `src/lib.rs`: selected public re-exports; existing root imports remain available.
