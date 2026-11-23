@@ -56,6 +56,7 @@ mod nav_menu;
 mod outline;
 mod overlay;
 mod pagination;
+mod popover;
 mod private_attributes;
 mod progress_bar;
 mod radio_list;
@@ -227,6 +228,7 @@ pub use overlay::{
     Overlay, OverlayAlign, OverlayPosition, OverlayProps, OverlayScrimMode, OverlayShowOn,
 };
 pub use pagination::{Pagination, PaginationProps, PaginationVariant};
+pub use popover::{Popover, PopoverProps, PopoverTriggerRenderProps};
 pub use progress_bar::{
     InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,
     ProgressBarVariant,
