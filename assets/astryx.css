@@ -3217,6 +3217,11 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-alert-dialog__description { color: var(--color-text-secondary); }
   .astryx-alert-dialog__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--spacing-2); margin-block-start: var(--spacing-4); }
   .astryx-dialog[data-variant="fullscreen"] { inline-size: 100%; block-size: 100%; max-inline-size: none; max-block-size: none; border-radius: 0; }
+  .astryx-dialog.astryx-lightbox[open] { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: var(--spacing-3); }
+  .astryx-lightbox__toolbar { display: flex; justify-content: end; }
+  .astryx-lightbox__figure { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: var(--spacing-3); margin: 0; min-inline-size: 0; }
+  .astryx-lightbox__image { inline-size: 100%; block-size: 100%; object-fit: contain; }
+  .astryx-lightbox__caption { overflow-wrap: anywhere; max-block-size: 25dvh; overflow: auto; text-align: center; }
 }
 
 @layer astryx-base {
