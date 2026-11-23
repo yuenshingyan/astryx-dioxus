@@ -208,7 +208,9 @@ pub use metadata_list::{
     MetadataList, MetadataListColumns, MetadataListItem, MetadataListItemProps,
     MetadataListLabelConfig, MetadataListLabelPosition, MetadataListOrientation, MetadataListProps,
 };
-pub use mobile_nav::{MobileNavToggle, MobileNavToggleProps};
+pub use mobile_nav::{
+    MobileNav, MobileNavProps, MobileNavSide, MobileNavToggle, MobileNavToggleProps,
+};
 pub use nav_icon::{NavIcon, NavIconProps};
 pub use nav_menu::{
     NavHeadingMenu, NavHeadingMenuItem, NavHeadingMenuItemProps, NavHeadingMenuProps,

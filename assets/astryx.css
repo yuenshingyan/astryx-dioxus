@@ -2724,6 +2724,14 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-mobile-nav { position: fixed; inset: 0; margin: 0; padding: 0; border: 0; inline-size: 100%; block-size: 100%; max-inline-size: none; max-block-size: none; overflow: clip; background: transparent; }
+  .astryx-mobile-nav::backdrop { background: var(--color-scrim, rgb(0 0 0 / 40%)); }
+  .astryx-mobile-nav__drawer { position: absolute; inset-block: 0; inset-inline-start: 0; display: flex; flex-direction: column; inline-size: min(var(--_mobile-nav-width), 100%); background: var(--color-background-surface); color: var(--color-text-primary); outline: none; }
+  .astryx-mobile-nav[data-side="end"] > .astryx-mobile-nav__drawer { inset-inline: auto 0; }
+  .astryx-mobile-nav__header { display: flex; align-items: center; gap: var(--spacing-2); padding: var(--spacing-2); }
+  .astryx-mobile-nav__header > button { margin-inline-start: auto; }
+  .astryx-mobile-nav__content { flex: 1; min-block-size: 0; overflow: auto; overscroll-behavior: contain; padding: var(--spacing-2); }
+
   .astryx-side-nav { display: flex; flex-direction: column; box-sizing: border-box; inline-size: 260px; max-inline-size: 100%; block-size: 100%; overflow: hidden; background-color: inherit; }
   .astryx-side-nav__top, .astryx-side-nav__bottom { display: flex; flex-direction: column; flex-shrink: 0; padding: var(--spacing-2); gap: var(--spacing-2); background-color: inherit; }
   .astryx-side-nav__bottom { margin-block-start: auto; padding-block-start: var(--spacing-1); }

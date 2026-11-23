@@ -116,6 +116,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - TableBody follows `Table/TableBody.tsx` and its spec at the same pin. See `docs/table-body-port.md`.
 - TableFooter follows `Table/TableFooter.tsx` and its spec at the same pin. See `docs/table-footer-port.md`.
 - TableHeader follows `Table/TableHeader.tsx` and its spec at the same pin. See `docs/table-header-port.md`.
+- MobileNav follows the native modal drawer in `MobileNav/MobileNav.tsx`, its spec, and the adapted showcase at the same pin. See `docs/mobile-nav-port.md`.
 - MobileNavToggle follows `MobileNav/MobileNavToggle.tsx`, the mobile state contract in `AppShell/AppShellMobileContext.tsx`, and both adapted catalog templates at the same pin. See `docs/mobile-nav-toggle-port.md`.
 - SideNavCollapseButton follows the controlled form of `SideNav/SideNavCollapseButton.tsx`, its spec, and both catalog templates at the same pin. See `docs/side-nav-collapse-button-port.md`.
 - SideNavSection follows `SideNav/SideNavSection.tsx`, its spec, and both catalog templates at the same pin. See `docs/side-nav-section-port.md`.
