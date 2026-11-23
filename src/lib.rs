@@ -146,7 +146,9 @@ pub use dialog::{
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };
-pub use drawer::{DrawerHeader, DrawerHeaderEdgeCompensation, DrawerHeaderProps};
+pub use drawer::{
+    Drawer, DrawerHeader, DrawerHeaderEdgeCompensation, DrawerHeaderProps, DrawerProps, DrawerSide,
+};
 pub use dropdown_menu::{
     DropdownMenuCheckboxItem, DropdownMenuCheckboxItem as ContextMenuCheckboxItem,
     DropdownMenuCheckboxItemProps, DropdownMenuCheckboxItemProps as ContextMenuCheckboxItemProps,

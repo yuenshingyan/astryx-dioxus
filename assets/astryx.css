@@ -3126,7 +3126,9 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   :is(.astryx-drawer-header-end-content, .astryx-dialog-header-end-content):is([data-compensation="all"], [data-compensation="block"]) { margin-block: calc(-1 * var(--spacing-2)); }
   .astryx-dialog-header-focus-title:focus { outline: none; }
   .astryx-dialog { box-sizing: border-box; inline-size: var(--_dialog-width); max-inline-size: calc(100% - 2 * var(--spacing-4)); max-block-size: var(--_dialog-max-height); padding: var(--_dialog-padding); border: 0; border-radius: var(--radius-container); background: var(--color-background-surface); color: var(--color-text-primary); box-shadow: var(--shadow-high); overflow: auto; }
-  .astryx-dialog::backdrop { background: var(--color-overlay); }
+  .astryx-dialog::backdrop, .astryx-drawer::backdrop { background: var(--color-overlay); }
+  .astryx-drawer { position: fixed; inset-block: 0; inset-inline: auto 0; margin: 0; box-sizing: border-box; inline-size: min(var(--_drawer-width), 100%); block-size: 100%; max-inline-size: none; max-block-size: none; padding: var(--_drawer-padding); border: 0; border-inline-start: var(--border-width) solid var(--color-border); background: var(--color-background-surface); color: var(--color-text-primary); box-shadow: var(--shadow-high); overflow: auto; }
+  .astryx-drawer[data-side="start"] { inset-inline: 0 auto; border-inline-start: 0; border-inline-end: var(--border-width) solid var(--color-border); }
   .astryx-alert-dialog__description { color: var(--color-text-secondary); }
   .astryx-alert-dialog__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--spacing-2); margin-block-start: var(--spacing-4); }
   .astryx-dialog[data-variant="fullscreen"] { inline-size: 100%; block-size: 100%; max-inline-size: none; max-block-size: none; border-radius: 0; }
