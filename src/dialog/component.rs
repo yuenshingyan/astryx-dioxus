@@ -38,6 +38,8 @@ pub fn Dialog(
     #[props(default)] width: Option<SizeValue>,
     #[props(default)] max_height: Option<SizeValue>,
     #[props(default)] padding: Option<SpacingStep>,
+    #[props(default)] class: String,
+    #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     let owner = use_hook(|| format!("astryx-dialog-{}", current_scope_id().0));
     let mount_owner = owner.clone();
@@ -67,17 +69,41 @@ pub fn Dialog(
     } else {
         "standard"
     };
+    let class = format!("astryx-dialog {class}");
+    let attributes: Vec<_> = attributes
+        .into_iter()
+        .filter(|attribute| {
+            !matches!(
+                attribute.name,
+                "class"
+                    | "style"
+                    | "open"
+                    | "hidden"
+                    | "data-variant"
+                    | "data-purpose"
+                    | "data-open"
+                    | "data-astryx-dialog-owner"
+                    | "onmounted"
+                    | "onclick"
+                    | "aria-labelledby"
+                    | "aria-label"
+            )
+        })
+        .collect();
+    let has_role = attributes.iter().any(|attribute| attribute.name == "role");
     if is_inline {
-        return rsx! { div { class: "astryx-dialog", "data-variant": variant, style, hidden: !is_open, {children} } };
+        return rsx! { div { class, "data-variant": variant, style, hidden: !is_open,
+            "aria-labelledby": labelled_by, ..attributes, {children}
+        } };
     }
-    let role = (purpose == DialogPurpose::Required).then_some("alertdialog");
+    let role = (!has_role && purpose == DialogPurpose::Required).then_some("alertdialog");
     let purpose = match purpose {
         DialogPurpose::Info => "info",
         DialogPurpose::Form => "form",
         DialogPurpose::Required => "required",
     };
     rsx! {
-        dialog { class: "astryx-dialog", "data-variant": variant, "data-purpose": purpose, "data-open": is_open.to_string(),
+        dialog { class, "data-variant": variant, "data-purpose": purpose, "data-open": is_open.to_string(),
             "data-astryx-dialog-owner": owner, style, role, "aria-label": label, "aria-labelledby": labelled_by,
             onclick: move |event| event.stop_propagation(),
             onmounted: move |_| {
@@ -89,6 +115,7 @@ pub fn Dialog(
                     while eval.recv::<bool>().await.is_ok() { request_close.call(()); }
                 });
             },
+            ..attributes,
             {children}
         }
     }
