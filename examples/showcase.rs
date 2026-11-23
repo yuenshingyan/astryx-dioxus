@@ -6,6 +6,8 @@ use astryx_dioxus::{
 };
 use dioxus::prelude::*;
 
+#[path = "showcase/alert_dialog.rs"]
+mod alert_dialog;
 #[path = "showcase/app_shell.rs"]
 mod app_shell;
 #[path = "showcase/aspect_ratio.rs"]
@@ -263,6 +265,7 @@ mod v_stack;
 #[path = "showcase/visually_hidden.rs"]
 mod visually_hidden;
 
+use alert_dialog::AlertDialogExamples;
 use app_shell::AppShellExamples;
 use aspect_ratio::AspectRatioExamples;
 use avatar::AvatarExamples;
@@ -484,6 +487,8 @@ fn App() -> Element {
                 a { href: "#dialog-header-examples", "DialogHeader examples" }
                 " · "
                 a { href: "#dialog-examples", "Dialog examples" }
+                " · "
+                a { href: "#alert-dialog-examples", "AlertDialog examples" }
                 " · "
                 a { href: "#dropdown-menu-divider-example", "DropdownMenuDivider example" }
                 " · "
@@ -810,6 +815,7 @@ fn App() -> Element {
             DrawerHeaderExamples {}
             DialogHeaderExamples {}
             DialogExamples {}
+            AlertDialogExamples {}
             DropdownMenuGroupExamples {}
             DropdownMenuRadioGroupExamples {}
             DropdownMenuCheckboxItemExamples {}

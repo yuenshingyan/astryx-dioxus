@@ -83,6 +83,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - ChatMessageMetadata follows `Chat/ChatMessageMetadata.tsx`, its spec, and four adapted catalog templates at the same pin. See `docs/chat-message-metadata-port.md`.
 - ChatSendButton follows `Chat/ChatSendButton.tsx`, its spec, and four adapted catalog templates at the same pin. See `docs/chat-send-button-port.md`.
 - ChatSystemMessage follows `Chat/ChatSystemMessage.tsx`, its spec, and four adapted catalog templates at the same pin. See `docs/chat-system-message-port.md`.
+- AlertDialog follows `AlertDialog/AlertDialog.tsx`, its spec, and the adapted Delete Confirmation arrangement at the same pin. See `docs/alert-dialog-port.md`.
 - Dialog follows the native modal behavior in `Dialog/Dialog.tsx`, its spec, and the adapted showcase at the same pin. See `docs/dialog-port.md`.
 - DialogHeader follows `Dialog/DialogHeader.tsx`, its spec, and both adapted catalog templates at the same pin. See `docs/dialog-header-port.md`.
 - DrawerHeader follows `Drawer/DrawerHeader.tsx`, its spec, and three adapted catalog templates at the same pin. See `docs/drawer-header-port.md`.

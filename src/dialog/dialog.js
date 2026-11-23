@@ -4,8 +4,8 @@ if (!dialog) return;
 const sync = () => {
   if (dialog.dataset.open === 'true' && dialog.isConnected && !dialog.open) {
     dialog.showModal();
-    const target = dialog.querySelector('[data-autofocus="dialog-title"]');
-    if (target?.closest('dialog') === dialog) target.focus({preventScroll: true});
+    const target = [...dialog.querySelectorAll('[data-autofocus]')].find(node => node.closest('dialog') === dialog);
+    target?.focus({preventScroll: true});
   } else if (dialog.dataset.open !== 'true' && dialog.open) dialog.close();
 };
 const cancel = event => {

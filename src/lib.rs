@@ -2,6 +2,7 @@
 //!
 //! Include [`STYLES`] once using `document::Style` in your application root.
 
+mod alert_dialog;
 mod app_shell;
 mod aspect_ratio;
 mod avatar;
@@ -88,6 +89,7 @@ mod utils;
 mod v_stack;
 mod visually_hidden;
 
+pub use alert_dialog::{AlertDialog, AlertDialogProps};
 pub use app_shell::{
     AppShell, AppShellMobileContext, AppShellMobileProvider, AppShellMobileProviderProps,
     AppShellMobileState, AppShellProps, AppShellVariant, use_app_shell_mobile,
