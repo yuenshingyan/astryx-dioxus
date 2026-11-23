@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+
+await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
+  await send('Network.enable');
+  await send('Network.setBlockedURLs', {urls: ['https://*']});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8253'});
+  const trigger = "document.getElementById('bottom-sheet-trigger')";
+  const panel = "document.querySelector('#bottom-sheet-examples dialog:modal')";
+  await waitFor(trigger);
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
+  await evaluate(`${trigger}.focus(); ${trigger}.click()`);
+  await waitFor(`${panel} && document.activeElement === ${panel}.firstElementChild`);
+  assert.ok(await evaluate(`(() => { const rect = ${panel}.getBoundingClientRect(); return rect.left === 0 && rect.right === innerWidth && Math.abs(rect.bottom - innerHeight) < 1 && rect.height <= innerHeight * .62 + 1; })()`));
+  const {nodes} = await send('Accessibility.getFullAXTree');
+  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'dialog' && node.name?.value === 'Filters'));
+  const first = `${panel}.querySelector('input[type=checkbox]')`;
+  await evaluate(`${first}.click()`);
+  await waitFor(`${first}.checked`);
+  for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key:'Escape', code:'Escape', windowsVirtualKeyCode:27});
+  const closed = `!${panel} && document.activeElement === ${trigger}`;
+  await waitFor(closed);
+  await evaluate(`${trigger}.click()`);
+  await waitFor(`${panel} && ${first}.checked`);
+  await evaluate(`Array.from(${panel}.querySelectorAll('button')).find(button => button.textContent.trim() === 'Apply').click()`);
+  await waitFor(closed);
+  assert.deepEqual(exceptions, []);
+  console.log('BottomSheet: modal name, bottom geometry, retained filters, dismissal and focus return passed');
+});

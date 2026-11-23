@@ -10,6 +10,7 @@ mod avatar_group;
 mod badge;
 mod banner;
 mod blockquote;
+mod bottom_sheet;
 mod breadcrumbs;
 mod button;
 mod button_group;
@@ -114,6 +115,7 @@ pub use avatar_group::{
 pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
 pub use banner::{Banner, BannerContainer, BannerProps, BannerStatus, InvalidBannerIdentifier};
 pub use blockquote::{Blockquote, BlockquoteCite};
+pub use bottom_sheet::{BottomSheet, BottomSheetHeight, BottomSheetProps};
 pub use breadcrumbs::{
     BreadcrumbItem, BreadcrumbItemProps, Breadcrumbs, BreadcrumbsProps, BreadcrumbsVariant,
     InvalidBreadcrumbsVariant,
