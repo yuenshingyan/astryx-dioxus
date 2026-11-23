@@ -1659,7 +1659,9 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     overflow-wrap: break-word;
     word-break: break-word;
   }
-  .astryx-date-input, .astryx-time-input, .astryx-number-input { display: flex; flex-direction: column; gap: var(--spacing-2); max-inline-size: 100%; }
+  .astryx-date-time-input__segments { display: flex; flex-wrap: wrap; gap: var(--spacing-2); }
+  .astryx-date-time-input__segments > input { flex: 1 1 auto; }
+  .astryx-date-time-input, .astryx-date-input, .astryx-time-input, .astryx-number-input { display: flex; flex-direction: column; gap: var(--spacing-2); max-inline-size: 100%; }
   .astryx-date-input__control, .astryx-time-input__control, .astryx-number-input__control {
     min-inline-size: 0;
     box-sizing: border-box;

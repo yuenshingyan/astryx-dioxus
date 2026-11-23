@@ -26,6 +26,7 @@ mod collapsible;
 mod command_palette;
 mod compatibility;
 mod date_input;
+mod date_time_input;
 mod dialog;
 mod divider;
 mod drawer;
@@ -149,6 +150,7 @@ pub use command_palette::{
     CommandPaletteItem, CommandPaletteItemProps, CommandPaletteList, CommandPaletteListProps,
 };
 pub use date_input::{DateInput, DateInputProps};
+pub use date_time_input::{DateTimeInput, DateTimeInputProps};
 pub use dialog::{
     Dialog, DialogHeader, DialogHeaderEdgeCompensation, DialogHeaderProps, DialogProps,
     DialogPurpose, DialogVariant,
