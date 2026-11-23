@@ -137,7 +137,10 @@ pub use command_palette::{
     CommandPaletteGroup, CommandPaletteGroupProps, CommandPaletteInput, CommandPaletteInputProps,
     CommandPaletteItem, CommandPaletteItemProps, CommandPaletteList, CommandPaletteListProps,
 };
-pub use dialog::{DialogHeader, DialogHeaderEdgeCompensation, DialogHeaderProps};
+pub use dialog::{
+    Dialog, DialogHeader, DialogHeaderEdgeCompensation, DialogHeaderProps, DialogProps,
+    DialogPurpose, DialogVariant,
+};
 pub use divider::{
     Divider, DividerLabel, DividerOrientation, DividerVariant, InvalidDividerVariant,
 };

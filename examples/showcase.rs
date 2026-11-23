@@ -94,6 +94,8 @@ mod command_palette_list;
 mod context_menu_group;
 #[path = "showcase/context_menu_item.rs"]
 mod context_menu_item;
+#[path = "showcase/dialog.rs"]
+mod dialog;
 #[path = "showcase/dialog_header.rs"]
 mod dialog_header;
 #[path = "showcase/divider.rs"]
@@ -305,6 +307,7 @@ use command_palette_item::CommandPaletteItemExamples;
 use command_palette_list::CommandPaletteListExamples;
 use context_menu_group::ContextMenuGroupExamples;
 use context_menu_item::ContextMenuItemExamples;
+use dialog::DialogExamples;
 use dialog_header::DialogHeaderExamples;
 use divider::DividerExamples;
 use drawer_header::DrawerHeaderExamples;
@@ -479,6 +482,8 @@ fn App() -> Element {
                 a { href: "#drawer-header-examples", "DrawerHeader examples" }
                 " · "
                 a { href: "#dialog-header-examples", "DialogHeader examples" }
+                " · "
+                a { href: "#dialog-examples", "Dialog examples" }
                 " · "
                 a { href: "#dropdown-menu-divider-example", "DropdownMenuDivider example" }
                 " · "
@@ -804,6 +809,7 @@ fn App() -> Element {
             DividerExamples {}
             DrawerHeaderExamples {}
             DialogHeaderExamples {}
+            DialogExamples {}
             DropdownMenuGroupExamples {}
             DropdownMenuRadioGroupExamples {}
             DropdownMenuCheckboxItemExamples {}
