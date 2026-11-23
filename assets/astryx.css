@@ -3125,6 +3125,9 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   :is(.astryx-drawer-header-end-content, .astryx-dialog-header-end-content):is([data-compensation="all"], [data-compensation="inline"]) { margin-inline-end: calc(-1 * var(--spacing-2)); }
   :is(.astryx-drawer-header-end-content, .astryx-dialog-header-end-content):is([data-compensation="all"], [data-compensation="block"]) { margin-block: calc(-1 * var(--spacing-2)); }
   .astryx-dialog-header-focus-title:focus { outline: none; }
+  .astryx-dialog { box-sizing: border-box; inline-size: var(--_dialog-width); max-inline-size: calc(100% - 2 * var(--spacing-4)); max-block-size: var(--_dialog-max-height); padding: var(--_dialog-padding); border: 0; border-radius: var(--radius-container); background: var(--color-background-surface); color: var(--color-text-primary); box-shadow: var(--shadow-high); overflow: auto; }
+  .astryx-dialog::backdrop { background: var(--color-overlay); }
+  .astryx-dialog[data-variant="fullscreen"] { inline-size: 100%; block-size: 100%; max-inline-size: none; max-block-size: none; border-radius: 0; }
 }
 
 @layer astryx-base {
