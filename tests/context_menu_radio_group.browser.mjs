@@ -13,6 +13,11 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'group' && node.name?.value === 'Sort documents'));
   await evaluate(`${name}.click()`);
   await waitFor(`${name}.getAttribute('aria-checked') === 'true' && ${recent}.getAttribute('aria-checked') === 'false'`);
+  const owner = `document.getElementById('context-menu-sort-owner')`;
+  assert.deepEqual(await evaluate(`[${owner}.getAttribute('role'), ${owner}.getAttribute('aria-disabled'), ${owner}.tabIndex]`), ['menuitemradio', 'true', -1]);
+  await evaluate(`${owner}.click()`);
+  assert.equal(await evaluate(`${owner}.getAttribute('aria-checked')`), 'false');
+  assert.equal(await evaluate(`${name}.getAttribute('aria-checked')`), 'true');
   assert.deepEqual(exceptions, []);
   console.log('ContextMenuRadioGroup: accessible group name and exclusive selection passed');
 });
