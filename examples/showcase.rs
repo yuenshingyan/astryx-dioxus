@@ -178,6 +178,8 @@ mod mobile_nav_toggle;
 mod nav_heading_menu_item;
 #[path = "showcase/nav_icon.rs"]
 mod nav_icon;
+#[path = "showcase/number_input.rs"]
+mod number_input;
 #[path = "showcase/outline.rs"]
 mod outline;
 #[path = "showcase/overlay.rs"]
@@ -363,6 +365,7 @@ use mobile_nav::MobileNavExamples;
 use mobile_nav_toggle::MobileNavToggleExamples;
 use nav_heading_menu_item::NavHeadingMenuItemExamples;
 use nav_icon::NavIconExamples;
+use number_input::NumberInputExamples;
 use outline::OutlineExamples;
 use overlay::OverlayExamples;
 use pagination::PaginationExamples;
@@ -537,6 +540,8 @@ fn App() -> Element {
                 a { href: "#text-area-examples", "TextArea examples" }
                 " · "
                 a { href: "#text-input-examples", "TextInput examples" }
+                " · "
+                a { href: "#number-input-examples", "NumberInput examples" }
                 " · "
                 a { href: "#input-group-text-examples", "InputGroupText examples" }
                 " · "
@@ -868,6 +873,7 @@ fn App() -> Element {
             FileInputExamples {}
             TextAreaExamples {}
             TextInputExamples {}
+            NumberInputExamples {}
             InputGroupTextExamples {}
             InputGroupExamples {}
             FormLayoutExamples {}
