@@ -80,6 +80,7 @@ mod text_input;
 mod theme;
 mod thumbnail;
 mod timer;
+mod timestamp;
 mod toggle_button;
 mod token;
 mod toolbar;
@@ -283,6 +284,7 @@ pub use theme::{
 };
 pub use thumbnail::{Thumbnail, ThumbnailProps, ThumbnailRemoveVisibility};
 pub use timer::{Timer, TimerFormat, TimerProps};
+pub use timestamp::{Timestamp, TimestampFormat, TimestampProps};
 pub use toggle_button::{
     ToggleButton, ToggleButtonGroup, ToggleButtonGroupProps, ToggleButtonGroupSelection,
     ToggleButtonProps,

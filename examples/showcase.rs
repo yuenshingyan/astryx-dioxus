@@ -240,6 +240,8 @@ mod theme;
 mod thumbnail;
 #[path = "showcase/timer.rs"]
 mod timer;
+#[path = "showcase/timestamp.rs"]
+mod timestamp;
 #[path = "showcase/toggle_button.rs"]
 mod toggle_button;
 #[path = "showcase/toggle_button_group.rs"]
@@ -386,6 +388,7 @@ use text_input::TextInputExamples;
 use theme::ThemeExamples;
 use thumbnail::ThumbnailExamples;
 use timer::TimerExamples;
+use timestamp::TimestampExamples;
 use toggle_button::ToggleButtonExamples;
 use toggle_button_group::ToggleButtonGroupExamples;
 use token::TokenExamples;
@@ -533,6 +536,8 @@ fn App() -> Element {
                 a { href: "#thumbnail-examples", "Thumbnail examples" }
                 " · "
                 a { href: "#timer-examples", "Timer examples" }
+                " · "
+                a { href: "#timestamp-examples", "Timestamp examples" }
                 " · "
                 a { href: "#typeahead-item-examples", "TypeaheadItem examples" }
                 " · "
@@ -856,6 +861,7 @@ fn App() -> Element {
             TextExamples {}
             ThumbnailExamples {}
             TimerExamples {}
+            TimestampExamples {}
             TypeaheadItemExamples {}
             TableHeaderExamples {}
             TableExamples {}
