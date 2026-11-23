@@ -83,6 +83,7 @@ mod text_area;
 mod text_input;
 mod theme;
 mod thumbnail;
+mod time_input;
 mod timer;
 mod timestamp;
 mod toggle_button;
@@ -291,6 +292,7 @@ pub use theme::{
     WordBreak,
 };
 pub use thumbnail::{Thumbnail, ThumbnailProps, ThumbnailRemoveVisibility};
+pub use time_input::{TimeInput, TimeInputProps};
 pub use timer::{Timer, TimerFormat, TimerProps};
 pub use timestamp::{Timestamp, TimestampFormat, TimestampProps};
 pub use toggle_button::{

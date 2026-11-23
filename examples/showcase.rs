@@ -246,6 +246,8 @@ mod text_input;
 mod theme;
 #[path = "showcase/thumbnail.rs"]
 mod thumbnail;
+#[path = "showcase/time_input.rs"]
+mod time_input;
 #[path = "showcase/timer.rs"]
 mod timer;
 #[path = "showcase/timestamp.rs"]
@@ -399,6 +401,7 @@ use text_area::TextAreaExamples;
 use text_input::TextInputExamples;
 use theme::ThemeExamples;
 use thumbnail::ThumbnailExamples;
+use time_input::TimeInputExamples;
 use timer::TimerExamples;
 use timestamp::TimestampExamples;
 use toggle_button::ToggleButtonExamples;
@@ -542,6 +545,8 @@ fn App() -> Element {
                 a { href: "#text-input-examples", "TextInput examples" }
                 " · "
                 a { href: "#number-input-examples", "NumberInput examples" }
+                " · "
+                a { href: "#time-input-examples", "TimeInput examples" }
                 " · "
                 a { href: "#input-group-text-examples", "InputGroupText examples" }
                 " · "
@@ -874,6 +879,7 @@ fn App() -> Element {
             TextAreaExamples {}
             TextInputExamples {}
             NumberInputExamples {}
+            TimeInputExamples {}
             InputGroupTextExamples {}
             InputGroupExamples {}
             FormLayoutExamples {}
