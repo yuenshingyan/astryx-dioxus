@@ -38,6 +38,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - Collapsible follows `Collapsible/Collapsible.tsx`, its spec, and the Without Card arrangement at the same pin. See `docs/collapsible-port.md`.
 - The LinkProvider showcase adapts `LinkProvider/LinkProviderCustomLink.tsx` at the same pin. See `docs/link-provider-port.md`.
 - Banner follows `Banner/Banner.tsx`, its spec, and the adapted Statuses showcase at the same pin. See `docs/banner-port.md`.
+- Slider follows the single-thumb path in `Slider/Slider.tsx`, its spec, and the adapted Volume showcase at the same pin. See `docs/slider-port.md`.
 - Switch follows `Switch/Switch.tsx`, its spec, and three adapted catalog arrangements at the same pin. See `docs/switch-port.md`.
 - The TextInput clear action follows `Field/InputClearButton.tsx` and the Search arrangement at the same pin. See `docs/input-clear-button-port.md`.
 - TextInput follows `TextInput/TextInput.tsx`, its spec, and parts of three catalog arrangements at the same pin. See `docs/text-input-port.md`.
