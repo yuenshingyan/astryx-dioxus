@@ -212,6 +212,8 @@ mod side_nav_item;
 mod side_nav_section;
 #[path = "showcase/skeleton.rs"]
 mod skeleton;
+#[path = "showcase/slider.rs"]
+mod slider;
 #[path = "showcase/spinner.rs"]
 mod spinner;
 #[path = "showcase/stack.rs"]
@@ -376,6 +378,7 @@ use side_nav_heading::SideNavHeadingExamples;
 use side_nav_item::SideNavItemExamples;
 use side_nav_section::SideNavSectionExamples;
 use skeleton::SkeletonExamples;
+use slider::SliderExamples;
 use spinner::SpinnerExamples;
 use stack::{StackExamples, StackItemExamples};
 use status_dot::StatusDotExamples;
@@ -676,6 +679,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#switch-examples", "Switch examples" }
                 " · "
+                a { href: "#slider-examples", "Slider examples" }
+                " · "
                 a { href: "#checkbox-list-examples", "CheckboxList examples" }
                 " · "
                 a { href: "#radio-list-examples", "RadioList examples" }
@@ -925,6 +930,7 @@ fn App() -> Element {
             CheckboxIndicatorExamples {}
             CheckboxInputExamples {}
             SwitchExamples {}
+            SliderExamples {}
             CheckboxListExamples {}
             RadioListExamples {}
             SectionExamples {}

@@ -69,6 +69,7 @@ mod selector;
 mod side_nav;
 mod size_context;
 mod skeleton;
+mod slider;
 mod spinner;
 mod stack;
 mod status_dot;
@@ -254,6 +255,7 @@ pub use side_nav::{
 };
 pub use size_context::{ElementSize, SizeContext, SizeProvider, use_size};
 pub use skeleton::{Skeleton, SkeletonError, SkeletonLength, SkeletonRadius};
+pub use slider::{Slider, SliderOrientation, SliderProps};
 pub use spinner::{Spinner, SpinnerError, SpinnerShade, SpinnerSize};
 pub use stack::{
     Stack, StackAlignment, StackCrossAlignment, StackDirection, StackElement, StackItem,
