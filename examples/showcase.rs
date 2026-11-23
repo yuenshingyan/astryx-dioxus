@@ -158,6 +158,8 @@ mod media_theme;
 mod metadata_list;
 #[path = "showcase/metadata_list_item.rs"]
 mod metadata_list_item;
+#[path = "showcase/mobile_nav.rs"]
+mod mobile_nav;
 #[path = "showcase/mobile_nav_toggle.rs"]
 mod mobile_nav_toggle;
 #[path = "showcase/nav_heading_menu_item.rs"]
@@ -333,6 +335,7 @@ use list::ListExamples;
 use media_theme::MediaThemeExamples;
 use metadata_list::MetadataListExamples;
 use metadata_list_item::MetadataListItemExamples;
+use mobile_nav::MobileNavExamples;
 use mobile_nav_toggle::MobileNavToggleExamples;
 use nav_heading_menu_item::NavHeadingMenuItemExamples;
 use nav_icon::NavIconExamples;
@@ -654,6 +657,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#mobile-nav-toggle-examples", "MobileNavToggle examples" }
                 " · "
+                a { href: "#mobile-nav-examples", "MobileNav examples" }
+                " · "
                 a { href: "#side-nav-section-examples", "SideNavSection examples" }
                 " · "
                 a { href: "#side-nav-collapse-button-examples", "SideNavCollapseButton examples" }
@@ -886,6 +891,7 @@ fn App() -> Element {
             SideNavItemExamples {}
             SideNavExamples {}
             MobileNavToggleExamples {}
+            MobileNavExamples {}
             SideNavSectionExamples {}
             SideNavCollapseButtonExamples {}
             TopNavHeadingExamples {}
