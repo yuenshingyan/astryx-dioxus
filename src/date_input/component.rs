@@ -57,7 +57,7 @@ pub fn DateInput(
     }
 }
 
-fn is_valid_date(value: &str) -> bool {
+pub(crate) fn is_valid_date(value: &str) -> bool {
     let bytes = value.as_bytes();
     if bytes.len() != 10
         || bytes.iter().enumerate().any(|(index, &byte)| {

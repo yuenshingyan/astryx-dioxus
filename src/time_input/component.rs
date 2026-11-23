@@ -57,7 +57,7 @@ pub fn TimeInput(
     }
 }
 
-fn is_valid_time(value: &str, has_seconds: bool) -> bool {
+pub(crate) fn is_valid_time(value: &str, has_seconds: bool) -> bool {
     fn pair(first: u8, second: u8, upper: u8) -> bool {
         first.is_ascii_digit()
             && second.is_ascii_digit()
