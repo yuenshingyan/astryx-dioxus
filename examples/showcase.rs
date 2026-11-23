@@ -180,6 +180,8 @@ mod outline;
 mod overlay;
 #[path = "showcase/pagination.rs"]
 mod pagination;
+#[path = "showcase/popover.rs"]
+mod popover;
 #[path = "showcase/progress_bar.rs"]
 mod progress_bar;
 #[path = "showcase/radio_indicator.rs"]
@@ -354,6 +356,7 @@ use nav_icon::NavIconExamples;
 use outline::OutlineExamples;
 use overlay::OverlayExamples;
 use pagination::PaginationExamples;
+use popover::PopoverExamples;
 use progress_bar::ProgressBarExamples;
 use radio_indicator::RadioIndicatorExamples;
 use radio_list::RadioListExamples;
@@ -494,6 +497,8 @@ fn App() -> Element {
                 a { href: "#dialog-examples", "Dialog examples" }
                 " · "
                 a { href: "#alert-dialog-examples", "AlertDialog examples" }
+                " · "
+                a { href: "#popover-examples", "Popover examples" }
                 " · "
                 a { href: "#dropdown-menu-divider-example", "DropdownMenuDivider example" }
                 " · "
@@ -822,6 +827,7 @@ fn App() -> Element {
             DialogHeaderExamples {}
             DialogExamples {}
             AlertDialogExamples {}
+            PopoverExamples {}
             DropdownMenuGroupExamples {}
             DropdownMenuRadioGroupExamples {}
             DropdownMenuCheckboxItemExamples {}
