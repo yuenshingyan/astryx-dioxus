@@ -125,6 +125,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - SyntaxTheme follows `theme/syntax/SyntaxTheme.tsx`, `defineSyntaxTheme.ts`, and `presets.ts` at the same pin. The extracted palette values are from [One Dark Pro](https://github.com/Binaryify/OneDark-Pro) (Binaryify), [Dracula](https://github.com/dracula/visual-studio-code) (Zeno Rocha and contributors), and [GitHub Light](https://github.com/primer/github-vscode-theme) (GitHub Primer team), all MIT-licensed per the pinned upstream palette notices. See `docs/syntax-theme-port.md`.
 - MediaTheme follows `theme/MediaTheme.tsx`, its on-media tokens and automatic surface selection, and three catalog templates at the same pin. The offline images are pinned catalog assets. See `docs/media-theme-port.md`.
 - FormLayout follows `FormLayout/{FormLayout.tsx,FormLayoutContext.ts}`, its component spec, and five catalog arrangements at the same pin. See `docs/form-layout-port.md`.
+- ContextMenuRadioItem follows the alias in `ContextMenu/index.ts` at the same pin. See `docs/context-menu-radio-item-port.md`.
 - ContextMenuRadioGroup follows the alias in `ContextMenu/index.ts` at the same pin. See `docs/context-menu-radio-group-port.md`.
 - ContextMenuCheckboxItem follows the alias in `ContextMenu/index.ts` at the same pin. See `docs/context-menu-checkbox-item-port.md`.
 - ContextMenuGroup follows the alias in `ContextMenu/index.ts` at the same pin. See `docs/context-menu-group-port.md`.

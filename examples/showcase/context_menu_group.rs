@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use astryx_dioxus::{
     ContextMenuCheckboxItem, ContextMenuDivider, ContextMenuGroup, ContextMenuItem,
-    ContextMenuRadioGroup, DropdownMenuRadioItem,
+    ContextMenuRadioGroup, ContextMenuRadioItem,
 };
 
 #[component]
@@ -20,8 +20,9 @@ pub(super) fn ContextMenuGroupExamples() -> Element {
                 }
                 ContextMenuDivider {}
                 ContextMenuRadioGroup { label: "Sort documents", value: sort(), on_change: move |value| sort.set(value),
-                    DropdownMenuRadioItem { id: "context-menu-sort-recent", label: "Recent first", value: "recent" }
-                    DropdownMenuRadioItem { id: "context-menu-sort-name", label: "By name", value: "name" }
+                    ContextMenuRadioItem { id: "context-menu-sort-recent", label: "Recent first", value: "recent" }
+                    ContextMenuRadioItem { id: "context-menu-sort-name", label: "By name", value: "name" }
+                    ContextMenuRadioItem { id: "context-menu-sort-owner", label: "By owner", value: "owner", is_disabled: true }
                 }
                 ContextMenuGroup {
                     ContextMenuItem { label: "Copy link" }
