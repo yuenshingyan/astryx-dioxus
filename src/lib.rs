@@ -89,8 +89,8 @@ mod v_stack;
 mod visually_hidden;
 
 pub use app_shell::{
-    AppShellMobileContext, AppShellMobileProvider, AppShellMobileProviderProps,
-    AppShellMobileState, use_app_shell_mobile,
+    AppShell, AppShellMobileContext, AppShellMobileProvider, AppShellMobileProviderProps,
+    AppShellMobileState, AppShellProps, AppShellVariant, use_app_shell_mobile,
 };
 pub use aspect_ratio::{AspectRatio, AspectRatioFit, AspectRatioShape};
 pub use avatar::{

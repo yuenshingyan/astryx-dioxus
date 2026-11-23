@@ -6,6 +6,8 @@ use astryx_dioxus::{
 };
 use dioxus::prelude::*;
 
+#[path = "showcase/app_shell.rs"]
+mod app_shell;
 #[path = "showcase/aspect_ratio.rs"]
 mod aspect_ratio;
 #[path = "showcase/avatar.rs"]
@@ -259,6 +261,7 @@ mod v_stack;
 #[path = "showcase/visually_hidden.rs"]
 mod visually_hidden;
 
+use app_shell::AppShellExamples;
 use aspect_ratio::AspectRatioExamples;
 use avatar::AvatarExamples;
 use avatar_group::AvatarGroupExamples;
@@ -659,6 +662,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#mobile-nav-examples", "MobileNav examples" }
                 " · "
+                a { href: "#app-shell-examples", "AppShell examples" }
+                " · "
                 a { href: "#side-nav-section-examples", "SideNavSection examples" }
                 " · "
                 a { href: "#side-nav-collapse-button-examples", "SideNavCollapseButton examples" }
@@ -892,6 +897,7 @@ fn App() -> Element {
             SideNavExamples {}
             MobileNavToggleExamples {}
             MobileNavExamples {}
+            AppShellExamples {}
             SideNavSectionExamples {}
             SideNavCollapseButtonExamples {}
             TopNavHeadingExamples {}
