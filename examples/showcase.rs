@@ -102,6 +102,8 @@ mod dialog;
 mod dialog_header;
 #[path = "showcase/divider.rs"]
 mod divider;
+#[path = "showcase/drawer.rs"]
+mod drawer;
 #[path = "showcase/drawer_header.rs"]
 mod drawer_header;
 #[path = "showcase/dropdown_menu_checkbox_item.rs"]
@@ -313,6 +315,7 @@ use context_menu_item::ContextMenuItemExamples;
 use dialog::DialogExamples;
 use dialog_header::DialogHeaderExamples;
 use divider::DividerExamples;
+use drawer::DrawerExamples;
 use drawer_header::DrawerHeaderExamples;
 use dropdown_menu_checkbox_item::DropdownMenuCheckboxItemExamples;
 use dropdown_menu_group::DropdownMenuGroupExamples;
@@ -483,6 +486,8 @@ fn App() -> Element {
                 a { href: "#divider-examples", "Divider examples" }
                 " · "
                 a { href: "#drawer-header-examples", "DrawerHeader examples" }
+                " · "
+                a { href: "#drawer-examples", "Drawer examples" }
                 " · "
                 a { href: "#dialog-header-examples", "DialogHeader examples" }
                 " · "
@@ -813,6 +818,7 @@ fn App() -> Element {
             AvatarGroupExamples {}
             DividerExamples {}
             DrawerHeaderExamples {}
+            DrawerExamples {}
             DialogHeaderExamples {}
             DialogExamples {}
             AlertDialogExamples {}

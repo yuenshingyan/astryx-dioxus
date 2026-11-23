@@ -86,6 +86,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - AlertDialog follows `AlertDialog/AlertDialog.tsx`, its spec, and the adapted Delete Confirmation arrangement at the same pin. See `docs/alert-dialog-port.md`.
 - Dialog follows the native modal behavior in `Dialog/Dialog.tsx`, its spec, and the adapted showcase at the same pin. See `docs/dialog-port.md`.
 - DialogHeader follows `Dialog/DialogHeader.tsx`, its spec, and both adapted catalog templates at the same pin. See `docs/dialog-header-port.md`.
+- Drawer follows the modal presentation in `Drawer/Drawer.tsx`, its spec, and the adapted Details showcase at the same pin. See `docs/drawer-port.md`.
 - DrawerHeader follows `Drawer/DrawerHeader.tsx`, its spec, and three adapted catalog templates at the same pin. See `docs/drawer-header-port.md`.
 - NavHeadingMenu follows `NavMenu/NavHeadingMenu.tsx`, its spec, and the adapted product-switcher template at the same pin. See `docs/nav-heading-menu-port.md`.
 - NavHeadingMenuItem follows the standalone form of `NavMenu/NavHeadingMenuItem.tsx` and adapts rows from the NavHeadingMenu catalog template at the same pin. See `docs/nav-heading-menu-item-port.md`.
