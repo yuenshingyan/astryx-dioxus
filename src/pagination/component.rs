@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 
+use crate::i18n::use_message;
 use crate::{Button, ButtonVariant};
 
 /// Presentation of the page position between the navigation controls.
@@ -26,9 +27,11 @@ pub fn Pagination(
         return VNode::empty();
     }
     let current = page.clamp(1, total_pages);
+    let previous = use_message("@astryx.pagination.previous", "Previous page");
+    let next = use_message("@astryx.pagination.next", "Next page");
     rsx! {
         nav { class: "astryx-pagination", "aria-label": label,
-            Button { label: "Previous page", variant: ButtonVariant::Ghost,
+            Button { label: previous, variant: ButtonVariant::Ghost,
                 is_disabled: is_disabled || current == 1,
                 onclick: move |_| on_change.call(current.saturating_sub(1)),
             }
@@ -40,7 +43,7 @@ pub fn Pagination(
                     }
                 },
             }
-            Button { label: "Next page", variant: ButtonVariant::Ghost,
+            Button { label: next, variant: ButtonVariant::Ghost,
                 is_disabled: is_disabled || current == total_pages,
                 onclick: move |_| on_change.call(current.saturating_add(1)),
             }
