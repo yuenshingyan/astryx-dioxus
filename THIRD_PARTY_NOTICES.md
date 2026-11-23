@@ -59,6 +59,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - MetadataList follows `MetadataList/MetadataList.tsx`, its component spec, and five catalog templates at the same pin. See `docs/metadata-list-port.md`.
 - MetadataListItem follows `MetadataList/MetadataListItem.tsx`, its component spec, and two catalog templates at the same pin. See `docs/metadata-list-item-port.md`.
 - EmptyState follows `EmptyState/EmptyState.tsx`, its component spec, and four catalog templates at the same pin. See `docs/empty-state-port.md`.
+- Timestamp follows the absolute formats in `Timestamp/Timestamp.tsx`, its spec, and the fixed instant in its showcase at the same pin. Its UTC calendar conversion adapts Howard Hinnant’s public-domain `civil_from_days` algorithm. See `docs/timestamp-port.md`.
 - Timer follows `Timer/Timer.tsx`, its component spec, and four catalog templates at the same pin. See `docs/timer-port.md`.
 - Thumbnail follows `Thumbnail/Thumbnail.tsx` and its five catalog templates at the same pin. The offline PNGs in `tests/fixtures/thumbnail/` come from the embedded gallery assets. See `docs/thumbnail-port.md`.
 - FieldStatus follows `FieldStatus/{FieldStatus.tsx,useFieldStatusAnnouncement.ts}`, the Core and Neutral status tokens and glyphs, and its two catalog templates at the same pin. See `docs/field-status-port.md`.
