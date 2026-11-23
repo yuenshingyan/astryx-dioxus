@@ -52,6 +52,7 @@ mod item;
 mod kbd;
 mod layer;
 mod layout;
+mod lightbox;
 mod link;
 mod list;
 mod metadata_list;
@@ -220,6 +221,7 @@ pub use layout::{
     Layout, LayoutContent, LayoutContentProps, LayoutFooter, LayoutFooterProps, LayoutHeader,
     LayoutHeaderProps, LayoutHeight, LayoutPanel, LayoutPanelProps, LayoutProps,
 };
+pub use lightbox::{Lightbox, LightboxMedia, LightboxProps};
 pub use link::{
     Link, LinkComponentType, LinkDownload, LinkProvider, LinkRenderProps, LinkifyCaptures,
     LinkifyError, LinkifyMatch, LinkifyNode, LinkifyPattern, UseLinkifyOptions, linkify,

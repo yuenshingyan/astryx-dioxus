@@ -164,6 +164,8 @@ mod layout_footer;
 mod layout_header;
 #[path = "showcase/layout_panel.rs"]
 mod layout_panel;
+#[path = "showcase/lightbox.rs"]
+mod lightbox;
 #[path = "showcase/link.rs"]
 mod link;
 #[path = "showcase/link_provider.rs"]
@@ -366,6 +368,7 @@ use layout_content::LayoutContentExamples;
 use layout_footer::LayoutFooterExamples;
 use layout_header::LayoutHeaderExamples;
 use layout_panel::LayoutPanelExamples;
+use lightbox::LightboxExamples;
 use link::LinkExamples;
 use link_provider::LinkProviderExamples;
 use list::ListExamples;
@@ -520,6 +523,8 @@ fn App() -> Element {
                 a { href: "#drawer-examples", "Drawer examples" }
                 " · "
                 a { href: "#bottom-sheet-examples", "BottomSheet examples" }
+                " · "
+                a { href: "#lightbox-examples", "Lightbox examples" }
                 " · "
                 a { href: "#dialog-header-examples", "DialogHeader examples" }
                 " · "
@@ -870,6 +875,7 @@ fn App() -> Element {
             DrawerHeaderExamples {}
             DrawerExamples {}
             BottomSheetExamples {}
+            LightboxExamples {}
             DialogHeaderExamples {}
             DialogExamples {}
             AlertDialogExamples {}
