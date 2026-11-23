@@ -55,6 +55,7 @@ mod metadata_list;
 mod mobile_nav;
 mod nav_icon;
 mod nav_menu;
+mod number_input;
 mod outline;
 mod overlay;
 mod pagination;
@@ -229,6 +230,7 @@ pub use nav_icon::{NavIcon, NavIconProps};
 pub use nav_menu::{
     NavHeadingMenu, NavHeadingMenuItem, NavHeadingMenuItemProps, NavHeadingMenuProps,
 };
+pub use number_input::{NumberInput, NumberInputProps};
 pub use outline::{Outline, OutlineDensity, OutlineItem, OutlineProps};
 pub use overlay::{
     Overlay, OverlayAlign, OverlayPosition, OverlayProps, OverlayScrimMode, OverlayShowOn,
