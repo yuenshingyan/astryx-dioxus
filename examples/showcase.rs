@@ -222,6 +222,8 @@ mod text;
 mod text_area;
 #[path = "showcase/text_input.rs"]
 mod text_input;
+#[path = "showcase/theme.rs"]
+mod theme;
 #[path = "showcase/thumbnail.rs"]
 mod thumbnail;
 #[path = "showcase/timer.rs"]
@@ -363,6 +365,7 @@ use table_selection_toolbar::TableSelectionToolbarExamples;
 use text::TextExamples;
 use text_area::TextAreaExamples;
 use text_input::TextInputExamples;
+use theme::ThemeExamples;
 use thumbnail::ThumbnailExamples;
 use timer::TimerExamples;
 use toggle_button::ToggleButtonExamples;
@@ -534,6 +537,8 @@ fn App() -> Element {
                 a { href: "#metadata-list-examples", "MetadataList examples" }
                 " · "
                 a { href: "#media-theme-examples", "MediaTheme examples" }
+                " · "
+                a { href: "#theme-examples", "Theme examples" }
                 " · "
                 a { href: "#syntax-theme-examples", "SyntaxTheme examples" }
                 " · "
@@ -769,6 +774,7 @@ fn App() -> Element {
             MetadataListItemExamples {}
             MetadataListExamples {}
             MediaThemeExamples {}
+            ThemeExamples {}
             SyntaxThemeExamples {}
             TooltipExamples {}
             InfoTipExamples {}
