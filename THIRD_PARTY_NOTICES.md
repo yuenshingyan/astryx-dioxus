@@ -95,6 +95,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - Dialog follows the native modal behavior in `Dialog/Dialog.tsx`, its spec, and the adapted showcase at the same pin. See `docs/dialog-port.md`.
 - DialogHeader follows `Dialog/DialogHeader.tsx`, its spec, and both adapted catalog templates at the same pin. See `docs/dialog-header-port.md`.
 - Popover follows the caller-rendered trigger path in `Popover/Popover.tsx`, its spec, and the adapted Settings showcase at the same pin. See `docs/popover-port.md`.
+- Bottom Sheet follows the standalone modal presentation in `BottomSheet/BottomSheet.tsx`, `BottomSheetPanel.tsx`, its spec, and the adapted Filters showcase at the same pin. See `docs/bottom-sheet-port.md`.
 - Drawer follows the modal presentation in `Drawer/Drawer.tsx`, its spec, and the adapted Details showcase at the same pin. See `docs/drawer-port.md`.
 - DrawerHeader follows `Drawer/DrawerHeader.tsx`, its spec, and three adapted catalog templates at the same pin. See `docs/drawer-header-port.md`.
 - NavHeadingMenu follows `NavMenu/NavHeadingMenu.tsx`, its spec, and the adapted product-switcher template at the same pin. See `docs/nav-heading-menu-port.md`.

@@ -26,6 +26,8 @@ mod badge;
 mod banner;
 #[path = "showcase/blockquote.rs"]
 mod blockquote;
+#[path = "showcase/bottom_sheet.rs"]
+mod bottom_sheet;
 #[path = "showcase/breadcrumb_item.rs"]
 mod breadcrumb_item;
 #[path = "showcase/breadcrumbs.rs"]
@@ -295,6 +297,7 @@ use avatar_status_dot::AvatarStatusDotExamples;
 use badge::BadgeExamples;
 use banner::BannerExamples;
 use blockquote::BlockquoteExamples;
+use bottom_sheet::BottomSheetExamples;
 use breadcrumb_item::BreadcrumbItemExamples;
 use breadcrumbs::BreadcrumbsExamples;
 use button_contract::ButtonContractExamples;
@@ -515,6 +518,8 @@ fn App() -> Element {
                 a { href: "#drawer-header-examples", "DrawerHeader examples" }
                 " · "
                 a { href: "#drawer-examples", "Drawer examples" }
+                " · "
+                a { href: "#bottom-sheet-examples", "BottomSheet examples" }
                 " · "
                 a { href: "#dialog-header-examples", "DialogHeader examples" }
                 " · "
@@ -864,6 +869,7 @@ fn App() -> Element {
             DividerExamples {}
             DrawerHeaderExamples {}
             DrawerExamples {}
+            BottomSheetExamples {}
             DialogHeaderExamples {}
             DialogExamples {}
             AlertDialogExamples {}
