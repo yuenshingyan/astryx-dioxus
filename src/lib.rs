@@ -233,7 +233,9 @@ pub use interactive_role_context::{
 };
 pub use item::{Item, ItemAlign, ItemDensity, ItemLabel, ItemLayout, ItemProps, ItemTag};
 pub use kbd::{Kbd, KbdError, KbdText};
-pub use layer::{LayerContentBoundary, LayerPlacement};
+pub use layer::{
+    LayerContentBoundary, LayerInset, LayerPlacement, LayerProvider, LayerProviderProps,
+};
 pub use layout::{
     Layout, LayoutContent, LayoutContentProps, LayoutFooter, LayoutFooterProps, LayoutHeader,
     LayoutHeaderProps, LayoutHeight, LayoutPanel, LayoutPanelProps, LayoutProps,

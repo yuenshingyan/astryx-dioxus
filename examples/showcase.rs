@@ -170,6 +170,8 @@ mod internationalization_provider;
 mod item;
 #[path = "showcase/kbd.rs"]
 mod kbd;
+#[path = "showcase/layer_provider.rs"]
+mod layer_provider;
 #[path = "showcase/layout.rs"]
 mod layout;
 #[path = "showcase/layout_content.rs"]
@@ -411,6 +413,7 @@ use input_group_text::InputGroupTextExamples;
 use internationalization_provider::InternationalizationProviderExamples;
 use item::ItemExamples;
 use kbd::KbdExamples;
+use layer_provider::LayerProviderExamples;
 use layout::LayoutExamples;
 use layout_content::LayoutContentExamples;
 use layout_footer::LayoutFooterExamples;
@@ -601,6 +604,8 @@ fn App() -> Element {
                 a { href: "#alert-dialog-examples", "AlertDialog examples" }
                 " · "
                 a { href: "#popover-examples", "Popover examples" }
+                " · "
+                a { href: "#layer-provider-examples", "Layer Provider examples" }
                 " · "
                 a { href: "#hover-card-examples", "Hover Card examples" }
                 " · "
@@ -984,6 +989,7 @@ fn App() -> Element {
             DialogExamples {}
             AlertDialogExamples {}
             PopoverExamples {}
+            LayerProviderExamples {}
             HoverCardExamples {}
             DropdownMenuGroupExamples {}
             DropdownMenuRadioGroupExamples {}
