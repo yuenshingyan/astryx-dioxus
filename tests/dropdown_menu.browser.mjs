@@ -1,0 +1,47 @@
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+
+await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
+  await send('Network.enable');
+  await send('Network.setBlockedURLs', {urls: ['https://*']});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8280'});
+  const trigger = `document.querySelector('#dropdown-menu-examples [aria-haspopup="menu"]')`;
+  const menu = `document.getElementById(${trigger}.getAttribute('aria-controls'))`;
+  const focused = `document.activeElement.textContent.trim()`;
+  const after = `document.getElementById('dropdown-menu-after')`;
+  const press = async (key, code, windowsVirtualKeyCode) => {
+    for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key, code, windowsVirtualKeyCode});
+  };
+  await waitFor(trigger);
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
+  await evaluate(`${trigger}.scrollIntoView({block:'center'}); ${trigger}.focus()`);
+  await press('ArrowDown', 'ArrowDown', 40);
+  await waitFor(`${menu}.matches(':popover-open') && ${focused} === 'Edit'`);
+  assert.equal(await evaluate(`${trigger}.getAttribute('aria-expanded')`), 'true');
+  assert.ok(await evaluate(`Math.abs(${menu}.getBoundingClientRect().top - ${trigger}.getBoundingClientRect().bottom - 4) < 1`));
+  const {nodes} = await send('Accessibility.getFullAXTree');
+  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'menu' && node.name?.value === 'Actions'));
+  await press('ArrowDown', 'ArrowDown', 40);
+  await waitFor(`${focused} === 'Duplicate'`);
+  assert.equal(await evaluate(`document.activeElement.getAttribute('aria-disabled')`), 'true');
+  await press('Enter', 'Enter', 13);
+  assert.ok(await evaluate(`${menu}.matches(':popover-open') && document.querySelector('#dropdown-menu-examples output').textContent === 'No action selected'`));
+  await press('End', 'End', 35);
+  await waitFor(`${focused} === 'Delete'`);
+  await press('e', 'KeyE', 69);
+  await waitFor(`${focused} === 'Edit'`);
+  await press('Enter', 'Enter', 13);
+  const closed = `!${menu}.matches(':popover-open')`;
+  await waitFor(`${closed} && document.activeElement === ${trigger} && document.querySelector('#dropdown-menu-examples output').textContent === 'Edit'`);
+  await press('ArrowUp', 'ArrowUp', 38);
+  await waitFor(`${focused} === 'Delete'`);
+  await press('Escape', 'Escape', 27);
+  await waitFor(`${closed} && document.activeElement === ${trigger}`);
+  await press('ArrowDown', 'ArrowDown', 40);
+  await waitFor(`${focused} === 'Edit'`);
+  await press('Tab', 'Tab', 9);
+  await waitFor(`${closed} && document.activeElement === ${after}`);
+  assert.deepEqual(exceptions, []);
+  console.log('DropdownMenu: anchored placement, named menu, keyboard selection, Escape and Tab dismissal passed');
+});
