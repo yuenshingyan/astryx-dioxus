@@ -234,6 +234,8 @@ mod spinner;
 mod stack;
 #[path = "showcase/status_dot.rs"]
 mod status_dot;
+#[path = "showcase/stepper.rs"]
+mod stepper;
 #[path = "showcase/switch.rs"]
 mod switch;
 #[path = "showcase/syntax_theme.rs"]
@@ -405,6 +407,7 @@ use slider::SliderExamples;
 use spinner::SpinnerExamples;
 use stack::{StackExamples, StackItemExamples};
 use status_dot::StatusDotExamples;
+use stepper::StepperExamples;
 use switch::SwitchExamples;
 use syntax_theme::SyntaxThemeExamples;
 use tab::TabExamples;
@@ -719,6 +722,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#segmented-control-examples", "Segmented Control examples" }
                 " · "
+                a { href: "#stepper-examples", "Stepper examples" }
+                " · "
                 a { href: "#slider-examples", "Slider examples" }
                 " · "
                 a { href: "#checkbox-list-examples", "CheckboxList examples" }
@@ -978,6 +983,7 @@ fn App() -> Element {
             CheckboxInputExamples {}
             SwitchExamples {}
             SegmentedControlExamples {}
+            StepperExamples {}
             SliderExamples {}
             CheckboxListExamples {}
             RadioListExamples {}

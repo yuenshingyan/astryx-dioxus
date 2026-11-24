@@ -112,6 +112,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - InputGroup follows `InputGroup/InputGroup.tsx`, its spec, `groupStyles.ts`, and both catalog templates at the same pin. See `docs/input-group-port.md`.
 - InputGroupText follows `InputGroup/InputGroupText.tsx`, its spec, and adapted arrangements from the InputGroup templates at the same pin. See `docs/input-group-text-port.md`.
 - Citation follows `Citation/Citation.tsx`, its spec, and three catalog templates at the same pin. See `docs/citation-port.md`.
+- Stepper and Step follow `Stepper/Stepper.tsx`, `Step.tsx`, their specs, and the adapted checkout and repository showcases at the same pin. See `docs/stepper-port.md`.
 - Segmented Control and Item follow `SegmentedControl/SegmentedControl.tsx`, `SegmentedControlItem.tsx`, the shared context, and the adapted catalog arrangements at the same pin. See `docs/segmented-control-port.md`.
 - ToggleButtonGroup follows `ToggleButton/ToggleButtonGroup.tsx`, its spec, and the single- and multi-select catalog arrangements at the same pin. See `docs/toggle-button-group-port.md`.
 - Toolbar follows `Toolbar/Toolbar.tsx` and its spec at the same pin. See `docs/toolbar-port.md`.
