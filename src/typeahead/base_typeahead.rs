@@ -19,6 +19,15 @@ pub fn BaseTypeahead(
     value: Option<BaseTypeaheadOption>,
     on_change: EventHandler<Option<BaseTypeaheadOption>>,
     #[props(default)] placeholder: Option<String>,
+    /// ID used by an external label.
+    #[props(default)]
+    input_id: Option<String>,
+    /// IDs of descriptions associated with the input.
+    #[props(default)]
+    described_by: Option<String>,
+    /// Reflects a caller-provided validation error.
+    #[props(default)]
+    is_invalid: bool,
     #[props(default)] has_entries_on_focus: bool,
     #[props(default)] is_disabled: bool,
     #[props(default = 10)] max_menu_items: usize,
@@ -57,7 +66,8 @@ pub fn BaseTypeahead(
     });
     rsx! {
         div { class: "astryx-base-typeahead",
-            input { r#type: "text", role: "combobox", "aria-label": label.clone(), "aria-autocomplete": "list",
+            input { id: input_id, r#type: "text", role: "combobox", "aria-label": label.clone(), "aria-autocomplete": "list",
+                "aria-describedby": described_by, "aria-invalid": is_invalid.then_some("true"),
                 "aria-expanded": shown.to_string(), "aria-controls": id.clone(), "aria-activedescendant": active_id,
                 autocomplete: "off", placeholder, value: text, disabled: is_disabled,
                 onfocus: move |_| { if has_entries_on_focus { is_open.set(true); } },
