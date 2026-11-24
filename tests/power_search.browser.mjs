@@ -1,0 +1,33 @@
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+
+await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
+  await send('Network.enable');
+  await send('Network.setBlockedURLs', {urls: ['https://*']});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8277'});
+  const group = "document.querySelector('#power-search-examples fieldset')";
+  const control = label => `${group}.querySelector('[aria-label="${label}"]')`;
+  const text = `${group}.querySelector('ul').textContent`;
+  const add = `Array.from(${group}.querySelectorAll('button')).find(button => button.textContent.trim() === 'Add filter')`;
+  const change = (label, value) => evaluate(`${control(label)}.value = ${JSON.stringify(value)}; ${control(label)}.dispatchEvent(new Event('change', {bubbles:true}))`);
+  await waitFor(group);
+  assert.equal(await evaluate(`${group}.querySelector('legend').textContent`), 'Search filters');
+  assert.match(await evaluate(text), /Status is Open.*Title contains dashboard/);
+  assert.ok(await evaluate(`${add}.disabled`));
+  await change('Value', 'open');
+  assert.ok(await evaluate(`${add}.disabled`));
+  await change('Value', 'closed');
+  await waitFor(`!${add}.disabled`);
+  await evaluate(`${add}.click()`);
+  await waitFor(`${text}.includes('Status is Closed') && ${control('Value')}.value === ''`);
+  await change('Field', 'title');
+  await waitFor(`${control('Value')}.tagName === 'INPUT' && ${control('Operator')}.value === 'contains'`);
+  await evaluate(`${control('Value')}.value = '  release  '; ${control('Value')}.dispatchEvent(new Event('input', {bubbles:true}))`);
+  await waitFor(`!${add}.disabled`);
+  await evaluate(`${add}.click()`);
+  await waitFor(`${text}.includes('Title contains release')`);
+  await evaluate(`${control('Remove Status is Open')}.click()`);
+  await waitFor(`!${text}.includes('Status is Open')`);
+  assert.deepEqual(exceptions, []);
+  console.log('PowerSearch: named group, duplicate guard, typed enum and text filters, and removal passed');
+});

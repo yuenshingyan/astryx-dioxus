@@ -214,6 +214,8 @@ mod overlay;
 mod pagination;
 #[path = "showcase/popover.rs"]
 mod popover;
+#[path = "showcase/power_search.rs"]
+mod power_search;
 #[path = "showcase/progress_bar.rs"]
 mod progress_bar;
 #[path = "showcase/radio_indicator.rs"]
@@ -429,6 +431,7 @@ use outline::OutlineExamples;
 use overlay::OverlayExamples;
 use pagination::PaginationExamples;
 use popover::PopoverExamples;
+use power_search::PowerSearchExamples;
 use progress_bar::ProgressBarExamples;
 use radio_indicator::RadioIndicatorExamples;
 use radio_list::RadioListExamples;
@@ -657,6 +660,8 @@ fn App() -> Element {
                 a { href: "#typeahead-examples", "Typeahead examples" }
                 " · "
                 a { href: "#tokenizer-examples", "Tokenizer examples" }
+                " · "
+                a { href: "#power-search-examples", "Power Search examples" }
                 " · "
                 a { href: "#table-header-examples", "TableHeader examples" }
                 " · "
@@ -1016,6 +1021,7 @@ fn App() -> Element {
             BaseTypeaheadExamples {}
             TypeaheadExamples {}
             TokenizerExamples {}
+            PowerSearchExamples {}
             TableHeaderExamples {}
             TableExamples {}
             TableSelectionToolbarExamples {}

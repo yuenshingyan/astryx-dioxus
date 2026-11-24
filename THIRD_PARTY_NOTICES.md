@@ -111,6 +111,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - NavHeadingMenu follows `NavMenu/NavHeadingMenu.tsx`, its spec, and the adapted product-switcher template at the same pin. See `docs/nav-heading-menu-port.md`.
 - NavHeadingMenuItem follows the standalone form of `NavMenu/NavHeadingMenuItem.tsx` and adapts rows from the NavHeadingMenu catalog template at the same pin. See `docs/nav-heading-menu-item-port.md`.
 - Overlay follows the desktop and controlled forms of `Overlay/Overlay.tsx`, `Overlay/OverlayScrim.tsx`, and three catalog templates at the same pin. The showcase uses pinned offline artwork. See `docs/overlay-port.md`.
+- Power Search follows the typed filter contract in `PowerSearch/PowerSearch.tsx`, its spec, and the adapted Status and Title showcase at the same pin. See `docs/power-search-port.md`.
 - Tokenizer follows the local-search behavior in `Tokenizer/Tokenizer.tsx`, its spec, and the adapted Tags showcase at the same pin. See `docs/tokenizer-port.md`.
 - Typeahead follows the labeled field in `Typeahead/Typeahead.tsx`, its spec, and the adapted Fruit showcase at the same pin. See `docs/typeahead-port.md`.
 - BaseTypeahead follows the local-search path in `Typeahead/BaseTypeahead.tsx`, its spec, and the adapted frameworks showcase at the same pin. See `docs/base-typeahead-port.md`.
