@@ -100,6 +100,8 @@ mod command_palette_input;
 mod command_palette_item;
 #[path = "showcase/command_palette_list.rs"]
 mod command_palette_list;
+#[path = "showcase/context_menu.rs"]
+mod context_menu;
 #[path = "showcase/context_menu_group.rs"]
 mod context_menu_group;
 #[path = "showcase/context_menu_item.rs"]
@@ -354,6 +356,7 @@ use command_palette_group::CommandPaletteGroupExamples;
 use command_palette_input::CommandPaletteInputExamples;
 use command_palette_item::CommandPaletteItemExamples;
 use command_palette_list::CommandPaletteListExamples;
+use context_menu::ContextMenuExamples;
 use context_menu_group::ContextMenuGroupExamples;
 use context_menu_item::ContextMenuItemExamples;
 use date_input::DateInputExamples;
@@ -572,6 +575,8 @@ fn App() -> Element {
                 a { href: "#dropdown-menu-checkbox-item-examples", "DropdownMenuCheckboxItem examples" }
                 " · "
                 a { href: "#dropdown-menu-item-examples", "DropdownMenuItem examples" }
+                " · "
+                a { href: "#context-menu-examples", "ContextMenu examples" }
                 " · "
                 a { href: "#context-menu-item-examples", "ContextMenuItem examples" }
                 " · "
@@ -930,6 +935,7 @@ fn App() -> Element {
             DropdownMenuRadioGroupExamples {}
             DropdownMenuCheckboxItemExamples {}
             DropdownMenuItemExamples {}
+            ContextMenuExamples {}
             ContextMenuItemExamples {}
             ContextMenuGroupExamples {}
             section { id: "dropdown-menu-divider-example", "data-astryx-theme": "neutral",
