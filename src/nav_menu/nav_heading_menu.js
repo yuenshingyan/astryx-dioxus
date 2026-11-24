@@ -4,7 +4,7 @@ if (!root) return;
 const onKey = event => {
   if (event.defaultPrevented || event.isComposing || event.ctrlKey || event.altKey || event.metaKey) return;
   if (event.target.closest?.('[role="menu"]') !== root) return;
-  const rows = [...root.querySelectorAll('[role="menuitem"]')].filter(row =>
+  const rows = [...root.querySelectorAll('[role="menuitem"], [role="menuitemradio"]')].filter(row =>
     row.closest('[role="menu"]') === root && !row.closest('[hidden],[inert]') && row.getClientRects().length && getComputedStyle(row).visibility === 'visible');
   if (!rows.length) return;
   const index = rows.indexOf(event.target);

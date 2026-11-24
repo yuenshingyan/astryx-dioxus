@@ -74,6 +74,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - File Input follows the picker mode in `FileInput/FileInput.tsx`, its spec, and the adapted Upload file showcase at the same pin. See `docs/file-input-port.md`.
 - FieldLabel follows `Field/FieldLabel.tsx`, the field optionality and input-container hooks, and two catalog arrangements at the same pin. See `docs/field-label-port.md`.
 - NavIcon follows `NavIcon/NavIcon.tsx`, its spec, and both catalog templates at the same pin. The showcase adapts fallback glyphs from `Icon/defaultIcons.tsx`. See `docs/nav-icon-port.md`.
+- TabMenu follows the navigation picker in `TabList/TabMenu.tsx`, its spec, and the adapted navigation showcase at the same pin. See `docs/tab-menu-port.md`.
 - TabList follows `TabList/TabList.tsx` and its spec at the same pin. See `docs/tab-list-port.md`.
 - Tab follows `TabList/Tab.tsx`, its spec, and the adapted Tab showcase at the same pin. See `docs/tab-port.md`.
 - Pagination follows the Pages and Compact variants of `Pagination/Pagination.tsx`, its spec, and the adapted Variants showcase at the same pin. See `docs/pagination-port.md`.
