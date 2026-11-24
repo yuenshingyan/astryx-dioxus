@@ -1,0 +1,8 @@
+
+@layer astryx-base {
+  .astryx-popover[data-layer-inset="true"] {
+    max-inline-size: max(0px, calc(100vi - 2 * var(--spacing-2) - var(--_astryx-layer-inset-inline-start, 0px) - var(--_astryx-layer-inset-inline-end, 0px)));
+    max-block-size: max(0px, calc(100vb - 2 * var(--spacing-2) - var(--_astryx-layer-inset-block-start, 0px) - var(--_astryx-layer-inset-block-end, 0px)));
+    overflow: auto;
+  }
+}
