@@ -292,6 +292,8 @@ mod toggle_button;
 mod toggle_button_group;
 #[path = "showcase/token.rs"]
 mod token;
+#[path = "showcase/tokenizer.rs"]
+mod tokenizer;
 #[path = "showcase/toolbar.rs"]
 mod toolbar;
 #[path = "showcase/tooltip.rs"]
@@ -466,6 +468,7 @@ use timestamp::TimestampExamples;
 use toggle_button::ToggleButtonExamples;
 use toggle_button_group::ToggleButtonGroupExamples;
 use token::TokenExamples;
+use tokenizer::TokenizerExamples;
 use toolbar::ToolbarExamples;
 use tooltip::TooltipExamples;
 use top_nav::TopNavExamples;
@@ -652,6 +655,8 @@ fn App() -> Element {
                 a { href: "#base-typeahead-examples", "Base Typeahead examples" }
                 " · "
                 a { href: "#typeahead-examples", "Typeahead examples" }
+                " · "
+                a { href: "#tokenizer-examples", "Tokenizer examples" }
                 " · "
                 a { href: "#table-header-examples", "TableHeader examples" }
                 " · "
@@ -1010,6 +1015,7 @@ fn App() -> Element {
             TypeaheadItemExamples {}
             BaseTypeaheadExamples {}
             TypeaheadExamples {}
+            TokenizerExamples {}
             TableHeaderExamples {}
             TableExamples {}
             TableSelectionToolbarExamples {}

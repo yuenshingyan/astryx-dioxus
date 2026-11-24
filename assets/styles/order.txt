@@ -39,6 +39,7 @@ components/command-palette.css
 components/table.css
 components/typeahead-item-overlay.css
 components/base-typeahead.css
+components/tokenizer.css
 components/nav-heading-menu.css
 components/modal-and-popover.css
 components/item-list-toolbar-chat.css
