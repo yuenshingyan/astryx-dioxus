@@ -3374,6 +3374,20 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 
   .astryx-dropdown-menu-radio-group { display: flex; flex-direction: column; gap: var(--spacing-0-5); }
 
+  .astryx-chat-composer-input {
+    box-sizing: border-box;
+    inline-size: 100%;
+    field-sizing: content;
+    max-block-size: calc(var(--_composer-max-rows) * 1lh + 2 * var(--spacing-3) + 2 * var(--border-width));
+    resize: none;
+    padding: var(--spacing-3) var(--spacing-4);
+    border: var(--border-width) solid var(--color-border-emphasized);
+    border-radius: var(--radius-chat);
+    background: var(--color-background-surface);
+    color: var(--color-text-primary);
+    font: inherit;
+  }
+  .astryx-chat-composer-input:focus-visible { outline: 2px solid var(--focus-outline-color); outline-offset: 2px; }
   .astryx-chat-composer-drawer { position: relative; display: flex; flex-direction: column; overflow: hidden; padding: var(--spacing-3) var(--spacing-4) calc(var(--spacing-3) + var(--radius-chat)); margin-block-end: calc(-1 * var(--radius-chat)); border-start-start-radius: var(--radius-chat); border-start-end-radius: var(--radius-chat); background: linear-gradient(var(--color-background-muted), var(--color-background-muted)), var(--color-background-surface); }
   .astryx-chat-composer-drawer__toggle { display: grid; min-block-size: var(--spacing-5); padding: 0; border: 0; background: transparent; color: var(--color-text-secondary); font: inherit; cursor: pointer; }
   .astryx-chat-composer-drawer__toggle:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); }

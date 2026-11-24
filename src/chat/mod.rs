@@ -1,4 +1,5 @@
 mod chat_composer_drawer;
+mod chat_composer_input;
 mod chat_composer_token;
 mod chat_composer_token_element;
 mod chat_dictation_button;
@@ -24,6 +25,7 @@ pub use chat_tool_calls::{
 };
 
 pub use chat_composer_drawer::{ChatComposerDrawer, ChatComposerDrawerProps};
+pub use chat_composer_input::{ChatComposerInput, ChatComposerInputProps};
 pub use chat_dictation_button::{
     ChatDictationButton, ChatDictationButtonProps, ChatDictationButtonSize, ChatDictationState,
 };
