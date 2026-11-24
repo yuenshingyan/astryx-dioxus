@@ -70,6 +70,7 @@ mod radio_list;
 mod resizable;
 mod scrollable_area;
 mod section;
+mod segmented_control;
 mod selectable_card;
 mod selector;
 mod side_nav;
@@ -259,6 +260,10 @@ pub use scrollable_area::{
     ScrollableAreaStickyContainment,
 };
 pub use section::{InvalidSectionVariant, Section, SectionDivider, SectionProps, SectionVariant};
+pub use segmented_control::{
+    SegmentedControl, SegmentedControlItem, SegmentedControlItemProps, SegmentedControlLayout,
+    SegmentedControlProps,
+};
 pub use selectable_card::{SelectableCard, SelectableCardError, SelectableCardProps};
 pub use selector::{SelectorOption, SelectorOptionProps};
 pub use side_nav::{

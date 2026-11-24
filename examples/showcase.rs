@@ -208,6 +208,8 @@ mod resize_handle;
 mod scrollable_area;
 #[path = "showcase/section.rs"]
 mod section;
+#[path = "showcase/segmented_control.rs"]
+mod segmented_control;
 #[path = "showcase/selectable_card.rs"]
 mod selectable_card;
 #[path = "showcase/selector_option.rs"]
@@ -390,6 +392,7 @@ use radio_list::RadioListExamples;
 use resize_handle::ResizeHandleExamples;
 use scrollable_area::ScrollableAreaExamples;
 use section::SectionExamples;
+use segmented_control::SegmentedControlExamples;
 use selectable_card::SelectableCardExamples;
 use selector_option::SelectorOptionExamples;
 use side_nav::SideNavExamples;
@@ -714,6 +717,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#switch-examples", "Switch examples" }
                 " · "
+                a { href: "#segmented-control-examples", "Segmented Control examples" }
+                " · "
                 a { href: "#slider-examples", "Slider examples" }
                 " · "
                 a { href: "#checkbox-list-examples", "CheckboxList examples" }
@@ -972,6 +977,7 @@ fn App() -> Element {
             CheckboxIndicatorExamples {}
             CheckboxInputExamples {}
             SwitchExamples {}
+            SegmentedControlExamples {}
             SliderExamples {}
             CheckboxListExamples {}
             RadioListExamples {}
