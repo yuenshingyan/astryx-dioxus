@@ -146,6 +146,8 @@ mod grid;
 mod h_stack;
 #[path = "showcase/heading.rs"]
 mod heading;
+#[path = "showcase/hover_card.rs"]
+mod hover_card;
 #[path = "showcase/icon_button.rs"]
 mod icon_button;
 #[path = "showcase/info_tip.rs"]
@@ -373,6 +375,7 @@ use form_layout::FormLayoutExamples;
 use grid::{GridExamples, GridSpanExamples};
 use h_stack::HStackExamples;
 use heading::HeadingExamples;
+use hover_card::HoverCardExamples;
 use icon_button::IconButtonExamples;
 use info_tip::InfoTipExamples;
 use input_group::InputGroupExamples;
@@ -554,6 +557,8 @@ fn App() -> Element {
                 a { href: "#alert-dialog-examples", "AlertDialog examples" }
                 " · "
                 a { href: "#popover-examples", "Popover examples" }
+                " · "
+                a { href: "#hover-card-examples", "Hover Card examples" }
                 " · "
                 a { href: "#dropdown-menu-divider-example", "DropdownMenuDivider example" }
                 " · "
@@ -915,6 +920,7 @@ fn App() -> Element {
             DialogExamples {}
             AlertDialogExamples {}
             PopoverExamples {}
+            HoverCardExamples {}
             DropdownMenuGroupExamples {}
             DropdownMenuRadioGroupExamples {}
             DropdownMenuCheckboxItemExamples {}
