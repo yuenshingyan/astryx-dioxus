@@ -196,6 +196,8 @@ mod metadata_list_item;
 mod mobile_nav;
 #[path = "showcase/mobile_nav_toggle.rs"]
 mod mobile_nav_toggle;
+#[path = "showcase/multi_selector.rs"]
+mod multi_selector;
 #[path = "showcase/nav_heading_menu_item.rs"]
 mod nav_heading_menu_item;
 #[path = "showcase/nav_icon.rs"]
@@ -414,6 +416,7 @@ use metadata_list::MetadataListExamples;
 use metadata_list_item::MetadataListItemExamples;
 use mobile_nav::MobileNavExamples;
 use mobile_nav_toggle::MobileNavToggleExamples;
+use multi_selector::MultiSelectorExamples;
 use nav_heading_menu_item::NavHeadingMenuItemExamples;
 use nav_icon::NavIconExamples;
 use number_input::NumberInputExamples;
@@ -540,6 +543,8 @@ fn App() -> Element {
                 a { href: "#selector-option-examples", "SelectorOption examples" }
                 " · "
                 a { href: "#selector-examples", "Selector examples" }
+                " · "
+                a { href: "#multi-selector-examples", "MultiSelector examples" }
                 " · "
                 a { href: "#layout-header-examples", "LayoutHeader examples" }
                 " · "
@@ -928,6 +933,7 @@ fn App() -> Element {
             ItemExamples {}
             SelectorOptionExamples {}
             SelectorExamples {}
+            MultiSelectorExamples {}
             MetadataListItemExamples {}
             MetadataListExamples {}
             MediaThemeExamples {}
