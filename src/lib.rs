@@ -275,7 +275,7 @@ pub use segmented_control::{
     SegmentedControlProps,
 };
 pub use selectable_card::{SelectableCard, SelectableCardError, SelectableCardProps};
-pub use selector::{SelectorOption, SelectorOptionProps};
+pub use selector::{Selector, SelectorChoice, SelectorOption, SelectorOptionProps, SelectorProps};
 pub use side_nav::{
     SideNav, SideNavCollapseButton, SideNavCollapseButtonProps, SideNavControlledCollapsible,
     SideNavHeading, SideNavHeadingProps, SideNavItem, SideNavItemProps, SideNavProps,
