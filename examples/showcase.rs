@@ -88,6 +88,8 @@ mod clickable_card;
 mod code_block;
 #[path = "showcase/collapsible.rs"]
 mod collapsible;
+#[path = "showcase/command_palette.rs"]
+mod command_palette;
 #[path = "showcase/command_palette_empty.rs"]
 mod command_palette_empty;
 #[path = "showcase/command_palette_footer.rs"]
@@ -352,6 +354,7 @@ use citation::CitationExamples;
 use clickable_card::ClickableCardExamples;
 use code_block::CodeBlockExamples;
 use collapsible::CollapsibleExamples;
+use command_palette::CommandPaletteExamples;
 use command_palette_empty::CommandPaletteEmptyExamples;
 use command_palette_footer::CommandPaletteFooterExamples;
 use command_palette_group::CommandPaletteGroupExamples;
@@ -745,6 +748,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#command-palette-input-examples", "CommandPaletteInput examples" }
                 " · "
+                a { href: "#command-palette-examples", "Command Palette examples" }
+                " · "
                 a { href: "#command-palette-footer-examples", "CommandPaletteFooter examples" }
                 " · "
                 a { href: "#command-palette-list-examples", "CommandPaletteList examples" }
@@ -1026,6 +1031,7 @@ fn App() -> Element {
             CommandPaletteEmptyExamples {}
             CommandPaletteGroupExamples {}
             CommandPaletteInputExamples {}
+            CommandPaletteExamples {}
             CommandPaletteFooterExamples {}
             CommandPaletteListExamples {}
             CommandPaletteItemExamples {}

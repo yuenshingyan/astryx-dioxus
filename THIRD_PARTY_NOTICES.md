@@ -109,6 +109,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - NavHeadingMenuItem follows the standalone form of `NavMenu/NavHeadingMenuItem.tsx` and adapts rows from the NavHeadingMenu catalog template at the same pin. See `docs/nav-heading-menu-item-port.md`.
 - Overlay follows the desktop and controlled forms of `Overlay/Overlay.tsx`, `Overlay/OverlayScrim.tsx`, and three catalog templates at the same pin. The showcase uses pinned offline artwork. See `docs/overlay-port.md`.
 - TypeaheadItem follows `Typeahead/TypeaheadItem.tsx`, its spec, and both adapted catalog templates at the same pin. See `docs/typeahead-item-port.md`.
+- Command Palette follows the local search arrangement in `CommandPalette/CommandPalette.tsx`, its spec, and the adapted showcase at the same pin. See `docs/command-palette-port.md`.
 - CommandPaletteInput follows the standalone path of `CommandPalette/CommandPaletteInput.tsx` and its spec at the same pin. See `docs/command-palette-input-port.md`.
 - CommandPaletteItem follows the standalone form of `CommandPalette/CommandPaletteItem.tsx`, its spec, and both adapted catalog templates at the same pin. See `docs/command-palette-item-port.md`.
 - CommandPaletteList follows the standalone form of `CommandPalette/CommandPaletteList.tsx`, its spec, and both adapted catalog templates at the same pin. See `docs/command-palette-list-port.md`.
