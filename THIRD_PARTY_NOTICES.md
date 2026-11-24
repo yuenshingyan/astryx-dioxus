@@ -97,6 +97,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - AlertDialog follows `AlertDialog/AlertDialog.tsx`, its spec, and the adapted Delete Confirmation arrangement at the same pin. See `docs/alert-dialog-port.md`.
 - Dialog follows the native modal behavior in `Dialog/Dialog.tsx`, its spec, and the adapted showcase at the same pin. See `docs/dialog-port.md`.
 - DialogHeader follows `Dialog/DialogHeader.tsx`, its spec, and both adapted catalog templates at the same pin. See `docs/dialog-header-port.md`.
+- Hover Card follows the desktop preview in `HoverCard/HoverCard.tsx`, its spec, and the adapted Jane Doe showcase at the same pin. See `docs/hover-card-port.md`.
 - Popover follows the caller-rendered trigger path in `Popover/Popover.tsx`, its spec, and the adapted Settings showcase at the same pin. See `docs/popover-port.md`.
 - Lightbox follows the single-image presentation in `Lightbox/Lightbox.tsx`, its spec, and the adapted showcase with its pinned coastline image. See `docs/lightbox-port.md`.
 - Bottom Sheet follows the standalone modal presentation in `BottomSheet/BottomSheet.tsx`, `BottomSheetPanel.tsx`, its spec, and the adapted Filters showcase at the same pin. See `docs/bottom-sheet-port.md`.
