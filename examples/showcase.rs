@@ -288,6 +288,8 @@ mod top_nav_featured_card;
 mod top_nav_heading;
 #[path = "showcase/top_nav_item.rs"]
 mod top_nav_item;
+#[path = "showcase/top_nav_mega_menu.rs"]
+mod top_nav_mega_menu;
 #[path = "showcase/top_nav_mega_menu_item.rs"]
 mod top_nav_mega_menu_item;
 #[path = "showcase/typeahead_item.rs"]
@@ -440,6 +442,7 @@ use top_nav::TopNavExamples;
 use top_nav_featured_card::TopNavFeaturedCardExamples;
 use top_nav_heading::TopNavHeadingExamples;
 use top_nav_item::TopNavItemExamples;
+use top_nav_mega_menu::TopNavMegaMenuExamples;
 use top_nav_mega_menu_item::TopNavMegaMenuItemExamples;
 use typeahead_item::TypeaheadItemExamples;
 use v_stack::VStackExamples;
@@ -769,6 +772,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#top-nav-examples", "TopNav examples" }
                 " · "
+                a { href: "#top-nav-mega-menu-examples", "TopNavMegaMenu examples" }
+                " · "
                 a { href: "#top-nav-featured-card-examples", "TopNavMegaMenuFeaturedCard examples" }
                 " · "
                 a { href: "#top-nav-mega-menu-item-examples", "TopNavMegaMenuItem examples" }
@@ -1017,6 +1022,7 @@ fn App() -> Element {
             TopNavHeadingExamples {}
             TopNavItemExamples {}
             TopNavExamples {}
+            TopNavMegaMenuExamples {}
             TopNavFeaturedCardExamples {}
             TopNavMegaMenuItemExamples {}
             NavIconExamples {}
