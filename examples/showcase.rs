@@ -226,6 +226,8 @@ mod section;
 mod segmented_control;
 #[path = "showcase/selectable_card.rs"]
 mod selectable_card;
+#[path = "showcase/selector.rs"]
+mod selector;
 #[path = "showcase/selector_option.rs"]
 mod selector_option;
 #[path = "showcase/side_nav.rs"]
@@ -427,6 +429,7 @@ use scrollable_area::ScrollableAreaExamples;
 use section::SectionExamples;
 use segmented_control::SegmentedControlExamples;
 use selectable_card::SelectableCardExamples;
+use selector::SelectorExamples;
 use selector_option::SelectorOptionExamples;
 use side_nav::SideNavExamples;
 use side_nav_collapse_button::SideNavCollapseButtonExamples;
@@ -535,6 +538,8 @@ fn App() -> Element {
                 a { href: "#item-examples", "Item examples" }
                 " · "
                 a { href: "#selector-option-examples", "SelectorOption examples" }
+                " · "
+                a { href: "#selector-examples", "Selector examples" }
                 " · "
                 a { href: "#layout-header-examples", "LayoutHeader examples" }
                 " · "
@@ -922,6 +927,7 @@ fn App() -> Element {
             TreeListExamples {}
             ItemExamples {}
             SelectorOptionExamples {}
+            SelectorExamples {}
             MetadataListItemExamples {}
             MetadataListExamples {}
             MediaThemeExamples {}
