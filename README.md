@@ -184,6 +184,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/token/`: [Token](docs/token-port.md), with static, clickable, and link forms and optional removal.
 - `src/selector/`: [SelectorOption](docs/selector-option-port.md), a presentational Item row for options and selected values. Selector host integration remains pending.
 - `src/item/`: [Item](docs/item-port.md), with static slot composition and stacked or inline text. Interactive row behavior remains pending.
+- `src/tree_list/`: [Tree List](docs/tree-list-port.md), with recursive branches and keyboard navigation. Link rows and visual parity remain open.
 - `src/list/`: [List](docs/list-port.md), with static ordered and unordered containers, plus [ListItem](docs/list-item-port.md) for static rows. Interactive rows, animated layout, and reordering remain pending.
 - `src/metadata_list/`: [MetadataList](docs/metadata-list-port.md) and [MetadataListItem](docs/metadata-list-item-port.md), with native description-list pairs, column layouts, and disclosure.
 - `src/empty_state/`: [EmptyState](docs/empty-state-port.md), with native headings, compact layout, and shared rendered-text announcements.

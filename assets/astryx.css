@@ -1663,6 +1663,14 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-date-range-input__segments { display: flex; flex-wrap: wrap; gap: var(--spacing-2); }
   .astryx-date-range-input__segments > * { flex: 1 1 auto; }
   .astryx-date-range-input [role="status"] { color: var(--color-text-error, var(--color-text-primary)); }
+  .astryx-tree-list__row { display: flex; align-items: center; gap: var(--spacing-2); min-block-size: var(--size-element-md); padding-inline: var(--spacing-2); border-radius: var(--radius-element); color: var(--color-text-primary); }
+  .astryx-tree-list__item[aria-selected="true"] > .astryx-tree-list__row { background: var(--color-overlay-pressed); }
+  .astryx-tree-list__item[aria-disabled="true"] > .astryx-tree-list__row { color: var(--color-text-disabled); }
+  .astryx-tree-list__item:focus-visible { outline: none; }
+  .astryx-tree-list__item:focus-visible > .astryx-tree-list__row { outline: 2px solid var(--focus-outline-color); outline-offset: -2px; }
+  .astryx-tree-list__group { margin-inline-start: var(--spacing-4); border-inline-start: var(--border-width) solid var(--color-border); }
+  .astryx-tree-list__marker { flex: 0 0 var(--spacing-4); text-align: center; }
+  .astryx-tree-list__item[aria-expanded="false"] > .astryx-tree-list__row > .astryx-tree-list__marker:dir(rtl) { transform: scaleX(-1); }
   .astryx-date-time-input__segments { display: flex; flex-wrap: wrap; gap: var(--spacing-2); }
   .astryx-date-time-input__segments > input { flex: 1 1 auto; }
   .astryx-date-time-input, .astryx-date-input, .astryx-time-input, .astryx-number-input { display: flex; flex-direction: column; gap: var(--spacing-2); max-inline-size: 100%; }
