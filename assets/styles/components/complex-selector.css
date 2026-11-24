@@ -1,0 +1,20 @@
+
+@layer astryx-base {
+  .astryx-complex-selector__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    inline-size: 100%;
+    min-block-size: var(--size-element-md);
+    padding-inline: var(--spacing-2);
+    border: var(--border-width) solid var(--color-border-emphasized);
+    border-radius: var(--radius-element);
+    background: var(--color-background-surface);
+    color: var(--color-text-primary);
+    font: inherit;
+    text-align: start;
+  }
+  .astryx-complex-selector__trigger[aria-disabled="true"] { color: var(--color-text-disabled); }
+  .astryx-complex-selector__trigger:focus-visible { outline: 2px solid var(--focus-outline-color); outline-offset: 2px; }
+  .astryx-complex-selector__popup { --_popover-padding: var(--spacing-3); max-block-size: 65dvh; overflow: auto; }
+}
