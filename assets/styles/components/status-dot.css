@@ -1,0 +1,39 @@
+
+@layer astryx-base {
+  .astryx-status-dot {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background-color: var(--color-icon-secondary);
+    color: var(--color-background-surface);
+  }
+  .astryx-status-dot[data-astryx-tooltip-placement="standalone"] { position: relative; cursor: pointer; }
+  .astryx-status-dot[data-variant="success"] { background-color: var(--color-icon-success); }
+  .astryx-status-dot[data-variant="warning"] { background-color: var(--color-icon-warning); }
+  .astryx-status-dot[data-variant="error"] { background-color: var(--color-icon-error); }
+  .astryx-status-dot[data-variant="accent"] { background-color: var(--color-accent); color: var(--color-on-accent); }
+  .astryx-status-dot[data-astryx-pulsing="true"] { animation: astryx-status-dot-pulse 2s ease-in-out infinite; }
+  .astryx-status-dot__icon { display: flex; align-items: center; justify-content: center; width: 8px; height: 8px; line-height: 0; }
+  .astryx-status-dot:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+  @media (pointer: coarse) {
+    .astryx-status-dot[data-astryx-tooltip-placement="standalone"][data-astryx-hit-area="true"]::after {
+      content: "";
+      position: absolute;
+      top: calc((var(--astryx-hit-inset-top, 0px) + var(--_hit-border-top, 0px)) * -1);
+      right: calc((var(--astryx-hit-inset-right, 0px) + var(--_hit-border-right, 0px)) * -1);
+      bottom: calc((var(--astryx-hit-inset-bottom, 0px) + var(--_hit-border-bottom, 0px)) * -1);
+      left: calc((var(--astryx-hit-inset-left, 0px) + var(--_hit-border-left, 0px)) * -1);
+    }
+  }
+  @keyframes astryx-status-dot-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  @media (prefers-reduced-motion: reduce) { .astryx-status-dot[data-astryx-pulsing="true"] { animation-name: none; } }
+  @media (forced-colors: active) {
+    .astryx-status-dot { outline: 1px solid CanvasText; outline-offset: -1px; }
+    .astryx-status-dot:focus-visible { outline-width: var(--focus-outline-width); outline-offset: var(--focus-outline-offset); }
+  }
+}

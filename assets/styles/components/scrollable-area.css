@@ -1,0 +1,47 @@
+
+@layer astryx-base {
+  .astryx-scrollable-area {
+    box-sizing: border-box;
+    max-inline-size: 100%;
+    max-block-size: 100%;
+    overflow: clip !important;
+    scrollbar-color: var(--color-neutral) transparent;
+    container-type: scroll-state;
+  }
+  .astryx-scrollable-area[data-overflow-x="auto"] { overflow-x: auto !important; }
+  .astryx-scrollable-area[data-overflow-y="auto"] { overflow-y: auto !important; }
+  .astryx-scrollable-area[data-overflow-x="hidden"] { overflow-x: hidden !important; }
+  .astryx-scrollable-area[data-overflow-y="hidden"] { overflow-y: hidden !important; }
+  .astryx-scrollable-area[data-contain-x] { overscroll-behavior-x: contain; }
+  .astryx-scrollable-area[data-contain-y] { overscroll-behavior-y: contain; }
+  .astryx-scrollable-area:focus-visible {
+    outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+    outline-offset: var(--focus-outline-offset);
+  }
+  @media (pointer: coarse), (forced-colors: active) {
+    .astryx-scrollable-area { scrollbar-color: auto; }
+  }
+  .astryx-scrollable-area--full-bleed {
+    margin-inline-start: calc(-1 * var(--container-padding-inline-start, 0px));
+    margin-inline-end: calc(-1 * var(--container-padding-inline-end, 0px));
+    max-inline-size: calc(100% + var(--container-padding-inline-start, 0px) + var(--container-padding-inline-end, 0px));
+  }
+  .astryx-scrollable-area--full-bleed:first-child { margin-block-start: calc(-1 * var(--container-padding-block-start, 0px)); }
+  .astryx-scrollable-area--full-bleed:last-child { margin-block-end: calc(-1 * var(--container-padding-block-end, 0px)); }
+  .astryx-scrollable-area__content {
+    box-sizing: border-box;
+    min-inline-size: 100%;
+    min-block-size: 100%;
+    padding-inline: var(--container-padding-inline-start) var(--container-padding-inline-end);
+    padding-block: var(--container-padding-block-start) var(--container-padding-block-end);
+    --_container-bleed-block-start: 0px;
+    --_container-bleed-block-end: 0px;
+  }
+  .astryx-scrollable-area:not([data-axis="block"]) > .astryx-scrollable-area__content { inline-size: max-content; }
+  .astryx-scrollable-area__content:has(> [data-container-corner]:first-child):not(:has(> * [data-container-corner])) {
+    --_container-bleed-block-start: var(--container-padding-block-start);
+  }
+  .astryx-scrollable-area__content:has(> [data-container-corner]:last-child):not(:has(> * [data-container-corner])) {
+    --_container-bleed-block-end: var(--container-padding-block-end);
+  }
+}

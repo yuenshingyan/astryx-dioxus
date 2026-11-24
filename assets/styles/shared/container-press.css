@@ -1,0 +1,23 @@
+
+/* utils/interactionOverlay: shared row/card pressedAlpha paint, not component policy. */
+@layer astryx-components {
+  [data-astryx-container-press] {
+    --_press-paint: color-mix(in srgb, var(--color-overlay-pressed) calc(var(--_astryx-press-strength, 0) * 100%), transparent);
+    --_press-paint-image: linear-gradient(var(--_press-paint), var(--_press-paint));
+  }
+  [data-astryx-container-press="true"][data-astryx-press="fading"] {
+    animation-name: astryx-container-press-release;
+    animation-duration: var(--duration-exit);
+    animation-timing-function: var(--ease-exit);
+    animation-fill-mode: both;
+  }
+  @keyframes astryx-container-press-release {
+    from { --_astryx-press-strength: 1; }
+    to { --_astryx-press-strength: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-astryx-container-press="true"][data-astryx-press="fading"] { animation-duration: min(var(--duration-exit), 200ms); }
+  }
+  [data-astryx-container-press="true"][data-pressable-container][data-astryx-press="on"]::after,
+  [data-astryx-container-press="true"][data-pressable-container][data-astryx-press="fading"]::after { background-color: transparent; background-image: var(--_press-paint-image); transition: none; }
+}

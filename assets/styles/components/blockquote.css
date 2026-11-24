@@ -1,0 +1,21 @@
+
+/* Blockquote: pinned logical rule and bare attribution, no content typography reset. */
+@layer astryx-base {
+  .astryx-blockquote {
+    border-inline-start-width: var(--spacing-0-5);
+    border-inline-start-style: solid;
+    border-inline-start-color: var(--color-border-emphasized);
+    padding-inline-start: var(--spacing-4);
+    color: var(--color-text-secondary);
+    overflow-wrap: break-word;
+    margin-inline: 0;
+    margin-block: 0;
+  }
+  .astryx-blockquote > .astryx-blockquote__cite {
+    display: block;
+    margin-block-start: var(--spacing-2);
+    font-size: var(--text-supporting-size);
+    line-height: var(--text-supporting-leading);
+    font-style: normal;
+  }
+}

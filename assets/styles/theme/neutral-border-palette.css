@@ -1,0 +1,16 @@
+
+/* Shared palette border roles required by SelectableCard's color-axis rings. */
+@layer astryx-theme {
+  [data-astryx-theme="neutral"] {
+    --color-border-blue: light-dark(#a1caff, #5aa0f8);
+    --color-border-cyan: light-dark(#85d5e9, #49adc4);
+    --color-border-gray: light-dark(#d4d4d4, #262626);
+    --color-border-green: light-dark(#aad4a9, #6ab26b);
+    --color-border-orange: light-dark(#ffc7a1, #df843f);
+    --color-border-pink: light-dark(#ffc0d7, #fc78b1);
+    --color-border-purple: light-dark(#f3bfff, #d885eb);
+    --color-border-red: light-dark(#ffaea7, #fa6762);
+    --color-border-teal: light-dark(#90d7c8, #4fb1a0);
+    --color-border-yellow: light-dark(#e3c36c, #c29900);
+  }
+}

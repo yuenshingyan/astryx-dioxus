@@ -1,0 +1,45 @@
+
+@layer astryx-base {
+  .astryx-typeahead-item { display: flex; align-items: center; gap: var(--spacing-2); min-height: 0; }
+  .astryx-typeahead-item[data-disabled] { opacity: 0.5; }
+  .astryx-typeahead-item__content { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .astryx-typeahead-item__label, .astryx-typeahead-item__description { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .astryx-typeahead-item__label {
+    font-size: var(--text-label-size);
+    line-height: var(--text-label-leading);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-text-primary);
+  }
+  .astryx-typeahead-item__description { font-size: var(--text-supporting-size); line-height: var(--text-supporting-leading); color: var(--color-text-secondary); }
+}
+
+@layer astryx-base {
+  .astryx-overlay { position: relative; overflow: clip; }
+  .astryx-overlay-scrim {
+    position: absolute; display: flex; flex-direction: column;
+    gap: var(--spacing-2); padding: var(--spacing-3);
+    align-items: flex-end; justify-content: flex-start;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateY(var(--_overlay-shift, 0));
+    transition: opacity var(--duration-fast) var(--ease-standard), visibility var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
+  }
+  .astryx-overlay-scrim[data-position="fill"] { inset: 0; }
+  .astryx-overlay-scrim[data-position="bottom"] { inset-inline: 0; bottom: 0; --_overlay-shift: 100%; }
+  .astryx-overlay-scrim[data-position="top"] { inset-inline: 0; top: 0; --_overlay-shift: -100%; }
+  .astryx-overlay-scrim[data-align="start"] { align-items: flex-start; }
+  .astryx-overlay-scrim[data-align="center"] { align-items: center; justify-content: center; }
+  .astryx-overlay-scrim[data-scrim="dark"] { background-color: var(--color-overlay); }
+  .astryx-overlay-scrim[data-scrim="light"] { background-color: color-mix(in srgb, white 60%, transparent); }
+  .astryx-overlay-scrim[data-reveal="open"],
+  .astryx-overlay:focus-within > .astryx-overlay-scrim:is([data-reveal="focus"], [data-reveal="hover"]) {
+    opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
+  }
+  @media (hover: hover) {
+    .astryx-overlay:hover > .astryx-overlay-scrim[data-reveal="hover"] {
+      opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .astryx-overlay-scrim { transition: none; }
+  }
+}

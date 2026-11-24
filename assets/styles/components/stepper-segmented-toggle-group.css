@@ -1,0 +1,39 @@
+
+@layer astryx-base {
+  .astryx-stepper { display: flex; gap: var(--spacing-1); margin: 0; padding: 0; list-style: none; }
+  .astryx-stepper[data-orientation="vertical"] { flex-direction: column; }
+  .astryx-stepper[data-orientation="horizontal"] > .astryx-step { flex: 1; min-inline-size: 0; border-block-start: var(--spacing-1) solid var(--_step-track); }
+  .astryx-stepper[data-orientation="vertical"] > .astryx-step { border-inline-start: var(--spacing-1) solid var(--_step-track); }
+  .astryx-step { --_step-track: var(--color-neutral); padding: var(--spacing-2); }
+  .astryx-step:is([data-progress="current"], [data-progress="completed"]) { --_step-track: var(--color-accent); }
+  .astryx-step__row, .astryx-step__summary { display: flex; align-items: center; gap: var(--spacing-2); min-inline-size: 0; }
+  .astryx-step__row { justify-content: space-between; }
+  .astryx-step__summary { padding: 0; border: 0; background: transparent; font: inherit; color: inherit; text-align: start; }
+  button.astryx-step__summary:focus-visible { outline: 2px solid var(--focus-outline-color); outline-offset: 2px; }
+  .astryx-step__indicator { display: grid; place-items: center; flex: none; inline-size: var(--spacing-4); block-size: var(--spacing-4); border-radius: var(--radius-full); background: var(--color-neutral); font-size: var(--text-supporting-size); }
+  .astryx-step[data-progress="current"] .astryx-step__indicator { outline: 2px solid var(--color-accent); }
+  .astryx-step__label { overflow: hidden; text-overflow: ellipsis; }
+  .astryx-step__optional, .astryx-step__description { color: var(--color-text-secondary); font-size: var(--text-supporting-size); }
+  .astryx-step[data-disabled="true"] .astryx-step__label { color: var(--color-text-disabled); }
+  @media (forced-colors: active) {
+    .astryx-step:is([data-progress="current"], [data-progress="completed"]) { --_step-track: Highlight; }
+    .astryx-step[data-progress="current"] .astryx-step__indicator { outline-color: Highlight; }
+  }
+  .astryx-segmented-control { --_segmented-size: var(--size-element-md); display: inline-flex; max-inline-size: 100%; box-sizing: border-box; padding: var(--spacing-0-5); border-radius: var(--radius-element); background: var(--color-neutral); }
+  .astryx-segmented-control[data-fill="true"] { display: flex; }
+  .astryx-segmented-control[data-fill="true"] > .astryx-segmented-control__item { flex: 1; }
+  .astryx-segmented-control[data-size="sm"] { --_segmented-size: var(--size-element-sm); }
+  .astryx-segmented-control[data-size="lg"] { --_segmented-size: var(--size-element-lg); }
+  .astryx-segmented-control__item { display: inline-flex; align-items: center; justify-content: center; gap: var(--spacing-1); min-inline-size: 0; block-size: calc(var(--_segmented-size) - 4px); padding-inline: var(--spacing-3); border: 0; border-radius: calc(var(--radius-element) - var(--spacing-0-5)); background: transparent; color: var(--color-text-secondary); font: inherit; font-size: var(--text-label-size); font-weight: var(--font-weight-medium); cursor: pointer; }
+  .astryx-segmented-control__item[aria-checked="true"] { color: var(--color-text-primary); background: var(--color-background-surface); font-weight: var(--font-weight-semibold); box-shadow: var(--shadow-low); }
+  .astryx-segmented-control__item[aria-disabled="true"] { color: var(--color-text-disabled); cursor: default; }
+  .astryx-segmented-control__item:focus-visible { outline: 2px solid var(--focus-outline-color); outline-offset: -2px; }
+  .astryx-segmented-control__label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .astryx-segmented-control__icon { display: inline-flex; flex: none; }
+  @media (forced-colors: active) {
+    .astryx-segmented-control__item[aria-checked="true"] { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+    .astryx-segmented-control__item:focus-visible { outline-color: ButtonText; }
+  }
+  .astryx-toggle-button-group { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-1); max-width: 100%; }
+  .astryx-toggle-button-group[data-orientation="vertical"] { flex-direction: column; flex-wrap: nowrap; align-items: stretch; }
+}

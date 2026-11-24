@@ -1,0 +1,17 @@
+
+/* theme/MediaTheme and onMediaTokens. */
+:is(.astryx-media-theme, .astryx-demo-toast-media) { display: contents; }
+:is(.astryx-media-theme, .astryx-demo-toast-media)[data-astryx-media="light"] {
+  color-scheme: light;
+  --color-text-primary: var(--color-on-light);
+  --color-icon-primary: var(--color-on-light);
+  --color-accent: var(--color-on-light);
+  color: var(--color-text-primary);
+}
+:is(.astryx-media-theme, .astryx-demo-toast-media)[data-astryx-media="dark"] {
+  color-scheme: dark;
+  --color-text-primary: var(--color-on-dark);
+  --color-icon-primary: var(--color-on-dark);
+  --color-accent: var(--color-on-dark);
+  color: var(--color-text-primary);
+}

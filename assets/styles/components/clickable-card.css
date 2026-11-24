@@ -1,0 +1,17 @@
+
+/* ClickableCard owns interaction only; Card remains the surface/padding owner. */
+@layer astryx-components {
+  .astryx-clickable-card { --_press-overlay: transparent; position: relative; cursor: pointer; color: inherit; text-decoration: none; transition: border-color var(--duration-fast) var(--ease-standard); }
+  .astryx-clickable-card__action { color: inherit; text-decoration: none; box-sizing: border-box; position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; outline: none; }
+  .astryx-clickable-card:has(> .astryx-clickable-card__action:focus-visible) { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+  .astryx-clickable-card[aria-disabled="true"] { cursor: default; }
+  .astryx-clickable-card[data-disabled="true"] { cursor: default; opacity: .5; }
+  .astryx-clickable-card:not([data-disabled="true"], [aria-disabled="true"])::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background-color: var(--_press-overlay, transparent); transition: background-color var(--duration-fast) var(--ease-standard); }
+  @media (hover: hover) {
+    .astryx-clickable-card:not([data-disabled="true"], [aria-disabled="true"]):hover { --_press-overlay: var(--color-overlay-hover); }
+    .astryx-clickable-card[data-variant="default"]:not([data-disabled="true"], [aria-disabled="true"]):hover { border-color: var(--color-border-emphasized); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .astryx-clickable-card, .astryx-clickable-card::after { transition: none; }
+  }
+}

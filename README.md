@@ -227,13 +227,15 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/input_group/`: the input-owned internal state contract used by existing controls; not a completed InputGroup component.
 - `src/compatibility/`: adapters for provisional public APIs only. Core components resolve independent upstream-owned contexts instead of a combined Button environment.
 - `src/lib.rs`: selected public re-exports; existing root imports remain available.
-- `assets/astryx.css`: shared design tokens and component styles.
+- `assets/styles/`: editable theme, shared, and component styles. [`order.txt`](assets/styles/order.txt) preserves cascade order; locate existing rules here before adding new ones.
+- `assets/astryx.css`: generated public bundle embedded by `astryx_dioxus::STYLES`. After editing a source stylesheet, run `python3 scripts/bundle_styles.py` and commit the updated bundle. Cargo builds do not require Python.
 - `examples/showcase.rs`: interactive web showcase.
 - `tests/`: server-rendered component tests.
 
 ## Checks
 
 ```sh
+python3 scripts/bundle_styles.py --check
 cargo fmt --check
 cargo check --lib --no-default-features
 cargo test
