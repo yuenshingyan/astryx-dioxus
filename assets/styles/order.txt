@@ -47,4 +47,5 @@ components/item-list-toolbar-chat.css
 components/grid-aspect-ratio-stack.css
 components/token-avatar.css
 components/toast-demo.css
+components/toast.css
 theme/media-theme.css

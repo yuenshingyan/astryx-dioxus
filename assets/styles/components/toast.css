@@ -1,0 +1,23 @@
+
+@layer astryx-components {
+  .astryx-toast-surface {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-3);
+    box-sizing: border-box;
+    inline-size: 400px;
+    max-inline-size: 100%;
+    padding: var(--spacing-4);
+    border-radius: var(--radius-container);
+    background: var(--color-background-inverted);
+    color: light-dark(var(--color-on-dark), var(--color-on-light));
+    box-shadow: var(--shadow-med);
+    font-family: var(--font-family-body);
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+  }
+  .astryx-toast-surface[data-error="true"] { background: var(--color-error); color: var(--color-on-error); }
+  .astryx-toast-surface__body { flex: 1; min-inline-size: 0; overflow-wrap: anywhere; }
+  .astryx-toast-surface__actions { display: flex; align-items: center; gap: var(--spacing-2); }
+  .astryx-toast-surface__actions .astryx-button--ghost { --button-color: inherit; color: inherit; }
+}

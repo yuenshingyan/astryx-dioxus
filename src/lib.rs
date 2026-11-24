@@ -98,6 +98,7 @@ mod thumbnail;
 mod time_input;
 mod timer;
 mod timestamp;
+mod toast;
 mod toggle_button;
 mod token;
 mod tokenizer;
@@ -334,6 +335,7 @@ pub use thumbnail::{Thumbnail, ThumbnailProps, ThumbnailRemoveVisibility};
 pub use time_input::{TimeInput, TimeInputProps};
 pub use timer::{Timer, TimerFormat, TimerProps};
 pub use timestamp::{Timestamp, TimestampFormat, TimestampProps};
+pub use toast::{Toast, ToastDismissReason, ToastProps, ToastType};
 pub use toggle_button::{
     ToggleButton, ToggleButtonGroup, ToggleButtonGroupProps, ToggleButtonGroupSelection,
     ToggleButtonProps,
