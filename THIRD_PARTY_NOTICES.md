@@ -53,6 +53,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - Breadcrumbs follows `Breadcrumbs/Breadcrumbs.tsx`, its component spec, and the five non-menu catalog arrangements at the same pin. See `docs/breadcrumbs-port.md`.
 - BreadcrumbItem follows the non-menu forms of `Breadcrumbs/BreadcrumbItem.tsx`, its component spec, and two catalog templates at the same pin. See `docs/breadcrumb-item-port.md`.
 - Token follows `Token/{Token.tsx,TokenLink.tsx}`, its component spec, and six catalog templates at the same pin. See `docs/token-port.md`.
+- Multi Selector follows the selection contract in `MultiSelector/MultiSelector.tsx`, its spec, and the adapted Columns showcase at the same pin. This checkpoint uses a native listbox. See `docs/multi-selector-port.md`.
 - Selector follows the single-choice field contract in `Selector/Selector.tsx`, its spec, and the adapted Fruit showcase at the same pin. The local checkpoint uses a native picker. See `docs/selector-port.md`.
 - SelectorOption follows `Selector/SelectorOption.tsx`, its spec, and three adapted catalog arrangements at the same pin. See `docs/selector-option-port.md`.
 - Item follows the static row path in `Item/Item.tsx` and its spec at the same pin. See `docs/item-port.md`.

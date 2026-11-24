@@ -1,0 +1,7 @@
+# Multi Selector: native listbox checkpoint
+
+`src/multi_selector/` composes Field with a native multiple select. The caller owns selection; retained choices keep their callback order, and new choices are appended. Native form data submits repeated values in option order. The control reconciles to the caller's selection after a change, including when the caller declines it.
+
+Pinned Meta Astryx sources at `476a3153417dbf75c565f7df05b0784e94ddd59e`: `MultiSelector/MultiSelector.tsx` (`eb891dd212e4c04947a41595e7b230bf9a5384ba`), its spec (`9a61b54f8a1d81bada344c65aff24ff35515f97e`), and the Columns showcase (`0e959329f9e61c181c424d759bd19c328727b620`). The adapted showcase retains the five column choices and uses a visible native listbox rather than the custom popup. It declines Created to demonstrate rollback.
+
+The CSS bundle check, all five Rust checks, and four Chrome suites passed. The focused suite verified native labeling, required validation, selection order, rollback, and repeated form values using dispatched change events. Native keyboard and touch interaction were not tested. The custom popup, rich options, search, tokens, select-all, and visual parity remain open. The checklist remains open.
