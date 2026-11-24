@@ -99,6 +99,7 @@ mod timer;
 mod timestamp;
 mod toggle_button;
 mod token;
+mod tokenizer;
 mod toolbar;
 mod tooltip;
 mod top_nav;
@@ -333,6 +334,7 @@ pub use toggle_button::{
     ToggleButtonProps,
 };
 pub use token::{InvalidTokenColor, Token, TokenColor, TokenProps, TokenSize};
+pub use tokenizer::{Tokenizer, TokenizerChange, TokenizerProps};
 pub use toolbar::{Toolbar, ToolbarOrientation, ToolbarProps};
 pub use tooltip::{Tooltip, TooltipProps};
 pub use top_nav::{
