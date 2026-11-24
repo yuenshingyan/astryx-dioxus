@@ -18,12 +18,19 @@ pub fn CommandPaletteInput(
     #[props(default)] end_content: Option<Element>,
     #[props(default)] class: String,
     #[props(default)] style: String,
+    /// Popup relationship when used as the palette's combobox.
+    #[props(default)]
+    listbox_id: Option<String>,
+    /// Focused option, when it exists in the associated listbox.
+    #[props(default)]
+    active_option_id: Option<String>,
 ) -> Element {
     let label = if label.trim().is_empty() {
         "Search commands".to_owned()
     } else {
         label
     };
+    let is_combobox = listbox_id.is_some();
     rsx! {
         div { class: format!("astryx-command-palette-input {class}"), style,
             span { class: "astryx-command-palette-input__icon", "aria-hidden": "true",
@@ -37,6 +44,9 @@ pub fn CommandPaletteInput(
             input { class: "astryx-command-palette-input__control", id, r#type: "text",
                 "aria-label": label, placeholder, value, "enterkeyhint": "search", "autocorrect": "off",
                 "data-autofocus": has_auto_focus.then_some("true"), autofocus: has_auto_focus,
+                role: is_combobox.then_some("combobox"), "aria-autocomplete": is_combobox.then_some("list"),
+                "aria-expanded": is_combobox.then_some("true"), "aria-controls": listbox_id,
+                "aria-activedescendant": active_option_id.filter(|_| is_combobox),
                 oninput: move |event| {
                     if let Some(handler) = on_value_change { handler.call(event.value()); }
                     if let Some(handler) = oninput { handler.call(event); }

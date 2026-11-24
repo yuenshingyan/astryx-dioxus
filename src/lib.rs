@@ -155,9 +155,10 @@ pub use collapsible::{
     CollapsibleGroupProps, CollapsibleGroupValue, CollapsibleProps,
 };
 pub use command_palette::{
-    CommandPaletteEmpty, CommandPaletteEmptyProps, CommandPaletteFooter, CommandPaletteFooterProps,
-    CommandPaletteGroup, CommandPaletteGroupProps, CommandPaletteInput, CommandPaletteInputProps,
-    CommandPaletteItem, CommandPaletteItemProps, CommandPaletteList, CommandPaletteListProps,
+    CommandPalette, CommandPaletteEmpty, CommandPaletteEmptyProps, CommandPaletteFooter,
+    CommandPaletteFooterProps, CommandPaletteGroup, CommandPaletteGroupProps, CommandPaletteInput,
+    CommandPaletteInputProps, CommandPaletteItem, CommandPaletteItemProps, CommandPaletteList,
+    CommandPaletteListProps, CommandPaletteOption, CommandPaletteProps,
 };
 pub use context_menu::{ContextMenu, ContextMenuProps};
 pub use date_input::{DateInput, DateInputProps};
