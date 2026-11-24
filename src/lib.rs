@@ -325,7 +325,8 @@ pub use tooltip::{Tooltip, TooltipProps};
 pub use top_nav::{
     TopNav, TopNavHeading, TopNavHeadingProps, TopNavItem, TopNavItemProps, TopNavMegaMenu,
     TopNavMegaMenuFeaturedCard, TopNavMegaMenuFeaturedCardProps, TopNavMegaMenuItem,
-    TopNavMegaMenuItemProps, TopNavMegaMenuProps, TopNavProps,
+    TopNavMegaMenuItemProps, TopNavMegaMenuProps, TopNavMenu, TopNavMenuItemData, TopNavMenuProps,
+    TopNavProps,
 };
 pub use typeahead::{TypeaheadItem, TypeaheadItemContent, TypeaheadItemProps};
 
