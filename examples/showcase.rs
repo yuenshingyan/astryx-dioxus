@@ -250,6 +250,8 @@ mod switch;
 mod syntax_theme;
 #[path = "showcase/tab.rs"]
 mod tab;
+#[path = "showcase/tab_menu.rs"]
+mod tab_menu;
 #[path = "showcase/table.rs"]
 mod table;
 #[path = "showcase/table_header.rs"]
@@ -427,6 +429,7 @@ use stepper::StepperExamples;
 use switch::SwitchExamples;
 use syntax_theme::SyntaxThemeExamples;
 use tab::TabExamples;
+use tab_menu::TabMenuExamples;
 use table::TableExamples;
 use table_header::TableHeaderExamples;
 use table_selection_toolbar::TableSelectionToolbarExamples;
@@ -709,6 +712,8 @@ fn App() -> Element {
                 a { href: "#internationalization-examples", "InternationalizationProvider examples" }
                 " · "
                 a { href: "#tab-examples", "Tab examples" }
+                " · "
+                a { href: "#tab-menu-examples", "Tab Menu examples" }
                 " · "
                 a { href: "#resize-handle-examples", "ResizeHandle examples" }
                 " · "
@@ -998,6 +1003,7 @@ fn App() -> Element {
             PaginationExamples {}
             InternationalizationProviderExamples {}
             TabExamples {}
+            TabMenuExamples {}
             ResizeHandleExamples {}
             GridSpanExamples {}
             HStackExamples {}

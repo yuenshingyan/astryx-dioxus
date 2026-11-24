@@ -293,7 +293,10 @@ pub use stepper::{
     Step, StepIndicatorPreset, StepProps, Stepper, StepperOrientation, StepperProps,
 };
 pub use switch::{Switch, SwitchLabelPosition, SwitchLabelSpacing, SwitchProps};
-pub use tab_list::{Tab, TabList, TabListMode, TabListProps, TabMode, TabProps};
+pub use tab_list::{
+    Tab, TabList, TabListMode, TabListProps, TabMenu, TabMenuOption, TabMenuProps, TabMode,
+    TabProps,
+};
 pub use table::{
     Table, TableBody, TableBodyProps, TableCell, TableCellProps, TableCellScope, TableDensity,
     TableDividers, TableFooter, TableFooterProps, TableHeader, TableHeaderCell,

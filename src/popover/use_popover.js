@@ -7,7 +7,12 @@ const priority = anchor.style.getPropertyPriority('anchor-name');
 anchor.style.setProperty('anchor-name', `--${id}`);
 const sync = () => {
   const isOpen = surface.matches(':popover-open');
-  if (surface.dataset.open === 'true' && !isOpen) surface.showPopover();
+  if (surface.dataset.open === 'true' && !isOpen) {
+    surface.showPopover();
+    if (surface.dataset.popoverMenuFocus === 'true') {
+      (surface.querySelector('[role="menuitemradio"]:not([aria-disabled="true"])') ?? surface).focus({preventScroll: true});
+    }
+  }
   if (surface.dataset.open !== 'true' && isOpen) {
     const restore = surface.contains(document.activeElement);
     surface.hidePopover();
@@ -16,6 +21,12 @@ const sync = () => {
 };
 const owns = target => anchor.contains(target) || surface.contains(target);
 const onKey = event => {
+  if (!event.defaultPrevented && event.key === 'Tab' && surface.dataset.popoverMenuFocus === 'true' &&
+      surface.matches(':popover-open') && surface.contains(event.target)) {
+    anchor.focus({preventScroll: true});
+    dioxus.send(true);
+    return;
+  }
   if (!event.defaultPrevented && !event.isComposing && event.key === 'Escape' &&
       surface.matches(':popover-open') && owns(event.target)) {
     event.preventDefault();
