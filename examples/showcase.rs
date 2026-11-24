@@ -288,6 +288,8 @@ mod time_input;
 mod timer;
 #[path = "showcase/timestamp.rs"]
 mod timestamp;
+#[path = "showcase/toast.rs"]
+mod toast;
 #[path = "showcase/toggle_button.rs"]
 mod toggle_button;
 #[path = "showcase/toggle_button_group.rs"]
@@ -468,6 +470,7 @@ use thumbnail::ThumbnailExamples;
 use time_input::TimeInputExamples;
 use timer::TimerExamples;
 use timestamp::TimestampExamples;
+use toast::ToastExamples;
 use toggle_button::ToggleButtonExamples;
 use toggle_button_group::ToggleButtonGroupExamples;
 use token::TokenExamples;
@@ -660,6 +663,8 @@ fn App() -> Element {
                 a { href: "#typeahead-examples", "Typeahead examples" }
                 " · "
                 a { href: "#tokenizer-examples", "Tokenizer examples" }
+                " · "
+                a { href: "#toast-examples", "Toast examples" }
                 " · "
                 a { href: "#power-search-examples", "Power Search examples" }
                 " · "
@@ -1021,6 +1026,7 @@ fn App() -> Element {
             BaseTypeaheadExamples {}
             TypeaheadExamples {}
             TokenizerExamples {}
+            ToastExamples {}
             PowerSearchExamples {}
             TableHeaderExamples {}
             TableExamples {}
