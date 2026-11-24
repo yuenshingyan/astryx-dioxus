@@ -9,6 +9,11 @@ const sync = () => {
   const isOpen = surface.matches(':popover-open');
   if (surface.dataset.open === 'true' && !isOpen) {
     surface.showPopover();
+    if (surface.dataset.popoverFocus === 'true') {
+      const target = [...surface.querySelectorAll('[data-autofocus]')].find(node =>
+        node.closest('[popover]') === surface && !node.matches(':disabled') && node.getClientRects().length);
+      (target ?? surface).focus({preventScroll: true});
+    }
     if (surface.dataset.popoverMenuFocus === 'true') {
       (surface.querySelector('[role="menuitemradio"]:not([aria-disabled="true"])') ?? surface).focus({preventScroll: true});
     }

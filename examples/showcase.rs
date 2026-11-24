@@ -104,6 +104,8 @@ mod command_palette_input;
 mod command_palette_item;
 #[path = "showcase/command_palette_list.rs"]
 mod command_palette_list;
+#[path = "showcase/complex_selector.rs"]
+mod complex_selector;
 #[path = "showcase/context_menu.rs"]
 mod context_menu;
 #[path = "showcase/context_menu_group.rs"]
@@ -370,6 +372,7 @@ use command_palette_group::CommandPaletteGroupExamples;
 use command_palette_input::CommandPaletteInputExamples;
 use command_palette_item::CommandPaletteItemExamples;
 use command_palette_list::CommandPaletteListExamples;
+use complex_selector::ComplexSelectorExamples;
 use context_menu::ContextMenuExamples;
 use context_menu_group::ContextMenuGroupExamples;
 use context_menu_item::ContextMenuItemExamples;
@@ -545,6 +548,8 @@ fn App() -> Element {
                 a { href: "#selector-examples", "Selector examples" }
                 " · "
                 a { href: "#multi-selector-examples", "MultiSelector examples" }
+                " · "
+                a { href: "#complex-selector-examples", "Complex Selector examples" }
                 " · "
                 a { href: "#layout-header-examples", "LayoutHeader examples" }
                 " · "
@@ -934,6 +939,7 @@ fn App() -> Element {
             SelectorOptionExamples {}
             SelectorExamples {}
             MultiSelectorExamples {}
+            ComplexSelectorExamples {}
             MetadataListItemExamples {}
             MetadataListExamples {}
             MediaThemeExamples {}

@@ -26,6 +26,7 @@ mod code_block;
 mod collapsible;
 mod command_palette;
 mod compatibility;
+mod complex_selector;
 mod context_menu;
 mod date_input;
 mod date_range_input;
@@ -161,6 +162,7 @@ pub use command_palette::{
     CommandPaletteInputProps, CommandPaletteItem, CommandPaletteItemProps, CommandPaletteList,
     CommandPaletteListProps, CommandPaletteOption, CommandPaletteProps,
 };
+pub use complex_selector::{ComplexSelector, ComplexSelectorContent, ComplexSelectorProps};
 pub use context_menu::{ContextMenu, ContextMenuProps};
 pub use date_input::{DateInput, DateInputProps};
 pub use date_range_input::{DateRange, DateRangeInput, DateRangeInputProps};
