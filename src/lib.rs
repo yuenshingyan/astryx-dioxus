@@ -129,17 +129,17 @@ pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation
 pub use card::{Card, CardVariant, InvalidCardVariant};
 pub use center::{Center, CenterAxis, CenterProps};
 pub use chat::{
-    ChatComposerDrawer, ChatComposerDrawerProps, ChatComposerInput, ChatComposerInputProps,
-    ChatComposerToken, ChatComposerTokenElement, ChatComposerTokenElementProps, ChatDensity,
-    ChatDictationButton, ChatDictationButtonProps, ChatDictationButtonSize, ChatDictationState,
-    ChatLayout, ChatLayoutProps, ChatLayoutScrollAction, ChatLayoutScrollButton,
-    ChatLayoutScrollButtonProps, ChatMessage, ChatMessageBubble, ChatMessageBubbleGroup,
-    ChatMessageBubbleProps, ChatMessageBubbleVariant, ChatMessageList, ChatMessageListAlign,
-    ChatMessageListProps, ChatMessageMetadata, ChatMessageMetadataProps, ChatMessageProps,
-    ChatMessageSender, ChatMessageStatus, ChatSendButton, ChatSendButtonProps, ChatSendButtonSize,
-    ChatSystemMessage, ChatSystemMessageProps, ChatSystemMessageVariant, ChatTokenizedText,
-    ChatTokenizedTextProps, ChatToolCallItem, ChatToolCallStatus, ChatToolCalls,
-    ChatToolCallsProps,
+    ChatComposer, ChatComposerDrawer, ChatComposerDrawerProps, ChatComposerInput,
+    ChatComposerInputProps, ChatComposerProps, ChatComposerToken, ChatComposerTokenElement,
+    ChatComposerTokenElementProps, ChatDensity, ChatDictationButton, ChatDictationButtonProps,
+    ChatDictationButtonSize, ChatDictationState, ChatLayout, ChatLayoutProps,
+    ChatLayoutScrollAction, ChatLayoutScrollButton, ChatLayoutScrollButtonProps, ChatMessage,
+    ChatMessageBubble, ChatMessageBubbleGroup, ChatMessageBubbleProps, ChatMessageBubbleVariant,
+    ChatMessageList, ChatMessageListAlign, ChatMessageListProps, ChatMessageMetadata,
+    ChatMessageMetadataProps, ChatMessageProps, ChatMessageSender, ChatMessageStatus,
+    ChatSendButton, ChatSendButtonProps, ChatSendButtonSize, ChatSystemMessage,
+    ChatSystemMessageProps, ChatSystemMessageVariant, ChatTokenizedText, ChatTokenizedTextProps,
+    ChatToolCallItem, ChatToolCallStatus, ChatToolCalls, ChatToolCallsProps,
 };
 pub use checkbox_input::{CheckboxInput, CheckboxInputProps};
 pub use checkbox_list::{CheckboxList, CheckboxListItem, CheckboxListItemProps, CheckboxListProps};

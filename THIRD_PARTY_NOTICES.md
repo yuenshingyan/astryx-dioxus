@@ -79,6 +79,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - Pagination follows the Pages and Compact variants of `Pagination/Pagination.tsx`, its spec, and the adapted Variants showcase at the same pin. See `docs/pagination-port.md`.
 - Outline follows the fragment navigation and visual indentation in `Outline/Outline.tsx`, its spec, and the adapted showcase at the same pin. See `docs/outline-port.md`.
 - ResizeHandle adapts the keyboard and separator behavior in `Resizable/ResizeHandle.tsx` at the same pin. See `docs/resize-handle-port.md`.
+- ChatComposer follows the default input and Send/Stop arrangement in `Chat/ChatComposer.tsx`, its spec, and the adapted showcase at the same pin. See `docs/chat-composer-port.md`.
 - ChatComposerInput follows the plain-text entry and submission behavior in `Chat/ChatComposerInput.tsx`, its spec, and the adapted showcase at the same pin. See `docs/chat-composer-input-port.md`.
 - ChatComposerDrawer follows `Chat/ChatComposerDrawer.tsx`, its spec, and the adapted Collapsible arrangement at the same pin. See `docs/chat-composer-drawer-port.md`.
 - ChatToolCalls follows `Chat/ChatToolCalls.tsx`, its spec, and the adapted showcase at the same pin. See `docs/chat-tool-calls-port.md`.

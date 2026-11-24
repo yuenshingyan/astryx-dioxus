@@ -3374,6 +3374,11 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 
   .astryx-dropdown-menu-radio-group { display: flex; flex-direction: column; gap: var(--spacing-0-5); }
 
+  .astryx-chat-composer { min-inline-size: 0; }
+  .astryx-chat-composer__body { position: relative; display: grid; padding: var(--spacing-2); gap: var(--spacing-1); border: var(--border-width) solid var(--color-border-emphasized); border-radius: var(--radius-chat); background: var(--color-background-surface); box-shadow: var(--shadow-low); }
+  .astryx-chat-composer__body > .astryx-chat-composer-input { border: 0; }
+  .astryx-chat-composer__row, .astryx-chat-composer__send-actions { display: flex; align-items: center; gap: var(--spacing-2); }
+  .astryx-chat-composer__row { justify-content: space-between; }
   .astryx-chat-composer-input {
     box-sizing: border-box;
     inline-size: 100%;
