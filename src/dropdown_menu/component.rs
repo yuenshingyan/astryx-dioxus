@@ -1,7 +1,7 @@
 use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
-use crate::{Button, LayerPlacement};
+use crate::{Button, ButtonSize, ButtonVariant, LayerPlacement};
 
 /// Single-level menu with a native popover and caller-owned menu rows.
 #[component]
@@ -10,6 +10,15 @@ pub fn DropdownMenu(
     children: Element,
     #[props(default = LayerPlacement::Below)] placement: LayerPlacement,
     #[props(default)] is_disabled: bool,
+    /// Trigger icon, when supplied.
+    #[props(default)]
+    trigger_icon: Option<Element>,
+    /// Hide visible trigger text while retaining its accessible name.
+    #[props(default)]
+    is_trigger_icon_only: bool,
+    #[props(default)] trigger_variant: ButtonVariant,
+    #[props(default)] trigger_size: Option<ButtonSize>,
+    #[props(default)] trigger_tooltip: Option<String>,
 ) -> Element {
     let id = use_hook(|| format!("astryx-dropdown-menu-{}", current_scope_id().0));
     let trigger = format!("{id}-trigger");
@@ -21,7 +30,8 @@ pub fn DropdownMenu(
         }
     });
     rsx! {
-        Button { id: trigger.clone(), label, is_disabled, "aria-haspopup": "menu", "aria-expanded": "false", "aria-controls": id.clone(),
+        Button { id: trigger.clone(), label, is_disabled, icon: trigger_icon,
+            is_icon_only: is_trigger_icon_only, variant: trigger_variant, size: trigger_size, tooltip: trigger_tooltip, "aria-haspopup": "menu", "aria-expanded": "false", "aria-controls": id.clone(),
             style: "anchor-name:--{id}",
         }
         div { id, class: "astryx-dropdown-menu", role: "menu", tabindex: -1, popover: "auto",

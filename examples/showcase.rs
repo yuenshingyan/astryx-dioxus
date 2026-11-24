@@ -202,6 +202,8 @@ mod metadata_list_item;
 mod mobile_nav;
 #[path = "showcase/mobile_nav_toggle.rs"]
 mod mobile_nav_toggle;
+#[path = "showcase/more_menu.rs"]
+mod more_menu;
 #[path = "showcase/multi_selector.rs"]
 mod multi_selector;
 #[path = "showcase/nav_heading_menu_item.rs"]
@@ -431,6 +433,7 @@ use metadata_list::MetadataListExamples;
 use metadata_list_item::MetadataListItemExamples;
 use mobile_nav::MobileNavExamples;
 use mobile_nav_toggle::MobileNavToggleExamples;
+use more_menu::MoreMenuExamples;
 use multi_selector::MultiSelectorExamples;
 use nav_heading_menu_item::NavHeadingMenuItemExamples;
 use nav_icon::NavIconExamples;
@@ -621,6 +624,8 @@ fn App() -> Element {
                 a { href: "#dropdown-menu-checkbox-item-examples", "DropdownMenuCheckboxItem examples" }
                 " · "
                 a { href: "#dropdown-menu-examples", "DropdownMenu examples" }
+                " · "
+                a { href: "#more-menu-examples", "More Menu examples" }
                 " · "
                 a { href: "#dropdown-menu-item-examples", "DropdownMenuItem examples" }
                 " · "
@@ -1000,6 +1005,7 @@ fn App() -> Element {
             DropdownMenuRadioGroupExamples {}
             DropdownMenuCheckboxItemExamples {}
             DropdownMenuExamples {}
+            MoreMenuExamples {}
             DropdownMenuItemExamples {}
             ContextMenuExamples {}
             ContextMenuItemExamples {}

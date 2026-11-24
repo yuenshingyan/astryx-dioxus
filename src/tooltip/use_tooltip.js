@@ -249,7 +249,15 @@ const createTooltipController = ({ records, listen, later, cancelTimer }) => {
   };
   listen(document, 'focusin', event => {
     const record = interestRecord(event.target);
-    if (record && !record.isTruncation) { record.isFocused = true; focusTip(record); }
+    if (!record || record.isTruncation) return;
+    record.isFocused = true;
+    if (record.element.getAttribute('aria-haspopup') === 'menu') {
+      // Native menu dismissal can restore focus inside a popover operation.
+      later(record, () => {
+        if (record.isFocused && record.element.contains(document.activeElement) &&
+            record.element.getAttribute('aria-expanded') !== 'true') focusTip(record);
+      }, 0);
+    } else focusTip(record);
   }, { capture: true });
   listen(document, 'focusout', event => {
     const record = interestRecord(event.target);
