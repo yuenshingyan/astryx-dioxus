@@ -3233,6 +3233,29 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-dialog-header-focus-title:focus { outline: none; }
   .astryx-dialog { box-sizing: border-box; inline-size: var(--_dialog-width); max-inline-size: calc(100% - 2 * var(--spacing-4)); max-block-size: var(--_dialog-max-height); padding: var(--_dialog-padding); border: 0; border-radius: var(--radius-container); background: var(--color-background-surface); color: var(--color-text-primary); box-shadow: var(--shadow-high); overflow: auto; }
   .astryx-popover { position: fixed; inset: auto; margin: 0; position-area: block-end; position-try-fallbacks: flip-block, flip-inline; padding: var(--_popover-padding); max-inline-size: calc(100vw - 2 * var(--spacing-2)); box-sizing: border-box; border: var(--border-width) solid var(--color-border); border-radius: var(--radius-container); color: var(--color-text-primary); background: var(--color-background-surface); box-shadow: var(--shadow-high); }
+  .astryx-top-nav-mega-menu {
+    position: fixed;
+    inset: auto;
+    position-area: block-end span-inline-end;
+    position-try-fallbacks: flip-inline, flip-block;
+    margin: 0;
+    box-sizing: border-box;
+    inline-size: min(600px, calc(100vw - 2 * var(--spacing-4)));
+    max-block-size: 65dvh;
+    overflow: auto;
+    padding: var(--spacing-4);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-container);
+    background: var(--color-background-surface);
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-high);
+  }
+  .astryx-top-nav-mega-menu:popover-open { display: flex; flex-wrap: wrap; gap: var(--spacing-4); }
+  .astryx-top-nav-mega-menu__items { flex: 2 1 260px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 125px), 1fr)); gap: var(--spacing-2); }
+  .astryx-top-nav-mega-menu__featured { flex: 1 1 160px; }
+  .astryx-top-nav-mega-menu__trigger { display: inline-flex; align-items: center; gap: var(--spacing-1); min-block-size: var(--size-element-md); padding-inline: var(--spacing-2); border: 0; border-radius: var(--radius-element); background: transparent; color: inherit; font: inherit; cursor: pointer; }
+  .astryx-top-nav-mega-menu__trigger:is(:hover,[aria-expanded="true"]) { background: var(--color-overlay-hover); }
+  .astryx-top-nav-mega-menu__trigger:focus-visible { outline: 2px solid var(--focus-outline-color); }
   .astryx-popover[data-placement="above"] { position-area: block-start; margin-block-end: var(--spacing-1); }
   .astryx-popover[data-placement="below"] { margin-block-start: var(--spacing-1); }
   .astryx-popover[data-placement="start"] { position-area: inline-start; margin-inline-end: var(--spacing-1); }

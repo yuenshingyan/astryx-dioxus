@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-pub(super) fn use_popover(
+pub(crate) fn use_popover(
     id: String,
     is_open: Option<bool>,
     on_open_change: Option<EventHandler<bool>>,

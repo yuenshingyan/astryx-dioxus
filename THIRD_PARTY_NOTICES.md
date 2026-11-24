@@ -120,6 +120,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - ToggleButtonGroup follows `ToggleButton/ToggleButtonGroup.tsx`, its spec, and the single- and multi-select catalog arrangements at the same pin. See `docs/toggle-button-group-port.md`.
 - Toolbar follows `Toolbar/Toolbar.tsx` and its spec at the same pin. See `docs/toolbar-port.md`.
 - ToggleButton follows the standalone form of `ToggleButton/ToggleButton.tsx`, its spec, and adapted catalog examples at the same pin. See `docs/toggle-button-port.md`.
+- TopNavMegaMenu follows the desktop disclosure in `TopNav/TopNavMegaMenu.tsx`, its spec, and the adapted Products showcase at the same pin. See `docs/top-nav-mega-menu-port.md`.
 - TopNavMegaMenuItem follows the desktop form of `TopNav/TopNavMegaMenuItem.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-mega-menu-item-port.md`.
 - TopNavMegaMenuFeaturedCard follows `TopNav/TopNavMegaMenuFeaturedCard.tsx`, its spec, and both catalog templates at the same pin. See `docs/top-nav-featured-card-port.md`.
 - TopNavItem follows the horizontal mode of `TopNav/TopNavItem.tsx`, its spec, and the adapted showcase at the same pin. See `docs/top-nav-item-port.md`.
