@@ -100,6 +100,7 @@ mod token;
 mod toolbar;
 mod tooltip;
 mod top_nav;
+mod tree_list;
 mod typeahead;
 mod utils;
 mod v_stack;
@@ -335,6 +336,7 @@ pub use top_nav::{
     TopNavMegaMenuItemProps, TopNavMegaMenuProps, TopNavMenu, TopNavMenuItemData, TopNavMenuProps,
     TopNavProps,
 };
+pub use tree_list::{TreeList, TreeListItemData, TreeListProps};
 pub use typeahead::{TypeaheadItem, TypeaheadItemContent, TypeaheadItemProps};
 
 pub use utils::types::{Elevation, SizeValue, SizeValueError, SpacingStep};

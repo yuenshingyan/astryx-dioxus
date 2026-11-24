@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+
+await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
+  await send('Network.enable');
+  await send('Network.setBlockedURLs', {urls: ['https://*']});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8269'});
+  const tree = "document.querySelector('#tree-list-examples [role=tree]')";
+  const row = label => `${tree}.querySelector('[aria-label="${label}"]')`;
+  const isFocused = label => `document.activeElement === ${row(label)}`;
+  const key = async (key, windowsVirtualKeyCode) => {
+    for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key, code:key, windowsVirtualKeyCode});
+  };
+  await waitFor(tree);
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
+  const {nodes} = await send('Accessibility.getFullAXTree');
+  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'tree' && node.name?.value === 'Project files'));
+  assert.ok(!nodes.some(node => !node.ignored && node.role?.value === 'treeitem' && node.name?.value === 'Button.tsx'));
+  await evaluate(`${row('src')}.focus()`);
+  await key('ArrowRight', 39);
+  await waitFor(isFocused('components'));
+  await key('ArrowRight', 39);
+  await waitFor(`${row('components')}.getAttribute('aria-expanded') === 'true'`);
+  await key('ArrowDown', 40);
+  await waitFor(isFocused('Button.tsx'));
+  await key('Enter', 13);
+  await waitFor(`${row('Button.tsx')}.getAttribute('aria-selected') === 'true'`);
+  await evaluate(`${tree}.dir = 'rtl'`);
+  await key('ArrowRight', 39);
+  await waitFor(isFocused('components'));
+  await key('ArrowRight', 39);
+  await waitFor(`${row('components')}.getAttribute('aria-expanded') === 'false'`);
+  assert.equal(await evaluate(`${row('Button.tsx')}.getClientRects().length`), 0);
+  assert.equal(await evaluate(`${tree}.querySelectorAll('[tabindex="0"]').length`), 1);
+  await key('End', 35);
+  await waitFor(isFocused('README.md'));
+  assert.deepEqual(exceptions, []);
+  console.log('TreeList: named tree, visible-only traversal, branch expansion, RTL and selection passed');
+});

@@ -300,6 +300,8 @@ mod top_nav_mega_menu;
 mod top_nav_mega_menu_item;
 #[path = "showcase/top_nav_menu.rs"]
 mod top_nav_menu;
+#[path = "showcase/tree_list.rs"]
+mod tree_list;
 #[path = "showcase/typeahead_item.rs"]
 mod typeahead_item;
 #[path = "showcase/typography_animation.rs"]
@@ -456,6 +458,7 @@ use top_nav_item::TopNavItemExamples;
 use top_nav_mega_menu::TopNavMegaMenuExamples;
 use top_nav_mega_menu_item::TopNavMegaMenuItemExamples;
 use top_nav_menu::TopNavMenuExamples;
+use tree_list::TreeListExamples;
 use typeahead_item::TypeaheadItemExamples;
 use v_stack::VStackExamples;
 use visually_hidden::VisuallyHiddenExamples;
@@ -517,6 +520,8 @@ fn App() -> Element {
                 a { href: "#link-provider-examples", "LinkProvider examples" }
                 " · "
                 a { href: "#list-examples", "List examples" }
+                " · "
+                a { href: "#tree-list-examples", "Tree List examples" }
                 " · "
                 a { href: "#item-examples", "Item examples" }
                 " · "
@@ -899,6 +904,7 @@ fn App() -> Element {
             LinkExamples {}
             LinkProviderExamples {}
             ListExamples {}
+            TreeListExamples {}
             ItemExamples {}
             SelectorOptionExamples {}
             MetadataListItemExamples {}
