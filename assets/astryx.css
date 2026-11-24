@@ -1659,6 +1659,10 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     overflow-wrap: break-word;
     word-break: break-word;
   }
+  .astryx-date-range-input { box-sizing: border-box; min-inline-size: 0; max-inline-size: 100%; margin: 0; padding: var(--spacing-2); border: var(--border-width) solid var(--color-border); border-radius: var(--radius-container); }
+  .astryx-date-range-input__segments { display: flex; flex-wrap: wrap; gap: var(--spacing-2); }
+  .astryx-date-range-input__segments > * { flex: 1 1 auto; }
+  .astryx-date-range-input [role="status"] { color: var(--color-text-error, var(--color-text-primary)); }
   .astryx-date-time-input__segments { display: flex; flex-wrap: wrap; gap: var(--spacing-2); }
   .astryx-date-time-input__segments > input { flex: 1 1 auto; }
   .astryx-date-time-input, .astryx-date-input, .astryx-time-input, .astryx-number-input { display: flex; flex-direction: column; gap: var(--spacing-2); max-inline-size: 100%; }
