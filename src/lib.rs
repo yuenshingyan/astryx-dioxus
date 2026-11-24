@@ -339,8 +339,8 @@ pub use top_nav::{
 };
 pub use tree_list::{TreeList, TreeListItemData, TreeListProps};
 pub use typeahead::{
-    BaseTypeahead, BaseTypeaheadOption, BaseTypeaheadProps, TypeaheadItem, TypeaheadItemContent,
-    TypeaheadItemProps,
+    BaseTypeahead, BaseTypeaheadOption, BaseTypeaheadProps, Typeahead, TypeaheadItem,
+    TypeaheadItemContent, TypeaheadItemProps, TypeaheadProps,
 };
 
 pub use utils::types::{Elevation, SizeValue, SizeValueError, SpacingStep};

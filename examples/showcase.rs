@@ -306,6 +306,8 @@ mod top_nav_mega_menu_item;
 mod top_nav_menu;
 #[path = "showcase/tree_list.rs"]
 mod tree_list;
+#[path = "showcase/typeahead.rs"]
+mod typeahead;
 #[path = "showcase/typeahead_item.rs"]
 mod typeahead_item;
 #[path = "showcase/typography_animation.rs"]
@@ -465,6 +467,7 @@ use top_nav_mega_menu::TopNavMegaMenuExamples;
 use top_nav_mega_menu_item::TopNavMegaMenuItemExamples;
 use top_nav_menu::TopNavMenuExamples;
 use tree_list::TreeListExamples;
+use typeahead::TypeaheadExamples;
 use typeahead_item::TypeaheadItemExamples;
 use v_stack::VStackExamples;
 use visually_hidden::VisuallyHiddenExamples;
@@ -632,6 +635,8 @@ fn App() -> Element {
                 a { href: "#typeahead-item-examples", "TypeaheadItem examples" }
                 " · "
                 a { href: "#base-typeahead-examples", "Base Typeahead examples" }
+                " · "
+                a { href: "#typeahead-examples", "Typeahead examples" }
                 " · "
                 a { href: "#table-header-examples", "TableHeader examples" }
                 " · "
@@ -986,6 +991,7 @@ fn App() -> Element {
             CodeBlockExamples {}
             TypeaheadItemExamples {}
             BaseTypeaheadExamples {}
+            TypeaheadExamples {}
             TableHeaderExamples {}
             TableExamples {}
             TableSelectionToolbarExamples {}
