@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+
+await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
+  await send('Network.enable');
+  await send('Network.setBlockedURLs', {urls: ['https://*']});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8271'});
+  const input = "document.querySelector('#base-typeahead-examples input[role=combobox]')";
+  const list = `document.getElementById(${input}.getAttribute('aria-controls'))`;
+  const open = `${input}.getAttribute('aria-expanded') === 'true'`;
+  const active = `document.getElementById(${input}.getAttribute('aria-activedescendant'))?.textContent`;
+  const key = async (key, windowsVirtualKeyCode) => {
+    for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key, code:key, windowsVirtualKeyCode});
+  };
+  await waitFor(input);
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
+  const {nodes} = await send('Accessibility.getFullAXTree');
+  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'combobox' && node.name?.value === 'Search frameworks'));
+  await evaluate(`${input}.focus()`);
+  await waitFor(open);
+  assert.equal(await evaluate(`${list}.querySelectorAll('[role=option]').length`), 3);
+  await send('Input.insertText', {text:'nEx'});
+  await waitFor(`${list}.querySelectorAll('[role=option]').length === 1`);
+  await key('ArrowDown', 40);
+  await waitFor(`${active}?.includes('Next.js')`);
+  assert.ok(await evaluate(`document.activeElement === ${input}`));
+  await key('Enter', 13);
+  await waitFor(`!(${open}) && ${input}.value === 'Next.js'`);
+  await evaluate(`${input}.select()`);
+  await send('Input.insertText', {text:'not a framework'});
+  await waitFor("document.querySelector('#base-typeahead-examples [role=status]')?.textContent === 'No results'");
+  assert.ok(await evaluate(`!${input}.hasAttribute('aria-activedescendant')`));
+  await key('Escape', 27);
+  await waitFor(`!(${open})`);
+  await evaluate(`${input}.blur()`);
+  await waitFor(`${input}.value === 'Next.js'`);
+  assert.deepEqual(exceptions, []);
+  console.log('BaseTypeahead: named combobox, local filtering, keyboard selection, empty results and dismissal passed');
+});
