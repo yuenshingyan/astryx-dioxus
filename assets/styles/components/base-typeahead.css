@@ -1,0 +1,31 @@
+
+@layer astryx-base {
+  .astryx-base-typeahead { position: relative; min-inline-size: 0; }
+  .astryx-base-typeahead > input {
+    box-sizing: border-box;
+    inline-size: 100%;
+    padding: var(--spacing-1-5) var(--spacing-2);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-element);
+    background: var(--color-background-surface);
+    color: var(--color-text-primary);
+    font: inherit;
+  }
+  .astryx-base-typeahead > input:focus-visible { outline: 2px solid var(--focus-outline-color); }
+  .astryx-base-typeahead__popup {
+    position: absolute;
+    z-index: 1;
+    inset-inline: 0;
+    inset-block-start: calc(100% + var(--spacing-1));
+    max-block-size: 40dvh;
+    overflow: auto;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-element);
+    background: var(--color-background-surface);
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-low);
+  }
+  .astryx-base-typeahead__popup [role="option"], .astryx-base-typeahead__empty { padding: var(--spacing-2); }
+  .astryx-base-typeahead__popup [role="option"]:hover { background: var(--color-overlay-hover); }
+  .astryx-base-typeahead__popup [aria-selected="true"] { background: var(--color-overlay-pressed); }
+}

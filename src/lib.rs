@@ -338,7 +338,10 @@ pub use top_nav::{
     TopNavProps,
 };
 pub use tree_list::{TreeList, TreeListItemData, TreeListProps};
-pub use typeahead::{TypeaheadItem, TypeaheadItemContent, TypeaheadItemProps};
+pub use typeahead::{
+    BaseTypeahead, BaseTypeaheadOption, BaseTypeaheadProps, TypeaheadItem, TypeaheadItemContent,
+    TypeaheadItemProps,
+};
 
 pub use utils::types::{Elevation, SizeValue, SizeValueError, SpacingStep};
 pub use v_stack::{VStack, VStackProps};

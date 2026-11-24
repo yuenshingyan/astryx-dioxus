@@ -24,6 +24,8 @@ mod avatar_status_dot;
 mod badge;
 #[path = "showcase/banner.rs"]
 mod banner;
+#[path = "showcase/base_typeahead.rs"]
+mod base_typeahead;
 #[path = "showcase/blockquote.rs"]
 mod blockquote;
 #[path = "showcase/bottom_sheet.rs"]
@@ -322,6 +324,7 @@ use avatar_group_overflow::AvatarGroupOverflowExamples;
 use avatar_status_dot::AvatarStatusDotExamples;
 use badge::BadgeExamples;
 use banner::BannerExamples;
+use base_typeahead::BaseTypeaheadExamples;
 use blockquote::BlockquoteExamples;
 use bottom_sheet::BottomSheetExamples;
 use breadcrumb_item::BreadcrumbItemExamples;
@@ -627,6 +630,8 @@ fn App() -> Element {
                 a { href: "#code-block-examples", "Code Block examples" }
                 " · "
                 a { href: "#typeahead-item-examples", "TypeaheadItem examples" }
+                " · "
+                a { href: "#base-typeahead-examples", "Base Typeahead examples" }
                 " · "
                 a { href: "#table-header-examples", "TableHeader examples" }
                 " · "
@@ -980,6 +985,7 @@ fn App() -> Element {
             TimestampExamples {}
             CodeBlockExamples {}
             TypeaheadItemExamples {}
+            BaseTypeaheadExamples {}
             TableHeaderExamples {}
             TableExamples {}
             TableSelectionToolbarExamples {}
