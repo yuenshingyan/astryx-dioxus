@@ -1,0 +1,7 @@
+# Stepper: ordered progress checkpoint
+
+`src/stepper/` keeps Stepper, Step, and their private context together. The caller owns the active index and may enable navigation via `on_step_click`. The ordered list identifies the current step with `aria-current="step"` and exposes completed state in text. A disabled navigation step remains focusable but does not activate. Static steps have no button. The separated layout supports horizontal and vertical tracks, optional labels, descriptions, and trailing content.
+
+Pinned Meta Astryx sources at `476a3153417dbf75c565f7df05b0784e94ddd59e`: `Stepper.tsx` (`c0e67e5a68f9cda8e19c432441544bec70794680`), `Step.tsx` (`109b6550b9c20480d863029a3ca8bd488414a510`), and their specs (`3ab6a47820fb693e628eb253d5c7cf0b76cd2e26`, `b6414a58a720419b70b2205dc9c1ff0862007a59`). The checkout example adapts `StepperShowcase.tsx` (`253f96f131ae5a3254add1089750723699fcd7bd`) by disabling Confirm. The static repository step adapts `StepShowcase.tsx` (`f886260287ec371018ee8796367dfa227967e4b6`).
+
+All five Rust checks and the Stepper, Segmented Control, and showcase-navigation Chrome suites passed. The focused suite checked the accessible list name and completed state, current-step updates through keyboard activation, disabled behavior, and the static vertical example. Responsive collapse, on-track indicators, semantic status, density, progress animation, remaining catalog arrangements, and visual parity remain open. Neither checklist entry is marked complete.

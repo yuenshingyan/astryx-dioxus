@@ -80,6 +80,7 @@ mod slider;
 mod spinner;
 mod stack;
 mod status_dot;
+mod stepper;
 mod switch;
 mod tab_list;
 mod table;
@@ -282,6 +283,9 @@ pub use stack::{
 };
 pub use status_dot::{
     InvalidStatusDotVariant, StatusDot, StatusDotError, StatusDotIcon, StatusDotVariant,
+};
+pub use stepper::{
+    Step, StepIndicatorPreset, StepProps, Stepper, StepperOrientation, StepperProps,
 };
 pub use switch::{Switch, SwitchLabelPosition, SwitchLabelSpacing, SwitchProps};
 pub use tab_list::{Tab, TabList, TabListMode, TabListProps, TabMode, TabProps};

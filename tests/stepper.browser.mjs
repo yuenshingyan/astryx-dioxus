@@ -1,0 +1,33 @@
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+
+await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
+  await send('Network.enable');
+  await send('Network.setBlockedURLs', {urls: ['https://*']});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8260'});
+  const checkout = `document.querySelector('#stepper-examples ol[aria-label="Checkout progress"]')`;
+  const setup = `document.querySelector('#stepper-examples ol[aria-label="Setup progress"]')`;
+  const current = `${checkout}.querySelector('[aria-current="step"] button').textContent.trim()`;
+  await waitFor(checkout);
+  assert.equal(await evaluate(current), '3Payment');
+  const {nodes} = await send('Accessibility.getFullAXTree');
+  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'list' && node.name?.value === 'Checkout progress'));
+  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'button' && /Shipping.*Completed/.test(node.name?.value ?? '')));
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
+  const review = `${checkout}.querySelectorAll('button')[3]`;
+  await evaluate(`${review}.focus()`);
+  await send('Input.dispatchKeyEvent', {type:'keyDown', key:'Enter', code:'Enter', windowsVirtualKeyCode:13, text:'\r'});
+  await send('Input.dispatchKeyEvent', {type:'keyUp', key:'Enter', code:'Enter', windowsVirtualKeyCode:13});
+  await waitFor(`${current} === '4Review'`);
+  const disabled = `${checkout}.querySelector('[aria-disabled="true"]')`;
+  await evaluate(`${disabled}.focus(); ${disabled}.click()`);
+  assert.equal(await evaluate(current), '4Review');
+  assert.equal(await evaluate(`document.activeElement === ${disabled}`), true);
+  assert.equal(await evaluate(`${checkout}.querySelectorAll('[aria-current=step]').length`), 1);
+  assert.equal(await evaluate(`getComputedStyle(${setup}).flexDirection`), 'column');
+  assert.equal(await evaluate(`${setup}.querySelectorAll('button').length`), 0);
+  assert.match(await evaluate(`${setup}.textContent`), /Connect a repository.*Optional.*2 min.*Astryx reads/);
+  assert.deepEqual(exceptions, []);
+  console.log('Stepper: named list, current and completed states, keyboard navigation, disabled step and static slots passed');
+});
