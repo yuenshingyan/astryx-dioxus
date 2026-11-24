@@ -3284,6 +3284,14 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-power-search { box-sizing: border-box; min-inline-size: 0; margin: 0; padding: var(--spacing-2); border: var(--border-width) solid var(--color-border); border-radius: var(--radius-element); }
+  .astryx-power-search__filters { display: flex; flex-wrap: wrap; gap: var(--spacing-1); margin: 0 0 var(--spacing-2); padding: 0; list-style: none; }
+  .astryx-power-search__controls { display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing-2); }
+  .astryx-power-search__controls :is(input, select, button) { max-inline-size: 100%; min-block-size: var(--size-element-md); font: inherit; }
+  .astryx-power-search__controls :focus-visible { outline: 2px solid var(--focus-outline-color); outline-offset: 2px; }
+}
+
+@layer astryx-base {
   .astryx-nav-heading-menu { display: flex; flex-direction: column; gap: var(--spacing-0-5); min-width: 200px; }
   .astryx-nav-heading-menu[data-size="sm"] { min-width: 160px; }
   .astryx-nav-heading-menu[data-size="lg"] { min-width: 240px; }

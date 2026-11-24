@@ -69,6 +69,7 @@ mod outline;
 mod overlay;
 mod pagination;
 mod popover;
+mod power_search;
 mod private_attributes;
 mod progress_bar;
 mod radio_list;
@@ -262,6 +263,10 @@ pub use overlay::{
 };
 pub use pagination::{Pagination, PaginationProps, PaginationVariant};
 pub use popover::{Popover, PopoverProps, PopoverTriggerRenderProps};
+pub use power_search::{
+    PowerSearch, PowerSearchChoice, PowerSearchField, PowerSearchFilter, PowerSearchOperator,
+    PowerSearchProps, PowerSearchValue, PowerSearchValueKind,
+};
 pub use progress_bar::{
     InvalidProgressBarVariant, ProgressBar, ProgressBarError, ProgressBarMark, ProgressBarState,
     ProgressBarVariant,
