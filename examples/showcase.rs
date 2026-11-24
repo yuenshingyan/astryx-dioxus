@@ -128,6 +128,8 @@ mod divider;
 mod drawer;
 #[path = "showcase/drawer_header.rs"]
 mod drawer_header;
+#[path = "showcase/dropdown_menu.rs"]
+mod dropdown_menu;
 #[path = "showcase/dropdown_menu_checkbox_item.rs"]
 mod dropdown_menu_checkbox_item;
 #[path = "showcase/dropdown_menu_group.rs"]
@@ -392,6 +394,7 @@ use dialog_header::DialogHeaderExamples;
 use divider::DividerExamples;
 use drawer::DrawerExamples;
 use drawer_header::DrawerHeaderExamples;
+use dropdown_menu::DropdownMenuExamples;
 use dropdown_menu_checkbox_item::DropdownMenuCheckboxItemExamples;
 use dropdown_menu_group::DropdownMenuGroupExamples;
 use dropdown_menu_item::DropdownMenuItemExamples;
@@ -616,6 +619,8 @@ fn App() -> Element {
                 a { href: "#dropdown-menu-radio-group-examples", "DropdownMenuRadioGroup examples" }
                 " · "
                 a { href: "#dropdown-menu-checkbox-item-examples", "DropdownMenuCheckboxItem examples" }
+                " · "
+                a { href: "#dropdown-menu-examples", "DropdownMenu examples" }
                 " · "
                 a { href: "#dropdown-menu-item-examples", "DropdownMenuItem examples" }
                 " · "
@@ -994,6 +999,7 @@ fn App() -> Element {
             DropdownMenuGroupExamples {}
             DropdownMenuRadioGroupExamples {}
             DropdownMenuCheckboxItemExamples {}
+            DropdownMenuExamples {}
             DropdownMenuItemExamples {}
             ContextMenuExamples {}
             ContextMenuItemExamples {}

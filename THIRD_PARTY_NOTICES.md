@@ -174,6 +174,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - DropdownMenuRadioItem follows `DropdownMenu/DropdownMenuRadioItem.tsx`, its spec, and the adapted Storybook sort arrangement at the same pin. See `docs/dropdown-menu-radio-item-port.md`.
 - DropdownMenuRadioGroup follows `DropdownMenu/DropdownMenuRadioGroup.tsx`, its spec, and the adapted Storybook sort arrangement at the same pin. See `docs/dropdown-menu-radio-group-port.md`.
 - DropdownMenuGroup follows `DropdownMenu/DropdownMenuGroup.tsx`, its spec, and both catalog arrangements at the same pin. See `docs/dropdown-menu-group-port.md`.
+- Dropdown Menu follows the single-level popup in `DropdownMenu/DropdownMenu.tsx`, its spec, and the adapted Actions showcase at the same pin. See `docs/dropdown-menu-port.md`.
 - DropdownMenuDivider follows `DropdownMenu/DropdownMenuDivider.tsx` and its component spec at the same pin. See `docs/dropdown-menu-divider-port.md`.
 - ScrollableArea follows `ScrollableArea/ScrollableArea.tsx`, `useScrollableArea.ts`, and six catalog arrangements at the same pin. See `docs/scrollable-area-port.md`.
 - Layout follows `Layout/Layout.tsx`, the Layout spec, and its seven catalog templates at the same pin. See `docs/layout-port.md`.
