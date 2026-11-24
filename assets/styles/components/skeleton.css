@@ -1,0 +1,48 @@
+
+@layer astryx-base {
+  .astryx-skeleton {
+    box-sizing: border-box;
+    width: var(--_skeleton-width, 100%);
+    height: var(--_skeleton-height, 100%);
+    border-radius: var(--_skeleton-radius, var(--radius-container));
+    background-color: var(--color-skeleton);
+    opacity: 0.25;
+    animation-name: astryx-skeleton-fade;
+    animation-duration: var(--_astryx-pre-tempo-duration-medium-max, var(--duration-medium-max));
+    animation-delay: var(--_skeleton-delay, 1000ms);
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+  .astryx-skeleton--width-inherit { width: inherit; }
+  .astryx-skeleton--width-initial { width: initial; }
+  .astryx-skeleton--width-unset { width: unset; }
+  .astryx-skeleton--width-revert { width: revert; }
+  .astryx-skeleton--width-revert-layer { width: revert-layer; }
+  .astryx-skeleton--height-inherit { height: inherit; }
+  .astryx-skeleton--height-initial { height: initial; }
+  .astryx-skeleton--height-unset { height: unset; }
+  .astryx-skeleton--height-revert { height: revert; }
+  .astryx-skeleton--height-revert-layer { height: revert-layer; }
+  @keyframes astryx-skeleton-fade {
+    0%, 9.99% { opacity: 0.25; }
+    10%, 19.99% { opacity: 0.325; }
+    20%, 29.99% { opacity: 0.4; }
+    30%, 39.99% { opacity: 0.475; }
+    40%, 49.99% { opacity: 0.55; }
+    50%, 59.99% { opacity: 0.625; }
+    60%, 69.99% { opacity: 0.7; }
+    70%, 79.99% { opacity: 0.775; }
+    80%, 89.99% { opacity: 0.85; }
+    90%, 100% { opacity: 0.925; }
+  }
+  @media (prefers-contrast: more) {
+    .astryx-skeleton { background-color: color-mix(in srgb, var(--color-skeleton), var(--color-text-primary) 30%); }
+  }
+  @media (forced-colors: active) {
+    .astryx-skeleton { background-color: GrayText; opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .astryx-skeleton { animation-name: none; }
+  }
+}

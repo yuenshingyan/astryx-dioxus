@@ -1,0 +1,101 @@
+
+@layer astryx-base {
+  .astryx-card {
+    --_card-width: initial;
+    --_card-height: initial;
+    --_card-max-width: initial;
+    --_card-min-height: initial;
+    --_card-padding: initial;
+    --_card-border-inset: 0px;
+    --_card-radius: var(--radius-container);
+    --_card-elevation: 0 0 transparent;
+    --_card-padding-inline-start: var(--_card-padding, var(--astryx-card-padding-inline-start, var(--astryx-card-padding-inline, var(--astryx-card-padding, var(--spacing-4)))));
+    --_card-padding-inline-end: var(--_card-padding, var(--astryx-card-padding-inline-end, var(--astryx-card-padding-inline, var(--astryx-card-padding, var(--spacing-4)))));
+    --_card-padding-block-start: var(--_card-padding, var(--astryx-card-padding-block-start, var(--astryx-card-padding, var(--spacing-4))));
+    --_card-padding-block-end: var(--_card-padding, var(--astryx-card-padding-block-end, var(--astryx-card-padding, var(--spacing-4))));
+    --container-padding-inline-start: max(0px, calc(var(--_card-padding-inline-start) - var(--_card-border-inset)));
+    --container-padding-inline-end: max(0px, calc(var(--_card-padding-inline-end) - var(--_card-border-inset)));
+    --container-padding-block-start: max(0px, calc(var(--_card-padding-block-start) - var(--_card-border-inset)));
+    --container-padding-block-end: max(0px, calc(var(--_card-padding-block-end) - var(--_card-border-inset)));
+    box-sizing: border-box;
+    width: var(--_card-width, auto);
+    height: var(--_card-height, auto);
+    max-width: var(--_card-max-width, none);
+    min-height: var(--_card-min-height, auto);
+    min-width: 0;
+    overflow: clip;
+    border-radius: var(--_card-radius);
+    padding-inline-start: var(--container-padding-inline-start);
+    padding-inline-end: var(--container-padding-inline-end);
+    padding-block-start: var(--container-padding-block-start);
+    padding-block-end: var(--container-padding-block-end);
+    box-shadow: var(--_card-ring, 0 0 transparent), var(--_card-elevation, 0 0 transparent);
+    /* Layout/container(): reset own padding and publish this host's inset. */
+    --layout-padding-own-outer-x: initial;
+    --layout-padding-own-outer-y: initial;
+    --layout-padding-outer-x: var(--container-padding-inline-start);
+    --layout-padding-outer-y: var(--container-padding-block-start);
+    --layout-padding-inner-x: var(--container-padding-inline-start);
+    --layout-padding-inner-y: var(--container-padding-block-start);
+    /* Layout's corner and block-bleed publishers only reach direct readers. */
+    --_container-corner-block-start: var(--_card-radius);
+    --_container-corner-block-end: var(--_card-radius);
+    --container-corner-start-start: 0px;
+    --container-corner-start-end: 0px;
+    --container-corner-end-start: 0px;
+    --container-corner-end-end: 0px;
+    --_container-bleed-block-start: 0px;
+    --_container-bleed-block-end: 0px;
+  }
+  .astryx-card:has(> [data-container-corner]:first-child):not(:has(> * [data-container-corner])) {
+    --container-corner-start-start: var(--_container-corner-block-start, 0px);
+    --container-corner-start-end: var(--_container-corner-block-start, 0px);
+    --_container-bleed-block-start: var(--container-padding-block-start, 0px);
+  }
+  .astryx-card:has(> [data-container-corner]:last-child):not(:has(> * [data-container-corner])) {
+    --container-corner-end-start: var(--_container-corner-block-end, 0px);
+    --container-corner-end-end: var(--_container-corner-block-end, 0px);
+    --_container-bleed-block-end: var(--container-padding-block-end, 0px);
+  }
+  .astryx-card[data-variant="default"] { --_card-border-inset: var(--border-width); background-color: var(--color-background-card); border: var(--border-width) solid var(--color-border); }
+  .astryx-card[data-variant="transparent"] { background-color: transparent; }
+  .astryx-card[data-variant="muted"] { background-color: var(--color-background-muted); }
+  .astryx-card[data-variant="blue"] { background-color: var(--color-background-blue); }
+  .astryx-card[data-variant="cyan"] { background-color: var(--color-background-cyan); }
+  .astryx-card[data-variant="gray"] { background-color: var(--color-background-gray); }
+  .astryx-card[data-variant="green"] { background-color: var(--color-background-green); }
+  .astryx-card[data-variant="orange"] { background-color: var(--color-background-orange); }
+  .astryx-card[data-variant="pink"] { background-color: var(--color-background-pink); }
+  .astryx-card[data-variant="purple"] { background-color: var(--color-background-purple); }
+  .astryx-card[data-variant="red"] { background-color: var(--color-background-red); }
+  .astryx-card[data-variant="teal"] { background-color: var(--color-background-teal); }
+  .astryx-card[data-variant="yellow"] { background-color: var(--color-background-yellow); }
+  .astryx-card--elevation-low { --_card-elevation: var(--shadow-low); }
+  .astryx-card--elevation-med { --_card-elevation: var(--shadow-med); }
+  .astryx-card--elevation-high { --_card-elevation: var(--shadow-high); }
+  .astryx-card[data-astryx-card-scroll="true"] { overflow: auto; }
+  .astryx-card--width-inherit { width: inherit; }
+  .astryx-card--width-initial { width: initial; }
+  .astryx-card--width-unset { width: unset; }
+  .astryx-card--width-revert { width: revert; }
+  .astryx-card--width-revert-layer { width: revert-layer; }
+  .astryx-card--height-inherit { height: inherit; }
+  .astryx-card--height-initial { height: initial; }
+  .astryx-card--height-unset { height: unset; }
+  .astryx-card--height-revert { height: revert; }
+  .astryx-card--height-revert-layer { height: revert-layer; }
+  .astryx-card--max-width-inherit { max-width: inherit; }
+  .astryx-card--max-width-initial { max-width: initial; }
+  .astryx-card--max-width-unset { max-width: unset; }
+  .astryx-card--max-width-revert { max-width: revert; }
+  .astryx-card--max-width-revert-layer { max-width: revert-layer; }
+  .astryx-card--min-height-inherit { min-height: inherit; }
+  .astryx-card--min-height-initial { min-height: initial; }
+  .astryx-card--min-height-unset { min-height: unset; }
+  .astryx-card--min-height-revert { min-height: revert; }
+  .astryx-card--min-height-revert-layer { min-height: revert-layer; }
+}
+
+@layer astryx-theme {
+  [data-astryx-theme="neutral"] .astryx-card:is([data-variant="blue"], [data-variant="cyan"], [data-variant="green"], [data-variant="orange"], [data-variant="pink"], [data-variant="purple"], [data-variant="red"], [data-variant="teal"], [data-variant="yellow"]) { --color-text-secondary: light-dark(#474747, #b9b9b9); }
+}
