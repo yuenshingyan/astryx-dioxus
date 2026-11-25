@@ -12,6 +12,9 @@ pub(super) fn CalendarExamples() -> Element {
                 min: "2026-04-10", max: "2026-05-20",
                 on_change: move |date| selected.set(Some(date)),
             }
+            div { id: "calendar-leap-year", h3 { "Leap-year keyboard navigation" }
+                Calendar { default_focused_date: "2024-02-29" }
+            }
         }
     }
 }
