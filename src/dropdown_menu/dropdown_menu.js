@@ -3,6 +3,7 @@ const menu = document.getElementById(id);
 const trigger = document.getElementById(`${id}-trigger`);
 if (!menu || !trigger || typeof menu.showPopover !== 'function') return;
 
+const isSubMenu = menu.hasAttribute('data-dropdown-sub-menu');
 const isOpen = () => menu.matches(':popover-open');
 const rowSelector = '[role="menuitem"],[role="menuitemcheckbox"],[role="menuitemradio"]';
 const owns = node => node?.closest?.('[role="menu"]') === menu;
@@ -25,6 +26,15 @@ const onToggle = event => {
     });
   }
 };
+const rootMenu = () => {
+  let root = menu;
+  while (root.hasAttribute('data-dropdown-sub-menu')) {
+    const parent = root.parentElement?.closest('.astryx-dropdown-menu');
+    if (!parent?.matches(':popover-open')) break;
+    root = parent;
+  }
+  return root;
+};
 const onClick = event => {
   if (event.defaultPrevented) return;
   if (trigger.contains(event.target)) {
@@ -33,20 +43,32 @@ const onClick = event => {
     else open();
   } else if (isOpen() && owns(event.target)) {
     const row = event.target.closest(rowSelector);
-    if (row && !row.matches(':disabled,[aria-disabled="true"]')) menu.hidePopover();
+    if (row && !row.matches(':disabled,[aria-disabled="true"],[data-dropdown-sub-menu-trigger]')) {
+      rootMenu().hidePopover();
+    }
   }
 };
 const onKey = event => {
   if (event.defaultPrevented || event.isComposing || event.altKey || event.ctrlKey || event.metaKey) return;
-  if (event.target === trigger && !trigger.matches(':disabled,[aria-disabled="true"]') && ['ArrowDown', 'ArrowUp'].includes(event.key)) {
+  const rtl = getComputedStyle(trigger).direction === 'rtl';
+  const openKey = rtl ? 'ArrowLeft' : 'ArrowRight';
+  const closeKey = rtl ? 'ArrowRight' : 'ArrowLeft';
+  const opens = isSubMenu ? event.key === openKey : ['ArrowDown', 'ArrowUp'].includes(event.key);
+  if (event.target === trigger && !trigger.matches(':disabled,[aria-disabled="true"]') && opens) {
     event.preventDefault();
     if (!isOpen()) open(event.key === 'ArrowUp');
     return;
   }
   if (!isOpen() || !owns(event.target)) return;
-  if (event.key === 'Tab') {
-    trigger.focus({preventScroll: true});
+  if (isSubMenu && (event.key === closeKey || event.key === 'Escape')) {
+    event.preventDefault();
     menu.hidePopover();
+    return;
+  }
+  if (event.key === 'Tab') {
+    const root = rootMenu();
+    document.getElementById(`${root.id}-trigger`)?.focus({preventScroll: true});
+    root.hidePopover();
     return;
   }
   const items = rows();

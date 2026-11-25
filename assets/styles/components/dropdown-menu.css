@@ -20,4 +20,6 @@
   .astryx-dropdown-menu[data-placement="above"] { position-area: block-start span-inline-end; }
   .astryx-dropdown-menu[data-placement="start"] { position-area: inline-start span-block-end; }
   .astryx-dropdown-menu[data-placement="end"] { position-area: inline-end span-block-end; }
+  .astryx-dropdown-menu.astryx-dropdown-sub-menu { position-area: inline-end span-block-end; position-try-fallbacks: flip-inline, flip-block; }
+  .astryx-dropdown-sub-menu__chevron:dir(rtl) { transform: scaleX(-1); }
 }
