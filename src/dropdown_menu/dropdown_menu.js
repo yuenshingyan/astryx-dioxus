@@ -82,6 +82,8 @@ const onKey = event => {
     case 'End': next = items.length - 1; break;
     case 'Enter': case ' ':
       if (index < 0) return;
+      // Enter on a live anchor already has native activation.
+      if (event.key === 'Enter' && items[index].matches('a[href]')) return;
       event.preventDefault();
       if (!items[index].matches(':disabled,[aria-disabled="true"]')) items[index].click();
       return;

@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::{DropdownMenu, DropdownMenuItem};
+use astryx_dioxus::{DropdownMenu, DropdownMenuItem, DropdownMenuItemTarget};
 
 #[component]
 pub(super) fn DropdownMenuExamples() -> Element {
@@ -15,6 +15,14 @@ pub(super) fn DropdownMenuExamples() -> Element {
             }
             output { "{action()}" }
             button { r#type: "button", id: "dropdown-menu-after", "After menu" }
+            div { id: "dropdown-menu-link-rows",
+                DropdownMenu { label: "Destinations",
+                    DropdownMenuItem { label: "Calendar examples", href: "#calendar-examples", onclick: move |_| action.set("Opened calendar") }
+                    DropdownMenuItem { label: "Unavailable destination", href: "#calendar-examples", is_disabled: true }
+                    DropdownMenuItem { label: "Blocked destination", href: "javascript:void(0)" }
+                    DropdownMenuItem { label: "Carousel in a new tab", href: "#carousel-examples", target: DropdownMenuItemTarget::NewTab }
+                }
+            }
         }
     }
 }
