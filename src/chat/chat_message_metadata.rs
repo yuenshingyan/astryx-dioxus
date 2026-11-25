@@ -2,6 +2,7 @@ use dioxus::prelude::*;
 
 use super::chat_message::ChatMessageSender;
 use super::chat_message_context::ChatMessageContext;
+use crate::i18n::use_message;
 use crate::utils::is_renderable::is_renderable;
 use crate::{Icon, IconSize};
 
@@ -16,6 +17,16 @@ pub enum ChatMessageStatus {
 }
 
 impl ChatMessageStatus {
+    fn message_key(self) -> &'static str {
+        match self {
+            Self::Sending => "@astryx.chat.status.sending",
+            Self::Sent => "@astryx.chat.status.sent",
+            Self::Delivered => "@astryx.chat.status.delivered",
+            Self::Read => "@astryx.chat.status.read",
+            Self::Error => "@astryx.chat.status.failed",
+        }
+    }
+
     fn presentation(self) -> (&'static str, &'static str, &'static str) {
         match self {
             Self::Sending => (
@@ -76,7 +87,8 @@ pub fn ChatMessageMetadata(
             if let Some(status) = status {
                 {
                     let (name, fallback, path_data) = status.presentation();
-                    let label = status_label.as_deref().filter(|label| !label.trim().is_empty()).unwrap_or(fallback);
+                    let label = status_label.filter(|label| !label.trim().is_empty())
+                        .unwrap_or_else(|| use_message(status.message_key(), fallback));
                     rsx! {
                         span { class: "astryx-chat-message-metadata__status", "data-status": name, title: label,
                             Icon { size: IconSize::ExtraSmall, icon: rsx! {

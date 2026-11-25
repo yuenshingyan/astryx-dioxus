@@ -1,13 +1,34 @@
 use dioxus::prelude::*;
 use dioxus_ssr::render_element;
 
-use astryx_dioxus::{ChatMessageMetadata, ChatMessageStatus};
+use astryx_dioxus::{
+    ChatMessageMetadata, ChatMessageStatus, InternationalizationProvider, MessagesByLocale,
+};
 
 #[test]
 fn empty_metadata_has_no_row() {
     let html =
         render_element(rsx! { ChatMessageMetadata { timestamp: rsx! {}, footer: rsx! { "" } } });
     assert!(!html.contains("astryx-chat-message-metadata"), "{html}");
+}
+
+#[test]
+fn status_caption_uses_catalog_unless_explicitly_overridden() {
+    let messages = MessagesByLocale::from([(
+        "fr".into(),
+        [("@astryx.chat.status.read".into(), "Lu".into())].into(),
+    )]);
+    let html = render_element(rsx! {
+        InternationalizationProvider { locale: "fr-CA", messages,
+            ChatMessageMetadata { status: ChatMessageStatus::Read }
+            ChatMessageMetadata { status: ChatMessageStatus::Read, status_label: "Vu" }
+            ChatMessageMetadata { status: ChatMessageStatus::Sent }
+        }
+    });
+    for caption in ["Lu", "Vu", "Sent"] {
+        assert!(html.contains(&format!("title=\"{caption}\"")), "{html}");
+        assert!(html.contains(&format!(">{caption}</span>")), "{html}");
+    }
 }
 
 #[test]
