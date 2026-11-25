@@ -14,6 +14,7 @@ mod bottom_sheet;
 mod breadcrumbs;
 mod button;
 mod button_group;
+mod calendar;
 mod card;
 mod carousel;
 mod center;
@@ -137,6 +138,7 @@ pub use breadcrumbs::{
 };
 pub use button::{Button, ButtonAction, ButtonElevation, ButtonSize, ButtonType, ButtonVariant};
 pub use button_group::{ButtonGroup, ButtonGroupElevation, ButtonGroupOrientation};
+pub use calendar::{Calendar, CalendarProps};
 pub use card::{Card, CardVariant, InvalidCardVariant};
 pub use carousel::{Carousel, CarouselProps, CarouselSlide};
 pub use center::{Center, CenterAxis, CenterProps};

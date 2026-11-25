@@ -203,6 +203,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/form_layout/`: [FormLayout](docs/form-layout-port.md), with responsive field arrangement and layer-scoped defaults. FieldLabel consumes the optionality default; input integration remains pending.
 - `src/date_range_input/`: [Date Range Input](docs/date-range-input-port.md), with two native endpoints and inclusive range validation. Calendar and preset integration remain open.
 - `src/date_time_input/`: [Date and Time Input](docs/date-time-input-port.md), with separate native pickers and one combined ISO value. Custom pickers and bounds remain open.
+- `src/calendar/`: [Calendar](docs/calendar-port.md), with a Gregorian month grid, single-date selection, and inclusive bounds. Range selection and localization remain open.
 - `src/date_input/`: [Date Input](docs/date-input-port.md), with native Gregorian date entry and form validation. Custom and adaptive calendar presentations remain open.
 - `src/time_input/`: [Time Input](docs/time-input-port.md), with native time entry and form validation. Custom presentation remains open.
 - `src/number_input/`: [Number Input](docs/number-input-port.md), with native numeric editing and form validation. Formatted values and custom steppers remain open.
