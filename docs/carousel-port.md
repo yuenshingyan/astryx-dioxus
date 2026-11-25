@@ -1,0 +1,7 @@
+# Carousel: native scrolling checkpoint
+
+`src/carousel/` renders a named region with keyed, named slides, optional CSS snapping, and optional logical previous/next buttons. The scroller enters the tab order only on overflow. When a focused edge button disappears, focus moves to the scroller. Button scrolling respects reduced motion.
+
+Pinned Meta Astryx sources at `476a3153417dbf75c565f7df05b0784e94ddd59e`: `Carousel/Carousel.tsx` (`571b92e0125c6986f2be3f2d3e94e5829518ecfe`), its spec (`5674ed79f4ee201e1aae20dbf767d579a41ef692`), and the Workflow steps showcase (`77085094b1df4356ffe6fda46ce5aa6719b12ab5`). The adapted showcase retains the five workflow cards and buttonless snap arrangement, and adds an RTL navigation example.
+
+After bringing the earlier local checkpoint forward to the split CSS layout, the CSS bundle check, all five Rust checks, and the Carousel, ScrollableArea, and showcase-navigation Chrome suites passed. The focused suite verified accessible region and slide names, keyboard scrolling, RTL edge controls, focus handoff, and removal of the scroller tab stop when the content fits. Looping, edge fade, imperative navigation, iOS snap paging, and visual parity remain open. The checklist remains open.

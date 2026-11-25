@@ -148,6 +148,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/aspect_ratio/`: CSS-only ratio box and fit slot; child semantics and operations stay caller-owned.
 - `src/badge/`, `src/button/`, `src/button_group/`, `src/card/`, `src/clickable_card/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
 - `src/blockquote/`: semantic quote and bare attribution; no layout/typography dependency.
+- `src/carousel/`: [Carousel](docs/carousel-port.md), with native scrolling, optional snap, and logical navigation. Looping and edge fade remain open.
 - `src/toolbar/`: [Toolbar](docs/toolbar-port.md), with named action lanes and roving keyboard focus. Tab rail integration remains pending.
 - `src/stepper/`: [Stepper and Step](docs/stepper-port.md), with ordered progress and optional navigation. Responsive collapse and on-track indicators remain open.
 - `src/segmented_control/`: [Segmented Control and Item](docs/segmented-control-port.md), with controlled radio selection and keyboard navigation. Touch drag and selection animation remain open.
