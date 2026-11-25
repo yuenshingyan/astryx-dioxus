@@ -40,6 +40,8 @@ mod button_contract;
 mod button_group;
 #[path = "showcase/button_patterns.rs"]
 mod button_patterns;
+#[path = "showcase/calendar.rs"]
+mod calendar;
 #[path = "showcase/card.rs"]
 mod card;
 #[path = "showcase/carousel.rs"]
@@ -358,6 +360,7 @@ use breadcrumbs::BreadcrumbsExamples;
 use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
+use calendar::CalendarExamples;
 use card::CardExamples;
 use carousel::CarouselExamples;
 use center::CenterExamples;
@@ -663,6 +666,8 @@ fn App() -> Element {
                 a { href: "#number-input-examples", "NumberInput examples" }
                 " · "
                 a { href: "#time-input-examples", "TimeInput examples" }
+                " · "
+                a { href: "#calendar-examples", "Calendar examples" }
                 " · "
                 a { href: "#date-input-examples", "DateInput examples" }
                 " · "
@@ -1043,6 +1048,7 @@ fn App() -> Element {
             TextInputExamples {}
             NumberInputExamples {}
             TimeInputExamples {}
+            CalendarExamples {}
             DateInputExamples {}
             DateTimeInputExamples {}
             DateRangeInputExamples {}

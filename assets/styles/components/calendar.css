@@ -1,0 +1,14 @@
+
+@layer astryx-base {
+  .astryx-calendar { inline-size: fit-content; max-inline-size: 100%; color: var(--color-text-primary); }
+  .astryx-calendar__header { display: flex; align-items: center; justify-content: space-between; gap: var(--spacing-2); font-weight: 600; }
+  .astryx-calendar table { border-spacing: var(--spacing-1); text-align: center; }
+  .astryx-calendar th { color: var(--color-text-secondary); font-weight: 400; }
+  .astryx-calendar button { min-inline-size: var(--spacing-8); min-block-size: var(--spacing-8); background: transparent; color: inherit; font: inherit; border: 1px solid transparent; border-radius: var(--radius-container); }
+  .astryx-calendar button:enabled:hover { background: var(--color-background-muted); }
+  .astryx-calendar button:focus-visible { outline: 2px solid var(--focus-outline-color); outline-offset: 1px; }
+  .astryx-calendar [aria-selected="true"] button { background: var(--color-accent); color: var(--color-on-accent); border-color: currentColor; }
+  .astryx-calendar [aria-selected="true"] button:enabled:hover { background: var(--color-accent); }
+  .astryx-calendar button:disabled { color: var(--color-text-secondary); }
+  .astryx-calendar:dir(rtl) .astryx-calendar__header button span { display: inline-block; transform: scaleX(-1); }
+}

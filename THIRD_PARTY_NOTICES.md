@@ -73,6 +73,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - Field follows `Field/Field.tsx`, its spec, and four adapted catalog templates at the same pin. See `docs/field-port.md`.
 - Date Range Input follows the range value and bounds contract in `DateRangeInput/DateRangeInput.tsx`, its spec, and the adapted Date range showcase at the same pin. The local checkpoint uses native endpoint controls. See `docs/date-range-input-port.md`.
 - Date and Time Input follows the native presentation in `DateTimeInput/DateTimeInput.tsx`, its spec, and the adapted Meeting time showcase at the same pin. See `docs/date-time-input-port.md`.
+- Calendar follows the single-date path in `Calendar/Calendar.tsx`, its spec, and the adapted April 2026 showcase at the same pin. See `docs/calendar-port.md`.
 - Date Input follows the native presentation in `DateInput/DateInput.tsx`, its spec, and the adapted Start date showcase at the same pin. See `docs/date-input-port.md`.
 - Time Input follows the native presentation in `TimeInput/TimeInput.tsx`, its spec, and the adapted Time showcase at the same pin. See `docs/time-input-port.md`.
 - Number Input follows `NumberInput/NumberInput.tsx`, its spec, and the adapted Quantity showcase at the same pin. See `docs/number-input-port.md`.
