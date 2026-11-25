@@ -178,7 +178,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/dialog/`: [Dialog](docs/dialog-port.md) and [DialogHeader](docs/dialog-header-port.md), with native modal dismissal and title focus. Nested-modal integration and transitions remain pending.
 - `src/alert_dialog/`: [AlertDialog](docs/alert-dialog-port.md), a confirmation dialog with initial Cancel focus and a caller-owned action.
 - `src/lightbox/`: [Lightbox](docs/lightbox-port.md), a fullscreen single-image viewer. Gallery, video, and zoom remain open.
-- `src/bottom_sheet/`: [Bottom Sheet](docs/bottom-sheet-port.md), a standalone modal anchored to the viewport bottom. Swipe and snap points remain open.
+- `src/bottom_sheet/`: [Bottom Sheet](docs/bottom-sheet-port.md), a standalone modal anchored to the viewport bottom. Swipe and snap points remain open. The [Bottom Sheet Switcher](docs/bottom-sheet-switcher-port.md) adds a controlled modal compatibility flow; prefer standalone sheets for new flows.
 - `src/drawer/`: [Drawer](docs/drawer-port.md) and [DrawerHeader](docs/drawer-header-port.md), with a controlled modal panel and optional caller-owned close action. Nonmodal presentation remains pending.
 - `src/nav_menu/`: [NavHeadingMenu](docs/nav-heading-menu-port.md) and [NavHeadingMenuItem](docs/nav-heading-menu-item-port.md), with inline keyboard navigation and link and action rows. Heading popover integration remains pending.
 - `src/overlay/`: [Overlay](docs/overlay-port.md), with desktop reveal and controlled scrim visibility. Touch and OverlayRegion integration remain pending.

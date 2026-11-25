@@ -131,7 +131,9 @@ pub use avatar_group::{
 pub use badge::{Badge, BadgeLabel, BadgeVariant, InvalidBadgeVariant};
 pub use banner::{Banner, BannerContainer, BannerProps, BannerStatus, InvalidBannerIdentifier};
 pub use blockquote::{Blockquote, BlockquoteCite};
-pub use bottom_sheet::{BottomSheet, BottomSheetHeight, BottomSheetProps};
+pub use bottom_sheet::{
+    BottomSheet, BottomSheetHeight, BottomSheetProps, BottomSheetSwitcher, BottomSheetSwitcherProps,
+};
 pub use breadcrumbs::{
     BreadcrumbItem, BreadcrumbItemProps, Breadcrumbs, BreadcrumbsProps, BreadcrumbsVariant,
     InvalidBreadcrumbsVariant,

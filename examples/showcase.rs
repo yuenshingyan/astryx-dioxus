@@ -30,6 +30,8 @@ mod base_typeahead;
 mod blockquote;
 #[path = "showcase/bottom_sheet.rs"]
 mod bottom_sheet;
+#[path = "showcase/bottom_sheet_switcher.rs"]
+mod bottom_sheet_switcher;
 #[path = "showcase/breadcrumb_item.rs"]
 mod breadcrumb_item;
 #[path = "showcase/breadcrumbs.rs"]
@@ -355,6 +357,7 @@ use banner::BannerExamples;
 use base_typeahead::BaseTypeaheadExamples;
 use blockquote::BlockquoteExamples;
 use bottom_sheet::BottomSheetExamples;
+use bottom_sheet_switcher::BottomSheetSwitcherExamples;
 use breadcrumb_item::BreadcrumbItemExamples;
 use breadcrumbs::BreadcrumbsExamples;
 use button_contract::ButtonContractExamples;
@@ -614,6 +617,8 @@ fn App() -> Element {
                 a { href: "#drawer-examples", "Drawer examples" }
                 " · "
                 a { href: "#bottom-sheet-examples", "BottomSheet examples" }
+                " · "
+                a { href: "#bottom-sheet-switcher-examples", "Bottom Sheet Switcher examples" }
                 " · "
                 a { href: "#lightbox-examples", "Lightbox examples" }
                 " · "
@@ -1015,6 +1020,7 @@ fn App() -> Element {
             DrawerHeaderExamples {}
             DrawerExamples {}
             BottomSheetExamples {}
+            BottomSheetSwitcherExamples {}
             LightboxExamples {}
             DialogHeaderExamples {}
             DialogExamples {}
