@@ -218,6 +218,8 @@ mod nav_icon;
 mod number_input;
 #[path = "showcase/outline.rs"]
 mod outline;
+#[path = "showcase/overflow_list.rs"]
+mod overflow_list;
 #[path = "showcase/overlay.rs"]
 mod overlay;
 #[path = "showcase/pagination.rs"]
@@ -445,6 +447,7 @@ use nav_heading_menu_item::NavHeadingMenuItemExamples;
 use nav_icon::NavIconExamples;
 use number_input::NumberInputExamples;
 use outline::OutlineExamples;
+use overflow_list::OverflowListExamples;
 use overlay::OverlayExamples;
 use pagination::PaginationExamples;
 use popover::PopoverExamples;
@@ -877,6 +880,8 @@ fn App() -> Element {
                 " · "
                 a { href: "#nav-heading-menu-item-examples", "NavHeadingMenuItem examples" }
                 " · "
+                a { href: "#overflow-list-examples", "Overflow List examples" }
+                " · "
                 a { href: "#scrollable-area-examples", "ScrollableArea examples" }
             }
             DocumentedButtonPatterns {}
@@ -1141,6 +1146,7 @@ fn App() -> Element {
             TopNavMegaMenuItemExamples {}
             NavIconExamples {}
             NavHeadingMenuItemExamples {}
+            OverflowListExamples {}
             ScrollableAreaExamples {}
         }
     }

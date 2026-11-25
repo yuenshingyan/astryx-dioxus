@@ -3790,6 +3790,18 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-carousel__button:dir(rtl) span { display: inline-block; transform: scaleX(-1); }
 }
 
+@layer astryx-base {
+  .astryx-overflow-list { position: relative; min-inline-size: 0; }
+  .astryx-overflow-list__row, .astryx-overflow-list__measure {
+    display: flex;
+    align-items: center;
+    gap: var(--_overflow-gap);
+  }
+  .astryx-overflow-list__row { overflow: clip; overflow-clip-margin: 2px; }
+  .astryx-overflow-list__measure { position: absolute; inline-size: max-content; visibility: hidden; contain: layout; inset: 0 auto auto 0; clip-path: inset(50%); }
+  .astryx-overflow-list__row > *, .astryx-overflow-list__measure > * { flex: none; }
+}
+
 /* Grid tracks remain class-level so caller CSS, including media rules, can win. */
 @layer astryx-base {
   .astryx-grid {

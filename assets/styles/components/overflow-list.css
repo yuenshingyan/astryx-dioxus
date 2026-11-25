@@ -1,0 +1,12 @@
+
+@layer astryx-base {
+  .astryx-overflow-list { position: relative; min-inline-size: 0; }
+  .astryx-overflow-list__row, .astryx-overflow-list__measure {
+    display: flex;
+    align-items: center;
+    gap: var(--_overflow-gap);
+  }
+  .astryx-overflow-list__row { overflow: clip; overflow-clip-margin: 2px; }
+  .astryx-overflow-list__measure { position: absolute; inline-size: max-content; visibility: hidden; contain: layout; inset: 0 auto auto 0; clip-path: inset(50%); }
+  .astryx-overflow-list__row > *, .astryx-overflow-list__measure > * { flex: none; }
+}
