@@ -108,6 +108,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - LayerProvider follows the viewport-inset context in `Layer/LayerProvider.tsx` and its spec at the same pin. See `docs/layer-provider-port.md`.
 - Popover follows the caller-rendered trigger path in `Popover/Popover.tsx`, its spec, and the adapted Settings showcase at the same pin. See `docs/popover-port.md`.
 - Lightbox follows the single-image presentation in `Lightbox/Lightbox.tsx`, its spec, and the adapted showcase with its pinned coastline image. See `docs/lightbox-port.md`.
+- Bottom Sheet Switcher follows `BottomSheet/BottomSheetSwitcher.tsx`, its spec, and the adapted review flow at the same pin. See `docs/bottom-sheet-switcher-port.md`.
 - Bottom Sheet follows the standalone modal presentation in `BottomSheet/BottomSheet.tsx`, `BottomSheetPanel.tsx`, its spec, and the adapted Filters showcase at the same pin. See `docs/bottom-sheet-port.md`.
 - Drawer follows the modal presentation in `Drawer/Drawer.tsx`, its spec, and the adapted Details showcase at the same pin. See `docs/drawer-port.md`.
 - DrawerHeader follows `Drawer/DrawerHeader.tsx`, its spec, and three adapted catalog templates at the same pin. See `docs/drawer-header-port.md`.
