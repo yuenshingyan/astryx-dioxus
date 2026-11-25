@@ -171,7 +171,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - ContextMenuGroup follows the alias in `ContextMenu/index.ts` at the same pin. See `docs/context-menu-group-port.md`.
 - Context Menu follows the desktop compound popup in `ContextMenu/ContextMenu.tsx`, its spec, and the adapted Cut/Copy/Paste showcase at the same pin. See `docs/context-menu-port.md`.
 - ContextMenuItem follows the alias in `ContextMenu/index.ts`, its spec, and the adapted Basic arrangement at the same pin. See `docs/context-menu-item-port.md`.
-- DropdownMenuItem action rows follow `DropdownMenu/DropdownMenuItem.tsx`, its spec, and the Storybook project menu at the same pin. See `docs/dropdown-menu-item-port.md`.
+- DropdownMenuItem action and destination rows follow `DropdownMenu/DropdownMenuItem.tsx`, its spec, and the Storybook project menu at the same pin. See `docs/dropdown-menu-item-port.md`.
 - DropdownMenuCheckboxItem follows `DropdownMenu/DropdownMenuCheckboxItem.tsx` and its spec at the same pin. See `docs/dropdown-menu-checkbox-item-port.md`.
 - DropdownMenuRadioItem follows `DropdownMenu/DropdownMenuRadioItem.tsx`, its spec, and the adapted Storybook sort arrangement at the same pin. See `docs/dropdown-menu-radio-item-port.md`.
 - DropdownMenuRadioGroup follows `DropdownMenu/DropdownMenuRadioGroup.tsx`, its spec, and the adapted Storybook sort arrangement at the same pin. See `docs/dropdown-menu-radio-group-port.md`.
