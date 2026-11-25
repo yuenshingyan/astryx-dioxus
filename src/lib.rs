@@ -61,6 +61,7 @@ mod link;
 mod list;
 mod metadata_list;
 mod mobile_nav;
+mod more_menu;
 mod multi_selector;
 mod nav_icon;
 mod nav_menu;
@@ -254,6 +255,7 @@ pub use metadata_list::{
 pub use mobile_nav::{
     MobileNav, MobileNavProps, MobileNavSide, MobileNavToggle, MobileNavToggleProps,
 };
+pub use more_menu::{MoreMenu, MoreMenuProps};
 pub use multi_selector::{MultiSelector, MultiSelectorProps};
 pub use nav_icon::{NavIcon, NavIconProps};
 pub use nav_menu::{

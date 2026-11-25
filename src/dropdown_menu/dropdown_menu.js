@@ -15,7 +15,15 @@ const open = (last = false) => {
 };
 const onToggle = event => {
   trigger.setAttribute('aria-expanded', String(event.newState === 'open'));
-  if (event.newState === 'closed' && menu.contains(document.activeElement)) trigger.focus({preventScroll: true});
+  if (event.newState === 'closed' && menu.contains(document.activeElement)) {
+    // Restoring focus can open the trigger tooltip. Wait for native dismissal to finish.
+    queueMicrotask(() => {
+      const focused = document.activeElement;
+      if (!isOpen() && trigger.isConnected && (focused === document.body || menu.contains(focused))) {
+        trigger.focus({preventScroll: true});
+      }
+    });
+  }
 };
 const onClick = event => {
   if (event.defaultPrevented) return;
