@@ -184,6 +184,7 @@ The implementations under `src/toast/`, `src/avatar/`, `src/token/`, `src/stack_
 - LayoutContent follows `Layout/{LayoutContent.tsx,LayoutSlotsContext.ts}`, the shared `useScrollRegionProps` and overflow observation contracts, and its Basic and Showcase templates at the same pin. See `docs/layout-content-port.md`.
 - LayoutHeader and LayoutFooter follow `Layout/{LayoutHeader.tsx,LayoutFooter.tsx,LayoutDividerContext.ts}`, the shared container padding and block-bleed contracts, and their respective CLI templates at the same pin. See `docs/layout-header-port.md` and `docs/layout-footer-port.md`.
 - Section follows `Section/Section.tsx`, the shared Layout padding contract, its specification, and all three Section CLI templates. See `docs/section-port.md`.
+- Overflow List follows `OverflowList/OverflowList.tsx`, `hooks/useOverflow.ts`, its spec, and the adapted showcase at the same pin. See `docs/overflow-list-port.md`.
 - Carousel follows `Carousel/Carousel.tsx`, its spec, and the adapted Workflow steps showcase at the same pin. See `docs/carousel-port.md`.
 - Center follows `Center/Center.tsx`, its specification, and all three Center CLI templates at the same pin. See `docs/center-port.md`.
 - Grid follows `Grid/Grid.tsx`, its authoritative specification and five CLI templates at the same pin. GridSpan follows `Grid/GridSpan.tsx`, its specification, and both GridSpan CLI templates. The Grid resize example uses a native range input; no public ResizeHandle port is claimed. See `docs/grid-port.md`.

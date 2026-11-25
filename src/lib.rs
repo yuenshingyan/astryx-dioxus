@@ -68,6 +68,7 @@ mod nav_icon;
 mod nav_menu;
 mod number_input;
 mod outline;
+mod overflow_list;
 mod overlay;
 mod pagination;
 mod popover;
@@ -266,6 +267,7 @@ pub use nav_menu::{
 };
 pub use number_input::{NumberInput, NumberInputProps};
 pub use outline::{Outline, OutlineDensity, OutlineItem, OutlineProps};
+pub use overflow_list::{OverflowCollapseFrom, OverflowItem, OverflowList, OverflowListProps};
 pub use overlay::{
     Overlay, OverlayAlign, OverlayPosition, OverlayProps, OverlayScrimMode, OverlayShowOn,
 };
