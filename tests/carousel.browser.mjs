@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+
+await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
+  await send('Network.enable');
+  await send('Network.setBlockedURLs', {urls: ['https://*']});
+  await send('Emulation.setEmulatedMedia', {features: [{name: 'prefers-reduced-motion', value: 'reduce'}]});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8283'});
+  const workflow = `document.querySelector('#carousel-examples [aria-label="Workflow steps"][role="region"]')`;
+  const scroller = `${workflow}?.querySelector('.astryx-carousel__scroller')`;
+  const navigation = `document.querySelector('#carousel-examples [aria-label="Navigation example"][role="region"]')`;
+  const navScroll = `${navigation}?.querySelector('.astryx-carousel__scroller')`;
+  const next = `${navigation}?.querySelector('[data-carousel-step=next]')`;
+  const previous = `${navigation}?.querySelector('[data-carousel-step=previous]')`;
+  await waitFor(`${scroller}?.tabIndex === 0 && ${next}?.hidden === false`);
+  assert.equal(await evaluate(`getComputedStyle(${scroller}).scrollSnapType`), 'inline mandatory');
+  assert.equal(await evaluate(`${workflow}.querySelectorAll('button').length`), 0);
+  const {nodes} = await send('Accessibility.getFullAXTree');
+  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'region' && node.name?.value === 'Workflow steps'));
+  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'group' && node.name?.value === '5 of 5'));
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
+  await evaluate(`${scroller}.focus()`);
+  await send('Input.dispatchKeyEvent', {type:'keyDown', key:'ArrowRight', code:'ArrowRight', windowsVirtualKeyCode:39});
+  await send('Input.dispatchKeyEvent', {type:'keyUp', key:'ArrowRight', code:'ArrowRight', windowsVirtualKeyCode:39});
+  await waitFor(`${scroller}.scrollLeft > 0`);
+  assert.equal(await evaluate(`${previous}.hidden`), true);
+  await evaluate(`${next}.focus(); ${next}.click()`);
+  await waitFor(`${navScroll}.scrollLeft < 0 && !${previous}.hidden`);
+  await evaluate(`${next}.click(); ${next}.click()`);
+  await waitFor(`${next}.hidden && document.activeElement === ${navScroll}`);
+  await evaluate(`${navigation}.parentElement.style.width = '720px'`);
+  await waitFor(`${navScroll}.tabIndex === -1 && ${previous}.hidden && ${next}.hidden`);
+  assert.deepEqual(exceptions, []);
+  console.log('Carousel: named region and slides, keyboard scrolling, RTL edge controls, focus handoff, and resize passed');
+});

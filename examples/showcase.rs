@@ -42,6 +42,8 @@ mod button_group;
 mod button_patterns;
 #[path = "showcase/card.rs"]
 mod card;
+#[path = "showcase/carousel.rs"]
+mod carousel;
 #[path = "showcase/center.rs"]
 mod center;
 #[path = "showcase/chat_composer.rs"]
@@ -355,6 +357,7 @@ use button_contract::ButtonContractExamples;
 use button_group::ButtonGroupExamples;
 use button_patterns::DocumentedButtonPatterns;
 use card::CardExamples;
+use carousel::CarouselExamples;
 use center::CenterExamples;
 use chat_composer::ChatComposerExamples;
 use chat_composer_drawer::ChatComposerDrawerExamples;
@@ -551,6 +554,8 @@ fn App() -> Element {
             p { "Documented patterns, interaction states, and integrations. See docs/ for each component's verification notes." }
             nav { "aria-label": "Showcase sections",
                 a { href: "#button-group-examples", "ButtonGroup examples" }
+                " · "
+                a { href: "#carousel-examples", "Carousel examples" }
                 " · "
                 a { href: "#icon-button-examples", "IconButton examples" }
                 " · "
@@ -964,6 +969,7 @@ fn App() -> Element {
                 p { id: "form-count", "Submissions: {form_count}" }
             }
             ButtonContractExamples {}
+            CarouselExamples {}
             ButtonGroupExamples {}
             IconButtonExamples {}
             LinkExamples {}

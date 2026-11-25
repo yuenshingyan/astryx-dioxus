@@ -46,6 +46,7 @@ components/modal-and-popover.css
 components/layer-inset.css
 components/item-list-toolbar-chat.css
 components/dropdown-menu.css
+components/carousel.css
 components/grid-aspect-ratio-stack.css
 components/token-avatar.css
 components/toast-demo.css
