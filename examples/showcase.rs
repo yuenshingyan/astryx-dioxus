@@ -138,6 +138,8 @@ mod dropdown_menu_group;
 mod dropdown_menu_item;
 #[path = "showcase/dropdown_menu_radio_group.rs"]
 mod dropdown_menu_radio_group;
+#[path = "showcase/dropdown_sub_menu.rs"]
+mod dropdown_sub_menu;
 #[path = "showcase/empty_state.rs"]
 mod empty_state;
 #[path = "showcase/field.rs"]
@@ -401,6 +403,7 @@ use dropdown_menu_checkbox_item::DropdownMenuCheckboxItemExamples;
 use dropdown_menu_group::DropdownMenuGroupExamples;
 use dropdown_menu_item::DropdownMenuItemExamples;
 use dropdown_menu_radio_group::DropdownMenuRadioGroupExamples;
+use dropdown_sub_menu::DropdownSubMenuExamples;
 use empty_state::EmptyStateExamples;
 use field::FieldExamples;
 use field_label::FieldLabelExamples;
@@ -624,6 +627,8 @@ fn App() -> Element {
                 a { href: "#dropdown-menu-checkbox-item-examples", "DropdownMenuCheckboxItem examples" }
                 " · "
                 a { href: "#dropdown-menu-examples", "DropdownMenu examples" }
+                " · "
+                a { href: "#dropdown-sub-menu-examples", "Dropdown submenu examples" }
                 " · "
                 a { href: "#more-menu-examples", "More Menu examples" }
                 " · "
@@ -1005,6 +1010,7 @@ fn App() -> Element {
             DropdownMenuRadioGroupExamples {}
             DropdownMenuCheckboxItemExamples {}
             DropdownMenuExamples {}
+            DropdownSubMenuExamples {}
             MoreMenuExamples {}
             DropdownMenuItemExamples {}
             ContextMenuExamples {}

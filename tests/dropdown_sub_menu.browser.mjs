@@ -1,0 +1,46 @@
+import assert from 'node:assert/strict';
+import {withTarget} from './card_metrics.mjs';
+
+await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
+  await send('Network.enable');
+  await send('Network.setBlockedURLs', {urls: ['https://*']});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8282'});
+  const frame = "document.getElementById('dropdown-sub-menu-examples')";
+  const trigger = `${frame}?.querySelector('button[aria-haspopup=menu]')`;
+  const branch = `${frame}.querySelector('[data-dropdown-sub-menu-trigger]')`;
+  const panel = `document.getElementById(${branch}.getAttribute('aria-controls'))`;
+  const root = `document.getElementById(${trigger}.getAttribute('aria-controls'))`;
+  const focused = 'document.activeElement.textContent.trim()';
+  const press = async (key, windowsVirtualKeyCode) => {
+    for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key, code:key, windowsVirtualKeyCode});
+  };
+  await waitFor(trigger);
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
+  await evaluate(`${trigger}.scrollIntoView({block:'center'}); ${trigger}.focus()`);
+  await press('ArrowDown', 40);
+  await waitFor(`${focused} === 'Rename'`);
+  await press('ArrowDown', 40);
+  await waitFor(`document.activeElement === ${branch}`);
+  await press('ArrowRight', 39);
+  await waitFor(`${panel}.matches(':popover-open') && ${focused} === 'Projects'`);
+  assert.ok(await evaluate(`${root}.matches(':popover-open')`));
+  const {nodes} = await send('Accessibility.getFullAXTree');
+  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'menu' && node.name?.value === 'Move to'));
+  await press('Escape', 27);
+  await waitFor(`!${panel}.matches(':popover-open') && document.activeElement === ${branch}`);
+  assert.ok(await evaluate(`${root}.matches(':popover-open')`));
+  await evaluate(`${frame}.dir = 'rtl'`);
+  await press('ArrowLeft', 37);
+  await waitFor(`${panel}.matches(':popover-open') && ${focused} === 'Projects'`);
+  await press('ArrowRight', 39);
+  await waitFor(`!${panel}.matches(':popover-open') && document.activeElement === ${branch}`);
+  await press('ArrowLeft', 37);
+  await waitFor(`${focused} === 'Projects'`);
+  await press('ArrowDown', 40);
+  await waitFor(`${focused} === 'Archive'`);
+  await press('Enter', 13);
+  await waitFor(`!${root}.matches(':popover-open') && !${panel}.matches(':popover-open') && document.activeElement === ${trigger} && ${frame}.querySelector('output').textContent === 'Move to Archive'`);
+  assert.deepEqual(exceptions, []);
+  console.log('Dropdown submenu: flyout naming, LTR/RTL keys, Escape and action focus return passed');
+});
