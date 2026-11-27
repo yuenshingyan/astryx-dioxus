@@ -1,3 +1,4 @@
+use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
 use crate::{Button, ButtonSize, ButtonVariant, SizeValue, VisuallyHidden};
@@ -15,6 +16,15 @@ pub fn CodeBlock(
     /// Present unified diff markers in a separate column without changing the source.
     #[props(default)]
     is_diff: bool,
+    /// Allow disclosure when a title or diff label is visible.
+    #[props(default)]
+    is_collapsible: bool,
+    /// Minimum number of source lines required for disclosure.
+    #[props(default = 10)]
+    collapsible_threshold: usize,
+    /// Accessible name when the disclosure has no visible label.
+    #[props(default = "Code".to_owned())]
+    disclosure_label: String,
     #[props(default)] is_wrapped: bool,
     #[props(default)] max_height: Option<SizeValue>,
     #[props(default)] has_copy_button: bool,
@@ -33,12 +43,32 @@ pub fn CodeBlock(
     let last_index = lines.len() - 1;
     let digits = (first + last_index as u64).to_string().len();
     let copy_source = code.clone();
+    let region_id = use_hook(|| format!("astryx-code-region-{}", current_scope_id().0));
+    let mut collapsed = use_signal(|| false);
+    let can_collapse =
+        is_collapsible && (title.is_some() || is_diff) && lines.len() >= collapsible_threshold;
+    if !can_collapse && *collapsed.peek() {
+        collapsed.set(false);
+    }
+    let is_collapsed = can_collapse && collapsed();
+    let header_text = match (title.as_deref(), is_diff) {
+        (Some(title), true) if !title.trim().is_empty() => format!("{title} — diff"),
+        (_, true) => "diff".to_owned(),
+        (title, false) => title.unwrap_or_default().to_owned(),
+    };
     rsx! {
         div { class: "astryx-code-block", style: "--_code-block-digits:{digits}ch",
             if title.is_some() || has_copy_button || is_diff {
                 div { class: "astryx-code-block__header",
-                    if let Some(title) = title.as_ref() { span { "{title}" } }
-                    if is_diff { span { "diff" } }
+                    if can_collapse {
+                        button { r#type: "button", class: "astryx-code-block__disclosure",
+                            "aria-expanded": (!is_collapsed).to_string(), "aria-controls": region_id.clone(),
+                            "aria-label": header_text.trim().is_empty().then_some(disclosure_label),
+                            onclick: move |_| collapsed.toggle(),
+                            span { class: "astryx-code-block__chevron", "aria-hidden": "true", if is_collapsed { "›" } else { "⌄" } }
+                            "{header_text}"
+                        }
+                    } else if title.is_some() || is_diff { span { "{header_text}" } }
                     if has_copy_button {
                         Button { label: copy_label, variant: ButtonVariant::Ghost, size: ButtonSize::Small,
                             onclick: move |_| {
@@ -59,7 +89,7 @@ pub fn CodeBlock(
                     }
                 }
             }
-            pre { class: "astryx-code-block__pre", style, dir: "ltr", tabindex: 0,
+            pre { id: region_id, class: "astryx-code-block__pre", style, dir: "ltr", tabindex: 0, hidden: is_collapsed,
                 "data-wrapped": is_wrapped.to_string(),
                 code {
                     for (index, &line) in lines.iter().enumerate() {

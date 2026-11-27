@@ -22,6 +22,10 @@ pub(super) fn CodeBlockExamples() -> Element {
         section { id: "code-block-examples",
             h2 { "Code Block" }
             CodeBlock { code: SOURCE, title: "useUser.ts".to_owned(), has_line_numbers: true, has_copy_button: true }
+            div { id: "code-block-disclosure-example",
+                h3 { "Collapsible source" }
+                CodeBlock { code: SOURCE, title: "Source excerpt", is_collapsible: true, has_copy_button: true }
+            }
             div { id: "code-block-diff-example",
                 h3 { "Unified diff" }
                 CodeBlock { code: "--- a/settings.rs\n+++ b/settings.rs\n@@ -1,2 +1,2 @@\n-const RETRIES: u8 = 2;\n+const RETRIES: u8 = 3;\n const DELAY: u8 = 5;", is_diff: true, has_line_numbers: true, has_copy_button: true }

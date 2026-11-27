@@ -10,7 +10,7 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
       window.copiedCode = text;
     }}});
   `});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8290'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8294'});
   const block = `document.querySelector('#code-block-examples')`;
   const pre = `${block}.querySelector('pre')`;
   const button = `${block}.querySelector('button')`;
@@ -33,6 +33,26 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await evaluate(`window.rejectCodeCopy = false; ${diff}.querySelector('button').click()`);
   await waitFor(`${diff}.querySelector('[data-code-block-status][role=status]').textContent === 'Copied code'`);
   assert.equal(await evaluate('window.copiedCode'), source);
+  const disclosure = `document.getElementById('code-block-disclosure-example')`;
+  const toggle = `${disclosure}.querySelector('button[aria-expanded]')`;
+  const copy = `${disclosure}.querySelector('button:not([aria-expanded])')`;
+  const region = `document.getElementById(${toggle}.getAttribute('aria-controls'))`;
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
+  await evaluate(`window.originalCodeRegion = ${region}; ${toggle}.focus()`);
+  const press = async (key, code, windowsVirtualKeyCode, text) => {
+    await send('Input.dispatchKeyEvent', {type:'keyDown', key, code, windowsVirtualKeyCode, text});
+    await send('Input.dispatchKeyEvent', {type:'keyUp', key, code, windowsVirtualKeyCode});
+  };
+  await press(' ', 'Space', 32, ' ');
+  await waitFor(`${toggle}.getAttribute('aria-expanded') === 'false' && ${region}.hidden && ${region}.getClientRects().length === 0 && document.activeElement === ${toggle}`);
+  await evaluate(`${copy}.click()`);
+  await waitFor(`${disclosure}.querySelector('[data-code-block-status]').textContent === 'Copied code'`);
+  assert.equal(await evaluate('window.copiedCode'), await evaluate(`${pre}.querySelector('code').textContent`));
+  assert.ok(await evaluate(`${region}.hidden && window.originalCodeRegion === ${region}`));
+  await evaluate(`${toggle}.focus()`);
+  await press('Enter', 'Enter', 13, '\r');
+  await waitFor(`${toggle}.getAttribute('aria-expanded') === 'true' && !${region}.hidden && window.originalCodeRegion === ${region}`);
   assert.deepEqual(exceptions, []);
   console.log('Code Block: line gutter, exact-source copy and failure status passed');
 });
