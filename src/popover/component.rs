@@ -51,6 +51,7 @@ pub fn Popover(
     if let Some(inset) = &inset {
         style.push_str(inset);
     }
+    let has_auto_width = width.is_none();
     if let Some(width) = width {
         let width = width.as_css()?;
         style.push_str(&format!("inline-size:{width};"));
@@ -60,6 +61,7 @@ pub fn Popover(
         div { id, class: format!("astryx-popover {class}"), style,
             popover: "manual", role: "dialog", "aria-label": label,
             "data-layer-inset": inset.is_some().then_some("true"),
+            "data-auto-width": has_auto_width.then_some("true"),
             "data-open": is_expanded.to_string(), "data-placement": placement.as_str(), onmounted,
             tabindex: -1,
             {content}

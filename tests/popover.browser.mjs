@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls:['https://*']});
-  await send('Page.navigate', {url:process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8244'});
+  await send('Page.navigate', {url:process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8292'});
   const trigger = `document.querySelector('#popover-examples [aria-haspopup=dialog]')`;
   const panel = `document.getElementById(${trigger}.getAttribute('aria-controls'))`;
   await waitFor(`${trigger}?.getAttribute('aria-expanded') === 'false'`);
@@ -22,6 +22,14 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(`${panel}.matches(':popover-open')`);
   await evaluate(`document.getElementById('popover-preview-outside').click()`);
   await waitFor(`!${panel}.matches(':popover-open')`);
+  const autoTrigger = `document.querySelector('#popover-auto-width-example [aria-haspopup=dialog]')`;
+  const autoPanel = `document.getElementById(${autoTrigger}.getAttribute('aria-controls'))`;
+  const rect = selector => `${selector}.getBoundingClientRect()`;
+  await evaluate(`${autoTrigger}.scrollIntoView({block:'center'}); ${autoTrigger}.click()`);
+  await waitFor(`${autoPanel}.matches(':popover-open')`);
+  assert.ok(await evaluate(`Math.abs(${rect(autoPanel)}.width - ${rect(autoTrigger)}.width) < 1`));
+  await evaluate(`Object.assign(${autoTrigger}.style, {position:'fixed', bottom:'4px', left:'35vw', inlineSize:'300px'})`);
+  await waitFor(`${rect(autoPanel)}.bottom < ${rect(autoTrigger)}.top && Math.abs(${rect(autoPanel)}.width - 300) < 1`);
   assert.deepEqual(exceptions, []);
   console.log('Popover: anchor placement, accessible name, Escape, outside click and focus return passed');
 });
