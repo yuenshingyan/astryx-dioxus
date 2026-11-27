@@ -13,6 +13,15 @@ pub enum SliderOrientation {
     Vertical,
 }
 
+/// A visual tick at a value on the slider's scale.
+#[derive(Clone, Debug, PartialEq)]
+pub struct SliderMark {
+    /// Mark position. Non-finite and out-of-range values are ignored.
+    pub value: f64,
+    /// Optional visible caption. Marks do not change the slider's step or accessible name.
+    pub label: Option<String>,
+}
+
 /// A controlled, single-thumb slider using a native range input.
 #[component]
 pub fn Slider(
@@ -22,6 +31,7 @@ pub fn Slider(
     #[props(default = 100.0)] max: f64,
     #[props(default = 1.0)] step: f64,
     #[props(default)] orientation: SliderOrientation,
+    #[props(default)] marks: Vec<SliderMark>,
     #[props(default)] on_change: Option<EventHandler<f64>>,
     #[props(default)] on_change_end: Option<EventHandler<f64>>,
     #[props(default)] html_name: Option<String>,
@@ -47,11 +57,17 @@ pub fn Slider(
     let description_id = description.as_ref().map(|_| format!("{id}-description"));
     let mount_id = id.clone();
     let is_vertical = orientation == SliderOrientation::Vertical;
+    let marks: Vec<_> = marks
+        .into_iter()
+        .filter(|mark| (min..=max).contains(&mark.value))
+        .collect();
+    let has_marks = !marks.is_empty();
     rsx! {
         div { class: "astryx-slider", style,
             FieldLabel { label, input_id: id.clone(), is_label_hidden, is_disabled,
                 description: description.map(|text| rsx! { "{text}" }), description_id: description_id.clone(),
             }
+            div { class: "astryx-slider__scale", "data-vertical": is_vertical.then_some("true"),
             input { id, class: "astryx-slider__input", r#type: "range", name: html_name, disabled: is_disabled,
                 min: min.to_string(), max: max.to_string(), step: step.to_string(), value: value.to_string(),
                 "data-value": value.to_string(), "data-vertical": is_vertical.then_some("true"),
@@ -71,6 +87,36 @@ pub fn Slider(
                         && let Some(handler) = on_change_end { handler.call(next); }
                 },
             }
+            if has_marks {
+                div { class: "astryx-slider__marks", "aria-hidden": "true",
+                    for (index, mark) in marks.into_iter().enumerate() {
+                        {
+                            let percent = mark_percent(mark.value, min, max);
+                            rsx! {
+                                span { key: "{index}", class: "astryx-slider__mark", style: "--_slider-mark-position:{percent}%",
+                                    "data-filled": (mark.value <= value).then_some("true"),
+                                    span { class: "astryx-slider__tick" }
+                                    if let Some(label) = mark.label { span { class: "astryx-slider__mark-label", "{label}" } }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            }
         }
     }
+}
+
+fn mark_percent(value: f64, min: f64, max: f64) -> f64 {
+    if min == max {
+        return 0.0;
+    }
+    let span = max - min;
+    let fraction = if span.is_finite() {
+        (value - min) / span
+    } else {
+        (value / 2.0 - min / 2.0) / (max / 2.0 - min / 2.0)
+    };
+    fraction * 100.0
 }
