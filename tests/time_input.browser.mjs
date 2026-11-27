@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8250'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8301'});
   const input = "document.querySelector('#time-input-examples input[name=time]')";
   const output = "document.getElementById('time-input-value').textContent";
   await waitFor(input);
@@ -18,6 +18,12 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   assert.deepEqual(await evaluate(`Array.from(new FormData(${input}.form))`), [['time', '12:34'], ['precise', '12:34:56']]);
   await evaluate(`${input}.value = ''; ${input}.dispatchEvent(new Event('change', {bubbles:true}))`);
   await waitFor(`${output} === 'No time selected'`);
+  const review = "document.querySelector('#time-input-status-example input')";
+  assert.ok(await evaluate(`${review}.validity.valid && ${review}.getAttribute('aria-invalid') === 'true'`));
+  assert.deepEqual(await evaluate(`${review}.getAttribute('aria-describedby').split(' ').map(id => document.getElementById(id).textContent.trim())`), ['Choose a time outside the lunch break.', 'This time overlaps the lunch break.']);
+  assert.equal(await evaluate(`document.querySelector('#time-input-status-example .astryx-field-status').dataset.variant`), 'detached');
+  const {nodes} = await send('Accessibility.getFullAXTree');
+  assert.ok(nodes.some(node => !node.ignored && node.name?.value === 'Review time' && node.description?.value.includes('This time overlaps the lunch break.')));
   assert.deepEqual(exceptions, []);
   console.log('TimeInput: label, description, bounds, minute/second precision and form behavior passed');
 });

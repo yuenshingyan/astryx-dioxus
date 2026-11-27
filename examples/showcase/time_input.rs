@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::TimeInput;
+use astryx_dioxus::{FieldStatusInput, FieldStatusPlacement, InputStatusType, TimeInput};
 
 #[component]
 pub(super) fn TimeInputExamples() -> Element {
@@ -17,6 +17,13 @@ pub(super) fn TimeInputExamples() -> Element {
                 output { id: "time-input-value", "{display}" }
                 TimeInput { label: "Time with seconds", value: "12:34:56", has_seconds: true, html_name: "precise" }
                 TimeInput { label: "Unavailable time", value: "12:00", is_disabled: true, html_name: "unavailable" }
+            }
+            div { id: "time-input-status-example",
+                TimeInput { label: "Review time", value: "12:00", width: Some(320.into()),
+                    description: "Choose a time outside the lunch break.", status_variant: FieldStatusPlacement::Detached,
+                    status: FieldStatusInput { status_type: InputStatusType::Error,
+                        message: Some("This time overlaps the lunch break.".into()), message_id: None },
+                }
             }
         }
     }
