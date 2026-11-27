@@ -18,6 +18,20 @@ pub fn TextArea(
     on_change: Option<EventHandler<String>>,
     #[props(default)] id: Option<String>,
     #[props(default)] html_name: Option<String>,
+    /// Native browser autocomplete hint; does not modify the controlled value.
+    #[props(default)]
+    autocomplete: Option<String>,
+    /// Whether the browser checks spelling in the field.
+    #[props(default = true)]
+    has_spell_check: bool,
+    /// Requests native autofocus, including when opened within a Dialog.
+    #[props(default)]
+    has_auto_focus: bool,
+    /// Receives the native paste event before the browser inserts the text.
+    #[props(default)]
+    onpaste: Option<EventHandler<ClipboardEvent>>,
+    #[props(default)] onfocus: Option<EventHandler<FocusEvent>>,
+    #[props(default)] onblur: Option<EventHandler<FocusEvent>>,
     #[props(default)] placeholder: Option<String>,
     #[props(default)] description: Option<String>,
     #[props(default)] label_tooltip: Option<String>,
@@ -85,10 +99,18 @@ pub fn TextArea(
                 }
                 textarea { class: "astryx-text-area-control", id: input_id, name, placeholder, rows,
                     maxlength: html_max_length, readonly: is_disabled || is_read_only,
+                    autocomplete, spellcheck: has_spell_check.to_string(), autofocus: has_auto_focus && !is_disabled,
+                    "data-autofocus": (has_auto_focus && !is_disabled).then_some("true"),
                     "aria-required": is_effectively_required.then_some("true"), "aria-disabled": is_disabled.then_some("true"),
                     "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
                     "aria-describedby": (!descriptions.is_empty()).then_some(descriptions),
                     value,
+                    onfocus: move |event| { if let Some(handler) = onfocus { handler.call(event); } },
+                    onblur: move |event| { if let Some(handler) = onblur { handler.call(event); } },
+                    onpaste: move |event| {
+                        if is_disabled || is_read_only { event.prevent_default(); }
+                        else if let Some(handler) = onpaste { handler.call(event); }
+                    },
                     oninput: move |event| {
                         if !is_disabled && !is_read_only && let Some(handler) = on_change { handler.call(event.value()); }
                     },
