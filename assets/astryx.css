@@ -1684,9 +1684,9 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     color: inherit;
     font: inherit;
   }
-  .astryx-number-input__control[data-status="error"] { border-color: var(--color-text-error); }
-  .astryx-number-input__control[data-status="warning"] { border-color: var(--color-text-warning); }
-  .astryx-number-input__control[data-status="success"] { border-color: var(--color-text-success); }
+  :is(.astryx-date-input__control, .astryx-number-input__control)[data-status="error"] { border-color: var(--color-text-error); }
+  :is(.astryx-date-input__control, .astryx-number-input__control)[data-status="warning"] { border-color: var(--color-text-warning); }
+  :is(.astryx-date-input__control, .astryx-number-input__control)[data-status="success"] { border-color: var(--color-text-success); }
   .astryx-date-input__control:disabled, .astryx-time-input__control:disabled, .astryx-number-input__control:disabled { color: var(--color-text-secondary); background: var(--color-background-muted); }
   .astryx-date-input__control:focus-visible, .astryx-time-input__control:focus-visible, .astryx-number-input__control:focus-visible { outline: 2px solid var(--focus-outline-color); outline-offset: 2px; }
   .astryx-file-input { display: flex; flex-direction: column; gap: var(--spacing-2); max-inline-size: 100%; }

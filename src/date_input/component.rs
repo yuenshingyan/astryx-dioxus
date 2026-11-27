@@ -1,7 +1,7 @@
 use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
-use crate::{FieldLabel, SizeValue};
+use crate::{Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue};
 
 /// Gregorian date field for the native picker presentation. Values and bounds
 /// use `YYYY-MM-DD`; invalid dates or reversed bounds render no field.
@@ -13,6 +13,12 @@ pub fn DateInput(
     #[props(default)] min: Option<String>,
     #[props(default)] max: Option<String>,
     #[props(default)] description: Option<String>,
+    /// Caller-owned validation feedback, independent of native date constraints.
+    #[props(default)]
+    status: Option<FieldStatusInput>,
+    /// Placement of the validation message.
+    #[props(default)]
+    status_variant: FieldStatusPlacement,
     #[props(default)] html_name: Option<String>,
     #[props(default)] width: Option<SizeValue>,
     #[props(default)] is_required: bool,
@@ -32,19 +38,37 @@ pub fn DateInput(
     {
         return VNode::empty();
     }
-    let style = width
-        .map(|size| size.as_css().map(|width| format!("inline-size:{width}")))
-        .transpose()?;
     let description = description.filter(|text| !text.is_empty());
     let description_id = description.as_ref().map(|_| format!("{id}-description"));
+    let severity = status.as_ref().map(|status| status.status_type);
+    let status_id = status
+        .as_ref()
+        .filter(|status| {
+            status
+                .message
+                .as_ref()
+                .is_some_and(|message| !message.is_empty())
+        })
+        .map(|status| {
+            status
+                .message_id
+                .clone()
+                .unwrap_or_else(|| format!("{id}-status"))
+        });
+    let described_by = [description_id.as_deref(), status_id.as_deref()]
+        .into_iter()
+        .flatten()
+        .collect::<Vec<_>>()
+        .join(" ");
     rsx! {
-        div { class: "astryx-date-input", style,
-            FieldLabel { label, input_id: id.clone(), is_label_hidden, is_disabled, is_required, is_optional,
-                description: description.map(|text| rsx! { "{text}" }), description_id: description_id.clone(),
-            }
+        Field { class: "astryx-date-input", label, input_id: id.clone(), is_label_hidden, is_disabled, is_required, is_optional,
+            width, description, description_id, status, status_variant,
             input { class: "astryx-date-input__control", id, r#type: "date", name: html_name,
                 value: value.unwrap_or_default(), min, max,
-                required: is_required, disabled: is_disabled, "aria-describedby": description_id,
+                required: is_required, disabled: is_disabled,
+                "aria-describedby": (!described_by.is_empty()).then_some(described_by),
+                "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
+                "data-status": severity.map(InputStatusType::as_str),
                 onchange: move |event| {
                     if !is_disabled && let Some(handler) = on_change {
                         let date = event.value();
