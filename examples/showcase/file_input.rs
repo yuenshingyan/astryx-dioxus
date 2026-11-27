@@ -1,7 +1,7 @@
 use dioxus::html::FileData;
 use dioxus::prelude::*;
 
-use astryx_dioxus::FileInput;
+use astryx_dioxus::{FieldStatusInput, FieldStatusPlacement, FileInput, InputStatusType};
 
 #[component]
 pub(super) fn FileInputExamples() -> Element {
@@ -16,7 +16,11 @@ pub(super) fn FileInputExamples() -> Element {
                     on_change: move |files: Vec<FileData>| count.set(files.len()),
                 }
                 output { id: "file-input-count", "{count()} selected" }
-                FileInput { label: "Attachments", html_name: "attachments", is_multiple: true }
+                FileInput { label: "Attachments", html_name: "attachments", is_multiple: true,
+                    description: "Use the project’s current documents.", status_variant: FieldStatusPlacement::Detached,
+                    status: FieldStatusInput { status_type: InputStatusType::Error,
+                        message: Some("The previous attachments are out of date.".into()), message_id: Some("attachment-status".into()) },
+                }
                 FileInput { label: "Unavailable upload", html_name: "unavailable", is_disabled: true }
             }
         }
