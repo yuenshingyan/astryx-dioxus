@@ -5,6 +5,7 @@ const owned = item => item?.closest('[role="tree"]') === root;
 const visible = () => [...root.querySelectorAll(itemSelector)].filter(item =>
   owned(item) && !item.closest('[hidden],[inert]') && item.getClientRects().length);
 let current;
+const typeahead = createTreeTypeahead();
 const sync = () => {
   const items = visible();
   if (!items.includes(current)) current = items[0];
@@ -48,7 +49,9 @@ const key = event => {
       else next = item.parentElement.closest(itemSelector);
       break;
     case 'Enter': case ' ': activate(); break;
-    default: return;
+    default:
+      next = typeahead(event, items, index);
+      if (!next) return;
   }
   event.preventDefault();
   if (owned(next)) next.focus();
