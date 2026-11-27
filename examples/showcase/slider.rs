@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::{Slider, SliderMark, SliderOrientation};
+use astryx_dioxus::{Slider, SliderMark, SliderOrientation, SliderValueDisplay};
 
 #[component]
 pub(super) fn SliderExamples() -> Element {
@@ -11,6 +11,7 @@ pub(super) fn SliderExamples() -> Element {
             h2 { "Slider" }
             form {
                 Slider { label: "Volume", value: volume(), html_name: "volume",
+                    value_display: SliderValueDisplay::Text, format_value: |value: f64| format!("{value}%"),
                     width: Some(300.into()), marks: [0, 25, 50, 75, 100].into_iter()
                         .map(|value| SliderMark { value: f64::from(value), label: Some(value.to_string()) }).collect::<Vec<_>>(),
                     on_change: move |value| volume.set(value) }
