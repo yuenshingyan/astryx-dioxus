@@ -71,6 +71,9 @@
     padding: var(--spacing-2) var(--spacing-4);
     border-block-end: var(--border-width) solid var(--color-border);
   }
+  .astryx-code-block__disclosure { display: inline-flex; align-items: center; gap: var(--spacing-2); padding: var(--spacing-1); border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; }
+  .astryx-code-block__disclosure:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); }
+  .astryx-code-block__disclosure[aria-expanded="false"] > .astryx-code-block__chevron:dir(rtl) { transform: scaleX(-1); }
   .astryx-code-block__pre {
     margin: 0;
     overflow: auto;
