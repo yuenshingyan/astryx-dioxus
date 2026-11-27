@@ -1704,6 +1704,10 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-slider__input { margin: 0; inline-size: 100%; accent-color: var(--color-accent); }
   .astryx-slider__input[data-vertical="true"] { writing-mode: vertical-lr; direction: rtl; inline-size: var(--spacing-32, 128px); }
   .astryx-slider__input:focus-visible { outline: 2px solid var(--focus-outline-color); outline-offset: 2px; }
+  .astryx-slider__value-row { inline-size: 100%; }
+  .astryx-slider__value-row[data-caption] { display: flex; align-items: start; gap: var(--spacing-3); }
+  .astryx-slider__value-row[data-caption] > .astryx-slider__scale { min-inline-size: 0; }
+  .astryx-slider__value { flex: none; font-variant-numeric: tabular-nums; color: var(--color-text-secondary); }
   .astryx-slider__scale { display: flex; flex-direction: column; inline-size: 100%; }
   .astryx-slider__scale[data-vertical] { flex-direction: row; inline-size: auto; }
   .astryx-slider__marks { position: relative; margin-inline: var(--spacing-2); block-size: 1.5em; pointer-events: none; }

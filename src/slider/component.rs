@@ -13,6 +13,16 @@ pub enum SliderOrientation {
     Vertical,
 }
 
+/// Presentation of the slider's current value.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum SliderValueDisplay {
+    /// Do not show a separate value caption.
+    #[default]
+    None,
+    /// Show a caption beside the scale.
+    Text,
+}
+
 /// A visual tick at a value on the slider's scale.
 #[derive(Clone, Debug, PartialEq)]
 pub struct SliderMark {
@@ -32,6 +42,11 @@ pub fn Slider(
     #[props(default = 1.0)] step: f64,
     #[props(default)] orientation: SliderOrientation,
     #[props(default)] marks: Vec<SliderMark>,
+    #[props(default)] value_display: SliderValueDisplay,
+    /// Formats the controlled value for assistive technology and the optional caption.
+    /// Supply step-aligned values so the caption and native thumb agree.
+    #[props(default)]
+    format_value: Option<Callback<f64, String>>,
     #[props(default)] on_change: Option<EventHandler<f64>>,
     #[props(default)] on_change_end: Option<EventHandler<f64>>,
     #[props(default)] html_name: Option<String>,
@@ -62,16 +77,23 @@ pub fn Slider(
         .filter(|mark| (min..=max).contains(&mark.value))
         .collect();
     let has_marks = !marks.is_empty();
+    let formatted = format_value
+        .map(|format| format.call(value))
+        .filter(|text| !text.trim().is_empty());
+    let caption = (value_display == SliderValueDisplay::Text)
+        .then(|| formatted.clone().unwrap_or_else(|| value.to_string()));
     rsx! {
         div { class: "astryx-slider", style,
             FieldLabel { label, input_id: id.clone(), is_label_hidden, is_disabled,
                 description: description.map(|text| rsx! { "{text}" }), description_id: description_id.clone(),
             }
+            div { class: "astryx-slider__value-row", "data-caption": caption.is_some().then_some("true"),
             div { class: "astryx-slider__scale", "data-vertical": is_vertical.then_some("true"),
             input { id, class: "astryx-slider__input", r#type: "range", name: html_name, disabled: is_disabled,
                 min: min.to_string(), max: max.to_string(), step: step.to_string(), value: value.to_string(),
                 "data-value": value.to_string(), "data-vertical": is_vertical.then_some("true"),
                 "aria-orientation": is_vertical.then_some("vertical"), "aria-describedby": description_id,
+                "aria-valuetext": formatted,
                 onmounted: move |_| {
                     if let Some(eval) = *controller.peek() { let _ = eval.send(()); }
                     let eval = document::eval(include_str!("sync_slider.js"));
@@ -102,6 +124,10 @@ pub fn Slider(
                         }
                     }
                 }
+            }
+            }
+            if let Some(caption) = caption.as_ref() {
+                span { class: "astryx-slider__value", "aria-hidden": "true", "{caption}" }
             }
             }
         }
