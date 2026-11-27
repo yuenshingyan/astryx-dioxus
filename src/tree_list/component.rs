@@ -45,7 +45,11 @@ pub fn TreeList(label: String, items: Vec<TreeListItemData>) -> Element {
         div { id, class: "astryx-tree-list", role: "tree", "aria-label": label,
             onmounted: move |_| {
                 if let Some(eval) = *controller.peek() { let _ = eval.send(()); }
-                let eval = document::eval(include_str!("tree_list.js"));
+                let eval = document::eval(concat!(
+                        include_str!("../utils/typeahead_match.js"),
+                        include_str!("../hooks/use_tree_focus.js"),
+                        include_str!("tree_list.js"),
+                    ));
                 let _ = eval.send(mount_id.clone());
                 controller.set(Some(eval));
             },

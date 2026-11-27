@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8269'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8291'});
   const tree = "document.querySelector('#tree-list-examples [role=tree]')";
   const row = label => `${tree}.querySelector('[aria-label="${label}"]')`;
   const isFocused = label => `document.activeElement === ${row(label)}`;
@@ -35,6 +35,23 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   assert.equal(await evaluate(`${tree}.querySelectorAll('[tabindex="0"]').length`), 1);
   await key('End', 35);
   await waitFor(isFocused('README.md'));
+  await key('b', 66); // Button.tsx is hidden by its collapsed parent.
+  assert.ok(await evaluate(isFocused('README.md')));
+  const city = label => `document.querySelector('[aria-label="Cities"] [aria-label="${label}"]')`;
+  const focusCity = label => waitFor(`document.activeElement === ${city(label)}`);
+  await evaluate(`${city('El Paso')}.focus()`);
+  // The key buffer is isolated per tree: the earlier 'b' cannot pollute this match.
+  await key('e', 69);
+  await focusCity('Évora');
+  await key('e', 69);
+  await focusCity('El Paso'); // Disabled Essen does not participate in cycling.
+  await key('é', 69);
+  await focusCity('Évora');
+  // Verify that a different prefix is accepted after the documented reset interval.
+  await new Promise(resolve => setTimeout(resolve, 550));
+  await key('o', 79);
+  await key('d', 68);
+  await focusCity('Odense');
   assert.deepEqual(exceptions, []);
   console.log('TreeList: named tree, visible-only traversal, branch expansion, RTL and selection passed');
 });

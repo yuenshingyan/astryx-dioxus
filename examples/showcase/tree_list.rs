@@ -40,6 +40,14 @@ pub(super) fn TreeListExamples() -> Element {
         section { id: "tree-list-examples",
             h2 { "Tree List" }
             TreeList { label: "Project files", items }
+            h3 { "Type to find a city" }
+            TreeList { label: "Cities", items: vec![
+                TreeListItemData::new("el-paso", "El Paso"),
+                TreeListItemData::new("evora", "Évora"),
+                TreeListItemData { is_disabled: true, ..TreeListItemData::new("essen", "Essen") },
+                TreeListItemData::new("oslo", "Oslo"),
+                TreeListItemData::new("odense", "Odense"),
+            ] }
         }
     }
 }
