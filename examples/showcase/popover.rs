@@ -22,6 +22,17 @@ pub(super) fn PopoverExamples() -> Element {
                     Button { label: "Done", onclick: move |_| open.set(false) }
                 },
             }
+            div { id: "popover-auto-width-example",
+                Popover { label: "More settings",
+                    trigger: |props: PopoverTriggerRenderProps| rsx! {
+                        Button { id: props.anchor_id, label: "More settings", onclick: props.onclick,
+                            style: "inline-size:240px;max-inline-size:100%", "aria-haspopup": "dialog",
+                            "aria-controls": props.controls, "aria-expanded": props.is_expanded.to_string(),
+                        }
+                    },
+                    content: rsx! { p { "Preferences" } },
+                }
+            }
             button { id: "popover-preview-outside", r#type: "button", "Outside popover" }
         }
     }
