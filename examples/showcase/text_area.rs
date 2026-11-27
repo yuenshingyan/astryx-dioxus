@@ -5,15 +5,21 @@ use astryx_dioxus::{FieldStatusInput, FieldStatusPlacement, InputStatusType, Tex
 #[component]
 pub(super) fn TextAreaExamples() -> Element {
     let mut description = use_signal(|| "Initial description".to_owned());
+    let mut last_event = use_signal(|| "");
     rsx! {
         section { id: "text-area-examples",
             h2 { "TextArea" }
             h3 { "Showcase" }
             TextArea { id: "description-area", label: "Description", value: description(), rows: 3,
                 placeholder: "Enter a description...", width: Some("320px".into()),
+                autocomplete: "off", has_spell_check: false,
+                onfocus: move |_| last_event.set("Focused"),
+                onblur: move |_| last_event.set("Blurred"),
+                onpaste: move |_| last_event.set("Paste requested"),
                 on_change: move |value| description.set(value),
             }
             output { id: "description-preview", "{description}" }
+            p { id: "text-area-last-event", "{last_event}" }
             h3 { "States" }
             form { id: "text-area-form",
                 TextArea { id: "disabled-area", label: "Disabled field", value: "Unavailable", is_disabled: true, html_name: "disabled" }
