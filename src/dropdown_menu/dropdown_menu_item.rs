@@ -34,6 +34,9 @@ pub fn DropdownMenuItem(
     href: Option<String>,
     #[props(default)] target: DropdownMenuItemTarget,
     #[props(default)] rel: Option<String>,
+    /// Set to false to keep the menu open for in-place feedback after activation.
+    #[props(default = true)]
+    has_close_on_select: bool,
     #[props(default)] variant: DropdownMenuItemVariant,
     #[props(default)] onclick: Option<EventHandler<MouseEvent>>,
     #[props(default)] class: String,
@@ -54,6 +57,7 @@ pub fn DropdownMenuItem(
                     | "aria-disabled"
                     | "onclick"
                     | "data-variant"
+                    | "data-astryx-menu-keep-open"
                     | "href"
                     | "target"
                     | "rel"
@@ -74,6 +78,14 @@ pub fn DropdownMenuItem(
             false,
         ),
     ]);
+    if !has_close_on_select {
+        attributes.push(Attribute::new(
+            "data-astryx-menu-keep-open",
+            "true",
+            None,
+            false,
+        ));
+    }
     if is_disabled {
         attributes.push(Attribute::new("aria-disabled", "true", None, false));
         attributes.push(Attribute::new(

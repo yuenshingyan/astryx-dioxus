@@ -40,7 +40,7 @@ const key = event => {
 const select = event => {
   if (!isOpen() || event.defaultPrevented) return;
   const row = event.target.closest?.(selector);
-  if (row?.closest('[role="menu"]') === menu && !row.matches('[aria-disabled="true"],:disabled')) {
+  if (row?.closest('[role="menu"]') === menu && !row.matches('[aria-disabled="true"],:disabled,[data-astryx-menu-keep-open]')) {
     returnFocus?.focus({preventScroll: true});
     menu.hidePopover();
   }

@@ -43,7 +43,7 @@ const onClick = event => {
     else open();
   } else if (isOpen() && owns(event.target)) {
     const row = event.target.closest(rowSelector);
-    if (row && !row.matches(':disabled,[aria-disabled="true"],[data-dropdown-sub-menu-trigger]')) {
+    if (row && !row.matches(':disabled,[aria-disabled="true"],[data-dropdown-sub-menu-trigger],[data-astryx-menu-keep-open]')) {
       rootMenu().hidePopover();
     }
   }
