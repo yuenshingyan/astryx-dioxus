@@ -97,11 +97,20 @@ pub fn Calendar(
                     onclick: move |_| { if index < last_month { view.set(index + 1); } }, span { "aria-hidden": "true", "›" } }
             }
             table { id: grid_id.clone(), role: "grid", "aria-labelledby": title_id,
+                "data-min": min, "data-max": max, "data-month": index.to_string(),
                 onmounted: move |_| {
                     if let Some(eval) = *controller.peek() { let _ = eval.send(()); }
-                    let eval = document::eval(include_str!("calendar_focus.js"));
+                    let mut eval = document::eval(include_str!("calendar_focus.js"));
                     let _ = eval.send(grid_id.clone());
                     controller.set(Some(eval));
+                    spawn(async move {
+                        while let Ok(date) = eval.recv::<String>().await {
+                            if let Some(target @ (_, _, day)) = parse_date(&date) {
+                                view.set(month_index(target));
+                                focused.set(day);
+                            }
+                        }
+                    });
                 },
                 thead { tr {
                     for (short, long) in WEEKDAYS { th { scope: "col", abbr: long, "{short}" } }
@@ -121,7 +130,7 @@ pub fn Calendar(
                                         rsx! {
                                             td { key: "{weekday}", role: "gridcell", "aria-selected": is_selected.to_string(),
                                                 button { r#type: "button", "aria-label": accessible_name, disabled: is_disabled,
-                                                    "data-day": day.to_string(), tabindex: if day == active { 0 } else { -1 },
+                                                    "data-day": day.to_string(), "data-date": iso.clone(), tabindex: if day == active { 0 } else { -1 },
                                                     onfocus: move |_| focused.set(day),
                                                     onclick: move |_| { if let Some(change) = on_change { change.call(iso.clone()); } },
                                                     "{day}"
