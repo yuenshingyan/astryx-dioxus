@@ -29,6 +29,9 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   for (const type of ['mousePressed', 'mouseReleased']) await send('Input.dispatchMouseEvent', {type, x, y, button:'right', clickCount:1});
   await waitFor(open);
   assert.deepEqual(await evaluate(`(() => { const r = ${menu}.getBoundingClientRect(); return [r.left, r.top]; })()`), [x,y]);
+  await evaluate(`${row(2)}.focus()`);
+  await key('Enter', 13);
+  await waitFor(`${open} && document.activeElement === ${row(2)} && document.querySelector('#context-menu-examples output').textContent === 'Paste'`);
   await key('Escape', 27);
   await waitFor(`!${open} && document.activeElement === ${trigger}`);
   assert.deepEqual(exceptions, []);

@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8280'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8293'});
   const trigger = `document.querySelector('#dropdown-menu-examples [aria-haspopup="menu"]')`;
   const menu = `document.getElementById(${trigger}.getAttribute('aria-controls'))`;
   const focused = `document.activeElement.textContent.trim()`;
@@ -42,6 +42,17 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(`${focused} === 'Edit'`);
   await press('Tab', 'Tab', 9);
   await waitFor(`${closed} && document.activeElement === ${after}`);
+  const retainedTrigger = `document.querySelector('#dropdown-menu-keep-open [aria-haspopup=menu]')`;
+  const retained = `document.getElementById(${retainedTrigger}.getAttribute('aria-controls'))`;
+  await evaluate(`${retainedTrigger}.focus()`);
+  await press('ArrowDown', 'ArrowDown', 40);
+  await waitFor(`${retained}.matches(':popover-open') && ${focused} === 'Pin preview'`);
+  await press('Enter', 'Enter', 13);
+  await waitFor(`${retained}.matches(':popover-open') && ${focused} === 'Unpin preview'`);
+  await press('ArrowDown', 'ArrowDown', 40);
+  await waitFor(`${focused} === 'Done'`);
+  await press('Enter', 'Enter', 13);
+  await waitFor(`!${retained}.matches(':popover-open') && document.activeElement === ${retainedTrigger}`);
   assert.deepEqual(exceptions, []);
   console.log('DropdownMenu: anchored placement, named menu, keyboard selection, Escape and Tab dismissal passed');
 });
