@@ -1728,6 +1728,12 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-code-block__pre code { display: block; font: inherit; inline-size: max-content; min-inline-size: 100%; }
   .astryx-code-block__pre[data-wrapped="true"] code { inline-size: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
   .astryx-code-block__line { display: flex; min-block-size: 1lh; padding-inline: var(--spacing-4); }
+  .astryx-code-block__line[data-diff="added"] { background-color: var(--color-syntax-added, color-mix(in srgb, var(--color-success-muted) 25%, transparent)); }
+  .astryx-code-block__line[data-diff="removed"] { background-color: var(--color-syntax-removed, color-mix(in srgb, var(--color-error-muted) 25%, transparent)); }
+  .astryx-code-block__line[data-diff="header"] { background-color: var(--color-syntax-diff-header, transparent); }
+  .astryx-code-block__diff-marker { flex: 0 0 1ch; }
+  [data-diff="added"] > .astryx-code-block__diff-marker { color: var(--color-syntax-added-marker, currentColor); }
+  [data-diff="removed"] > .astryx-code-block__diff-marker { color: var(--color-syntax-removed-marker, currentColor); }
   .astryx-code-block__line[data-highlighted="true"] { background-color: var(--color-background-muted); }
   .astryx-code-block__number {
     flex: 0 0 var(--_code-block-digits);

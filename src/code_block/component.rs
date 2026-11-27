@@ -2,7 +2,9 @@ use dioxus::prelude::*;
 
 use crate::{Button, ButtonSize, ButtonVariant, SizeValue, VisuallyHidden};
 
-/// Unhighlighted source display with optional line gutter and exact-source copy.
+use super::tokenizer::{DiffLineKind, classify_diff_line};
+
+/// Source display with optional unified diff, line gutter, and exact-source copy.
 #[component]
 pub fn CodeBlock(
     code: String,
@@ -10,6 +12,9 @@ pub fn CodeBlock(
     #[props(default)] has_line_numbers: bool,
     #[props(default = 1)] start_line_number: u32,
     #[props(default)] highlight_lines: Vec<u32>,
+    /// Present unified diff markers in a separate column without changing the source.
+    #[props(default)]
+    is_diff: bool,
     #[props(default)] is_wrapped: bool,
     #[props(default)] max_height: Option<SizeValue>,
     #[props(default)] has_copy_button: bool,
@@ -30,9 +35,10 @@ pub fn CodeBlock(
     let copy_source = code.clone();
     rsx! {
         div { class: "astryx-code-block", style: "--_code-block-digits:{digits}ch",
-            if title.is_some() || has_copy_button {
+            if title.is_some() || has_copy_button || is_diff {
                 div { class: "astryx-code-block__header",
                     if let Some(title) = title.as_ref() { span { "{title}" } }
+                    if is_diff { span { "diff" } }
                     if has_copy_button {
                         Button { label: copy_label, variant: ButtonVariant::Ghost, size: ButtonSize::Small,
                             onclick: move |_| {
@@ -56,18 +62,28 @@ pub fn CodeBlock(
             pre { class: "astryx-code-block__pre", style, dir: "ltr", tabindex: 0,
                 "data-wrapped": is_wrapped.to_string(),
                 code {
-                    for (index, line) in lines.into_iter().enumerate() {
+                    for (index, &line) in lines.iter().enumerate() {
                         {
                             let number = first + index as u64;
                             let highlighted = highlight_lines.iter().any(|&line| u64::from(line) == number);
+                            let kind = is_diff.then(|| classify_diff_line(&lines, index));
+                            let (marker, line) = match kind {
+                                Some(DiffLineKind::Added | DiffLineKind::Removed) => line.split_at(1),
+                                Some(DiffLineKind::Context) => line.strip_prefix(' ').map_or(("", line), |rest| (" ", rest)),
+                                _ => ("", line),
+                            };
                             let text = if index < last_index {
                                 format!("{line}\n")
                             } else { line.to_owned() };
                             rsx! {
                                 span { key: "{index}", class: "astryx-code-block__line",
+                                    "data-diff": kind.map(DiffLineKind::as_str),
                                     "data-highlighted": highlighted.then_some("true"),
                                     if has_line_numbers {
                                         span { class: "astryx-code-block__number", "aria-hidden": "true", "data-number": "{number}" }
+                                    }
+                                    if matches!(kind, Some(DiffLineKind::Context | DiffLineKind::Added | DiffLineKind::Removed)) {
+                                        span { class: "astryx-code-block__diff-marker", "{marker}" }
                                     }
                                     span { "{text}" }
                                 }
