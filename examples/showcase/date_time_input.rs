@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::DateTimeInput;
+use astryx_dioxus::{DateTimeInput, FieldStatusInput, InputStatusType};
 
 #[component]
 pub(super) fn DateTimeInputExamples() -> Element {
@@ -14,6 +14,13 @@ pub(super) fn DateTimeInputExamples() -> Element {
                     width: Some(320.into()), on_change: move |next| meeting.set(next),
                 }
                 output { id: "date-time-input-value", "{display}" }
+            }
+            div { id: "date-time-input-status-example",
+                DateTimeInput { label: "Review date", time_label: "Review time", value: "2026-04-29T12:00",
+                    width: Some(320.into()), description: "Choose an available review slot.",
+                    status: FieldStatusInput { status_type: InputStatusType::Error,
+                        message: Some("This review slot is already booked.".into()), message_id: Some("review-slot-status".into()) },
+                }
             }
         }
     }
