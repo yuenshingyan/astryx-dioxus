@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::DateInput;
+use astryx_dioxus::{DateInput, FieldStatusInput, FieldStatusPlacement, InputStatusType};
 
 #[component]
 pub(super) fn DateInputExamples() -> Element {
@@ -16,6 +16,13 @@ pub(super) fn DateInputExamples() -> Element {
                 }
                 output { id: "date-input-value", "{display}" }
                 DateInput { label: "Unavailable date", value: "2024-03-01", is_disabled: true, html_name: "unavailable" }
+            }
+            div { id: "date-input-status-example",
+                DateInput { label: "Review date", value: "2024-10-12", width: Some(320.into()),
+                    description: "Choose a working day.", status_variant: FieldStatusPlacement::Detached,
+                    status: FieldStatusInput { status_type: InputStatusType::Error,
+                        message: Some("This date falls on a weekend.".into()), message_id: None },
+                }
             }
         }
     }
