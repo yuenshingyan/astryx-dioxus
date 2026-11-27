@@ -1,3 +1,3 @@
-pub use component::{Slider, SliderOrientation, SliderProps};
+pub use component::{Slider, SliderMark, SliderOrientation, SliderProps};
 
 mod component;
