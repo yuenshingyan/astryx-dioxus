@@ -148,6 +148,8 @@ mod tests {
         ] {
             dom.in_runtime(|| outer.set(settings));
             dom.render_immediate_to_vec();
+            // The provider update schedules its consumers after the parent render.
+            dom.render_immediate_to_vec();
             let html = render(&dom);
             assert_probe(&html, "outer-before", expected);
             assert_probe(&html, "outer-after", expected);

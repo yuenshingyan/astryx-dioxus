@@ -210,7 +210,12 @@ fn form_layout_showcase_renders_the_five_pinned_arrangements() {
         4
     );
     assert!(
-        settings.contains("<textarea") && settings.contains("rows=\"3\""),
+        settings.split("<textarea").skip(1).any(|textarea| {
+            textarea.split('>').next().is_some_and(|tag| {
+                tag.split_ascii_whitespace()
+                    .any(|attribute| matches!(attribute, "rows=3" | "rows=\"3\""))
+            })
+        }),
         "{settings}"
     );
     assert!(
