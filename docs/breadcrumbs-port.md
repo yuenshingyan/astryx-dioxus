@@ -6,6 +6,23 @@ Source: Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`, `Breadcrumbs/Bre
 
 All five standard Rust checks passed. Chrome verified the landmark name, ordered list, repeated custom separators, narrow wrapping, and reactive variant and separator changes without replacing the current link. BreadcrumbItem and showcase navigation suites passed. Published screenshot parity, other browsers, and manual assistive technology were not verified. The migration checklist remains open.
 
+## Landmark and separator follow-up
+
+Focused SSR tests cover the pinned spec's naming precedence (FR1/ORD1):
+`label` replaces the English fallback, and either native ARIA naming attribute
+replaces the component label. They also verify that a custom separator node
+stays inside each item's `aria-hidden` wrapper, separate from the ancestor
+link and current-page text. BreadcrumbItem still owns the wrapper, first-item
+hiding, and default-slash RTL mirroring. SSR verifies markup, not computed
+visibility or accessible names in a browser.
+
+The omitted label still uses the literal `Breadcrumb`, not the provider's
+`@astryx.breadcrumbs.label` message. Callers can supply localized text via
+`label`. This follow-up does not change the public API, CSS, or ownership, and
+adds no overflow behavior. Browser and assistive-technology checks were not
+rerun; the checklist remains open.
+
 ```sh
+cargo test --locked --test breadcrumbs
 SHOWCASE_URL=http://127.0.0.1:8138 node tests/breadcrumbs.browser.mjs
 ```

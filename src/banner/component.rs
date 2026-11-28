@@ -6,6 +6,9 @@ use dioxus::prelude::*;
 use crate::utils::is_renderable::is_renderable;
 use crate::{Button, ButtonSize, ButtonVariant, Elevation, Icon, IconSize};
 
+#[cfg(target_arch = "wasm32")]
+use super::focus_origin::FocusOrigin;
+
 macro_rules! banner_identifier {
     ($(#[$doc:meta])* $name:ident { $($constant:ident => $value:literal),+ $(,)? }) => {
         $(#[$doc])*
@@ -72,6 +75,12 @@ pub fn Banner(
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     let mut is_dismissed = use_signal(|| false);
+    #[cfg(target_arch = "wasm32")]
+    let mut focus_origin = use_signal(|| None::<FocusOrigin>);
+    #[cfg(target_arch = "wasm32")]
+    use_drop(move || {
+        focus_origin.write().take();
+    });
     if is_dismissed() {
         return VNode::empty();
     }
@@ -81,8 +90,30 @@ pub fn Banner(
     let should_center = description.is_none() && (end_content.is_some() || is_dismissable);
     let has_action = end_content.is_some();
     let dismiss_label = dismiss_label.unwrap_or_else(|| format!("Dismiss {title}"));
+    let mount = move |event: MountedEvent| {
+        #[cfg(target_arch = "wasm32")]
+        focus_origin.set(event.data().downcast().and_then(FocusOrigin::attach));
+        #[cfg(not(target_arch = "wasm32"))]
+        let _ = event;
+    };
+    let dismiss = move |_| {
+        #[cfg(target_arch = "wasm32")]
+        let origin = focus_origin
+            .write()
+            .take()
+            .and_then(FocusOrigin::into_origin);
+        is_dismissed.set(true);
+        if let Some(handler) = on_dismiss {
+            handler.call(());
+        }
+        // Return focus after notifying the caller, but before the renderer removes the Banner.
+        #[cfg(target_arch = "wasm32")]
+        if let Some(origin) = origin.filter(|origin| origin.is_connected()) {
+            let _ = origin.focus();
+        }
+    };
     rsx! {
-        div { class: format!("astryx-banner-root {class}"), style, "data-elevation": elevation.as_str(), "data-container": container.as_str(), ..attributes,
+        div { class: format!("astryx-banner-root {class}"), style, "data-elevation": elevation.as_str(), "data-container": container.as_str(), onmounted: mount, ..attributes,
             div { class: "astryx-banner", "data-status": status.as_str(), "data-centered": should_center.then_some("true"), "data-has-action": has_action.then_some("true"),
                 if let Some(icon) = icon {
                     span { class: "astryx-banner-icon", "aria-hidden": "true", {icon} }
@@ -99,7 +130,7 @@ pub fn Banner(
                         if is_dismissable {
                             Button { class: "astryx-banner-dismiss", label: dismiss_label, tooltip: "Dismiss", size: ButtonSize::Small, variant: ButtonVariant::Ghost, is_icon_only: true,
                                 icon: glyph("M6 6l12 12M18 6L6 18", false, IconSize::Small),
-                                onclick: move |_| { is_dismissed.set(true); if let Some(handler) = on_dismiss { handler.call(()); } },
+                                onclick: dismiss,
                             }
                         }
                     }

@@ -13,6 +13,7 @@ pub enum DrawerSide {
 }
 
 /// A controlled modal panel. Compose a DrawerHeader for an explicit close action.
+/// Mark a focusable descendant with `data-autofocus` to focus it when the drawer opens.
 #[component]
 pub fn Drawer(
     is_open: bool,
@@ -65,7 +66,8 @@ pub fn Drawer(
                     while eval.recv::<bool>().await.is_ok() { request_close.call(()); }
                 });
             },
-            div { class: "astryx-drawer__content", tabindex: -1, "data-autofocus": "drawer-content", {children} }
+            // Keep the native fallback separate from the controller's caller-marker search.
+            div { class: "astryx-drawer__content", tabindex: -1, autofocus: true, {children} }
         }
     }
 }

@@ -6,7 +6,9 @@
     max-block-size: 100%;
     overflow: clip !important;
     scrollbar-color: var(--color-neutral) transparent;
-    container-type: scroll-state;
+  }
+  @supports (container-type: scroll-state) {
+    .astryx-scrollable-area { container-type: scroll-state; }
   }
   .astryx-scrollable-area[data-overflow-x="auto"] { overflow-x: auto !important; }
   .astryx-scrollable-area[data-overflow-y="auto"] { overflow-y: auto !important; }

@@ -213,7 +213,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/text_area/`: [TextArea](docs/text-area-port.md), a controlled native multiline field. Grapheme counting and async state remain open.
 - `src/text_input/`: [TextInput](docs/text-input-port.md), a controlled native single-line field. Includes an opt-in [clear action](docs/input-clear-button-port.md). InputGroup integration remains open.
 - `src/checkbox_input/`: [CheckboxInput](docs/checkbox-input-port.md), a controlled native checkbox with mixed state, a decorative indicator, and detached validation status.
-- `src/banner/`: [Banner](docs/banner-port.md), with status messages, actions, and dismissal. Supplementary disclosure and dismissal focus restoration remain open.
+- `src/banner/`: [Banner](docs/banner-port.md), with status messages, actions, and dismissal focus restoration. Supplementary disclosure remains open.
 - `src/slider/`: [Slider](docs/slider-port.md), a controlled native single-thumb range input. Dual-thumb range and custom presentation remain open.
 - `src/switch/`: [Switch](docs/switch-port.md), a controlled native on/off switch. Touch drag and async state remain open.
 - `src/checkbox_list/`: [CheckboxList](docs/checkbox-list-port.md) and [CheckboxListItem](docs/checkbox-list-item-port.md), a named group and individually controlled checkbox rows. Collection mode remains open.
