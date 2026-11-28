@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 
+use crate::i18n::use_message;
 use crate::utils::is_renderable::is_renderable;
 use crate::{
     Button, ButtonSize, ButtonVariant, Heading, HeadingLevel, Icon, LayoutHeader, Text, TextColor,
@@ -26,8 +27,9 @@ pub fn DrawerHeader(
     /// When supplied, renders a close button that requests `false`.
     #[props(default)]
     on_open_change: Option<EventHandler<bool>>,
-    /// Localized close button label and tooltip.
-    #[props(default = "Close".to_owned())]
+    /// Overrides the close button name and tooltip. Empty or whitespace-only
+    /// values use the scoped translation, falling back to "Close".
+    #[props(default)]
     close_label: String,
     /// Content before the title.
     #[props(default)]
@@ -72,18 +74,38 @@ pub fn DrawerHeader(
                     div { class: "astryx-drawer-header-end-content", "data-compensation": compensate,
                         {end_content}
                         if let Some(close) = on_open_change {
-                            Button { label: close_label.clone(), tooltip: close_label, variant: ButtonVariant::Ghost,
-                                size: ButtonSize::Medium, is_icon_only: true, onclick: move |_| close.call(false),
-                                icon: rsx! { Icon { class: "astryx-drawer-header-close-icon", icon: rsx! {
-                                    svg { view_box: "0 0 24 24", fill: "none", stroke: "currentColor", stroke_width: "1.5", stroke_linecap: "round",
-                                        path { d: "M6 6l12 12M18 6 6 18" }
-                                    }
-                                } } },
-                            }
+                            {render_close_button(close, close_label)}
                         }
                     }
                 }
             }
         }
+    }
+}
+
+fn render_close_button(close: EventHandler<bool>, label: String) -> Element {
+    let label = resolve_close_label(label);
+    rsx! {
+        Button { label: label.clone(), tooltip: label, variant: ButtonVariant::Ghost,
+            size: ButtonSize::Medium, is_icon_only: true, onclick: move |_| close.call(false),
+            icon: rsx! { Icon { class: "astryx-drawer-header-close-icon", icon: rsx! {
+                svg { view_box: "0 0 24 24", fill: "none", stroke: "currentColor", stroke_width: "1.5", stroke_linecap: "round",
+                    path { d: "M6 6l12 12M18 6 6 18" }
+                }
+            } } },
+        }
+    }
+}
+
+fn resolve_close_label(label: String) -> String {
+    if !label.trim().is_empty() {
+        return label;
+    }
+    const ENGLISH_CLOSE: &str = "Close";
+    let translated = use_message("@astryx.dialog.close", ENGLISH_CLOSE);
+    if translated.trim().is_empty() {
+        ENGLISH_CLOSE.to_owned()
+    } else {
+        translated
     }
 }
