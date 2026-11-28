@@ -3,7 +3,9 @@ use std::collections::HashSet;
 use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
-use crate::{Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue};
+use crate::{
+    Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue, Spinner, SpinnerSize,
+};
 
 /// A plain-text option for a native selector.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -34,6 +36,9 @@ pub fn Selector(
     #[props(default)] html_name: Option<String>,
     #[props(default)] width: Option<SizeValue>,
     #[props(default)] is_disabled: bool,
+    /// Show progress for caller-owned work without disabling existing options.
+    #[props(default)]
+    is_loading: bool,
     #[props(default)] is_required: bool,
     #[props(default)] is_label_hidden: bool,
 ) -> Element {
@@ -79,8 +84,10 @@ pub fn Selector(
         .collect::<Vec<_>>();
     rsx! {
         Field { label, input_id: id.clone(), description, description_id, width, is_label_hidden, is_required, is_disabled, status, status_variant,
+            div { class: "astryx-selector__entry", "data-loading": is_loading.then_some("true"),
             select { id, class: "astryx-selector__control", name: html_name, required: is_required, disabled: is_disabled,
                 "aria-describedby": (!described_by.is_empty()).then_some(described_by),
+                "aria-busy": is_loading.then_some("true"),
                 "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
                 "data-status": severity.map(InputStatusType::as_str), "data-astryx-selector-value": value.clone(),
                 onmounted: move |_| {
@@ -98,6 +105,8 @@ pub fn Selector(
                     option { key: "{choice.value}", selected: choice.value == value, value: choice.value,
                         disabled: choice.is_disabled, "{choice.label}" }
                 }
+            }
+            if is_loading { Spinner { size: SpinnerSize::Small, is_decorative: true } }
             }
         }
     }
