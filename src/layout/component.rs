@@ -137,6 +137,8 @@ pub fn Layout(
     let mut middle = String::from("astryx-layout__middle");
     if let Some(width) = content_width {
         let value = width.as_css()?;
+        // Unitless zero is a valid max-width but cannot be subtracted from a length.
+        let value = if value.trim() == "0" { "0px" } else { &value };
         let _ = write!(inner_style, "--layout-content-width:{value};");
         if supports_alignment(&width) && !(slots.has_start && slots.has_end) {
             let _ = write!(inner_style, "--layout-alignment-width:{value};");
