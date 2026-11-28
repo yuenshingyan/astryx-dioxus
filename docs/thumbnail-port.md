@@ -6,6 +6,8 @@ Source: Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`, `Thumbnail.tsx` 
 
 All five standard Rust checks passed. Chrome verified offline images, failed-source recovery, focus retention when Open becomes unavailable, keyboard activation suppression, upload announcements in the DOM, and separate Open and Remove behavior. FieldStatus and showcase navigation regressions passed. The initial-load announcement policy follows the existing shared reader; startup timing parity, authored tooltip trigger and touch parity, palette contrast, published screenshots, and spoken output were not independently verified. The upstream missing-image-name development warning is not implemented. The migration checklist remains open.
 
+The follow-up enforces the component-owned `group` role (FR7/AR1), even when a caller supplies another role. Focused SSR tests verify that caller `aria-label` and `aria-labelledby` still reach the group and that a group label override does not rename Open or Remove. This is serialized markup evidence, not a browser accessibility-tree, computed-style, raster, or spoken-output check. The fine-pointer Remove hit target is still 20px in the stylesheet; the 2px extension applies only to coarse pointers.
+
 ```sh
 SHOWCASE_URL=http://127.0.0.1:8131 node tests/thumbnail.browser.mjs
 ```

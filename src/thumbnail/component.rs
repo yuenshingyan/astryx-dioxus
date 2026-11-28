@@ -87,7 +87,7 @@ pub fn Thumbnail(
     /// Inline CSS on the outer group.
     #[props(default)]
     style: String,
-    /// Root attributes, mounted callback, and ordinary root listeners.
+    /// Root attributes, mounted callback, and ordinary root listeners. The group role is fixed.
     #[props(extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 ) -> Element {
@@ -141,13 +141,12 @@ pub fn Thumbnail(
             .any(|attr| attr.name == name && !matches!(attr.value, AttributeValue::None))
     };
     let root_name = (!has_attr("aria-label") && !has_attr("aria-labelledby")).then_some(name);
-    let role = (!has_attr("role")).then_some("group");
+    // An overriding role such as img could hide the native actions from assistive technology.
     let attributes: Vec<_> = attributes
         .into_iter()
         .filter(|attr| {
-            !matches!(attr.name, "class" | "style")
-                && !(matches!(attr.name, "role" | "aria-label")
-                    && matches!(attr.value, AttributeValue::None))
+            !matches!(attr.name, "class" | "style" | "role")
+                && !(attr.name == "aria-label" && matches!(attr.value, AttributeValue::None))
         })
         .collect();
     let image = rsx! {
@@ -156,7 +155,7 @@ pub fn Thumbnail(
         else { ImagePlaceholder {} }
     };
     rsx! {
-        div { class: "astryx-thumbnail {class}", style: (!style.is_empty()).then_some(style), role,
+        div { class: "astryx-thumbnail {class}", style: (!style.is_empty()).then_some(style), role: "group",
             "aria-label": root_name, "data-disabled": is_disabled.then_some("true"), ..attributes,
             div { class: "astryx-thumbnail__surface", "data-astryx-feedback-id": tooltip_id,
                 "data-astryx-thumbnail-busy": id.clone(), onmounted: move |event: MountedEvent| { tooltip.call(event.clone()); announce.call(event); },
