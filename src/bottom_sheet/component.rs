@@ -35,7 +35,12 @@ pub fn BottomSheet(
     let switcher = step
         .as_ref()
         .and_then(|_| try_consume_context::<Signal<BottomSheetSwitcherContext>>());
-    let is_open = switcher.map_or(is_open, |state| state.read().active_sheet == step);
+    let mut has_mounted = use_signal(|| false);
+    // Match the closed server markup until the standalone sheet can enter the native top layer.
+    let is_open = match switcher {
+        Some(state) => state.read().active_sheet == step,
+        None => is_open && has_mounted(),
+    };
     let on_change = move |open: bool| {
         if let Some(state) = switcher {
             let callback = {
@@ -58,7 +63,14 @@ pub fn BottomSheet(
     rsx! {
         Dialog { is_open, on_open_change: on_change, label, purpose, padding, max_height: Some(height),
             class: "astryx-bottom-sheet", "data-tall": is_tall.then_some("true"),
-            div { class: "astryx-bottom-sheet__content", tabindex: -1, "data-autofocus": "sheet-content", {children} }
+            div { class: "astryx-bottom-sheet__content", tabindex: -1, "data-autofocus": "sheet-content",
+                onmounted: move |_| {
+                    if switcher.is_none() {
+                        has_mounted.set(true);
+                    }
+                },
+                {children}
+            }
         }
     }
 }

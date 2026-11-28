@@ -8,18 +8,29 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   const input = "document.querySelector('#date-input-examples input[name=start]')";
   const output = "document.getElementById('date-input-value').textContent";
   await waitFor(input);
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
   assert.equal(await evaluate(`${input}.labels[0].textContent.trim()`), 'Start date ∙ Required');
   assert.equal(await evaluate(`document.getElementById(${input}.getAttribute('aria-describedby')).textContent`), 'Choose a date in 2024.');
   assert.ok(await evaluate(`${input}.validity.valueMissing`));
-  assert.ok(await evaluate(`${input}.value = '2023-12-31'; ${input}.validity.rangeUnderflow`));
-  assert.ok(await evaluate(`${input}.value = '2025-01-01'; ${input}.validity.rangeOverflow`));
-  await evaluate(`${input}.value = '2024-02-29'; ${input}.dispatchEvent(new Event('change', {bubbles:true}))`);
+  const changeDate = date => evaluate(`${input}.value = ${JSON.stringify(date)}; ${input}.dispatchEvent(new Event('change', {bubbles:true}))`);
+  for (const date of ['2024-01-01', '2024-12-31']) {
+    await changeDate(date);
+    await waitFor(`${output} === ${JSON.stringify(date)}`);
+    assert.ok(await evaluate(`${input}.validity.valid`));
+  }
+  for (const [date, flag] of [['2023-12-31', 'rangeUnderflow'], ['2025-01-01', 'rangeOverflow']]) {
+    await changeDate(date);
+    // Give a wrongly emitted change time to render before checking the controlled value.
+    await evaluate('new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))');
+    assert.ok(await evaluate(`${input}.validity.${flag}`));
+    assert.equal(await evaluate(output), '2024-12-31');
+  }
+  await changeDate('2024-02-29');
   await waitFor(`${output} === '2024-02-29'`);
   assert.deepEqual(await evaluate(`Array.from(new FormData(${input}.form))`), [['start', '2024-02-29']]);
   const clear = `${input}.form.querySelector('button[aria-label="Clear Start date"]')`;
   assert.equal(await evaluate(`${input}.form.querySelectorAll('.astryx-input-clear-button').length`), 1);
-  await send('Page.bringToFront');
-  await waitFor('document.hasFocus()');
   const toggle = "document.getElementById('date-input-toggle-loading')";
   const spinner = `${input}.parentElement.querySelector('.astryx-spinner[aria-hidden=true]')`;
   await evaluate(`${input}.focus(); ${toggle}.click()`);

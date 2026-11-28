@@ -8,6 +8,7 @@ use crate::{
 
 /// Gregorian date field for the native picker presentation. Values and bounds
 /// use `YYYY-MM-DD`; invalid dates or reversed bounds render no field.
+/// Native edits outside the inclusive bounds do not call `on_change`.
 #[component]
 pub fn DateInput(
     label: String,
@@ -94,7 +95,7 @@ pub fn DateInput(
             div { class: "astryx-date-input__entry", "data-has-clear": should_show_clear.then_some("true"),
                 "data-loading": is_loading.then_some("true"),
             input { class: "astryx-date-input__control", id, r#type: "date", name: html_name,
-                value: value.unwrap_or_default(), min, max,
+                value: value.unwrap_or_default(), min: min.clone(), max: max.clone(),
                 required: is_required, disabled: is_disabled, readonly: is_loading,
                 "aria-busy": is_loading.then_some("true"), "aria-disabled": is_loading.then_some("true"),
                 "aria-describedby": (!described_by.is_empty()).then_some(described_by),
@@ -108,7 +109,9 @@ pub fn DateInput(
                     if !is_disabled && !is_loading && let Some(handler) = on_change {
                         let date = event.value();
                         if date.is_empty() { handler.call(None); }
-                        else if is_valid_date(&date) { handler.call(Some(date)); }
+                        else if is_selectable_date(&date, min.as_deref(), max.as_deref()) {
+                            handler.call(Some(date));
+                        }
                     }
                 },
             }
@@ -125,6 +128,11 @@ pub fn DateInput(
             }
         }
     }
+}
+
+fn is_selectable_date(date: &str, min: Option<&str>, max: Option<&str>) -> bool {
+    // Fixed-width Gregorian ISO dates sort chronologically.
+    is_valid_date(date) && min.is_none_or(|min| date >= min) && max.is_none_or(|max| date <= max)
 }
 
 pub(crate) fn is_valid_date(value: &str) -> bool {
@@ -163,7 +171,23 @@ pub(crate) fn is_valid_date(value: &str) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use super::is_valid_date;
+    use super::{is_selectable_date, is_valid_date};
+
+    #[test]
+    fn native_edits_must_respect_inclusive_date_bounds() {
+        let min = Some("2024-01-01");
+        let max = Some("2024-12-31");
+
+        for date in ["2024-01-01", "2024-02-29", "2024-12-31"] {
+            assert!(is_selectable_date(date, min, max), "{date}");
+        }
+        assert!(!is_selectable_date("2023-12-31", min, None));
+        assert!(!is_selectable_date("2025-01-01", None, max));
+        assert!(is_selectable_date("2023-12-31", None, max));
+        assert!(is_selectable_date("2025-01-01", min, None));
+        assert!(is_selectable_date("2024-02-29", None, None));
+        assert!(!is_selectable_date("2024-04-31", min, max));
+    }
 
     #[test]
     fn accepts_only_real_four_digit_gregorian_dates() {
