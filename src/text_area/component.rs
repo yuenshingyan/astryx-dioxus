@@ -5,7 +5,7 @@ use crate::form_layout::form_layout_context::{FormLayoutContext, FormOptionality
 use crate::utils::is_renderable::is_renderable;
 use crate::{
     ElementSize, Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue,
-    use_size,
+    Spinner, SpinnerSize, use_size,
 };
 
 /// A labeled, controlled, native multiline text field.
@@ -43,6 +43,9 @@ pub fn TextArea(
     #[props(default)] is_optional: bool,
     #[props(default)] is_disabled: bool,
     #[props(default)] is_read_only: bool,
+    /// Show progress for a caller-owned operation without preventing editing.
+    #[props(default)]
+    is_loading: bool,
     /// Native UTF-16 limit; it does not truncate a caller-supplied value.
     #[props(default)]
     html_max_length: Option<u32>,
@@ -94,6 +97,7 @@ pub fn TextArea(
             is_label_hidden, is_required, is_optional, is_disabled,
             div { class: "astryx-text-area", "data-size": size, "data-status": severity.map(InputStatusType::as_str),
                 "data-has-icon": has_start_icon.then_some("true"), "data-disabled": is_disabled.then_some("true"),
+                "data-loading": is_loading.then_some("true"),
                 if let Some(icon) = start_icon {
                     span { class: "astryx-text-area__icon", "aria-hidden": "true", {icon} }
                 }
@@ -102,6 +106,7 @@ pub fn TextArea(
                     autocomplete, spellcheck: has_spell_check.to_string(), autofocus: has_auto_focus && !is_disabled,
                     "data-autofocus": (has_auto_focus && !is_disabled).then_some("true"),
                     "aria-required": is_effectively_required.then_some("true"), "aria-disabled": is_disabled.then_some("true"),
+                    "aria-busy": is_loading.then_some("true"),
                     "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
                     "aria-describedby": (!descriptions.is_empty()).then_some(descriptions),
                     value,
@@ -115,6 +120,9 @@ pub fn TextArea(
                         if !is_disabled && !is_read_only && let Some(handler) = on_change { handler.call(event.value()); }
                     },
                     "{initial_text}"
+                }
+                if is_loading {
+                    span { class: "astryx-text-area__loading", Spinner { size: SpinnerSize::Small, is_decorative: true } }
                 }
             }
         }

@@ -2725,6 +2725,8 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-text-area-control::placeholder { color: var(--color-text-secondary); }
   .astryx-text-area[data-disabled] > .astryx-text-area-control { color: inherit; cursor: default; }
   .astryx-text-area[data-has-icon] > .astryx-text-area-control { padding-inline-start: calc(var(--_textarea-inline-padding) + var(--spacing-6)); }
+  .astryx-text-area[data-loading] > .astryx-text-area-control { padding-inline-end: calc(var(--_textarea-inline-padding) + var(--spacing-6)); }
+  .astryx-text-area__loading { position: absolute; inset-block-start: var(--spacing-2); inset-inline-end: var(--_textarea-inline-padding); display: flex; pointer-events: none; }
   .astryx-text-area__icon { position: absolute; inset-block-start: var(--spacing-2); inset-inline-start: var(--_textarea-inline-padding); display: flex; color: var(--color-icon-secondary); pointer-events: none; }
 
   .astryx-radio-list { display: flex; flex-direction: column; gap: var(--spacing-2); }
