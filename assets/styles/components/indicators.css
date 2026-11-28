@@ -24,9 +24,11 @@
       border-color: color-mix(in srgb, var(--color-border-emphasized), var(--color-tint-hover) 20%);
       background-color: color-mix(in srgb, var(--color-background-surface), var(--color-tint-hover) 5%);
     }
+    :where([data-astryx-indicator-scope]:hover) .astryx-radio-indicator[data-checked] {
+      background-color: color-mix(in srgb, var(--color-accent), var(--color-tint-hover) 15%);
+    }
     :where([data-astryx-indicator-scope]:hover) .astryx-radio-indicator[data-checked]:not([data-disabled]) {
       border-color: color-mix(in srgb, var(--color-accent), var(--color-tint-hover) 15%);
-      background-color: color-mix(in srgb, var(--color-accent), var(--color-tint-hover) 15%);
     }
   }
   @media (prefers-reduced-motion: reduce) {

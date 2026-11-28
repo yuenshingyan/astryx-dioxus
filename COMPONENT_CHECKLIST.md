@@ -2964,12 +2964,12 @@ These changes are available for review. The table records focused evidence, not 
 
 - [ ] **[Radio Indicator](https://astryx.atmeta.com/components/RadioIndicator)**
 
-  - Sources: [Indicator family English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/Indicator.doc.mjs), [RadioIndicator.tsx](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/RadioIndicator.tsx). No standalone doc or supplied templates.
+  - Sources: [Indicator family English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/Indicator.doc.mjs), [RadioIndicator.tsx](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/RadioIndicator.tsx). No standalone doc or supplied templates. [Pinned audit, evidence and remaining blockers](docs/radio-indicator-port.md).
 
   - **Decorative state and size**
-    - [ ] Required state `unchecked`, `checked`; no partial/indeterminate public state in singleSelection family.
+    - [x] Required state `unchecked`, `checked`; no partial/indeterminate public state in singleSelection family.
     - [ ] `size`: `sm` (20px circle/8px dot), `md` (default, 24px circle/10px dot); isDisabled false (default) / true visual dimming only.
-    - [ ] Empty circle when unchecked versus filled circle/dot checked; circle remains circular independent of radius-full theme token.
+    - [x] Empty circle when unchecked versus filled circle/dot checked; circle remains circular independent of radius-full theme token.
     - [ ] children replace inner state mark when shallow isRenderable accepts them; excludes null/undefined/booleans/empty string, not empty-rendering element/container descendants.
     - [ ] Decorative aria-hidden root, no input/role/focus/keyboard ownership; owner supplies semantics/focus ring; hover/press via ancestor CSS, reduced-motion no transition, forced-color dot stays perceivable.
     - [ ] Theme restyling radio-indicator/radio-indicator-dot versus whole radio replacement; mapping check to RadioIndicator also draws unchecked circles for selection slots.
@@ -2978,7 +2978,7 @@ These changes are available for review. The table records focused evidence, not 
     - [ ] **Restyle an indicator (the common path)**: shared circle/dot component targets, state overrides.
     - [ ] **Replace an indicator with your own component**: family replacement recipe, token styles and isRenderable; example uses checkbox, not a claimed extra radio state.
     - [ ] **Use radio visuals for single selection**: theme check indicator replaced by RadioIndicator.
-    - [ ] Source example: checked md RadioIndicator.
+    - [x] Source example: checked md RadioIndicator (showcase and SSR).
 
 - [ ] **[Item](https://astryx.atmeta.com/components/Item)**
 
