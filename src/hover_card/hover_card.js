@@ -6,7 +6,9 @@ const contains = node => anchor.contains(node) || card.contains(node);
 let timer;
 let hovered = false;
 let lastTrigger;
+const isControlled = card.dataset.hoverControlled === 'true';
 const schedule = (open, delay) => {
+  if (isControlled) return;
   clearTimeout(timer);
   timer = setTimeout(() => {
     if (!open && (hovered || contains(document.activeElement))) return;
@@ -33,7 +35,11 @@ const blur = event => {
 const toggle = event => {
   if (event.newState !== 'closed') return;
   clearTimeout(timer);
-  if (card.contains(document.activeElement)) lastTrigger?.focus({preventScroll: true});
+  if (card.contains(document.activeElement)) {
+    // A caller can open the card without ever focusing the trigger.
+    const trigger = isControlled && !anchor.contains(lastTrigger) ? anchor.firstElementChild : lastTrigger;
+    trigger?.focus?.({preventScroll: true});
+  }
 };
 for (const node of [anchor, card]) {
   node.addEventListener('pointerenter', enter);
