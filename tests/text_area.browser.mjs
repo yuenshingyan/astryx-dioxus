@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8295'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8322'});
   const input = `document.getElementById('description-area')`;
   await waitFor(`${input}?.value === 'Initial description'`);
   assert.deepEqual(await evaluate(`[${input}.rows, getComputedStyle(${input}).resize, ${input}.labels[0].textContent.trim()]`), [3, 'vertical', 'Description']);
@@ -17,10 +17,19 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await evaluate(`${input}.dispatchEvent(new ClipboardEvent('paste', {bubbles:true, cancelable:true}))`);
   await waitFor(`${lastEvent} === 'Paste requested'`);
   assert.equal(await evaluate(`${input}.value`), 'Initial description');
+  const toggle = "document.getElementById('text-area-toggle-loading')";
+  const spinner = `${input}.parentElement.querySelector('.astryx-text-area__loading .astryx-spinner')`;
+  const padding = await evaluate(`getComputedStyle(${input}).paddingInlineEnd`);
+  await evaluate(`${toggle}.click()`);
+  await waitFor(`${input}.getAttribute('aria-busy') === 'true' && ${spinner}?.getAttribute('aria-hidden') === 'true'`);
+  assert.ok(await evaluate(`parseFloat(getComputedStyle(${input}).paddingInlineEnd) > ${parseFloat(padding)}`));
   await send('Input.insertText', {text: '\nSecond line'});
   await waitFor(`document.getElementById('description-preview').textContent.endsWith('Second line')`);
   assert.equal(await evaluate(`${input}.value`), 'Initial description\nSecond line');
   assert.ok(await evaluate(`document.activeElement === ${input}`));
+  await evaluate(`${toggle}.click()`);
+  await waitFor(`!${input}.hasAttribute('aria-busy') && !${spinner}`);
+  assert.equal(await evaluate(`getComputedStyle(${input}).paddingInlineEnd`), padding);
   assert.deepEqual(await evaluate(`Array.from(new FormData(document.getElementById('text-area-form')))`), [['reference', 'Reference notes']]);
   await evaluate(`document.getElementById('disabled-area').focus()`);
   await waitFor(`${lastEvent} === 'Blurred'`);

@@ -6,18 +6,20 @@ use astryx_dioxus::{FieldStatusInput, FieldStatusPlacement, InputStatusType, Tex
 pub(super) fn TextAreaExamples() -> Element {
     let mut description = use_signal(|| "Initial description".to_owned());
     let mut last_event = use_signal(|| "");
+    let mut is_loading = use_signal(|| false);
     rsx! {
         section { id: "text-area-examples",
             h2 { "TextArea" }
             h3 { "Showcase" }
             TextArea { id: "description-area", label: "Description", value: description(), rows: 3,
                 placeholder: "Enter a description...", width: Some("320px".into()),
-                autocomplete: "off", has_spell_check: false,
+                autocomplete: "off", has_spell_check: false, is_loading: is_loading(),
                 onfocus: move |_| last_event.set("Focused"),
                 onblur: move |_| last_event.set("Blurred"),
                 onpaste: move |_| last_event.set("Paste requested"),
                 on_change: move |value| description.set(value),
             }
+            button { id: "text-area-toggle-loading", r#type: "button", onclick: move |_| is_loading.toggle(), "Toggle simulated loading" }
             output { id: "description-preview", "{description}" }
             p { id: "text-area-last-event", "{last_event}" }
             h3 { "States" }
