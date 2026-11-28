@@ -6,6 +6,8 @@ use crate::{
     TextSize,
 };
 
+const DEFAULT_CLOSE_LABEL: &str = "Close";
+
 /// Edges on which trailing content compensates for the close button's padding.
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum DialogHeaderEdgeCompensation {
@@ -32,8 +34,8 @@ pub fn DialogHeader(
     /// When supplied, renders a close button that requests `false`.
     #[props(default)]
     on_open_change: Option<EventHandler<bool>>,
-    /// Localized close button label and tooltip.
-    #[props(default = "Close".to_owned())]
+    /// Localized close button label and tooltip. Blank values fall back to "Close".
+    #[props(default = DEFAULT_CLOSE_LABEL.to_owned())]
     close_label: String,
     /// Content before the title.
     #[props(default)]
@@ -54,6 +56,11 @@ pub fn DialogHeader(
     attributes: Vec<Attribute>,
 ) -> Element {
     let end_content = end_content.filter(is_renderable);
+    let close_label = if close_label.trim().is_empty() {
+        DEFAULT_CLOSE_LABEL.to_owned()
+    } else {
+        close_label
+    };
     let compensation =
         end_content_edge_compensation.or(on_open_change.map(|_| DialogHeaderEdgeCompensation::All));
     let compensate = match compensation {

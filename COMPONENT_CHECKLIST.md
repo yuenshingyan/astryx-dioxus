@@ -2758,8 +2758,8 @@ These changes are available for review. The table records focused evidence, not 
   - **Content, focus, and choices**
     - [ ] Title non-empty/non-interactive inline ReactNode in focusable h2; receives initial focus and labels dialog unless parent supplies explicit aria-label/labelledby.
     - [ ] Subtitle supports inline Link, not block elements; optional startContent (e.g. back), endContent before close.
-    - [ ] onOpenChange present renders close button calling false; absent omits button. `hasDivider=true` default versus no border.
-    - [ ] `endContentEdgeCompensation`: `inline`, `block`, `all`; omitted preserves automatic close-action compensation. No independent size/color enum documented.
+    - [ ] onOpenChange present renders a named close button calling false; absent omits it. Pinned TSX forwards `hasDivider` to LayoutHeader (omitted inherits Layout; explicit true/false override).
+    - [ ] `endContentEdgeCompensation`: `inline`, `block`, `all`; omitted preserves automatic close-action compensation. No independent size/color enum documented. See [verification limits](docs/dialog-header-port.md#follow-up-verification).
   - **Named inline examples and templates**
     - [ ] Inline **Basic**: title/subtitle, no close callback.
     - [ ] Inline **With close button**: callback false.
