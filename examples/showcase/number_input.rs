@@ -32,7 +32,7 @@ pub(super) fn NumberInputExamples() -> Element {
                     on_change: move |next| headcount.set(next), status_variant: FieldStatusPlacement::Detached,
                     status: FieldStatusInput { status_type: InputStatusType::Warning, message: Some("Exceeds typical team size".into()), message_id: None },
                 }
-                NumberInput { label: "Completion (%)", value: completion(), width: Some(300.into()),
+                NumberInput { label: "Completion", units: "%", value: completion(), width: Some(300.into()),
                     on_change: move |next| completion.set(next),
                     status: FieldStatusInput { status_type: InputStatusType::Success, message: Some("On track".into()), message_id: None },
                 }

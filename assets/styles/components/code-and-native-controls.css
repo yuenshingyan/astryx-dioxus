@@ -27,7 +27,7 @@
   .astryx-date-time-input__segments { display: flex; flex-wrap: wrap; gap: var(--spacing-2); }
   .astryx-date-time-input__segments > input { flex: 1 1 auto; }
   .astryx-date-time-input, .astryx-date-input, .astryx-time-input, .astryx-number-input { display: flex; flex-direction: column; gap: var(--spacing-2); max-inline-size: 100%; }
-  .astryx-date-input__control, .astryx-time-input__control, .astryx-number-input__control {
+  .astryx-date-input__control, .astryx-time-input__control, .astryx-number-input__control, .astryx-number-input__entry[data-units] {
     min-inline-size: 0;
     box-sizing: border-box;
     padding: var(--spacing-2) var(--spacing-3);
@@ -42,6 +42,16 @@
   :is(.astryx-date-input__control, .astryx-time-input__control, .astryx-number-input__control)[data-status="success"] { border-color: var(--color-text-success); }
   .astryx-date-input__control:disabled, .astryx-time-input__control:disabled, .astryx-number-input__control:disabled { color: var(--color-text-secondary); background: var(--color-background-muted); }
   .astryx-date-input__control:focus-visible, .astryx-time-input__control:focus-visible, .astryx-number-input__control:focus-visible { outline: 2px solid var(--focus-outline-color); outline-offset: 2px; }
+  .astryx-number-input__entry:not([data-units]) { display: contents; }
+  .astryx-number-input__entry[data-units] { display: flex; align-items: center; gap: var(--spacing-2); padding: 0; }
+  .astryx-number-input__entry[data-units] > .astryx-number-input__control { flex: 1 1 0; border: 0; background: transparent; }
+  .astryx-number-input__entry[data-units]:has(> :focus-visible) { outline: 2px solid var(--focus-outline-color); outline-offset: 2px; }
+  .astryx-number-input__entry[data-units] > .astryx-number-input__control:focus-visible { outline: none; }
+  .astryx-number-input__entry[data-units]:has(> :disabled) { color: var(--color-text-secondary); background: var(--color-background-muted); }
+  .astryx-number-input__entry[data-units][data-status="error"] { border-color: var(--color-text-error); }
+  .astryx-number-input__entry[data-units][data-status="warning"] { border-color: var(--color-text-warning); }
+  .astryx-number-input__entry[data-units][data-status="success"] { border-color: var(--color-text-success); }
+  .astryx-number-input__units { min-inline-size: 0; max-inline-size: 50%; margin-inline-end: var(--spacing-3); color: var(--color-text-secondary); overflow-wrap: anywhere; }
   .astryx-file-input { display: flex; flex-direction: column; gap: var(--spacing-2); max-inline-size: 100%; }
   .astryx-file-input__control { min-inline-size: 0; font: inherit; color: inherit; }
   .astryx-file-input__control::file-selector-button {

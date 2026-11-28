@@ -15,6 +15,9 @@ pub fn NumberInput(
     #[props(default)] step: Option<f64>,
     #[props(default)] placeholder: Option<String>,
     #[props(default)] description: Option<String>,
+    /// Visible units that describe the input without changing its numeric value.
+    #[props(default)]
+    units: Option<String>,
     /// Caller-owned validation status, independent of native constraints.
     #[props(default)]
     status: Option<FieldStatusInput>,
@@ -57,14 +60,22 @@ pub fn NumberInput(
                 .clone()
                 .unwrap_or_else(|| format!("{id}-status"))
         });
-    let described_by = [description_id.as_deref(), status_id.as_deref()]
-        .into_iter()
-        .flatten()
-        .collect::<Vec<_>>()
-        .join(" ");
+    let units = units.filter(|text| !text.trim().is_empty());
+    let units_id = units.as_ref().map(|_| format!("{id}-units"));
+    let described_by = [
+        description_id.as_deref(),
+        status_id.as_deref(),
+        units_id.as_deref(),
+    ]
+    .into_iter()
+    .flatten()
+    .collect::<Vec<_>>()
+    .join(" ");
     rsx! {
         Field { class: "astryx-number-input", label, input_id: id.clone(), is_label_hidden, is_disabled, is_required,
             width, description, description_id, status, status_variant,
+            div { class: "astryx-number-input__entry", "data-units": units.is_some().then_some("true"),
+                "data-status": severity.map(InputStatusType::as_str),
             input { class: "astryx-number-input__control", id, r#type: "number", name: html_name,
                 value: value.map_or_else(String::new, |value| value.to_string()),
                 min: min.map(|min| min.to_string()), max: max.map(|max| max.to_string()),
@@ -82,6 +93,10 @@ pub fn NumberInput(
                         }
                     }
                 },
+            }
+            if let Some(units) = units.as_ref() {
+                span { id: units_id, class: "astryx-number-input__units", "{units}" }
+            }
             }
         }
     }
