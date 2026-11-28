@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8304'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8323'});
   const input = "document.querySelector('#number-input-examples input[name=quantity]')";
   const output = "document.getElementById('number-input-value').textContent";
   await waitFor(input);
@@ -32,6 +32,15 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   assert.ok(await evaluate(isSuffixOnRight));
   await evaluate(`${entry}.dir = 'rtl'`);
   assert.ok(await evaluate(`${entry}.querySelector('span').getBoundingClientRect().right <= ${entry}.querySelector('input').getBoundingClientRect().left`));
+  const clear = `${input}.form.querySelector('button[aria-label="Clear Quantity"]')`;
+  assert.equal(await evaluate(`${input}.form.querySelectorAll('.astryx-input-clear-button').length`), 1);
+  assert.equal(await evaluate(`${input}.valueAsNumber`), 0);
+  await evaluate(`window.clearEvents = 0; for (const type of ['input','change']) ${input}.addEventListener(type, () => window.clearEvents++); ${clear}.focus()`);
+  for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key:'Enter', code:'Enter', windowsVirtualKeyCode:13, ...(type === 'keyDown' ? {text:'\r'} : {})});
+  await waitFor(`${output} === 'Empty' && ${input}.value === '' && !${clear} && document.activeElement === ${input}`);
+  assert.equal(await evaluate('window.clearEvents'), 0);
+  await evaluate(`${input}.value = '0'; ${input}.dispatchEvent(new Event('change', {bubbles:true}))`);
+  await waitFor(`${output} === '0' && ${clear}`);
   await evaluate(`${input}.focus()`);
   for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key:'ArrowUp', code:'ArrowUp', windowsVirtualKeyCode:38});
   await evaluate(`${input}.blur()`);
