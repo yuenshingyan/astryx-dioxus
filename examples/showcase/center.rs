@@ -59,6 +59,7 @@ pub(super) fn CenterExamples() -> Element {
                     }
                 }
             }
+            p { "In vertical writing, Horizontal follows the flex main axis, not the physical horizontal axis." }
             h3 { "Vertical & Horizontal Center" }
             Card { width: SizeValue::from(400), max_width: SizeValue::from("100%"),
                 Center { id: "center-empty-state", height: SizeValue::from(200),
@@ -74,6 +75,23 @@ pub(super) fn CenterExamples() -> Element {
                 Stack { direction: StackDirection::Vertical, gap: SpacingStep::Two, h_align: StackAlignment::Center,
                     Heading { level: HeadingLevel::Four, "Centered content" }
                     Text { color: TextColor::SECONDARY, "Horizontally and vertically aligned." }
+                }
+            }
+            h3 { "Vertical Center with logical padding" }
+            Center { id: "center-vertical", axis: CenterAxis::Vertical,
+                width: SizeValue::from(160), height: SizeValue::from(96),
+                padding: SpacingStep::One, padding_inline: SpacingStep::Two,
+                padding_inline_start: SpacingStep::Zero, padding_block_end: SpacingStep::Three,
+                span { "Cross-axis center" }
+            }
+            h3 { "Inline Center" }
+            div { "Status: " Center { id: "center-inline", is_inline: true,
+                Icon { icon: glyph(INBOX), size: IconSize::Small }
+            } " Inbox" }
+            div { style: "width:240px;max-width:100%;min-height:48px",
+                Center { id: "center-inherited-size", width: SizeValue::from("inherit"),
+                    max_width: SizeValue::from("inherit"), min_height: SizeValue::from("inherit"),
+                    "Inherited dimensions"
                 }
             }
         }
