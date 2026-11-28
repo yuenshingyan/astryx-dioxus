@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 use astryx_dioxus::{
-    AppShell, AppShellVariant, SideNav, SideNavItem, SpacingStep, TopNav, TopNavHeading,
+    AppShell, AppShellVariant, Section, SideNav, SideNavItem, SpacingStep, TopNav, TopNavHeading,
 };
 
 #[component]
@@ -20,6 +20,15 @@ pub(super) fn AppShellExamples() -> Element {
                 },
                 h3 { "Workspace overview" }
                 for index in 1..=16 { p { key: "{index}", "Project {index}" } }
+            }
+            div { id: "app-shell-inset-example",
+                Section { padding: SpacingStep::Six,
+                    h3 { "Shell inside a padded Section" }
+                    AppShell { style: "block-size:160px",
+                        Section { "Uses the default Section inset" }
+                    }
+                    Section { "Inherits the enclosing Section inset" }
+                }
             }
         }
     }
