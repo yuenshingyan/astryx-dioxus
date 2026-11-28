@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::{ComplexSelector, ComplexSelectorContent};
+use astryx_dioxus::{ComplexSelector, ComplexSelectorContent, FieldStatusInput, InputStatusType};
 
 type Blend = (&'static str, &'static str);
 
@@ -14,6 +14,11 @@ pub(super) fn ComplexSelectorExamples() -> Element {
             ComplexSelector { label: "Fruit blend", width: Some(280.into()), value: value(),
                 description: "Choose a fruit and ripeness in one control.",
                 trigger_label: rsx! { "{fruit} · {ripeness}" },
+                status: (ripeness == "Peak").then(|| FieldStatusInput {
+                    status_type: InputStatusType::Warning,
+                    message: Some("Use peak fruit today.".into()),
+                    message_id: Some("fruit-blend-status".into()),
+                }),
                 on_change: move |next| value.set(next),
                 content: |props: ComplexSelectorContent<Blend>| rsx! {
                     table { "aria-label": "Fruit ripeness choices",
