@@ -3315,6 +3315,13 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-typeahead__control {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+  }
+  .astryx-typeahead__control > .astryx-base-typeahead { flex: 1; }
+  .astryx-typeahead__control > .astryx-input-clear-button { flex: none; }
   .astryx-base-typeahead { position: relative; min-inline-size: 0; }
   .astryx-base-typeahead > input {
     box-sizing: border-box;
@@ -3347,6 +3354,16 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 
 @layer astryx-base {
   .astryx-tokenizer { min-inline-size: 0; }
+  .astryx-tokenizer[data-has-clear] {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: var(--spacing-1);
+  }
+  .astryx-tokenizer[data-has-clear] > .astryx-tokenizer__tokens { grid-column: 1 / -1; }
+  /* Keep the suggestions as wide as the whole field, including the clear action. */
+  .astryx-tokenizer[data-has-clear] > .astryx-base-typeahead { position: static; }
   .astryx-tokenizer__tokens {
     display: flex;
     flex-wrap: wrap;
@@ -3471,9 +3488,42 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-dialog[data-variant="fullscreen"] { inline-size: 100%; block-size: 100%; max-inline-size: none; max-block-size: none; border-radius: 0; }
   .astryx-dialog.astryx-lightbox[open] { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: var(--spacing-3); }
   .astryx-lightbox__toolbar { display: flex; justify-content: end; }
-  .astryx-lightbox__figure { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: var(--spacing-3); margin: 0; min-inline-size: 0; }
+  .astryx-lightbox__figure { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: var(--spacing-3); margin: 0; min-inline-size: 0; }
   .astryx-lightbox__image { inline-size: 100%; block-size: 100%; object-fit: contain; }
-  .astryx-lightbox__caption { overflow-wrap: anywhere; max-block-size: 25dvh; overflow: auto; text-align: center; }
+  .astryx-lightbox__caption {
+    --_caption-lines: 2;
+    --_caption-bottom: calc(var(--spacing-3) + env(safe-area-inset-bottom, 0px));
+    --_caption-band-size: calc(var(--_caption-lines) * 1lh + var(--spacing-2) + var(--_caption-bottom));
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+    block-size: var(--_caption-band-size);
+  }
+  .astryx-lightbox__caption[data-disclosure="true"] { --_caption-lines: 3; }
+  /* The panel grows over the fitted image without changing the reserved band. */
+  .astryx-lightbox__caption-panel {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    justify-items: center;
+    padding: var(--spacing-2) var(--spacing-3) var(--_caption-bottom);
+    background: color-mix(in srgb, var(--color-on-light) 90%, transparent);
+    color: var(--color-text-primary);
+  }
+  .astryx-lightbox__caption[data-expanded="false"] .astryx-lightbox__caption-panel { block-size: var(--_caption-band-size); }
+  .astryx-lightbox__caption[data-expanded="true"] .astryx-lightbox__caption-panel { max-block-size: min(60dvh, 100%); }
+  .astryx-lightbox__caption-text,
+  .astryx-lightbox__caption-action { inline-size: min(100%, 600px); min-inline-size: 0; overflow-wrap: anywhere; }
+  .astryx-lightbox__caption[data-expanded="false"] .astryx-lightbox__caption-text {
+    align-self: start;
+    /* The shared measurement compares the fractional Text rect to a rounded offsetHeight. */
+    padding-block-end: 1px;
+  }
+  .astryx-lightbox__caption[data-expanded="true"] .astryx-lightbox__caption-text { overflow-y: auto; overscroll-behavior: contain; }
+  .astryx-lightbox__caption-text:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); }
+  .astryx-lightbox__caption-action { text-align: end; }
 }
 
 @layer astryx-base {

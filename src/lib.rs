@@ -223,7 +223,7 @@ pub use grid::{
 pub use h_stack::{HStack, HStackProps};
 pub use heading::{Heading, HeadingLevel, HeadingProps, HeadingType, InvalidHeadingLevel};
 pub use hooks::use_interactive_role::{InteractiveRole, use_interactive_role};
-pub use hover_card::{HoverCard, HoverCardProps};
+pub use hover_card::{ControlledHoverCard, ControlledHoverCardProps, HoverCard, HoverCardProps};
 pub use i18n::{InternationalizationProvider, InternationalizationProviderProps, MessagesByLocale};
 pub use icon::{
     Icon, IconDefaultSizeContext, IconDefaultSizeProvider, IconEntry, IconRequest, IconSize,
@@ -271,7 +271,10 @@ pub use nav_menu::{
 };
 pub use number_input::{NumberInput, NumberInputProps};
 pub use outline::{Outline, OutlineDensity, OutlineItem, OutlineProps};
-pub use overflow_list::{OverflowCollapseFrom, OverflowItem, OverflowList, OverflowListProps};
+pub use overflow_list::{
+    OverflowCollapseFrom, OverflowItem, OverflowList, OverflowListProps,
+    OverflowListWithNotifications, OverflowListWithNotificationsProps,
+};
 pub use overlay::{
     Overlay, OverlayAlign, OverlayPosition, OverlayProps, OverlayScrimMode, OverlayShowOn,
 };
@@ -354,7 +357,7 @@ pub use toggle_button::{
     ToggleButtonProps,
 };
 pub use token::{InvalidTokenColor, Token, TokenColor, TokenProps, TokenSize};
-pub use tokenizer::{Tokenizer, TokenizerChange, TokenizerProps};
+pub use tokenizer::{Tokenizer, TokenizerChange, TokenizerProps, TokenizerWithClear};
 pub use toolbar::{Toolbar, ToolbarOrientation, ToolbarProps};
 pub use tooltip::{Tooltip, TooltipProps};
 pub use top_nav::{

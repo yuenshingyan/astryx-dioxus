@@ -23,9 +23,10 @@ const update = () => {
     if (width + gaps * gap + (hasIndicator ? indicatorWidth : 0) <= available + 0.01) break;
     width -= widths[--count];
   }
-  if (previous !== count) {
-    previous = count;
-    dioxus.send(count);
+  const revision = Number(root.dataset.overflowRevision ?? 0);
+  if (previous?.[0] !== count || previous?.[1] !== revision) {
+    previous = [count, revision];
+    dioxus.send(previous);
   }
 };
 const resize = new ResizeObserver(update);
@@ -36,7 +37,7 @@ const observe = () => {
   update();
 };
 const mutations = new MutationObserver(observe);
-mutations.observe(root, {attributes: true, attributeFilter: ['data-min', 'data-max', 'data-collapse', 'style']});
+mutations.observe(root, {attributes: true, attributeFilter: ['data-min', 'data-max', 'data-collapse', 'data-overflow-revision', 'style']});
 mutations.observe(measure, {childList: true});
 try {
   observe();

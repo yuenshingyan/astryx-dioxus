@@ -20,13 +20,59 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
     assert.ok(nodes.some(node => !node.ignored && node.role?.value === role && node.name?.value === name), name);
   }
   assert.match(await evaluate(`${panel}.querySelector('figcaption').textContent`), /scenic coastline/);
-  for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key:'Escape', code:'Escape', windowsVirtualKeyCode:27});
+  assert.equal(await evaluate(`${panel}.querySelector('figcaption button').getClientRects().length`), 0);
+  const press = async (key, windowsVirtualKeyCode) => {
+    await send('Input.dispatchKeyEvent', {
+      type: 'keyDown', key, code: key, windowsVirtualKeyCode, ...(key === 'Enter' && {text: '\r'}),
+    });
+    await send('Input.dispatchKeyEvent', {type: 'keyUp', key, code: key, windowsVirtualKeyCode});
+  };
+  await press('Escape', 27);
   const closed = `!${panel} && document.activeElement === ${trigger}`;
   await waitFor(closed);
   await evaluate(`${trigger}.click()`);
   await waitFor(panel);
   await evaluate(`${close}.click()`);
   await waitFor(closed);
+  const longTrigger = "document.getElementById('lightbox-long-caption-trigger')";
+  const toggle = `${panel}.querySelector('figcaption button')`;
+  const caption = `${panel}.querySelector('figcaption .astryx-text')`;
+  const rect = element => `JSON.stringify(${element}.getBoundingClientRect().toJSON())`;
+  await send('Emulation.setDeviceMetricsOverride', {width: 380, height: 390, deviceScaleFactor: 1, mobile: false});
+  await evaluate(`${longTrigger}.focus(); ${longTrigger}.click()`);
+  await waitFor(`${panel} && ${image}?.naturalWidth > 0 && ${toggle}?.getClientRects().length > 0`);
+  assert.equal(await evaluate(`${toggle}.getAttribute('aria-expanded')`), 'false');
+  assert.equal(await evaluate(`${toggle}.textContent.trim()`), 'more');
+  assert.equal(await evaluate(`getComputedStyle(${caption}).webkitLineClamp`), '2');
+  const fitted = await evaluate(rect(image));
+  const {nodes: collapsedTree} = await send('Accessibility.getFullAXTree');
+  const description = collapsedTree.find(node => !node.ignored && node.role?.value === 'dialog')?.description?.value;
+  assert.match(description, /rise and fall of the tide/);
+  await evaluate(`${toggle}.focus()`);
+  await press('Enter', 13);
+  await waitFor(`${toggle}.getAttribute('aria-expanded') === 'true'`);
+  assert.equal(await evaluate(`${toggle}.textContent.trim()`), 'less');
+  assert.equal(await evaluate(`getComputedStyle(${caption}).webkitLineClamp`), 'none');
+  assert.equal(await evaluate(`document.activeElement === ${toggle}`), true);
+  assert.equal(await evaluate(rect(image)), fitted);
+  assert.equal(await evaluate(`(() => {
+    const text = document.getElementById(${toggle}.getAttribute('aria-controls'));
+    text.scrollTop = text.scrollHeight;
+    return text.scrollTop > 0 && ${toggle}.getBoundingClientRect().bottom <= innerHeight;
+  })()`), true);
+  await press('Enter', 13);
+  await waitFor(`${toggle}.getAttribute('aria-expanded') === 'false'`);
+  assert.equal(await evaluate(`document.activeElement === ${toggle}`), true);
+  assert.equal(await evaluate(rect(image)), fitted);
+  await press('Enter', 13);
+  await waitFor(`${toggle}.getAttribute('aria-expanded') === 'true'`);
+  await press('Escape', 27);
+  await waitFor(`!${panel} && document.activeElement === ${longTrigger}`);
+  await evaluate(`${longTrigger}.click()`);
+  await waitFor(`${panel} && ${toggle}?.getClientRects().length > 0`);
+  assert.equal(await evaluate(`${toggle}.getAttribute('aria-expanded')`), 'false');
+  await evaluate(`${close}.click()`);
+  await waitFor(`!${panel} && document.activeElement === ${longTrigger}`);
   assert.deepEqual(exceptions, []);
-  console.log('Lightbox: fullscreen geometry, image and caption, dismissal and focus return passed');
+  console.log('Lightbox: fitting, caption disclosure, keyboard dismissal and focus return passed');
 });
