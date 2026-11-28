@@ -1723,8 +1723,8 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Surfaces, borders, and content**
     - [ ] variant `section` (default), `transparent`, `muted`; page grouping, not discrete Card object.
-    - [ ] dividers explicit sides `top`, `bottom`, `start`, `end`; optional independent sides, no invented combination matrix.
-    - [ ] padding default 4; padding, paddingInline, paddingInlineStart, paddingInlineEnd, paddingBlock, paddingBlockStart, paddingBlockEnd each `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; zero full-bleed, edge overrides axis overrides all.
+    - [x] dividers explicit sides `top`, `bottom`, `start`, `end`; optional independent sides, no invented combination matrix.
+    - [x] padding default 4; padding, paddingInline, paddingInlineStart, paddingInlineEnd, paddingBlock, paddingBlockStart, paddingBlockEnd each `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; zero full-bleed, edge overrides axis overrides all.
     - [ ] Arbitrary width/height/maxWidth/minHeight and children; heading-plus-Stack, settings/form/sidebar regions; muted emphasizes particular area.
 
   - **Named inline example**
@@ -1733,7 +1733,7 @@ These changes are available for review. The table records focused evidence, not 
   - **Named templates**
     - [ ] `SectionVariants` — **Section — Variants**: section/muted/transparent comparison.
     - [ ] `SectionWashHighlight` — **Section — Default with Wash**: default region plus full-width muted callout.
-    - [ ] `SectionWithDividers` — **Section — With Dividers**: adjacent same-surface settings sections, bottom borders.
+    - [x] `SectionWithDividers` — **Section — With Dividers**: adjacent same-surface settings sections, bottom borders.
 
 - [ ] **[Stack](https://astryx.atmeta.com/components/Stack)**
 

@@ -134,7 +134,13 @@ pub fn Section(
         ("min-height", min_height),
     ] {
         if let Some(value) = value {
-            let _ = write!(outer_style, "--_section-{property}:{};", value.as_css()?);
+            let css = value.as_css()?;
+            if value.css_wide_keyword().is_some() {
+                // A CSS-wide keyword must act on the dimension, not the private variable.
+                let _ = write!(outer_style, "{property}:{css};");
+            } else {
+                let _ = write!(outer_style, "--_section-{property}:{css};");
+            }
         }
     }
     outer_style.push_str(&style);
