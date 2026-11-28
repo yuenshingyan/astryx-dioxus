@@ -1,6 +1,11 @@
-use astryx_dioxus::{Code, CodeColor, CodeSize};
+use std::cell::Cell;
+use std::rc::Rc;
+
+use dioxus::core::{AttributeValue, Mutation};
 use dioxus::prelude::*;
 use dioxus_ssr::render_element;
+
+use astryx_dioxus::{Code, CodeColor, CodeSize};
 
 #[test]
 fn one_native_inline_root_preserves_rich_content_and_escapes_text() {
@@ -21,6 +26,66 @@ fn one_native_inline_root_preserves_rich_content_and_escapes_text() {
         "<span",
     ] {
         assert!(!html.contains(absent), "{absent}: {html}");
+    }
+}
+
+#[test]
+fn optional_direction_keeps_the_ltr_default_until_a_caller_supplies_a_value() {
+    for (direction, expected) in [(None, "ltr"), (Some("rtl"), "rtl"), (Some("auto"), "auto")] {
+        let html = render_element(rsx! {
+            p { dir: "rtl", "טקסט " Code { dir: direction, "foo(1)" } " טקסט" }
+        });
+        let (_, code) = html.split_once("<code ").expect("native code in RTL prose");
+        let (attrs, content) = code.split_once('>').expect("code opening tag");
+        assert!(attrs.contains(&format!("dir=\"{expected}\"")), "{html}");
+        assert_eq!(attrs.matches("dir=").count(), 1, "{html}");
+        assert!(content.starts_with("foo(1)</code>"), "{html}");
+    }
+}
+
+#[test]
+fn changing_direction_updates_the_same_root_attribute() {
+    type Direction = Rc<Cell<Option<&'static str>>>;
+
+    fn app() -> Element {
+        let direction = use_context::<Direction>().get();
+        rsx! { Code { dir: direction, "foo(1)" } }
+    }
+
+    let direction: Direction = Rc::new(Cell::new(Some("rtl")));
+    let mut dom = VirtualDom::new(app).with_root_context(direction.clone());
+    let root = dom
+        .rebuild_to_vec()
+        .edits
+        .into_iter()
+        .find_map(|edit| match edit {
+            Mutation::SetAttribute {
+                name: "dir",
+                value: AttributeValue::Text(value),
+                id,
+                ..
+            } if value == "rtl" => Some(id),
+            _ => None,
+        })
+        .expect("initial RTL direction");
+
+    for (next, expected) in [(None, "ltr"), (Some("auto"), "auto")] {
+        direction.set(next);
+        dom.mark_dirty(ScopeId::APP);
+        let edits: Vec<_> = dom
+            .render_immediate_to_vec()
+            .edits
+            .into_iter()
+            .filter(|edit| matches!(edit, Mutation::SetAttribute { name: "dir", .. }))
+            .collect();
+        assert!(
+            matches!(
+                edits.as_slice(),
+                [Mutation::SetAttribute { value: AttributeValue::Text(value), id, .. }]
+                    if value == expected && *id == root
+            ),
+            "{edits:?}"
+        );
     }
 }
 

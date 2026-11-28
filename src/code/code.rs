@@ -1,6 +1,7 @@
 // Adapted from Meta Astryx Code/Code.tsx, baseline
 // 476a3153417dbf75c565f7df05b0784e94ddd59e. See THIRD_PARTY_NOTICES.md.
 
+use dioxus::core::AttributeValue;
 use dioxus::events::{onclick as click_attribute, onmounted as mounted_attribute};
 use dioxus::prelude::*;
 
@@ -63,17 +64,18 @@ pub fn Code(
     #[props(default)] onmounted: Option<EventHandler<MountedEvent>>,
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
-    let has_dir = attributes.iter().any(|attribute| attribute.name == "dir");
-    let mut attributes: Vec<_> = attributes
-        .into_iter()
-        .filter(|attribute| {
-            !matches!(
-                attribute.name,
-                "class" | "style" | "data-color" | "data-size"
-            ) && (onmounted.is_none() || attribute.name != "onmounted")
-                && (onclick.is_none() || attribute.name != "onclick")
-        })
-        .collect();
+    let mut attributes = attributes;
+    attributes.retain(|attribute| match attribute.name {
+        "class" | "style" | "data-color" | "data-size" => false,
+        "onmounted" => onmounted.is_none(),
+        "onclick" => onclick.is_none(),
+        "dir" => !matches!(attribute.value, AttributeValue::None),
+        _ => true,
+    });
+    // An absent caller value must not let Code inherit the prose direction.
+    if !attributes.iter().any(|attribute| attribute.name == "dir") {
+        attributes.push(Attribute::new("dir", "ltr", None, false));
+    }
     if let Some(handler) = onmounted {
         attributes.push(mounted_attribute(move |event| handler.call(event)));
     }
@@ -84,7 +86,6 @@ pub fn Code(
         code {
             class: "astryx-code {class}",
             style,
-            dir: (!has_dir).then_some("ltr"),
             "data-color": color.as_str(),
             "data-size": size.map(CodeSize::as_str),
             ..attributes,
