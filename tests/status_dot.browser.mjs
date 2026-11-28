@@ -60,6 +60,26 @@ try{
   samples.forEach((value,index)=>assert.ok(Math.abs(value.opacity-Number(fixture.cases[mode].pulseSamples[index].opacity))<1e-5,`${mode} actual easing sample ${index}`));
  }
  await click('sd-theme');
+ const flexPressure = await evaluate(`(() => {
+  const source = document.querySelector('#sd-variants .astryx-status-dot');
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex; width:12px';
+  const neighbor = document.createElement('span');
+  neighbor.style.flex = '0 0 8px';
+  const dot = source.cloneNode(false);
+  dot.removeAttribute('data-status-dot-named');
+  row.append(dot, neighbor);
+  source.parentElement.after(row);
+  try {
+   const {width, height} = dot.getBoundingClientRect();
+   // Confirm that this row would compress the same dot without shrink protection.
+   dot.style.flexShrink = '1';
+   return {width, height, shrinkableWidth: dot.getBoundingClientRect().width};
+  } finally {
+   row.remove();
+  }
+ })()`);
+ assert.deepEqual(flexPressure, {width: 8, height: 8, shrinkableWidth: 4}, 'FR1: the default dot keeps its 8px field when the flex row runs out of space');
  assert.equal(await evaluate('Array.from(document.querySelectorAll("[data-status-dot-named]")).some(e=>document[Symbol.for("astryx.dioxus.button.runtime")].records.has(e))'),false,'no tooltip means no runtime registration');
  assert.deepEqual(await evaluate('["sd-empty-text","sd-false","sd-true","sd-zero"].map(id=>document.getElementById(id).childElementCount)'),[0,0,0,1]);
  assert.equal(await evaluate('Array.from(document.querySelectorAll("[id^=sd-icon-]")).every(e=>{const s=e.firstElementChild,r=s.getBoundingClientRect(),v=s.firstElementChild.getBoundingClientRect(),p=e.getBoundingClientRect();return s.getAttribute("aria-hidden")==="true"&&r.width===8&&r.height===8&&v.width===8&&v.height===8&&Math.abs(v.x-p.x)<.01&&Math.abs(v.y-p.y)<.01&&getComputedStyle(s).color===getComputedStyle(e).color})'),true,'caller artwork fits hidden centered field and inherits ink');
