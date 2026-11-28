@@ -1,4 +1,6 @@
 use dioxus::prelude::*;
+#[cfg(target_arch = "wasm32")]
+use web_sys::Element as WebElement;
 
 use astryx_dioxus::{
     Badge, BadgeVariant, Button, ButtonVariant, Card, CardVariant, HStack, Icon, IconButton,
@@ -28,9 +30,20 @@ fn live_root(props: VisuallyHiddenRenderProps) -> Element {
     rsx! { div { ..props.attributes, {props.children} } }
 }
 
+fn is_mounted_result_root(event: &MountedEvent) -> bool {
+    #[cfg(target_arch = "wasm32")]
+    if let Some(element) = event.data().downcast::<WebElement>() {
+        return element.tag_name() == "DIV" && element.id() == "vh-results";
+    }
+    let _ = event;
+    false
+}
+
 #[component]
 fn BuildFilter() -> Element {
     let mut is_filtered = use_signal(|| false);
+    let mut mounts = use_signal(|| 0usize);
+    let mut clicks = use_signal(|| 0usize);
     let count = if is_filtered() { 1 } else { 2 };
     rsx! {
         button { id: "vh-filter", r#type: "button", aria_pressed: is_filtered(),
@@ -45,6 +58,11 @@ fn BuildFilter() -> Element {
             }
         }
         VisuallyHidden { id: "vh-results", as_element: Callback::new(live_root), aria_live: "polite", aria_atomic: "true",
+            "data-mounts": mounts(), "data-clicks": clicks(),
+            attributes: vec![
+                onmounted(move |event| { if is_mounted_result_root(&event) { mounts += 1; } }),
+                onclick(move |_| clicks += 1),
+            ],
             if count == 1 { "1 build result" } else { "{count} build results" }
         }
     }

@@ -1,3 +1,4 @@
+use dioxus::core::{AttributeValue, Mutation};
 use dioxus::prelude::*;
 
 #[path = "../examples/showcase/stack_item.rs"]
@@ -78,6 +79,43 @@ fn overflow_semantics_are_deferred_without_losing_the_caller_label() {
         !html.contains("role=") && !html.contains("tabindex="),
         "{html}"
     );
+}
+
+#[test]
+fn showcase_mount_listeners_target_the_nodes_with_caller_ids() {
+    let mut dom = VirtualDom::new(StackItemExamples);
+    let mutations = dom.rebuild_to_vec();
+    let edits = &mutations.edits;
+    let mounted = edits
+        .iter()
+        .filter_map(|edit| match edit {
+            Mutation::NewEventListener { name, id } if name == "mounted" => Some(*id),
+            _ => None,
+        })
+        .collect::<Vec<_>>();
+    for caller_id in [
+        "stack-item-scroll",
+        "stack-item-scroll-span",
+        "stack-item-scroll-article",
+    ] {
+        let root = edits
+            .iter()
+            .find_map(|edit| match edit {
+                Mutation::SetAttribute {
+                    name: "id",
+                    value: AttributeValue::Text(value),
+                    id,
+                    ..
+                } if value == caller_id => Some(id),
+                _ => None,
+            })
+            .unwrap_or_else(|| panic!("missing caller ID {caller_id}"));
+        assert_eq!(
+            mounted.iter().filter(|id| *id == root).count(),
+            1,
+            "{caller_id}"
+        );
+    }
 }
 
 #[test]

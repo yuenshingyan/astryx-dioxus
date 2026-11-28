@@ -32,6 +32,20 @@ pub(super) fn SectionExamples() -> Element {
                     }
                 }
             }
+            h3 { "Section — Sizing regression cases" }
+            div { style: "box-sizing:border-box;width:240px;max-width:260px;height:96px;min-height:80px;padding-inline:10px;",
+                Section { id: "section-inherited-size",
+                    width: SizeValue::from("inherit"), height: SizeValue::from("inherit"),
+                    max_width: SizeValue::from("inherit"), min_height: SizeValue::from("inherit"),
+                    padding: SpacingStep::Zero,
+                    "Inherited dimensions"
+                }
+            }
+            Section { id: "section-min-height-only", min_height: SizeValue::from(120),
+                variant: SectionVariant::MUTED, padding: SpacingStep::Zero,
+                dividers: vec![SectionDivider::Bottom],
+                div { style: "height:24px;", "Content-height surface" }
+            }
             h3 { "Section — Variants" }
             VStack { id: "section-variants", gap: SpacingStep::Six,
                 Section { padding: SpacingStep::Five, VariantContent { title: "Section", description: "White background." } }

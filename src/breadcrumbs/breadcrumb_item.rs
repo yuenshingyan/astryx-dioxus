@@ -1,6 +1,6 @@
 //! Non-menu breadcrumb item adapted from Astryx Breadcrumbs/BreadcrumbItem.tsx.
 
-use dioxus::core::current_scope_id;
+use dioxus::core::{DynamicNode, TemplateNode, current_scope_id};
 use dioxus::prelude::*;
 
 use super::component::BreadcrumbContext;
@@ -94,6 +94,7 @@ pub fn BreadcrumbItem(
     } else {
         rsx! { button { r#type: "button", class: "astryx-breadcrumb-item__content astryx-breadcrumb-item__link", onclick: on_click.unwrap_or_default(), {content} } }
     };
+    let separator = settings.separator.filter(|node| !is_slash_separator(node));
     let mount_id = id.clone();
     let attributes: Vec<_> = attributes
         .into_iter()
@@ -116,10 +117,24 @@ pub fn BreadcrumbItem(
             },
             ..attributes,
             span { class: "astryx-breadcrumb-item__separator", "aria-hidden": "true",
-                if let Some(separator) = settings.separator { {separator} }
+                if let Some(separator) = separator { {separator} }
                 else { span { class: "astryx-breadcrumb-item__slash", "/" } }
             }
             {label}
         }
+    }
+}
+
+fn is_slash_separator(separator: &Element) -> bool {
+    let Ok(node) = separator else {
+        return false;
+    };
+    // The pinned separator mirrors bare slash text, not custom nodes that render a slash.
+    match node.template.roots {
+        [TemplateNode::Text { text: "/" }] => true,
+        [TemplateNode::Dynamic { .. }] => {
+            matches!(node.dynamic_root(0), Some(DynamicNode::Text(text)) if text.value == "/")
+        }
+        _ => false,
     }
 }

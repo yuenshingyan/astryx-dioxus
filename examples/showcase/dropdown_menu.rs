@@ -1,20 +1,39 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::{DropdownMenu, DropdownMenuItem, DropdownMenuItemTarget};
+#[cfg(target_arch = "wasm32")]
+use web_sys::Element as WebElement;
+
+use astryx_dioxus::{
+    DropdownMenu, DropdownMenuDivider, DropdownMenuItem, DropdownMenuItemTarget,
+    DropdownMenuItemVariant,
+};
 
 #[component]
 pub(super) fn DropdownMenuExamples() -> Element {
     let mut action = use_signal(|| "No action selected");
+    let mut divider_clicks = use_signal(|| 0);
     let mut is_pinned = use_signal(|| false);
     rsx! {
         section { id: "dropdown-menu-examples",
             h2 { "Dropdown Menu" }
             DropdownMenu { label: "Actions",
-                for label in ["Edit", "Duplicate", "Delete"] {
-                    DropdownMenuItem { key: "{label}", label, is_disabled: label == "Duplicate", onclick: move |_| action.set(label) }
+                DropdownMenuItem { label: "Edit", onclick: move |_| action.set("Edit") }
+                DropdownMenuItem { label: "Duplicate", is_disabled: true }
+                DropdownMenuDivider {
+                    id: "dropdown-menu-actions-divider", class: "actions-divider", style: "margin-block: 8px",
+                    onmounted: move |_event: MountedEvent| {
+                        #[cfg(target_arch = "wasm32")]
+                        if let Some(element) = _event.data().downcast::<WebElement>() {
+                            element.set_attribute("data-mounted", "true").expect("valid mount marker");
+                        }
+                    },
+                    attributes: vec![onclick(move |_| divider_clicks += 1)],
+                }
+                DropdownMenuItem { label: "Delete", variant: DropdownMenuItemVariant::Destructive,
+                    onclick: move |_| action.set("Delete"),
                 }
             }
-            output { "{action()}" }
+            output { "data-divider-clicks": "{divider_clicks()}", "{action()}" }
             button { r#type: "button", id: "dropdown-menu-after", "After menu" }
             div { id: "dropdown-menu-keep-open",
                 DropdownMenu { label: "Preview options",

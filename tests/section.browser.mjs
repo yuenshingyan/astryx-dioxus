@@ -45,18 +45,34 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
     return measured;
   })()`);
   assert.deepEqual(centered, [1280, 80, 80]);
+  const inheritedSize = await evaluate(`(() => {
+    const wrapper = document.querySelector('#section-inherited-size');
+    const {width, height} = wrapper.getBoundingClientRect();
+    const {maxWidth, minHeight} = getComputedStyle(wrapper);
+    return [width, height, maxWidth, minHeight, wrapper.firstElementChild.getBoundingClientRect().height];
+  })()`);
+  // Auto width would be 220px (the host's content box), not the inherited 240px.
+  assert.deepEqual(inheritedSize, [240, 96, '260px', '80px', 96], 'CSS-wide sizing and definite-height fill');
+  const minimumOnly = await evaluate(`(() => {
+    const wrapper = document.querySelector('#section-min-height-only');
+    const surface = wrapper.firstElementChild;
+    const outer = wrapper.getBoundingClientRect();
+    const inner = surface.getBoundingClientRect();
+    return [outer.height, inner.height, outer.bottom - inner.bottom, getComputedStyle(surface).borderBottomWidth];
+  })()`);
+  // FR1: 24px of content plus the 1px divider does not fill the 120px wrapper.
+  assert.deepEqual(minimumOnly, [120, 25, 95, '1px'], 'minHeight alone leaves the surface and divider at content height');
   const geometry = await evaluate(`(() => {
     const wrapper = document.querySelector('#section-with-dividers .astryx-section-wrapper');
     const surface = wrapper.firstElementChild;
     const host = document.createElement('div');
     host.style.cssText='--container-padding-inline-start:20px;--container-padding-inline-end:8px;--container-padding-block-start:16px;--container-padding-block-end:12px;direction:rtl';
     wrapper.before(host); host.append(wrapper);
-    wrapper.style.height='125px';
     surface.classList.add('astryx-section--divider-start');
     const css = getComputedStyle(wrapper), inner = getComputedStyle(surface);
-    return [css.marginRight, css.marginLeft, css.marginTop, css.marginBottom, inner.borderRightWidth, surface.getBoundingClientRect().height];
+    return [css.marginRight, css.marginLeft, css.marginTop, css.marginBottom, inner.borderRightWidth];
   })()`);
-  assert.deepEqual(geometry, ['-20px','-8px','-16px','-12px','1px',125]);
+  assert.deepEqual(geometry, ['-20px','-8px','-16px','-12px','1px']);
   const nested = await evaluate(`(() => {
     const parent = document.querySelector('#section-wash-highlight .astryx-section');
     const child = document.querySelector('#section-with-dividers .astryx-section-wrapper').cloneNode(true);
@@ -84,5 +100,5 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   })()`);
   assert.deepEqual(wash, [true, true]);
   assert.equal(exceptions.length, 0);
-  console.log('Section: three patterns, centered width, paint, nested padding, overlay reset, explicit height and RTL divider/bleed passed');
+  console.log('Section: three patterns, centered width, paint, nested padding, overlay reset, CSS-wide sizing, min-height-only geometry and RTL divider/bleed passed');
 });

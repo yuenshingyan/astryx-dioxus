@@ -25,6 +25,58 @@ fn mixed_checkbox_renders_native_label_and_description_relationships() {
 }
 
 #[test]
+fn row_hover_scope_depends_on_disabled_not_loading() {
+    for (is_disabled, is_loading) in [(false, false), (false, true), (true, false), (true, true)] {
+        let mut dom = VirtualDom::new_with_props(
+            |(is_disabled, is_loading)| {
+                rsx! {
+                    CheckboxInput { label: "Backups", html_name: "backups", value: CheckboxIndicatorState::Checked,
+                        is_disabled, is_loading,
+                    }
+                }
+            },
+            (is_disabled, is_loading),
+        );
+        dom.rebuild_in_place();
+        let html = render(&dom);
+        let (_, row) = html
+            .split_once("<div class=\"astryx-checkbox-input__row\"")
+            .unwrap();
+        let (row_attrs, _) = row.split_once('>').unwrap();
+        let (_, input) = html.split_once("<input ").unwrap();
+        let (input_attrs, _) = input.split_once('>').unwrap();
+        assert_eq!(
+            row_attrs.contains(" data-astryx-indicator-scope"),
+            !is_disabled,
+            "{html}"
+        );
+        assert_eq!(
+            html.matches("data-astryx-indicator-scope").count(),
+            usize::from(!is_disabled),
+            "{html}"
+        );
+        assert_eq!(
+            input_attrs.contains(" aria-disabled=\"true\""),
+            is_disabled,
+            "{html}"
+        );
+        assert_eq!(input_attrs.contains(" form=\"\""), is_disabled, "{html}");
+        assert_eq!(
+            input_attrs.contains(" name=\"backups\""),
+            !is_disabled,
+            "{html}"
+        );
+        assert!(!input_attrs.contains(" disabled"), "{html}");
+        assert_eq!(
+            input_attrs.contains(" aria-busy=\"true\""),
+            is_loading,
+            "{html}"
+        );
+        assert_eq!(html.contains("astryx-spinner"), is_loading, "{html}");
+    }
+}
+
+#[test]
 fn explicit_required_preserves_native_validation_and_reports_status() {
     let mut dom = VirtualDom::new(|| {
         rsx! {
