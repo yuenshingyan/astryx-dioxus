@@ -30,7 +30,8 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
       return {x: r.x + r.width / 2, y: r.y + r.height / 2};
     })()`);
     await moveMouse(x, y);
-    await waitFor(`${label}.matches(':hover') && !${input}.matches(':hover')`);
+    // Chromium also matches :hover on the associated input when its label is hit.
+    await waitFor(`${label}.matches(':hover') && ${label}.contains(document.elementFromPoint(${x}, ${y}))`);
     assert.equal((await fill()) !== baseline, shouldTint, input);
   };
   await checkLabelHover(`document.getElementById('checkbox-unchecked')`, true);
