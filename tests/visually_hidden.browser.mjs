@@ -28,10 +28,21 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
     return [control.hasAttribute('aria-label'), control.hasAttribute('aria-labelledby'),
       region.tagName, region.getAttribute('aria-live'), region.textContent];
   })()`), [false, false, 'DIV', 'polite', '2 build results']);
+  await waitFor('originalResults.dataset.mounts === "1"');
+  assert.equal(await evaluate('originalResults.dataset.clicks'), '0');
   await evaluate(`document.getElementById('vh-filter').click()`);
   await waitFor('originalResults.textContent === "1 build result"');
   assert.equal(await evaluate(`originalResults === document.getElementById('vh-results')
     && document.getElementById('vh-filter').getAttribute('aria-pressed') === 'true'`), true);
+  assert.equal(await evaluate('originalResults.dataset.clicks'), '0');
+  // Test delivery without hit-testing: the clipped root deliberately ignores pointer hits.
+  await evaluate('originalResults.click()');
+  await waitFor('originalResults.dataset.clicks === "1"');
+  await evaluate('originalResults.click()');
+  await waitFor('originalResults.dataset.clicks === "2"');
+  assert.equal(await evaluate(`originalResults === document.getElementById('vh-results')
+    && originalResults.dataset.mounts === '1'
+    && originalResults.textContent === '1 build result'`), true);
   assert.equal(exceptions.length, 0);
-  console.log('VisuallyHidden: clipping, AX content and names, and persistent task/result regions passed');
+  console.log('VisuallyHidden: clipping, AX content and names, persistent regions, and custom-root event delivery passed');
 });
