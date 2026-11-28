@@ -11,7 +11,7 @@ pub fn Tooltip(
     text: String,
     /// Supplemental help, not an accessible name or interactive content.
     content: String,
-    /// Draw a dotted underline to signal supplemental help.
+    /// Draw a dashed underline to signal supplemental help, without changing keyboard access.
     #[props(default = true)]
     has_hover_indication: bool,
 ) -> Element {
