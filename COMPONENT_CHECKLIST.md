@@ -2385,7 +2385,7 @@ These changes are available for review. The table records focused evidence, not 
 - [ ] **[VisuallyHidden](https://astryx.atmeta.com/components/VisuallyHidden)**
 
   - Source: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/VisuallyHidden/VisuallyHidden.doc.mjs).
-  - [Port evidence](docs/visually-hidden-port.md#verification-and-completion-blockers): PR #241 passed the focused Chrome checks for computed clipping, accessibility-tree exposure, and both persistent polite-region updates. The 13 clip declarations match the pinned source, and the focused Rust suite verifies custom-root mount/click listener registration, not native delivery. The parent remains open for manual speech/focus, coordinated browser delivery and non-Chromium checks, pinned recipe raster comparisons, shared dependency audits, and FR3/OQ1 approval.
+  - [Port evidence](docs/visually-hidden-port.md#verification-and-completion-blockers): PR #241 verified Chrome computed clipping, AX exposure, and persistent polite-region DOM updates. PR #243 verified custom-root event delivery in Chrome. The 13 clip declarations match the pinned source; mixed-case raw styling attributes no longer shadow the fixed style in SSR. The parent remains open for manual speech/focus, non-Chromium checks, pinned recipe raster comparisons, shared dependency audits, and FR3/OQ1 approval.
 
   - **Semantics and content patterns**
     - [x] Truly no visual variants, sizes, or colors: intentionally invisible but exposed to accessibility tree; `xstyle` accepted and ignored only for 0.7.2 compatibility (ignored as a raw attribute in Dioxus).
