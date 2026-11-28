@@ -25,6 +25,7 @@ pub enum IndicatorSize {
 }
 
 /// Paint a decorative check or a caller-provided replacement without adding control semantics.
+/// Keep focus attributes, the accessible name, and selection or busy state on the host.
 #[component]
 pub fn CheckIndicator(
     /// Selection state owned by the caller.
@@ -35,7 +36,8 @@ pub fn CheckIndicator(
     /// Use the disabled icon foreground.
     #[props(default)]
     is_disabled: bool,
-    /// Replacement content, including a deliberately empty element. `None` retains the mark.
+    /// Replacement content, including a deliberately empty element. Pass `None` for an
+    /// absent, false, or empty-string slot value to keep the built-in state behavior.
     #[props(default)]
     replacement: Option<Element>,
     /// Host styling target and caller classes.
@@ -44,7 +46,7 @@ pub fn CheckIndicator(
     /// Caller inline CSS.
     #[props(default)]
     style: String,
-    /// Native attributes and callbacks for whichever root renders.
+    /// Native attributes and callbacks (including `onmounted`) for whichever root renders.
     #[props(extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 ) -> Element {
@@ -79,8 +81,9 @@ pub fn CheckIndicator(
             variant: None,
         },
         rsx! {
-            svg { view_box: "0 0 24 24", width: "1em", height: "1em", fill: "none", stroke: "currentColor", stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
-                path { d: "M20 6 9 17l-5-5" }
+            // The pinned defaultIcons.tsx fallback; a registry entry can replace this artwork.
+            svg { xmlns: "http://www.w3.org/2000/svg", view_box: "0 0 24 24", width: "1em", height: "1em", fill: "none", stroke: "currentColor", stroke_width: "1.5", stroke_linecap: "round", stroke_linejoin: "round", "aria-hidden": "true",
+                path { d: "M5 13l4 4L19 7" }
             }
         },
     );

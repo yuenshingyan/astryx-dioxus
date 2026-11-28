@@ -2951,16 +2951,17 @@ These changes are available for review. The table records focused evidence, not 
   - Sources: [owning English family doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/Indicator.doc.mjs), [original TSX](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/CheckIndicator.tsx), [types](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/types.ts). Own doc absent; family ownership resolved. No own template metadata supplied.
 
   - **Decorative choices and behavior**
-    - [ ] Required state `unchecked`, `checked`; default unchecked renders nothing/no reserved chrome, checked draws glyph. No indeterminate state in singleSelection family.
-    - [ ] `size`: `sm`, `md` (default); both source mappings use sm Icon. `isDisabled=false` default; accent versus disabled icon foreground.
-    - [ ] Renderable children replace mark in either state, e.g. pending Spinner even when unchecked; shallow renderability excludes null/undefined/booleans/empty string, not empty-rendering elements.
-    - [ ] Always decorative aria-hidden, no role/name/keyboard/focus ownership; host owns semantics. Check has no separate chrome/theme target: host target shares Icon element; replacement-content branch forwards props to span.
+    - [x] Required state `unchecked`, `checked`; default unchecked renders nothing/no reserved chrome, checked draws glyph. No indeterminate state in singleSelection family.
+    - [x] `size`: `sm`, `md` (default); both source mappings use sm Icon. `isDisabled=false` default; accent versus disabled icon foreground.
+    - [x] Renderable children replace mark in either state, e.g. pending Spinner even when unchecked; shallow renderability excludes null/undefined/booleans/empty string, not empty-rendering elements.
+    - [x] Always decorative aria-hidden, no role/name/keyboard/focus ownership; host owns semantics. Check has no separate chrome/theme target: host target shares Icon element; replacement-content branch forwards props to span.
     - [ ] Theme `indicators.check` replacement can draw both states, e.g. RadioIndicator gives unchecked empty circle; host always mounts indicator rather than hiding it based on selection.
   - **Named family/source examples**
     - [ ] **Restyle an indicator (the common path)**: family target override recipe.
     - [ ] **Replace an indicator with your own component**: family replacement contract, token use, children-first behavior.
     - [ ] **Use radio visuals for single selection**: map check to RadioIndicator globally.
     - [ ] Source examples: checked/unchecked selection expression with size sm; replace check with RadioIndicator through defineTheme.
+  - [Port audit](docs/check-indicator-port.md): Rust `Option<Element>` preserves the shallow slot choice; the standalone render contract is source-verified. The nearest-theme resolver, exact family recipes, and current browser/visual/AT evidence remain open.
 
 - [ ] **[Radio Indicator](https://astryx.atmeta.com/components/RadioIndicator)**
 
