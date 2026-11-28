@@ -38,19 +38,29 @@ pub fn TabList(
     let size = use_size(size);
     let owner = use_hook(|| format!("astryx-tab-list-{}", current_scope_id().0));
     let mount_owner = owner.clone();
-    let mut controller = use_signal(|| None::<document::Eval>);
+    let mut controllers = use_signal(|| None::<[document::Eval; 2]>);
     use_drop(move || {
-        if let Some(eval) = *controller.peek() {
-            let _ = eval.send(());
+        if let Some(evals) = *controllers.peek() {
+            for eval in evals {
+                let _ = eval.send(());
+            }
         }
     });
     let mount = move |_| {
-        if let Some(eval) = *controller.peek() {
-            let _ = eval.send(());
+        if let Some(evals) = *controllers.peek() {
+            for eval in evals {
+                let _ = eval.send(());
+            }
         }
-        let eval = document::eval(include_str!("../hooks/use_list_focus.js"));
-        let _ = eval.send([mount_owner.clone()]);
-        controller.set(Some(eval));
+        let focus = document::eval(include_str!("../hooks/use_list_focus.js"));
+        let _ = focus.send([mount_owner.clone()]);
+        let overflow = document::eval(concat!(
+            include_str!("../utils/shared_resize_observer.js"),
+            "\n",
+            include_str!("tab_list_overflow.js"),
+        ));
+        let _ = overflow.send(&mount_owner);
+        controllers.set(Some([focus, overflow]));
     };
     let class = format!("astryx-tab-list {class}");
     let divider = has_divider.then_some("true");

@@ -2619,8 +2619,29 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     .astryx-banner:is([data-status="info"], [data-status="success"], [data-status="warning"], [data-status="error"]) { outline: 1px solid CanvasText; outline-offset: -1px; }
   }
 
-  .astryx-tab-list { display: flex; align-items: center; gap: var(--spacing-0-5); overflow-x: auto; padding: var(--spacing-1); }
+  .astryx-tab-list { display: flex; align-items: center; gap: var(--spacing-0-5); min-inline-size: 0; overflow-x: auto; padding: var(--spacing-1); scroll-padding-inline: var(--spacing-1); }
   .astryx-tab-list[data-divider] { border-block-end: var(--border-width) solid var(--color-border); --_tab-indicator-bottom: calc(-1 * var(--spacing-1) - 1px); }
+  @media (forced-colors: none) {
+    .astryx-tab-list {
+      --_tab-fade-width: var(--spacing-8);
+      --_tab-fade-from-left: initial;
+      --_tab-fade-to-right: initial;
+      scroll-padding-inline: calc(var(--_tab-fade-width) + var(--spacing-1));
+    }
+    .astryx-tab-list[data-tab-overflow-left] { --_tab-fade-from-left: transparent, black min(var(--_tab-fade-width), 25%); }
+    .astryx-tab-list[data-tab-overflow-right] { --_tab-fade-to-right: black max(100% - var(--_tab-fade-width), 75%), transparent; }
+    .astryx-tab-list:is([data-tab-overflow-left], [data-tab-overflow-right]) {
+      --_tab-fade: linear-gradient(to right, var(--_tab-fade-from-left, black), var(--_tab-fade-to-right, black));
+      mask-image: var(--_tab-fade);
+    }
+    /* The rail belongs to the whole strip, not to the scrolling tabs. */
+    .astryx-tab-list[data-divider]:is([data-tab-overflow-left], [data-tab-overflow-right]) {
+      mask-image: var(--_tab-fade), linear-gradient(black, black);
+      mask-size: 100% 100%, 100% var(--border-width);
+      mask-position: center, bottom;
+      mask-repeat: no-repeat;
+    }
+  }
   .astryx-tab { position: relative; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; gap: var(--spacing-1); min-block-size: var(--size-element-md); padding: 0 var(--spacing-3); border: 0; border-radius: var(--radius-element); background: transparent; color: var(--color-text-secondary); font: inherit; font-size: var(--text-label-size); line-height: var(--text-label-leading); text-decoration: none; white-space: nowrap; cursor: pointer; }
   .astryx-tab[data-size="sm"] { min-block-size: var(--size-element-sm); }
   .astryx-tab[data-size="lg"] { min-block-size: var(--size-element-lg); }
@@ -2635,6 +2656,8 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-tab:not([aria-disabled]):active { background: var(--color-overlay-pressed); }
   .astryx-tab[aria-disabled] { color: var(--color-text-disabled); cursor: default; }
   .astryx-tab:focus-visible { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+  /* Keep the ring inside the scrollport even at either scroll limit. */
+  .astryx-tab-list .astryx-tab:focus-visible { outline-offset: min(var(--focus-outline-offset), var(--spacing-1) - var(--focus-outline-width)); }
   @media (forced-colors: active) {
     .astryx-tab:is([aria-current], [aria-selected="true"]) > .astryx-tab-indicator { border-block-end: 2px solid Highlight; }
     .astryx-tab[aria-disabled] { color: GrayText; }
