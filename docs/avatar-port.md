@@ -6,6 +6,8 @@ Source: Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`, `Avatar.tsx` (Gi
 
 All five standard Rust checks passed. Chrome verified the offline fallback chain, wrapped status-label updates and removal, reactive sizing, and button activation. The standalone AvatarStatusDot and showcase navigation regressions also passed.
 
+FR2 follow-up: an empty `src` or `fallback_src` is treated as absent, matching the pinned source. Nonempty sources are still used as supplied (no trimming), with failure tracked per source. The focused SSR regression checks the immediate fallback photo and default icon without waiting for an image error; it does not exercise browser loading or retry.
+
 The initials implementation selects Unicode scalars, not full grapheme clusters. Automatic status-name reporting happens after mount, and custom status components must supply `status_label` or contain an AvatarStatusDot. Full tooltip parity, published screenshots, other browsers, and manual assistive technology remain unverified. The migration checklist remains open.
 
 ```sh
