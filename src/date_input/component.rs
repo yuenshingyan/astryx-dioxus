@@ -13,6 +13,9 @@ pub fn DateInput(
     #[props(default)] min: Option<String>,
     #[props(default)] max: Option<String>,
     #[props(default)] description: Option<String>,
+    /// IDs of additional elements that describe the date control.
+    #[props(default)]
+    described_by: Option<String>,
     /// Caller-owned validation feedback, independent of native date constraints.
     #[props(default)]
     status: Option<FieldStatusInput>,
@@ -55,11 +58,16 @@ pub fn DateInput(
                 .clone()
                 .unwrap_or_else(|| format!("{id}-status"))
         });
-    let described_by = [description_id.as_deref(), status_id.as_deref()]
-        .into_iter()
-        .flatten()
-        .collect::<Vec<_>>()
-        .join(" ");
+    let described_by = [
+        description_id.as_deref(),
+        status_id.as_deref(),
+        described_by.as_deref(),
+    ]
+    .into_iter()
+    .flatten()
+    .flat_map(str::split_ascii_whitespace)
+    .collect::<Vec<_>>()
+    .join(" ");
     rsx! {
         Field { class: "astryx-date-input", label, input_id: id.clone(), is_label_hidden, is_disabled, is_required, is_optional,
             width, description, description_id, status, status_variant,

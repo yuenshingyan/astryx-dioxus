@@ -1,7 +1,8 @@
+use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
 use crate::date_input::is_valid_date;
-use crate::{DateInput, SizeValue};
+use crate::{DateInput, FieldStatusInput, InputStatusType, SizeValue};
 
 /// An inclusive Gregorian date range. Both endpoints use `YYYY-MM-DD`.
 #[derive(Clone, PartialEq, Eq)]
@@ -28,6 +29,7 @@ pub fn DateRangeInput(
     #[props(default)] is_disabled: bool,
     #[props(default)] width: Option<SizeValue>,
 ) -> Element {
+    let error_id = use_hook(|| format!("astryx-date-range-error-{}", current_scope_id().0));
     let mut draft = use_signal(|| None::<Draft>);
     use_effect(use_reactive((&value,), move |_| {
         draft.set(None);
@@ -64,6 +66,13 @@ pub fn DateRangeInput(
         .as_deref()
         .zip(end.as_deref())
         .is_some_and(|(start, end)| !is_allowed(start, end, min.as_deref(), max.as_deref()));
+    let described_by =
+        (has_error && !invalid_range_message.trim().is_empty()).then(|| error_id.clone());
+    let endpoint_status = has_error.then_some(FieldStatusInput {
+        status_type: InputStatusType::Error,
+        message: None,
+        message_id: None,
+    });
     let current_start = start.clone();
     let current_end = end.clone();
     let min_bound = min.clone();
@@ -105,11 +114,13 @@ pub fn DateRangeInput(
             legend { "{label}" }
             div { class: "astryx-date-range-input__segments",
                 DateInput { label: start_label, value: start, min: min.clone(), max: max.clone(), is_disabled,
+                    status: endpoint_status.clone(), described_by: described_by.clone(),
                     on_change: move |start| update.call((start, current_end.clone())), }
                 DateInput { label: end_label, value: end, min, max, is_disabled,
+                    status: endpoint_status, described_by,
                     on_change: move |end| update.call((current_start.clone(), end)), }
             }
-            div { role: "status", if has_error { "{invalid_range_message}" } }
+            div { id: error_id, role: "status", if has_error { "{invalid_range_message}" } }
         }
     }
 }
