@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8301'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8311'});
   const input = "document.querySelector('#time-input-examples input[name=time]')";
   const output = "document.getElementById('time-input-value').textContent";
   await waitFor(input);
@@ -16,8 +16,14 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await evaluate(`${input}.value = '12:34'; ${input}.dispatchEvent(new Event('change', {bubbles:true}))`);
   await waitFor(`${output} === '12:34'`);
   assert.deepEqual(await evaluate(`Array.from(new FormData(${input}.form))`), [['time', '12:34'], ['precise', '12:34:56']]);
-  await evaluate(`${input}.value = ''; ${input}.dispatchEvent(new Event('change', {bubbles:true}))`);
-  await waitFor(`${output} === 'No time selected'`);
+  const clear = `${input}.form.querySelector('button[aria-label="Clear Time"]')`;
+  assert.equal(await evaluate(`${input}.form.querySelectorAll('.astryx-input-clear-button').length`), 1);
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
+  await evaluate(`window.nativeTimeEvents = 0; for (const type of ['input','change','focus']) ${input}.addEventListener(type, () => window.nativeTimeEvents++); ${clear}.focus()`);
+  for (const type of ['keyDown','keyUp']) await send('Input.dispatchKeyEvent', {type, key:'Enter', code:'Enter', windowsVirtualKeyCode:13, ...(type === 'keyDown' ? {text:'\r'} : {})});
+  await waitFor(`${output} === 'No time selected' && ${input}.value === '' && !${clear}`);
+  assert.equal(await evaluate('window.nativeTimeEvents'), 0);
   const review = "document.querySelector('#time-input-status-example input')";
   assert.ok(await evaluate(`${review}.validity.valid && ${review}.getAttribute('aria-invalid') === 'true'`));
   assert.deepEqual(await evaluate(`${review}.getAttribute('aria-describedby').split(' ').map(id => document.getElementById(id).textContent.trim())`), ['Choose a time outside the lunch break.', 'This time overlaps the lunch break.']);

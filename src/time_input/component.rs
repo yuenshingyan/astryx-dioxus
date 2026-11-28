@@ -1,6 +1,7 @@
 use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
+use crate::field::input_clear_button::InputClearButton;
 use crate::{Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue};
 
 /// Native time-of-day field for the browser picker presentation.
@@ -25,6 +26,12 @@ pub fn TimeInput(
     #[props(default)] is_required: bool,
     #[props(default)] is_disabled: bool,
     #[props(default)] is_optional: bool,
+    /// Show a clear action when a time is set and the field is enabled.
+    #[props(default)]
+    has_clear: bool,
+    /// Accessible clear button name. Defaults to `Clear {label}`.
+    #[props(default)]
+    clear_label: Option<String>,
     #[props(default)] is_label_hidden: bool,
 ) -> Element {
     let id = use_hook(|| format!("astryx-time-input-{}", current_scope_id().0));
@@ -57,9 +64,14 @@ pub fn TimeInput(
         .flatten()
         .collect::<Vec<_>>()
         .join(" ");
+    let should_show_clear = has_clear && value.is_some() && !is_disabled;
+    let clear_label = clear_label
+        .filter(|text| !text.trim().is_empty())
+        .unwrap_or_else(|| format!("Clear {label}"));
     rsx! {
         Field { class: "astryx-time-input", label, input_id: id.clone(), is_label_hidden, is_disabled, is_required, is_optional,
             width, description, description_id, status, status_variant,
+            div { class: "astryx-time-input__entry", "data-has-clear": should_show_clear.then_some("true"),
             input { class: "astryx-time-input__control", id, r#type: "time", name: html_name,
                 value: value.unwrap_or_default(), min, max, step: if has_seconds { "1" } else { "60" },
                 required: is_required, disabled: is_disabled,
@@ -76,6 +88,13 @@ pub fn TimeInput(
                         }
                     }
                 },
+            }
+            if should_show_clear {
+                InputClearButton { label: clear_label, onclick: move |_| {
+                    // Focusing the native time input can reopen the picker on iOS.
+                    if let Some(handler) = on_change { handler.call(None); }
+                } }
+            }
             }
         }
     }
