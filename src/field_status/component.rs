@@ -82,7 +82,7 @@ impl Display for InvalidFieldStatusVariant {
 
 impl Error for InvalidFieldStatusVariant {}
 
-fn status_icon(status: InputStatusType) -> Element {
+pub(crate) fn status_icon(status: InputStatusType) -> Element {
     let path = match status {
         InputStatusType::Success => {
             "M12 3a9 9 0 100 18 9 9 0 000-18zm4.06 6.56a.75.75 0 00-1.12-1l-3.94 4.4-1.94-1.94a.75.75 0 00-1.06 1.06l2.5 2.5a.75.75 0 001.09-.03l4.47-5z"

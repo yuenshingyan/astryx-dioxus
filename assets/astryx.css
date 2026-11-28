@@ -2760,6 +2760,7 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-text-input[data-has-clear] > .astryx-text-input-control::-webkit-search-cancel-button { display: none; }
   .astryx-text-input__loading { display: flex; flex: none; margin-inline-end: var(--spacing-1); }
   .astryx-text-input > .astryx-input-clear-button { flex: none; height: 20px; margin-inline-end: var(--spacing-1); }
+  .astryx-text-input > .astryx-text-input__status-icon { margin-inline-end: var(--spacing-2); }
   .astryx-input-clear-icon { color: var(--color-icon-secondary); }
 
   .astryx-text-area {

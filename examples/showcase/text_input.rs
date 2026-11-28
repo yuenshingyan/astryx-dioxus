@@ -29,6 +29,9 @@ pub(super) fn TextInputExamples() -> Element {
                 placeholder: "Filter…", has_clear: true, is_loading: is_loading(), on_change: move |value| filter.set(value) }
             button { id: "text-input-toggle-loading", r#type: "button", onclick: move |_| is_loading.toggle(), "Toggle simulated loading" }
             h3 { "States" }
+            TextInput { label: "Display name", value: "Sam",
+                status: FieldStatusInput { status_type: InputStatusType::Success, message: Some("Display name is available.".into()), message_id: None },
+            }
             form { id: "text-input-form",
                 TextInput { id: "disabled-text-input", label: "Disabled field", value: "Unavailable", is_disabled: true, has_clear: true, html_name: "disabled" }
                 TextInput { label: "Read-only field", value: "Reference", is_read_only: true, has_clear: true, html_name: "reference" }

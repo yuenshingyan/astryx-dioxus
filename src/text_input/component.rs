@@ -2,7 +2,9 @@ use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
 use crate::field::input_clear_button::InputClearButton;
+use crate::field_status::status_icon;
 use crate::form_layout::form_layout_context::{FormLayoutContext, FormOptionality};
+use crate::icon::{Icon, IconSize};
 use crate::utils::is_renderable::is_renderable;
 use crate::{
     ElementSize, Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue,
@@ -77,6 +79,8 @@ pub fn TextInput(
     let description = description.filter(|text| !text.is_empty());
     let description_id = description.as_ref().map(|_| format!("{id}-desc"));
     let severity = status.as_ref().map(|status| status.status_type);
+    // Detached messages supply their own glyph through FieldStatus.
+    let attached_status = severity.filter(|_| status_variant == FieldStatusPlacement::Attached);
     let status_id = status
         .as_ref()
         .filter(|status| status.message.as_ref().is_some_and(|text| !text.is_empty()))
@@ -138,6 +142,10 @@ pub fn TextInput(
                             }
                         },
                     }
+                }
+                if let Some(severity) = attached_status {
+                    Icon { icon: status_icon(severity), size: IconSize::Small,
+                        class: "astryx-text-input__status-icon", color: "var(--_text-input-border)" }
                 }
             }
         }
