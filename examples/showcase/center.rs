@@ -1,4 +1,4 @@
-use dioxus::events::onmounted;
+use dioxus::events::{onclick, onmounted};
 use dioxus::prelude::*;
 #[cfg(target_arch = "wasm32")]
 use web_sys::Element as WebElement;
@@ -115,8 +115,7 @@ pub(super) fn CenterExamples() -> Element {
                         node.set_attribute("data-center-mounted", "true")
                             .expect("mark the mounted Center fixture node");
                     }
-                })],
-                onclick: move |_| root_clicks += 1,
+                }), onclick(move |_| root_clicks += 1)],
                 "Native root"
             }
             output { id: "center-native-clicks", "{root_clicks}" }
