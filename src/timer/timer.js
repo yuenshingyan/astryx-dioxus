@@ -1,13 +1,19 @@
 const [id, initialConfig] = await dioxus.recv();
 const node = document.querySelector(`[data-astryx-timer-id="${CSS.escape(id)}"]`);
-if (!node) return;
 const mountedAt = Date.now();
 const pad = value => String(value).padStart(2, '0');
 let timeout;
+let activeStart;
+let activeClock;
 
 const schedule = ([start, isClock]) => {
-  clearTimeout(timeout);
   const startTime = start ?? mountedAt;
+  // The mount callback and the reactive effect may send the same config.
+  // Keep the pending boundary instead of waking again for the same reading.
+  if (startTime === activeStart && isClock === activeClock) return;
+  activeStart = startTime;
+  activeClock = isClock;
+  clearTimeout(timeout);
   const tick = () => {
     if (!node.isConnected) return;
     const now = Date.now();
@@ -33,13 +39,16 @@ const schedule = ([start, isClock]) => {
   tick();
 };
 
-try {
-  schedule(initialConfig);
-  while (true) {
-    const config = await dioxus.recv();
-    if (config === false) break;
-    schedule(config);
+// Fall through to the evaluator's channel close if mount lookup fails.
+if (node) {
+  try {
+    schedule(initialConfig);
+    while (true) {
+      const config = await dioxus.recv();
+      if (config === false) break;
+      schedule(config);
+    }
+  } finally {
+    clearTimeout(timeout);
   }
-} finally {
-  clearTimeout(timeout);
 }

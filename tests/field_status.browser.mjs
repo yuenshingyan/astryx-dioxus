@@ -32,8 +32,29 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(`${current}.textContent.trim() === ''`);
   await click();
   await waitFor(`${current} === null`);
+
+  // Mount and update the same visible description inside an existing polite log.
+  await waitFor(`!${channel('polite')}.textContent && !${channel('assertive')}.textContent`);
+  const controlGroup = `document.getElementById('field-status-input').parentElement`;
+  await evaluate(`${controlGroup}.setAttribute('role', 'log')`);
+  const assertOnlyLogOwnsMessage = async () => {
+    await evaluate('new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))');
+    assert.deepEqual(await evaluate(`[${current}.getAttribute('role'), ${current}.getAttribute('aria-live'),
+      ${channel('polite')}.textContent, ${channel('assertive')}.textContent]`), [null, null, '', '']);
+  };
+  await click(); // phase 0: still absent
+  await click(); // phase 1: conditional warning mount
+  await waitFor(`${current}?.textContent === 'Review your postal code'`);
+  await assertOnlyLogOwnsMessage();
+  await click(); // phase 2: same text, now an error
+  await waitFor(`${current}.dataset.type === 'error'`);
+  await assertOnlyLogOwnsMessage();
+  await evaluate(`${controlGroup}.removeAttribute('role')`);
+  await click();
+  await waitFor(`${channel('assertive')}.textContent === 'Enter a valid postal code'`);
+
   await send('Emulation.setEmulatedMedia', {features: [{name: 'forced-colors', value: 'active'}]});
   assert.equal(await evaluate(`getComputedStyle(document.querySelector('.astryx-field-status')).outlineStyle`), 'solid');
   assert.deepEqual(exceptions, []);
-  console.log('FieldStatus: both arrangements, decorative glyph, overlap, priority, mount and message changes, empty status, and forced colors passed');
+  console.log('FieldStatus: placement, decorative glyph, shared and enclosing live-region ownership, and forced colors passed');
 });

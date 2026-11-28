@@ -8,7 +8,7 @@ pub(super) fn SideNavExamples() -> Element {
         section { id: "side-nav-examples",
             h2 { "SideNav" }
             div { style: "block-size:240px",
-                SideNav { id: "workspace-side-nav", label: "Workspace navigation",
+                SideNav { id: "workspace-side-nav", "aria-label": "Workspace navigation",
                     header: rsx! { strong { "Workspace" } },
                     footer_icons: rsx! { Button { label: "Preferences", variant: ButtonVariant::Ghost } },
                     SideNavSection { title: "Main",

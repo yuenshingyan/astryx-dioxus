@@ -3698,8 +3698,16 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-list-item__marker { display: flex; align-items: center; justify-content: center; flex: none; inline-size: var(--spacing-4); color: var(--color-text-primary); }
   .astryx-list-item__marker:is([data-kind="disc"], [data-kind="circle"])::before { content: ""; box-sizing: border-box; inline-size: 6px; block-size: 6px; border-radius: 50%; border: 1px solid currentColor; }
   .astryx-list-item__marker[data-kind="disc"]::before { background: currentColor; }
-  .astryx-list-item__marker[data-kind="decimal"] { inline-size: auto; min-inline-size: var(--spacing-4); justify-content: flex-end; font-variant-numeric: tabular-nums; }
-  .astryx-list-item__marker[data-kind="decimal"]::before { content: counter(astryx-list) "."; }
+  .astryx-list-item__marker[data-kind="decimal"] {
+    inline-size: auto; min-inline-size: var(--spacing-4); justify-content: flex-end;
+    font-size: var(--text-body-size); line-height: var(--text-body-leading);
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .astryx-list-item__marker[data-kind="decimal"]::before {
+    content: counter(astryx-list) ".";
+    /* Use the row's inset before a long counter pushes the label inward. */
+    margin-inline-start: calc(-1 * var(--_item-inset-inline));
+  }
   .astryx-list:is([data-edge="outset"], [data-edge="bleed"]) {
     margin-inline-start: calc(-1 * var(--container-padding-inline-start, 0px));
     margin-inline-end: calc(-1 * var(--container-padding-inline-end, 0px));

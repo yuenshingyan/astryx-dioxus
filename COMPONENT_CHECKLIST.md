@@ -2586,6 +2586,8 @@ These changes are available for review. The table records focused evidence, not 
 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/CheckboxList/CheckboxList.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/CheckboxList).
 
+  - [Port evidence and remaining gates](docs/checkbox-list-port.md): the native group keeps caller-owned rows; detached status references fall back to a generated ID when the supplied ID is unusable.
+
   - **Choices and group modes**
     - [ ] `density`: `compact`, `balanced` (default), `spacious`; `hasDividers=false` default.
     - [ ] Collection mode value string array/onChange; without value, children may manage direct standalone checked state. No group defaultValue documented.
@@ -3073,6 +3075,8 @@ These changes are available for review. The table records focused evidence, not 
     - [ ] `HStackShowcase` — **HStack**: varying gaps/alignments.
     - [ ] Source example: HStack with gap 2 and sibling items; gap 2 is example data, not a documented universal default.
 
+  - [Verification and remaining gates](docs/h-stack-port.md): native-root and sizing SSR checks pass; live native mounting, keyboard activation, and rendered template comparisons remain open.
+
 - [ ] **[Layout Content](https://astryx.atmeta.com/components/LayoutContent)**
 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Layout/LayoutContent.doc.mjs). Templates in `LayoutContent/` under [pinned root](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components).
@@ -3152,7 +3156,7 @@ These changes are available for review. The table records focused evidence, not 
   - Sources: [owning English Stack family doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Stack/Stack.doc.mjs), [original VStack TSX](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/VStack/VStack.tsx), [Stack implementation](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Stack/Stack.tsx).
 
   - **Direction, alignment, and wrapping**
-    - [ ] Fixed vertical/top-to-bottom wrapper; direction omitted from VStackProps, not a horizontal/vertical variant selector.
+    - [x] Fixed vertical/top-to-bottom wrapper; direction omitted from VStackProps, not a horizontal/vertical variant selector. Verified by pinned source, focused SSR, and prior Chrome column measurements.
     - [ ] `hAlign` cross-axis: `start`, `center`, `end`, `stretch` (documented default).
     - [ ] `vAlign` main-axis: `start`, `center`, `end`, `between`, `around`, `evenly`.
     - [ ] `align` cross-axis alias: `start`, `center`, `end`, `stretch`; `justify` main-axis alias: `start`, `center`, `end`, `between`, `around`, `evenly`; explicit hAlign/vAlign override aliases.
@@ -3171,7 +3175,7 @@ These changes are available for review. The table records focused evidence, not 
     - [ ] `isScrollable`: `false` (default) / `true` overflow auto; when flex child must scroll use parent StackItem fill/scrollable min-size reset.
     - [ ] Polymorphic `as` default `div`, arbitrary children; optional StackItem controls individual fill/static/cross-alignment behavior rather than adding VStack variants.
     - [ ] StyleX layout customization, className, style and forwarded ref supported; family theme target `astryx-stack` reflects direction/gap/wrap. No color/elevation/type variants documented.
-    - [ ] Family playground: three Cards with padding `3` at gap `2`; unnamed source example: two Items inside VStack gap `2`.
+    - [ ] Family playground: three Cards with padding `3` at gap `2`; unnamed source example: two Items inside VStack gap `2`. Both are in the showcase; live gap and Card inset checks remain pending. See [VStack port notes](docs/v-stack-port.md).
   - **Every associated template**
     - [ ] **VStack — Basic** (`VStackBasic`): heading and paragraphs with consistent top-to-bottom gap. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VStack/VStackBasic.doc.mjs).
     - [ ] **VStack** / display name **V Stack** showcase (`VStackShowcase`): vertically arranged items with different gaps, composed with Layout/Badge/Text; metadata does not enumerate additional gap presets. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VStack/VStackShowcase.doc.mjs).
