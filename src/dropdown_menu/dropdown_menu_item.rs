@@ -47,22 +47,27 @@ pub fn DropdownMenuItem(
     let is_link = href.is_some();
     let href = href.filter(|url| !is_disabled && is_safe_url(url));
     let is_disabled = is_disabled || (is_link && href.is_none());
+    let mut mouse_down_handlers = Vec::new();
     let mut attributes = attributes
         .into_iter()
-        .filter(|attr| {
-            !matches!(
-                attr.name,
-                "role"
-                    | "tabindex"
-                    | "aria-disabled"
-                    | "onclick"
-                    | "data-variant"
-                    | "data-astryx-menu-keep-open"
-                    | "href"
-                    | "target"
-                    | "rel"
-                    | "draggable"
-            ) && !(is_disabled && attr.name == "onmousedown")
+        .filter_map(|attr| match attr.name {
+            "role"
+            | "tabindex"
+            | "aria-disabled"
+            | "onclick"
+            | "data-variant"
+            | "data-astryx-menu-keep-open"
+            | "href"
+            | "target"
+            | "rel"
+            | "draggable" => None,
+            "onmousedown" if is_disabled => {
+                if let AttributeValue::Listener(callback) = attr.value {
+                    mouse_down_handlers.push(callback);
+                }
+                None
+            }
+            _ => Some(attr),
         })
         .collect::<Vec<_>>();
     attributes.extend([
@@ -90,7 +95,13 @@ pub fn DropdownMenuItem(
         attributes.push(Attribute::new("aria-disabled", "true", None, false));
         attributes.push(Attribute::new(
             "onmousedown",
-            AttributeValue::listener(|event: Event<PlatformEventData>| event.prevent_default()),
+            AttributeValue::listener(move |event: Event<PlatformEventData>| {
+                // Honor the host listener before suppressing pointer focus, without blocking keyboard focus.
+                for callback in &mouse_down_handlers {
+                    callback.call(event.clone().into_any());
+                }
+                event.prevent_default();
+            }),
             None,
             false,
         ));
