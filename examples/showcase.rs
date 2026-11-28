@@ -273,6 +273,8 @@ mod slider;
 mod spinner;
 #[path = "showcase/stack.rs"]
 mod stack;
+#[path = "showcase/stack_item.rs"]
+mod stack_item;
 #[path = "showcase/status_dot.rs"]
 mod status_dot;
 #[path = "showcase/stepper.rs"]
@@ -480,7 +482,8 @@ use side_nav_section::SideNavSectionExamples;
 use skeleton::SkeletonExamples;
 use slider::SliderExamples;
 use spinner::SpinnerExamples;
-use stack::{StackExamples, StackItemExamples};
+use stack::StackExamples;
+use stack_item::StackItemExamples;
 use status_dot::StatusDotExamples;
 use stepper::StepperExamples;
 use switch::SwitchExamples;

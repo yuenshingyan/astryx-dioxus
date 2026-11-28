@@ -10,15 +10,12 @@ use dioxus::prelude::*;
 mod avatar;
 #[path = "../../src/tooltip/pattern_tooltip.rs"]
 mod pattern_tooltip;
-#[path = "stack_item.rs"]
-mod stack_item;
 #[path = "../../src/toast/pattern.rs"]
 mod toast;
 #[path = "../../src/token/pattern.rs"]
 mod token;
 
 use avatar::PatternAvatar;
-pub use stack_item::StackItemExamples;
 use toast::{DemoToastViewport, use_demo_toasts};
 use token::PatternToken;
 const DEMO_CSS: &str = "
