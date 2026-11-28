@@ -3020,14 +3020,15 @@ These changes are available for review. The table records focused evidence, not 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Center/Center.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Center).
 
   - **Layout choices**
-    - [ ] `axis`: `both` (default), `horizontal`, `vertical`; single-axis behavior follows logical flex main/cross axes in vertical writing, not guaranteed physical names.
-    - [ ] `isInline=false` default versus inline-flex for inline icon/badge content.
-    - [ ] Each of `padding`, `paddingInline`, `paddingInlineStart`, `paddingInlineEnd`, `paddingBlock`, `paddingBlockStart`, `paddingBlockEnd` accepts `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; axis overrides all-padding, edge overrides axis.
-    - [ ] Children and arbitrary width/height/maxWidth/minHeight; selected axis needs available space. Layout only, adds no role/name; children retain semantics.
+    - [x] `axis`: `both` (default), `horizontal`, `vertical`; single-axis behavior follows logical flex main/cross axes in vertical writing, not guaranteed physical names.
+    - [x] `isInline=false` default versus inline-flex for inline icon/badge content.
+    - [x] Each of `padding`, `paddingInline`, `paddingInlineStart`, `paddingInlineEnd`, `paddingBlock`, `paddingBlockStart`, `paddingBlockEnd` accepts `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; axis overrides all-padding, edge overrides axis.
+    - [ ] Children and arbitrary width/height/maxWidth/minHeight; selected axis needs available space. Layout only, adds no role/name; children retain semantics. SSR covers semantics and size serialization; browser verification of the CSS-wide sizing fix is pending.
   - **Templates**
-    - [ ] **Center — Horizontal Center** (`CenterHorizontal.doc.mjs`): formatting controls, writing-mode caveat.
-    - [ ] **Center — Vertical & Horizontal Center** (`CenterInsideACard.doc.mjs`): fixed-height empty state icon/heading/description.
-    - [ ] **Center** (`CenterShowcase.doc.mjs`): both-axis fixed-height content.
+    - [x] **Center — Horizontal Center** (`CenterHorizontal.doc.mjs`): formatting controls, writing-mode caveat.
+    - [x] **Center — Vertical & Horizontal Center** (`CenterInsideACard.doc.mjs`): fixed-height empty state with icon, bold body-text title, and description.
+    - [x] **Center** (`CenterShowcase.doc.mjs`): both-axis fixed-height content.
+  - [Verification and remaining closure evidence](docs/center-port.md): pinned template composition, SSR and bundled declarations; template checks do not imply published visual parity.
 
 - [ ] **[Grid Span](https://astryx.atmeta.com/components/GridSpan)**
 

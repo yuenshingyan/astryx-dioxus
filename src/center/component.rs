@@ -83,6 +83,10 @@ pub fn Center(
     #[props(extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 ) -> Element {
+    let mut root_class = String::from("astryx-center");
+    if is_inline {
+        root_class.push_str(" astryx-center--inline");
+    }
     let mut css = String::new();
     for (property, value) in [
         ("width", width),
@@ -91,7 +95,17 @@ pub fn Center(
         ("min-height", min_height),
     ] {
         if let Some(value) = value {
-            let _ = write!(css, "--_center-{property}:{};", value.as_css()?);
+            let css_value = value.as_css()?;
+            // A CSS-wide keyword must act on the dimension, not on its custom property.
+            if let Some(keyword) = value.css_wide_keyword() {
+                let _ = write!(
+                    root_class,
+                    " astryx-center--{property}-{}",
+                    keyword.as_str()
+                );
+            } else {
+                let _ = write!(css, "--_center-{property}:{css_value};");
+            }
         }
     }
     for (edge, step) in [
@@ -114,18 +128,13 @@ pub fn Center(
         }
     }
     css.push_str(&style);
-    let modifier = if is_inline {
-        " astryx-center--inline"
-    } else {
-        ""
-    };
     let attributes: Vec<_> = attributes
         .into_iter()
         .filter(|attribute| !matches!(attribute.name, "class" | "style" | "data-axis"))
         .collect();
     rsx! {
         div {
-            class: "astryx-center{modifier} {class}",
+            class: "{root_class} {class}",
             "data-axis": axis.as_str(),
             style: (!css.is_empty()).then_some(css),
             ..attributes,

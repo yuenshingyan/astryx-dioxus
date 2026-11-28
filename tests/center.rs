@@ -2,6 +2,11 @@ use dioxus::prelude::*;
 
 use astryx_dioxus::{Center, CenterAxis, SizeValue, SpacingStep};
 
+#[path = "../examples/showcase/center.rs"]
+mod showcase;
+
+use showcase::CenterExamples;
+
 fn render(app: fn() -> Element) -> String {
     let mut dom = VirtualDom::new(app);
     dom.rebuild_in_place();
@@ -16,9 +21,14 @@ fn native_root_preserves_semantics_and_order() {
         } }
     });
     assert_eq!(html.matches("<div").count(), 1);
+    assert!(html.starts_with("<div"), "{html}");
+    assert_eq!(html.matches("data-axis=").count(), 1);
     assert!(html.contains("data-axis=\"both\""));
+    assert!(html.contains("id=\"root\""));
     assert!(html.contains("data-extra=\"kept\""));
-    assert!(html.find("First") < html.find("Second"));
+    let first = html.find("<button").expect("native button");
+    let second = html.find("<a href=\"#root\"").expect("native link");
+    assert!(first < second, "{html}");
     for absent in [
         "role=",
         "tabindex=",
@@ -56,5 +66,96 @@ fn local_padding_prefers_edge_then_axis_then_all_and_keeps_zero() {
         "width:50%",
     ] {
         assert!(html.contains(expected), "{html}");
+    }
+}
+
+#[test]
+fn padding_axis_and_edge_overrides_are_independent() {
+    let html = render(|| {
+        rsx! {
+            Center { padding: SpacingStep::Ten, padding_inline: SpacingStep::Half,
+                padding_block: SpacingStep::OneAndHalf,
+                padding_inline_end: SpacingStep::Eight, padding_block_start: SpacingStep::Zero,
+                "Content"
+            }
+        }
+    });
+    for (edge, step) in [
+        ("inline-start", "0-5"),
+        ("inline-end", "8"),
+        ("block-start", "0"),
+        ("block-end", "1-5"),
+    ] {
+        assert!(
+            html.contains(&format!("--_center-padding-{edge}:var(--spacing-{step});")),
+            "{html}"
+        );
+    }
+    assert!(!html.contains("--container-padding"), "{html}");
+}
+
+#[test]
+fn css_wide_keywords_apply_to_dimensions_not_custom_properties() {
+    let html = render(|| {
+        rsx! {
+            Center { axis: CenterAxis::Horizontal, class: "caller",
+                width: SizeValue::from(" /* comment */ INHERIT "),
+                height: SizeValue::from("initial"),
+                max_width: SizeValue::from("revert-layer"),
+                min_height: SizeValue::from("unset"),
+                style: "width:50%", "Content"
+            }
+            Center { width: SizeValue::from("revert"), "Content" }
+        }
+    });
+    for modifier in [
+        "width-inherit",
+        "height-initial",
+        "max-width-revert-layer",
+        "min-height-unset",
+        "width-revert",
+    ] {
+        assert!(
+            html.contains(&format!("astryx-center--{modifier}")),
+            "{html}"
+        );
+    }
+    assert!(!html.contains("--_center-"), "{html}");
+    assert!(html.contains("data-axis=\"horizontal\""), "{html}");
+    assert!(html.contains("style=\"width:50%\""), "{html}");
+}
+
+#[test]
+fn pinned_patterns_are_present_in_the_showcase() {
+    let html = render(CenterExamples);
+    for expected in [
+        "id=\"center-formatting\"",
+        "id=\"center-empty-state\"",
+        "id=\"center-showcase\"",
+        "No messages yet",
+        "Messages from your team will appear here.",
+        "Centered content",
+        "Horizontally and vertically aligned.",
+    ] {
+        assert!(html.contains(expected), "missing {expected}");
+    }
+    for label in ["Bold", "Italic", "Underline", "List", "Link", "Image"] {
+        assert!(
+            html.contains(&format!("aria-label=\"{label}\"")),
+            "missing {label}"
+        );
+    }
+}
+
+#[test]
+fn caller_can_opt_into_root_semantics() {
+    let html = render(|| {
+        rsx! {
+            Center { role: "group", aria_label: "Tools", tabindex: "-1", "Content" }
+        }
+    });
+    let root = html.split_once('>').expect("root start tag").0;
+    for expected in ["role=\"group\"", "aria-label=\"Tools\"", "tabindex=\"-1\""] {
+        assert!(root.contains(expected), "{html}");
     }
 }

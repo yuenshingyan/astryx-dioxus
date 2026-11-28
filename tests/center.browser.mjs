@@ -38,5 +38,31 @@ await withTarget(async ({send, evaluate, waitFor}) => {
     return result;
   })()`);
   assert.deepEqual(modes, Array.from({length:4}, () => ['center','normal']));
-  console.log('Center: three patterns match source-derived flex geometry; formatting names and released logical axis behavior passed');
+  const states = await evaluate(`(() => {
+    const vertical = document.getElementById('center-vertical');
+    const result = [];
+    for (const mode of ['horizontal-tb', 'vertical-rl']) for (const dir of ['ltr', 'rtl']) {
+      vertical.style.writingMode = mode;
+      vertical.dir = dir;
+      const s = getComputedStyle(vertical);
+      result.push([s.justifyContent, s.alignItems, s.paddingTop, s.paddingRight, s.paddingBottom, s.paddingLeft]);
+    }
+    const inline = getComputedStyle(document.getElementById('center-inline'));
+    const inherit = document.getElementById('center-inherited-size');
+    const dimensions = node => {
+      const s = getComputedStyle(node);
+      return [s.width, s.maxWidth, s.minHeight];
+    };
+    return { result, inline: [inline.display, inline.justifyContent, inline.alignItems],
+      inherit: dimensions(inherit), parent: dimensions(inherit.parentElement),
+      rem: parseFloat(getComputedStyle(document.documentElement).fontSize) };
+  })()`);
+  const padding = (...factors) => ['normal', 'center', ...factors.map(factor => `${factor * states.rem}px`)];
+  assert.deepEqual(states.result, [
+    padding(.25, .5, .75, 0), padding(.25, 0, .75, .5),
+    padding(0, .25, .5, .75), padding(.5, .25, 0, .75),
+  ]);
+  assert.deepEqual(states.inline, ['inline-flex', 'center', 'center']);
+  assert.deepEqual(states.inherit, states.parent);
+  console.log('Center: three patterns match source-derived flex geometry; axis, padding, inline display and inherited dimensions passed');
 });
