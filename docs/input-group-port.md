@@ -4,6 +4,10 @@ InputGroup composes Field, InputGroupText, and caller-owned controls into a name
 
 Source: Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`, `InputGroup/InputGroup.tsx` (`4b5c840d460900acadcc4388abb7dbccb05d736f`), its spec (`25c0a3e5e0e75fe6d0b7e2d5f7a9c9681bc5220a`), `groupStyles.ts`, and both catalog templates. The examples use native inputs in place of TextInput. Per-input label/description context, production input integrations, and label help remain pending. The row retains the pinned implementation's fixed height. Published visual parity and manual assistive technology were not verified; the checklist remains open.
 
+### Disabled-state follow-up
+
+The pinned source computes disabled state from the prop and the enclosing group (FR6). InputGroup now captures the enclosing Dioxus context before providing its own and reads the enclosing signal on every render. This prevents a rerender from treating the row's own disabled state as inherited. A focused VirtualDom regression toggles the same outer group on and off and checks that the nested group and its Button recover, an explicitly disabled Button stays disabled, and the caller-owned input is unaffected. This verifies rendered state, not browser activation or assistive-technology speech.
+
 ### Description follow-up
 
 Both reference files were compared byte-for-byte against the pinned commit. The pinned component generates a status message ID and lists it after the helper description ID (FR1, ORD2). The Rust row now generates that fallback when its optional custom status ID is empty or contains ASCII whitespace, and still preserves valid explicit IDs. Focused SSR coverage verifies that the ordered references resolve to the helper text and detached message. Child controls and shared Field behavior are unchanged.
