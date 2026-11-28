@@ -37,6 +37,13 @@ const key = event => {
     menu.hidePopover();
   }
 };
+// Consume held activation keys before the shared menu's document listener.
+const preventRepeatActivation = event => {
+  if (isOpen() && event.repeat && (event.key === 'Enter' || event.key === ' ') &&
+      event.target.matches?.(selector) && event.target.closest('[role="menu"]') === menu) {
+    event.preventDefault();
+  }
+};
 const select = event => {
   if (!isOpen() || event.defaultPrevented) return;
   const row = event.target.closest?.(selector);
@@ -52,6 +59,7 @@ const toggle = event => dioxus.send(event.newState === 'open');
 const observer = new MutationObserver(() => { if (isDisabled() && isOpen()) menu.hidePopover(); });
 observer.observe(trigger, {attributes: true, attributeFilter: ['data-context-menu-disabled']});
 trigger.addEventListener('contextmenu', context);
+menu.addEventListener('keydown', preventRepeatActivation);
 menu.addEventListener('beforetoggle', beforeToggle);
 menu.addEventListener('toggle', toggle);
 document.addEventListener('keydown', key);
@@ -60,6 +68,7 @@ try { await dioxus.recv(); }
 finally {
   observer.disconnect();
   trigger.removeEventListener('contextmenu', context);
+  menu.removeEventListener('keydown', preventRepeatActivation);
   menu.removeEventListener('beforetoggle', beforeToggle);
   menu.removeEventListener('toggle', toggle);
   document.removeEventListener('keydown', key);

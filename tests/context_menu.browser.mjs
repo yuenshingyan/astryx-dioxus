@@ -29,11 +29,21 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   for (const type of ['mousePressed', 'mouseReleased']) await send('Input.dispatchMouseEvent', {type, x, y, button:'right', clickCount:1});
   await waitFor(open);
   assert.deepEqual(await evaluate(`(() => { const r = ${menu}.getBoundingClientRect(); return [r.left, r.top]; })()`), [x,y]);
-  await evaluate(`${row(2)}.focus()`);
-  await key('Enter', 13);
-  await waitFor(`${open} && document.activeElement === ${row(2)} && document.querySelector('#context-menu-examples output').textContent === 'Paste'`);
+  await evaluate(`${row(2)}.focus(); window.pasteClicks = 0;
+    ${row(2)}.addEventListener('click', () => window.pasteClicks++)`);
+  // Paste stays open, so an unguarded repeat would activate the same row again.
+  for (const [i, [key, code, windowsVirtualKeyCode]] of [['Enter', 'Enter', 13], [' ', 'Space', 32]].entries()) {
+    const input = {key, code, windowsVirtualKeyCode};
+    await send('Input.dispatchKeyEvent', {type: 'keyDown', ...input});
+    for (let repeat = 0; repeat < 2; repeat++) {
+      await send('Input.dispatchKeyEvent', {type: 'keyDown', autoRepeat: true, ...input});
+    }
+    await send('Input.dispatchKeyEvent', {type: 'keyUp', ...input});
+    assert.equal(await evaluate('window.pasteClicks'), i + 1, `${code} should activate only once per press`);
+    await waitFor(`${open} && document.activeElement === ${row(2)} && document.querySelector('#context-menu-examples output').textContent === 'Paste'`);
+  }
   await key('Escape', 27);
   await waitFor(`!${open} && document.activeElement === ${trigger}`);
   assert.deepEqual(exceptions, []);
-  console.log('ContextMenu: named popup, right-click placement, Shift+F10, keyboard selection and focus return passed');
+  console.log('ContextMenu: named popup, right-click placement, Shift+F10, keyboard selection, repeat guard and focus return passed');
 });
