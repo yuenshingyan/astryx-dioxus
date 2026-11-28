@@ -11,3 +11,9 @@ All five standard Rust checks passed, along with the focused SSR test and three 
 Pinned FR7: `is_required` now exposes `aria-required="true"` on the native checkbox alongside the existing `required` attribute. An unmarked checkbox has neither attribute. `aria-invalid` remains status-driven (`false` for a required checkbox without an error), without bypassing native constraint validation or changing form submission or caller-owned state.
 
 The focused `explicit_required_preserves_native_validation_and_reports_status` SSR test passed, covering unmarked, required without error, and required with error markup. Formatting and style bundle verification passed. Browser submission and accessibility-tree behavior were not rechecked for this follow-up.
+
+## Enabled-row hover follow-up
+
+The pinned TSX applies `indicatorScope` to the inner row whenever the checkbox is not disabled, including while loading. This port uses the existing `data-astryx-indicator-scope` selector on that row; no styles, activation guards, or indicator APIs changed. The supplied TSX and spec match the pinned blob IDs above.
+
+The focused SSR suite passed (3 tests). The new regression covers all four disabled/loading combinations: scope placement, disabled-state form exclusion attributes, and busy/Spinner markup. The browser regression moves the pointer over the label rather than the native input, checks that enabled and loading rows tint but disabled rows do not, and exercises click/Space blocking and recovery from loading. Run `node tests/checkbox_input.browser.mjs` against the showcase and Chrome CDP to verify that behavior. Only its syntax was checked here; the integrator owns the browser run. No visual comparison or spoken accessibility parity was verified. Host press treatment and replacement-root focus remain outside this follow-up.
