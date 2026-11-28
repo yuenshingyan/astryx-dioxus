@@ -67,6 +67,35 @@ fn disabled_and_action_forms_have_distinct_native_semantics() {
 }
 
 #[test]
+fn caller_tabindex_survives_disabled_element_selection() {
+    for (is_disabled, tabindex, has_action, tag) in [
+        (false, -1, false, "a"),
+        (true, -1, false, "a"),
+        (false, 2, true, "a"),
+        (true, 2, true, "button"),
+    ] {
+        let mut dom = VirtualDom::new_with_props(
+            |(is_disabled, tabindex, has_action): (bool, i32, bool)| {
+                let onclick = has_action.then(|| EventHandler::new(|_: MouseEvent| {}));
+                rsx! { Link { href: "/docs", is_disabled, onclick, tabindex, "Documentation" } }
+            },
+            (is_disabled, tabindex, has_action),
+        );
+        dom.rebuild_in_place();
+        let html = dioxus_ssr::render(&dom);
+        let (root, _) = html.split_once('>').expect("Link should render a root");
+        assert!(root.starts_with(&format!("<{tag} ")), "{html}");
+        assert_eq!(
+            root.split_ascii_whitespace()
+                .filter_map(|attr| attr.strip_prefix("tabindex="))
+                .collect::<Vec<_>>(),
+            [tabindex.to_string()],
+            "{html}"
+        );
+    }
+}
+
+#[test]
 fn provider_explicit_native_fallback_and_absent_destination_are_preserved() {
     let html = render(|| {
         rsx! {

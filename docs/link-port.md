@@ -88,6 +88,21 @@ Rust tests cover semantic forms/precedence/providers, actual None handoff, URL r
 
 `tests/fixtures/link-neutral-reference.json` records the actual catalog's eight component-example links in Neutral light/dark. Tests compare label/href/target/rel, root/label paint, font/leading/weight, display, underline, gap, dimensions, and external-icon geometry. Only width permits 1/32 CSS pixel; other recorded properties match exactly. The registered external SVG viewBox/stroke/paths are also checked against the actual catalog artwork. The catalog's displayed release is not asserted identical to the pinned commit. The two hook templates are checked against their pinned sources and observable behavior, not whole-site screenshot equality. Tests do not depend on live services.
 
+### FR5 / AR2 follow-up: caller tab order
+
+The pinned spec identifies caller `tabIndex` as an evidence gap. The port
+already preserves it, so no runtime change was needed. The focused SSR
+regression `caller_tabindex_survives_disabled_element_selection` checks that
+`tabindex=-1` survives the enabled-to-disabled anchor form and that `tabindex=2`
+survives the enabled anchor to disabled button form when an action is supplied.
+Each rendered root must have exactly one `tabindex` with the caller's value.
+
+This verifies the rendered attribute in each state, not browser Tab traversal
+or live focus. The port intentionally restores focus across router
+replacements, unlike the pinned upstream's documented focus-loss gap; the
+existing browser assertions for that behavior were not rerun in this follow-up.
+Destination validation and LinkProvider handoff are unchanged.
+
 ## Contrast and verification boundaries
 
 `node tests/link.contrast.mjs` (or `--json`) audits 96 active color/state/backdrop cases: rest, hover, fine-pointer pressed and coarse-pointer pressed, six colors, light/dark, page/surface. Inherit assumes the default primary parent. There are **19 text failures below 4.5:1**, including active disabled-color paint and some accent pressed cases; **0/24 focus/backdrop failures below 3:1**. Merely choosing color=disabled does not make a link unavailable or exempt it from contrast.
