@@ -1,8 +1,12 @@
+use dioxus::core::AttributeValue;
 use dioxus::prelude::*;
 
 use crate::{Button, ButtonVariant, Icon, use_app_shell_mobile};
 
 /// Opens or closes the navigation surface owned by the mobile shell.
+///
+/// `label` defaults to "Open navigation". Pass an empty `label` to use a
+/// caller-supplied `aria-label` instead.
 #[component]
 pub fn MobileNavToggle(
     #[props(default = "Open navigation".to_owned())] label: String,
@@ -42,6 +46,19 @@ pub fn MobileNavToggle(
             false,
         ));
     }
+    // The pinned Button leaves the host aria-label in place for an empty label.
+    // The Rust Button derives its icon-only name from label, so pass the fallback there.
+    let label = if label.is_empty() {
+        attributes
+            .iter()
+            .find_map(|attr| match &attr.value {
+                AttributeValue::Text(value) if attr.name == "aria-label" => Some(value.clone()),
+                _ => None,
+            })
+            .unwrap_or(label)
+    } else {
+        label
+    };
     let icon = children.unwrap_or_else(|| rsx! {
         Icon { icon: rsx! { svg { view_box: "0 0 24 24", fill: "none", stroke: "currentColor", stroke_width: "2", stroke_linecap: "round", path { d: "M4 6h16M4 12h16M4 18h16" } } } }
     });
