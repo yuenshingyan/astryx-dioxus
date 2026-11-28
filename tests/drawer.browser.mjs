@@ -6,6 +6,7 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.setBlockedURLs', {urls: ['https://*']});
   await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8243'});
   const trigger = "document.getElementById('drawer-preview-trigger')";
+  const editTrigger = "document.getElementById('drawer-preview-edit-trigger')";
   const drawer = "document.querySelector('#drawer-examples dialog:modal')";
   await waitFor(trigger);
   await send('Page.bringToFront');
@@ -18,10 +19,10 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Input.dispatchKeyEvent', {type: 'keyDown', key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27});
   await send('Input.dispatchKeyEvent', {type: 'keyUp', key: 'Escape', code: 'Escape', windowsVirtualKeyCode: 27});
   await waitFor(`!${drawer} && document.activeElement === ${trigger}`);
-  await evaluate(`${trigger}.click()`);
-  await waitFor(drawer);
+  await evaluate(`${editTrigger}.focus(); ${editTrigger}.click()`);
+  await waitFor(`${drawer} && document.activeElement === ${drawer}.querySelector('#drawer-workspace-name')`);
   await evaluate(`${drawer}.querySelector('button[aria-label="Close"]').click()`);
-  await waitFor(`!${drawer} && document.activeElement === ${trigger}`);
+  await waitFor(`!${drawer} && document.activeElement === ${editTrigger}`);
   assert.deepEqual(exceptions, []);
-  console.log('Drawer: RTL edge, modal name, Escape, close action and restored focus passed');
+  console.log('Drawer: RTL edge, modal name, fallback and caller-marked focus, Escape, close action and restored focus passed');
 });
