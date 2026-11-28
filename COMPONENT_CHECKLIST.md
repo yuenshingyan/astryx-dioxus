@@ -3029,12 +3029,12 @@ These changes are available for review. The table records focused evidence, not 
     - [x] `axis`: `both` (default), `horizontal`, `vertical`; single-axis behavior follows logical flex main/cross axes in vertical writing, not guaranteed physical names.
     - [x] `isInline=false` default versus inline-flex for inline icon/badge content.
     - [x] Each of `padding`, `paddingInline`, `paddingInlineStart`, `paddingInlineEnd`, `paddingBlock`, `paddingBlockStart`, `paddingBlockEnd` accepts `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; axis overrides all-padding, edge overrides axis.
-    - [ ] Children and arbitrary width/height/maxWidth/minHeight; selected axis needs available space. Layout only, adds no role/name; children retain semantics. SSR covers semantics and size serialization; browser verification of the CSS-wide sizing fix is pending.
+    - [x] Children and arbitrary width/height/maxWidth/minHeight; selected axis needs available space. Layout only, adds no role/name; children retain semantics. SSR covers semantics and size serialization; PR #241 Chrome verified inherited width, max-width, and min-height.
   - **Templates**
     - [x] **Center — Horizontal Center** (`CenterHorizontal.doc.mjs`): formatting controls, writing-mode caveat.
     - [x] **Center — Vertical & Horizontal Center** (`CenterInsideACard.doc.mjs`): fixed-height empty state with icon, bold body-text title, and description.
     - [x] **Center** (`CenterShowcase.doc.mjs`): both-axis fixed-height content.
-  - [Verification and remaining closure evidence](docs/center-port.md): pinned template composition, SSR and bundled declarations; template checks do not imply published visual parity.
+  - [Verification and remaining closure evidence](docs/center-port.md): pinned composition, SSR and integrated Chrome layout. Independent upstream raster comparisons, manual screen-reader checks, and live root-adapter evidence remain open.
 
 - [ ] **[Grid Span](https://astryx.atmeta.com/components/GridSpan)**
 
