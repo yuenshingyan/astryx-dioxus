@@ -1741,6 +1741,7 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     background: var(--color-syntax-background, var(--color-background-muted));
     color: var(--color-text-primary);
   }
+  .astryx-code-block[data-intrinsic-width] { min-inline-size: min(100%, 400px); }
   .astryx-code-block__header {
     display: flex;
     align-items: center;

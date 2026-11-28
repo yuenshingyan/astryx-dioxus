@@ -35,6 +35,11 @@ pub(super) fn CodeBlockExamples() -> Element {
                     end_content: rsx! { a { href: "#code-block-disclosure-example", "See full excerpt" } },
                 }
             }
+            div { id: "code-block-width-example", style: "inline-size:360px;max-inline-size:100%",
+                h3 { "Preferred width" }
+                CodeBlock { code: "let answer = 42;", width: Some(240.into()) }
+                CodeBlock { code: "let answer = 42;", width: Some("100%".into()) }
+            }
             div { id: "code-block-diff-example",
                 h3 { "Unified diff" }
                 CodeBlock { code: "--- a/settings.rs\n+++ b/settings.rs\n@@ -1,2 +1,2 @@\n-const RETRIES: u8 = 2;\n+const RETRIES: u8 = 3;\n const DELAY: u8 = 5;", is_diff: true, has_line_numbers: true, has_copy_button: true }

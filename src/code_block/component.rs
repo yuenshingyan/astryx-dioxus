@@ -28,6 +28,10 @@ pub fn CodeBlock(
     disclosure_label: String,
     #[props(default)] is_wrapped: bool,
     #[props(default)] max_height: Option<SizeValue>,
+    /// Preferred inline size. When omitted, size to the source with a 400px
+    /// minimum that shrinks to fit the containing block.
+    #[props(default)]
+    width: Option<SizeValue>,
     #[props(default)] has_copy_button: bool,
     /// Caller-owned actions shown before Copy, outside the disclosure control.
     #[props(default)]
@@ -42,10 +46,20 @@ pub fn CodeBlock(
         Some(value) => format!("max-block-size:{}", value.as_css()?),
         None => String::new(),
     };
+    let width = width.map(|value| value.as_css()).transpose()?;
+    let has_intrinsic_width = width
+        .as_deref()
+        .is_none_or(|width| width.trim().eq_ignore_ascii_case("fit-content"));
     let lines: Vec<_> = code.split('\n').collect();
     let first = u64::from(start_line_number.max(1));
     let last_index = lines.len() - 1;
     let digits = (first + last_index as u64).to_string().len();
+    let mut root_style = format!("--_code-block-digits:{digits}ch;");
+    if let Some(width) = width {
+        root_style.push_str("inline-size:");
+        root_style.push_str(&width);
+        root_style.push(';');
+    }
     let copy_source = code.clone();
     let region_id = use_hook(|| format!("astryx-code-region-{}", current_scope_id().0));
     let mut collapsed = use_signal(|| false);
@@ -91,7 +105,8 @@ pub fn CodeBlock(
         (None, actions)
     };
     rsx! {
-        div { class: "astryx-code-block", style: "--_code-block-digits:{digits}ch",
+        div { class: "astryx-code-block", style: root_style,
+            "data-intrinsic-width": has_intrinsic_width.then_some("true"),
             "data-corner-actions": (!has_header && has_actions).then_some("true"),
             if has_header {
                 div { class: "astryx-code-block__header",
