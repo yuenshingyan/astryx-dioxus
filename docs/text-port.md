@@ -169,6 +169,20 @@ compiler equivalence and independently executed upstream React comparison are
 not claimed. See [presentation verification](tooltip-presentation.md) for exact
 scope, source hashes, offline network/browser evidence and regression results.
 
+## Native semantics follow-up
+
+The port already matches the pin's FR1 and AR1 for native heading semantics:
+`text_type` selects typography, and `tag` independently selects the element.
+The SSR regression in `tests/text.rs` checks display typography on a span,
+body typography on an `h1`, and display styles on `h2` and `h3`. Text reflects
+the requested type and adds neither `role` nor `aria-level`. The existing
+passthrough test still covers caller-supplied roles and native label association.
+This is markup evidence, not a browser accessibility-tree check. No production
+code or CSS changed; the approved truncation focus and tooltip behavior remain
+untouched, and Text stays open on the checklist. The focused SSR test passed
+via `cargo-slot`, along with formatting and bundle verification. No browser,
+WASM, or full-suite checks were run for this follow-up.
+
 ## Verification
 
 Run from the project root with `CARGO_INCREMENTAL=0`; cargo checks used the

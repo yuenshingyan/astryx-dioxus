@@ -148,6 +148,26 @@ fn every_native_tag_and_native_attributes() {
 }
 
 #[test]
+fn display_typography_does_not_choose_heading_semantics() {
+    for (tag, text_type, element, reflected_type) in [
+        (TextTag::Span, TextType::DISPLAY_1, "span", "display-1"),
+        (TextTag::H1, TextType::BODY, "h1", "body"),
+        (TextTag::H2, TextType::DISPLAY_1, "h2", "display-1"),
+        (TextTag::H3, TextType::DISPLAY_2, "h3", "display-2"),
+    ] {
+        let html = render_element(move || rsx! { Text { tag, text_type, "Summary" } });
+        assert!(html.starts_with(&format!("<{element} ")), "{html}");
+        assert!(html.ends_with(&format!(">Summary</{element}>")), "{html}");
+        assert!(
+            html.contains(&format!("data-type=\"{reflected_type}\"")),
+            "{html}"
+        );
+        assert!(!html.contains(" role="), "{html}");
+        assert!(!html.contains(" aria-level="), "{html}");
+    }
+}
+
+#[test]
 fn explicit_overrides_preserve_type_and_color() {
     let html = render_element(move || {
         rsx! {
