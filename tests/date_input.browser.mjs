@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8310'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8325'});
   const input = "document.querySelector('#date-input-examples input[name=start]')";
   const output = "document.getElementById('date-input-value').textContent";
   await waitFor(input);
@@ -20,6 +20,16 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   assert.equal(await evaluate(`${input}.form.querySelectorAll('.astryx-input-clear-button').length`), 1);
   await send('Page.bringToFront');
   await waitFor('document.hasFocus()');
+  const toggle = "document.getElementById('date-input-toggle-loading')";
+  const spinner = `${input}.parentElement.querySelector('.astryx-spinner[aria-hidden=true]')`;
+  await evaluate(`${input}.focus(); ${toggle}.click()`);
+  await waitFor(`${input}.getAttribute('aria-busy') === 'true' && ${spinner} && !${clear}`);
+  assert.ok(await evaluate(`${input}.readOnly && !${input}.disabled && document.activeElement === ${input}`));
+  assert.deepEqual(await evaluate(`Array.from(new FormData(${input}.form))`), [['start', '2024-02-29']]);
+  await evaluate(`${input}.value = '2024-03-01'; ${input}.dispatchEvent(new Event('change', {bubbles:true}))`);
+  assert.equal(await evaluate(output), '2024-02-29');
+  await evaluate(`${input}.value = '2024-02-29'; ${toggle}.click()`);
+  await waitFor(`!${input}.hasAttribute('aria-busy') && !${input}.readOnly && !${spinner} && ${clear}`);
   await evaluate(`window.nativeDateEvents = 0; for (const type of ['input','change']) ${input}.addEventListener(type, () => window.nativeDateEvents++); ${clear}.focus()`);
   for (const type of ['keyDown','keyUp']) await send('Input.dispatchKeyEvent', {type, key:'Enter', code:'Enter', windowsVirtualKeyCode:13, ...(type === 'keyDown' ? {text:'\r'} : {})});
   await waitFor(`${output} === 'No date selected' && document.activeElement === ${input} && !${clear}`);
