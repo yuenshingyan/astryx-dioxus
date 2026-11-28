@@ -3342,8 +3342,9 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Content and interaction modes**
     - [ ] No finite style variants documented. Logo as image/NavIcon/arbitrary node; heading; optional superheading/subheading and independent href for each; trailing headerEndContent badge/status.
-    - [ ] No menu and only headingHref: entire heading is one link. Menu with no hrefs: entire header triggers popover. Menu with hrefs: independent inline links plus chevron trigger.
-    - [ ] Menu adds automatic chevron; custom link `as` overrides LinkProvider and must accept href/className/style/children.
+    - [x] No menu: only `headingHref` on visible content yields one link for logo and text (a native anchor by default); independent destinations render separate links; trailing controls remain siblings. Static product identity does not add a page heading (SSR: `tests/top_nav_heading.rs`).
+    - [x] No menu: the custom link renderer (`render_link`, upstream `as`) overrides LinkProvider on the whole-heading and logo links; independent text links still use LinkProvider (SSR: `tests/top_nav_heading.rs`). Custom renderers are responsible for forwarding href/class/style/children.
+    - [ ] Menu without hrefs: the entire header opens the popover. Menu with hrefs: independent inline links plus a menu trigger. Both modes add an automatic chevron.
 
   - **Named templates**
     - [ ] [`TopNavHeadingBasic`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/TopNavHeading/TopNavHeadingBasic.doc.mjs) — “TopNavHeading — Basic”: linked logo heading.
