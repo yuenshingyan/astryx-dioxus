@@ -3124,7 +3124,7 @@ These changes are available for review. The table records focused evidence, not 
     - [ ] `padding`: `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; replaces automatic inset/shared gap; zero full-bleed.
     - [ ] Fixed arbitrary `width` versus `resizable` region/props, which owns width; region axis `horizontal`/`vertical` must match adjacent ResizeHandle.
     - [ ] Hook-owned region slides collapsed/expanded from handle edge; hand-built props do not slide. Both move contained focus to handle and make collapsed panel inert, also supported for adjacent panel sized from region.size.
-    - [ ] Arbitrary navigation/settings/inspector children; no finite background variants.
+    - [x] Arbitrary navigation/settings/inspector children; no finite background variants. Pinned source and public props leave content to the caller; SSR verifies direct semantic children and caller styling on the panel root.
 
   - **Named templates**
     - [ ] `LayoutPanelNavigation` — **LayoutPanel — Navigation**: fixed-width nav list beside content.
