@@ -9,6 +9,7 @@ pub(super) fn TextInputExamples() -> Element {
     let mut name = use_signal(String::new);
     let mut search = use_signal(String::new);
     let mut filter = use_signal(|| "Design systems".to_owned());
+    let mut is_loading = use_signal(|| false);
     rsx! {
         section { id: "text-input-examples",
             h2 { "TextInput" }
@@ -25,7 +26,8 @@ pub(super) fn TextInputExamples() -> Element {
             TextInput { id: "project-search", label: "Search field", value: search(), input_type: TextInputType::Search,
                 placeholder: "Search projects…", has_clear: true, on_change: move |value| search.set(value) }
             TextInput { id: "project-filter", label: "Search field with value", value: filter(), input_type: TextInputType::Search,
-                placeholder: "Filter…", has_clear: true, on_change: move |value| filter.set(value) }
+                placeholder: "Filter…", has_clear: true, is_loading: is_loading(), on_change: move |value| filter.set(value) }
+            button { id: "text-input-toggle-loading", r#type: "button", onclick: move |_| is_loading.toggle(), "Toggle simulated loading" }
             h3 { "States" }
             form { id: "text-input-form",
                 TextInput { id: "disabled-text-input", label: "Disabled field", value: "Unavailable", is_disabled: true, has_clear: true, html_name: "disabled" }

@@ -6,7 +6,7 @@ use crate::form_layout::form_layout_context::{FormLayoutContext, FormOptionality
 use crate::utils::is_renderable::is_renderable;
 use crate::{
     ElementSize, Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue,
-    use_size,
+    Spinner, SpinnerSize, use_size,
 };
 
 /// Native single-line input types supported by TextInput.
@@ -57,6 +57,9 @@ pub fn TextInput(
     #[props(default)] is_optional: bool,
     #[props(default)] is_disabled: bool,
     #[props(default)] is_read_only: bool,
+    /// Shows progress for a caller-owned operation without preventing editing.
+    #[props(default)]
+    is_loading: bool,
     #[props(default)] has_spell_check: Option<bool>,
     #[props(default)] has_auto_focus: bool,
     /// Offers a clear action for nonempty, editable values.
@@ -111,6 +114,7 @@ pub fn TextInput(
                     r#type: input_type.as_str(), readonly: is_disabled || is_read_only,
                     spellcheck: has_spell_check.map(|enabled| enabled.to_string()), autofocus: has_auto_focus,
                     "data-autofocus": has_auto_focus.then_some("true"),
+                    "aria-busy": is_loading.then_some("true"),
                     "aria-required": is_effectively_required.then_some("true"), "aria-disabled": is_disabled.then_some("true"),
                     "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
                     "aria-describedby": (!descriptions.is_empty()).then_some(descriptions),
@@ -120,6 +124,9 @@ pub fn TextInput(
                     oninput: move |event| {
                         if !is_disabled && !is_read_only && let Some(handler) = on_change { handler.call(event.value()); }
                     },
+                }
+                if is_loading {
+                    span { class: "astryx-text-input__loading", Spinner { size: SpinnerSize::Small, is_decorative: true } }
                 }
                 if should_show_clear {
                     InputClearButton { label: clear_label,
