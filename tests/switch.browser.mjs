@@ -42,6 +42,52 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(`!${backup}.hasAttribute('aria-busy') && !${backup}.parentElement.querySelector('.astryx-spinner')`);
   await pressSpace();
   await waitFor(`!${backup}.checked && ${backup}.dataset.checked === 'false'`);
+  const hover = async selector => {
+    const target = `document.querySelector(${JSON.stringify(selector)})`;
+    const {x, y} = await evaluate(`(() => {
+      ${target}.scrollIntoView({block: 'nearest', inline: 'nearest'});
+      const {left, top, width, height} = ${target}.getBoundingClientRect();
+      return {x: left + width / 2, y: top + height / 2};
+    })()`);
+    await send('Input.dispatchMouseEvent', {type: 'mouseMoved', x, y});
+    await waitFor(`${target}.matches(':hover')`);
+  };
+  const trackColor = target => evaluate(`getComputedStyle(${target}.nextElementSibling).backgroundColor`);
+  const expectedTint = (target, fill, percentage) => evaluate(`(() => {
+    const track = ${target}.nextElementSibling;
+    const sample = document.createElement('span');
+    sample.style.backgroundColor = 'color-mix(in srgb, var(${fill}), var(--color-tint-hover) ${percentage}%)';
+    track.append(sample);
+    const color = getComputedStyle(sample).backgroundColor;
+    sample.remove();
+    return color;
+  })()`);
+  assert.ok(await evaluate("matchMedia('(hover: hover) and (forced-colors: none)').matches"));
+  await hover('#switch-examples h2');
+  const offColor = await trackColor(managed);
+  const onColor = await trackColor(dark);
+  const disabledColor = await trackColor(premium);
+  await hover('label[for="managed-switch"]');
+  assert.notEqual(await trackColor(managed), offColor);
+  assert.equal(await trackColor(managed), await expectedTint(managed, '--color-background-gray', 5));
+  await hover('label[for="dark-mode-switch"]');
+  assert.equal(await trackColor(managed), offColor, 'tint clears when leaving the row');
+  assert.notEqual(await trackColor(dark), onColor);
+  assert.equal(await trackColor(dark), await expectedTint(dark, '--color-accent', 15));
+  await hover('label[for="premium-switch"]');
+  assert.equal(await trackColor(premium), disabledColor, 'disabled row has no hover tint');
+
+  await send('Emulation.setEmulatedMedia', {features: [{name: 'forced-colors', value: 'active'}]});
+  await waitFor("matchMedia('(forced-colors: active)').matches");
+  await hover('#switch-examples h2');
+  const forcedOff = await trackColor(managed);
+  const forcedOn = await trackColor(dark);
+  assert.notEqual(forcedOff, forcedOn, 'forced-colors tracks distinguish off from on');
+  await hover('label[for="managed-switch"]');
+  assert.equal(await trackColor(managed), forcedOff);
+  await hover('label[for="dark-mode-switch"]');
+  assert.equal(await trackColor(dark), forcedOn);
+
   assert.deepEqual(exceptions, []);
-  console.log('Switch: keyboard toggle, controlled rollback, disabled form behavior, AX, and RTL passed');
+  console.log('Switch: keyboard toggle, controlled rollback, disabled form behavior, AX, RTL, and track hover passed');
 });

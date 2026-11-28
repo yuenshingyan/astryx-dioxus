@@ -2718,6 +2718,14 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-switch-control > input:checked + .astryx-switch > .astryx-switch-thumb { inset-inline-start: auto; inset-inline-end: 1px; inline-size: var(--_switch-on); block-size: var(--_switch-on); }
   .astryx-switch-control > input:focus-visible + .astryx-switch { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
   .astryx-switch-control > input[aria-disabled="true"] + .astryx-switch { opacity: .5; }
+  @media (hover: hover) and (forced-colors: none) {
+    .astryx-switch-field__row:hover > .astryx-switch-control > input:not(:checked, [aria-disabled="true"]) + .astryx-switch {
+      background-color: color-mix(in srgb, var(--color-background-gray), var(--color-tint-hover) 5%);
+    }
+    .astryx-switch-field__row:hover > .astryx-switch-control > input:checked:not([aria-disabled="true"]) + .astryx-switch {
+      background-color: color-mix(in srgb, var(--color-accent), var(--color-tint-hover) 15%);
+    }
+  }
   @media (forced-colors: active) {
     .astryx-switch { forced-color-adjust: none; background: Canvas; border-color: CanvasText; }
     .astryx-switch-thumb { background: CanvasText; }
