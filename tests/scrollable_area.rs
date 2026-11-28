@@ -1,7 +1,9 @@
 use dioxus::prelude::*;
 use dioxus_ssr::render_element;
 
-use astryx_dioxus::{ScrollAxis, ScrollableArea, ScrollableAreaRole, SizeValue, SpacingStep};
+use astryx_dioxus::{
+    STYLES, ScrollAxis, ScrollableArea, ScrollableAreaRole, SizeValue, SpacingStep,
+};
 
 #[test]
 fn native_viewport_owns_semantics_and_content_publishes_padding() {
@@ -26,4 +28,17 @@ fn native_viewport_owns_semantics_and_content_publishes_padding() {
     }
     assert_eq!(html.matches("<div").count(), 2);
     assert!(!html.contains("Ignored") && !html.contains("tabindex"));
+}
+
+#[test]
+fn bundled_viewport_styles_gate_scroll_state_on_support() {
+    let styles = STYLES.split_whitespace().collect::<Vec<_>>().join(" ");
+    let (_, viewport_styles) = styles
+        .split_once(".astryx-scrollable-area {")
+        .expect("bundled viewport styles");
+    let (base, _) = viewport_styles.split_once('}').expect("viewport rule end");
+    assert!(!base.contains("container-type"), "{base}");
+    assert!(styles.contains(
+        "@supports (container-type: scroll-state) { .astryx-scrollable-area { container-type: scroll-state; } }"
+    ));
 }

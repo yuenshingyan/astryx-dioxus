@@ -15,6 +15,18 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
     ['hidden','auto','auto','0'], ['auto','hidden','auto','0'], ['auto','auto','auto','0'],
     ['clip','clip','auto',null], ['hidden','auto','auto',null], ['hidden','auto','auto','0'], ['hidden','auto','contain','0'],
   ]);
+  const {viewportType, contentType, supportsScrollState} = await evaluate(`(() => {
+    const viewport = ${get('both')};
+    const content = viewport.querySelector(':scope > [data-scroll-content]');
+    const containerType = el => getComputedStyle(el).getPropertyValue('container-type') || 'normal';
+    return {
+      viewportType: containerType(viewport),
+      contentType: containerType(content),
+      supportsScrollState: CSS.supports('container-type', 'scroll-state'),
+    };
+  })()`);
+  assert.equal(viewportType, supportsScrollState ? 'scroll-state' : 'normal');
+  assert.equal(contentType, 'normal');
   await evaluate(`${get('both')}.scrollTo(10000, 10000)`);
   await waitFor(`${get('both')}.dataset.scrollBlockEnd === 'true' && ${get('both')}.dataset.scrollInlineEnd === 'true'`);
   await evaluate(`${get('change')}.focus(); document.getElementById('scroll-area-toggle').click()`);
