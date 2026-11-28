@@ -23,9 +23,9 @@ const navigate = event => {
   switch (event.key) {
     case 'Home': next = available[0]; break;
     case 'End': next = available.at(-1); break;
-    case 'ArrowDown': case rtl ? 'ArrowLeft' : 'ArrowRight':
+    case rtl ? 'ArrowLeft' : 'ArrowRight':
       next = available[(index + 1) % available.length]; break;
-    case 'ArrowUp': case rtl ? 'ArrowRight' : 'ArrowLeft':
+    case rtl ? 'ArrowRight' : 'ArrowLeft':
       next = available[index <= 0 ? available.length - 1 : index - 1]; break;
     default: return;
   }
