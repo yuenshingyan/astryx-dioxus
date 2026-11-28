@@ -2,7 +2,9 @@ use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
 use crate::popover::use_popover;
-use crate::{Field, LayerPlacement, SizeValue};
+use crate::{
+    Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, LayerPlacement, SizeValue,
+};
 
 /// Bindings for caller-rendered selector content.
 #[derive(Clone, PartialEq)]
@@ -27,6 +29,12 @@ pub fn ComplexSelector<T: Clone + PartialEq + 'static>(
     #[props(default)] trigger_label: Option<Element>,
     #[props(default = "Select an option".to_owned())] placeholder: String,
     #[props(default)] description: Option<String>,
+    /// Caller-owned validation feedback for the selection.
+    #[props(default)]
+    status: Option<FieldStatusInput>,
+    /// Placement of the validation message.
+    #[props(default)]
+    status_variant: FieldStatusPlacement,
     #[props(default)] width: Option<SizeValue>,
     #[props(default)] is_label_hidden: bool,
     #[props(default)] is_disabled: bool,
@@ -40,6 +48,21 @@ pub fn ComplexSelector<T: Clone + PartialEq + 'static>(
         .as_ref()
         .filter(|text| !text.is_empty())
         .map(|_| format!("{trigger_id}-desc"));
+    let severity = status.as_ref().map(|status| status.status_type);
+    let status_id = status
+        .as_ref()
+        .filter(|status| status.message.as_ref().is_some_and(|text| !text.is_empty()))
+        .map(|status| {
+            status
+                .message_id
+                .clone()
+                .unwrap_or_else(|| format!("{trigger_id}-status"))
+        });
+    let described_by = [description_id.as_deref(), status_id.as_deref()]
+        .into_iter()
+        .flatten()
+        .collect::<Vec<_>>()
+        .join(" ");
     let change = use_callback(move |next: T| {
         if !is_disabled {
             on_change.call(next);
@@ -59,10 +82,12 @@ pub fn ComplexSelector<T: Clone + PartialEq + 'static>(
     });
     let trigger_content = trigger_label.unwrap_or_else(|| rsx! { "{placeholder}" });
     rsx! {
-        Field { label: label.clone(), input_id: trigger_id.clone(), description, description_id: description_id.clone(),
-            width, is_label_hidden, is_disabled,
+        Field { label: label.clone(), input_id: trigger_id.clone(), description, description_id,
+            width, is_label_hidden, is_disabled, status, status_variant,
             button { id: trigger_id.clone(), class: "astryx-complex-selector__trigger", r#type: "button", role: "combobox",
-                "aria-label": label.clone(), "aria-describedby": description_id, "aria-haspopup": "dialog",
+                "aria-label": label.clone(), "aria-describedby": (!described_by.is_empty()).then_some(described_by), "aria-haspopup": "dialog",
+                "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
+                "data-status": severity.map(InputStatusType::as_str),
                 "aria-expanded": (is_open && !is_disabled).to_string(), "aria-controls": id.clone(),
                 "aria-disabled": is_disabled.then_some("true"),
                 onclick: move |_| { if !is_disabled { request.call(!is_open); } },

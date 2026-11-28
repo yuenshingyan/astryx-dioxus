@@ -1828,6 +1828,9 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     text-align: start;
   }
   .astryx-complex-selector__trigger[aria-disabled="true"] { color: var(--color-text-disabled); }
+  .astryx-complex-selector__trigger[data-status="error"] { border-color: var(--color-text-error); }
+  .astryx-complex-selector__trigger[data-status="warning"] { border-color: var(--color-text-warning); }
+  .astryx-complex-selector__trigger[data-status="success"] { border-color: var(--color-text-success); }
   .astryx-complex-selector__trigger:focus-visible { outline: 2px solid var(--focus-outline-color); outline-offset: 2px; }
   .astryx-complex-selector__popup { --_popover-padding: var(--spacing-3); max-block-size: 65dvh; overflow: auto; }
 }
