@@ -26,6 +26,15 @@ pub fn DateRangeInput(
     invalid_range_message: String,
     #[props(default)] min: Option<String>,
     #[props(default)] max: Option<String>,
+    /// Minimum span in calendar days, counting both endpoints.
+    #[props(default)]
+    min_range_span: Option<u32>,
+    /// Maximum span in calendar days, counting both endpoints.
+    #[props(default)]
+    max_range_span: Option<u32>,
+    /// Message shown when an otherwise valid range violates the span limits.
+    #[props(default = "Choose a range within the allowed number of days.".to_owned())]
+    invalid_span_message: String,
     #[props(default)] is_disabled: bool,
     #[props(default)] width: Option<SizeValue>,
 ) -> Element {
@@ -41,6 +50,11 @@ pub fn DateRangeInput(
         || min
             .as_ref()
             .zip(max.as_ref())
+            .is_some_and(|(min, max)| min > max)
+        || min_range_span == Some(0)
+        || max_range_span == Some(0)
+        || min_range_span
+            .zip(max_range_span)
             .is_some_and(|(min, max)| min > max)
         || value.as_ref().is_some_and(|range| {
             !is_valid_date(&range.start) || !is_valid_date(&range.end) || range.start > range.end
@@ -62,13 +76,22 @@ pub fn DateRangeInput(
                 .map(|range| (Some(range.start.clone()), Some(range.end.clone())))
         })
         .unwrap_or_default();
-    let has_error = start
+    let span_bounds = (min_range_span, max_range_span);
+    let message = start
         .as_deref()
         .zip(end.as_deref())
-        .is_some_and(|(start, end)| !is_allowed(start, end, min.as_deref(), max.as_deref()));
-    let described_by =
-        (has_error && !invalid_range_message.trim().is_empty()).then(|| error_id.clone());
-    let endpoint_status = has_error.then_some(FieldStatusInput {
+        .and_then(|(start, end)| {
+            range_error(start, end, min.as_deref(), max.as_deref(), span_bounds).map(|error| {
+                match error {
+                    RangeError::Endpoints => invalid_range_message.as_str(),
+                    RangeError::Span => invalid_span_message.as_str(),
+                }
+            })
+        });
+    let described_by = message
+        .filter(|text| !text.trim().is_empty())
+        .map(|_| error_id.clone());
+    let endpoint_status = message.is_some().then_some(FieldStatusInput {
         status_type: InputStatusType::Error,
         message: None,
         message_id: None,
@@ -85,7 +108,14 @@ pub fn DateRangeInput(
             .as_deref()
             .zip(end.as_deref())
             .filter(|&(start, end)| {
-                is_allowed(start, end, min_bound.as_deref(), max_bound.as_deref())
+                range_error(
+                    start,
+                    end,
+                    min_bound.as_deref(),
+                    max_bound.as_deref(),
+                    span_bounds,
+                )
+                .is_none()
             })
             .map(|(start, end)| DateRange {
                 start: start.to_owned(),
@@ -120,7 +150,7 @@ pub fn DateRangeInput(
                     status: endpoint_status, described_by,
                     on_change: move |end| update.call((current_start.clone(), end)), }
             }
-            div { id: error_id, role: "status", if has_error { "{invalid_range_message}" } }
+            div { id: error_id, role: "status", if let Some(message) = message { "{message}" } }
         }
     }
 }
@@ -131,6 +161,67 @@ struct Draft {
     end: Option<String>,
 }
 
-fn is_allowed(start: &str, end: &str, min: Option<&str>, max: Option<&str>) -> bool {
-    start <= end && min.is_none_or(|min| start >= min) && max.is_none_or(|max| end <= max)
+enum RangeError {
+    Endpoints,
+    Span,
+}
+
+fn range_error(
+    start: &str,
+    end: &str,
+    min: Option<&str>,
+    max: Option<&str>,
+    (min_span, max_span): (Option<u32>, Option<u32>),
+) -> Option<RangeError> {
+    if start > end || min.is_some_and(|min| start < min) || max.is_some_and(|max| end > max) {
+        return Some(RangeError::Endpoints);
+    }
+    if min_span.is_some() || max_span.is_some() {
+        let Some((start, end)) = day_ordinal(start).zip(day_ordinal(end)) else {
+            return Some(RangeError::Endpoints);
+        };
+        let span = end - start + 1;
+        if min_span.is_some_and(|min| span < min) || max_span.is_some_and(|max| span > max) {
+            return Some(RangeError::Span);
+        }
+    }
+    None
+}
+
+// Count civil days without a time zone or daylight-saving transitions.
+fn day_ordinal(date: &str) -> Option<u32> {
+    let year = date.get(..4)?.parse::<u32>().ok()?;
+    let month = date.get(5..7)?.parse::<usize>().ok()?;
+    let day = date.get(8..10)?.parse::<u32>().ok()?;
+    let completed = year.checked_sub(1)?;
+    let before_month = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+    let leap = year.is_multiple_of(4) && (!year.is_multiple_of(100) || year.is_multiple_of(400));
+    Some(
+        365 * completed + completed / 4 - completed / 100
+            + completed / 400
+            + before_month.get(month.checked_sub(1)?)?
+            + u32::from(leap && month > 2)
+            + day,
+    )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{RangeError, range_error};
+
+    #[test]
+    fn span_counts_both_endpoints_across_leap_days_and_years() {
+        let exactly_three = (Some(3), Some(3));
+        for (start, end) in [("2024-02-28", "2024-03-01"), ("2025-12-30", "2026-01-01")] {
+            assert!(range_error(start, end, None, None, exactly_three).is_none());
+        }
+        assert!(matches!(
+            range_error("2100-02-28", "2100-03-01", None, None, exactly_three),
+            Some(RangeError::Span)
+        ));
+        assert!(matches!(
+            range_error("2024-02-28", "2024-03-02", None, None, exactly_three),
+            Some(RangeError::Span)
+        ));
+    }
 }
