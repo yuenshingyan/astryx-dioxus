@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::SideNavHeading;
+use astryx_dioxus::{SideNav, SideNavHeading, SideNavItem};
 
 #[component]
 fn AppIcon() -> Element {
@@ -15,12 +15,16 @@ fn AppIcon() -> Element {
 
 #[component]
 pub(super) fn SideNavHeadingExamples() -> Element {
+    let mut settings_clicks = use_signal(|| 0);
     rsx! {
         section { id: "side-nav-heading-examples", "data-astryx-theme": "neutral",
             h2 { "SideNavHeading" }
             h3 { "Basic" }
-            nav { "aria-label": "Analytics navigation", style: "max-width:240px",
-                SideNavHeading { id: "side-nav-heading-basic", heading: "Analytics", heading_href: "/", icon: rsx! { AppIcon {} } }
+            SideNav { label: "Analytics navigation", style: "max-width:240px",
+                header: rsx! {
+                    SideNavHeading { id: "side-nav-heading-basic", heading: "Analytics", heading_href: "/", icon: rsx! { AppIcon {} } }
+                },
+                SideNavItem { label: "Reports", href: "#side-nav-heading-examples" }
             }
             h3 { "Showcase" }
             div { style: "display:flex;gap:var(--spacing-6);flex-wrap:wrap",
@@ -33,8 +37,11 @@ pub(super) fn SideNavHeadingExamples() -> Element {
             }
             h3 { "Trailing action" }
             SideNavHeading { id: "side-nav-heading-trailing", heading: "Analytics", heading_href: "#side-nav-heading-examples",
-                header_end_content: rsx! { button { r#type: "button", "Settings" } },
+                header_end_content: rsx! {
+                    button { r#type: "button", onclick: move |_| settings_clicks += 1, "Settings" }
+                },
             }
+            output { id: "side-nav-heading-settings-count", "{settings_clicks}" }
         }
     }
 }
