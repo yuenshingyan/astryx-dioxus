@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use astryx_dioxus::{
     Card, CardVariant, Grid, GridColumns, GridRepeat, GridSpan, GridSpanColumns, SizeValue,
-    SpacingStep, Stack, StackDirection, Text, TextColor, TextDisplay, TextType,
+    SpacingStep, Stack, StackDirection, Text, TextDisplay, TextType,
 };
 
 #[component]

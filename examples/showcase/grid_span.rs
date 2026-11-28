@@ -46,7 +46,7 @@ pub(super) fn GridSpanExamples() -> Element {
                 GridSpan { id: "grid-span-full", columns: GridSpanColumns::Full,
                     class: "grid-span-caller", style: "grid-column:2;grid-row:2;color:inherit",
                     "data-mounted-size": mounted_size().map(|(width, height)| format!("{width},{height}")),
-                    attributes: vec![onmounted(move |event| {
+                    attributes: vec![onmounted(move |event: MountedEvent| {
                         spawn(async move {
                             if let Ok(rect) = event.get_client_rect().await {
                                 mounted_size.set(Some((rect.size.width, rect.size.height)));
