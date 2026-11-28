@@ -3315,6 +3315,13 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 }
 
 @layer astryx-base {
+  .astryx-typeahead__control {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+  }
+  .astryx-typeahead__control > .astryx-base-typeahead { flex: 1; }
+  .astryx-typeahead__control > .astryx-input-clear-button { flex: none; }
   .astryx-base-typeahead { position: relative; min-inline-size: 0; }
   .astryx-base-typeahead > input {
     box-sizing: border-box;
