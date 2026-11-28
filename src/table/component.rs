@@ -1,7 +1,7 @@
-use dioxus::core::AttributeValue;
+use dioxus::core::{AttributeValue, current_scope_id};
 use dioxus::prelude::*;
 
-use crate::{ScrollAxis, ScrollOverscroll, ScrollableArea, ScrollableAreaRole};
+use crate::hooks::use_scrollable_area::use_scrollable_area;
 
 /// Padding density for table cells.
 #[derive(Clone, Copy, Default, PartialEq, Eq)]
@@ -44,7 +44,7 @@ pub enum TableTextOverflow {
 pub fn Table(
     /// Caption and table sections in native HTML order.
     children: Element,
-    /// Accessible name shared by the table and its scroll region.
+    /// Accessible label for the table and, when `labelled_by` is absent, its scroll region.
     #[props(default)]
     label: Option<String>,
     /// IDs of elements that name the table and its scroll region.
@@ -106,12 +106,28 @@ pub fn Table(
         TableTextOverflow::Wrap => "wrap",
         TableTextOverflow::Truncate => "truncate",
     };
+    // Table owns the viewport name; the shared hook still manages scrolling and focus.
+    let viewport_label = labelled_by
+        .is_none()
+        .then(|| label.as_deref().unwrap_or("Table"));
+    let viewport_id = format!("scrollable-area-{}", current_scope_id().0);
+    let mounted = use_scrollable_area(viewport_id.clone(), ("inline", false, true));
     rsx! {
-        ScrollableArea { label: label.clone().unwrap_or_else(|| "Table".into()), "aria-labelledby": labelled_by.clone(),
-            axis: ScrollAxis::Inline, overscroll: ScrollOverscroll::Contain, role: ScrollableAreaRole::Group, class: "astryx-table-scroll-wrapper",
-            table { class: "astryx-table {class}", style, "aria-label": label, "aria-labelledby": labelled_by,
-                "data-density": density, "data-dividers": dividers, "data-vertical-align": align, "data-text-overflow": overflow,
-                "data-striped": is_striped.then_some("true"), "data-hover": has_hover.then_some("true"), ..attributes, {children}
+        div {
+            class: "astryx-scrollable-area astryx-table-scroll-wrapper",
+            role: "group", "aria-label": viewport_label, "aria-labelledby": labelled_by.clone(),
+            "data-axis": "inline", "data-scroll-axis": "inline", "data-astryx-scroll-viewport": viewport_id,
+            onmounted: mounted,
+            div {
+                class: "astryx-scrollable-area__content", "data-scroll-content": "",
+                style: "--container-padding-inline-start:var(--spacing-0);\
+                        --container-padding-inline-end:var(--spacing-0);\
+                        --container-padding-block-start:var(--spacing-0);\
+                        --container-padding-block-end:var(--spacing-0);",
+                table { class: "astryx-table {class}", style, "aria-label": label, "aria-labelledby": labelled_by,
+                    "data-density": density, "data-dividers": dividers, "data-vertical-align": align, "data-text-overflow": overflow,
+                    "data-striped": is_striped.then_some("true"), "data-hover": has_hover.then_some("true"), ..attributes, {children}
+                }
             }
         }
     }
