@@ -20,9 +20,30 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   const toggle = "document.getElementById('text-area-toggle-loading')";
   const spinner = `${input}.parentElement.querySelector('.astryx-text-area__loading .astryx-spinner')`;
   const padding = await evaluate(`getComputedStyle(${input}).paddingInlineEnd`);
+  async function assertFlushResizeCorner() {
+    const {edges, zIndex} = await evaluate(`(() => {
+      const frame = ${input}.parentElement;
+      const frameRect = frame.getBoundingClientRect();
+      const controlRect = ${input}.getBoundingClientRect();
+      const style = getComputedStyle(frame);
+      return {
+        edges: [
+          controlRect.top - frameRect.top - parseFloat(style.borderTopWidth),
+          frameRect.right - controlRect.right - parseFloat(style.borderRightWidth),
+          frameRect.bottom - controlRect.bottom - parseFloat(style.borderBottomWidth),
+          controlRect.left - frameRect.left - parseFloat(style.borderLeftWidth),
+        ],
+        zIndex: style.zIndex,
+      };
+    })()`);
+    assert.ok(edges.every(delta => Math.abs(delta) < 0.5), `Textarea must fill the frame: ${edges}`);
+    assert.equal(zIndex, '1');
+  }
+  await assertFlushResizeCorner();
   await evaluate(`${toggle}.click()`);
   await waitFor(`${input}.getAttribute('aria-busy') === 'true' && ${spinner}?.getAttribute('aria-hidden') === 'true'`);
   assert.ok(await evaluate(`parseFloat(getComputedStyle(${input}).paddingInlineEnd) > ${parseFloat(padding)}`));
+  await assertFlushResizeCorner();
   await send('Input.insertText', {text: '\nSecond line'});
   await waitFor(`document.getElementById('description-preview').textContent.endsWith('Second line')`);
   assert.equal(await evaluate(`${input}.value`), 'Initial description\nSecond line');
