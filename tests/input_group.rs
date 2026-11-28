@@ -1,3 +1,6 @@
+use std::cell::Cell;
+use std::rc::Rc;
+
 use dioxus::prelude::*;
 use dioxus_ssr::render;
 
@@ -36,6 +39,53 @@ fn group_owns_name_and_state_and_inherits_size() {
     assert_eq!(html.matches("aria-disabled=\"true\"").count(), 4, "{html}");
     assert_eq!(html.matches("data-size=\"lg\"").count(), 4, "{html}");
     assert!(!html.contains("Not the group name"));
+}
+
+#[test]
+fn re_enabling_group_restores_only_inherited_disabled_state() {
+    let control = Rc::new(Cell::new(None));
+    let mut dom = VirtualDom::new_with_props(
+        |control: Rc<Cell<Option<Signal<bool>>>>| {
+            let disabled = use_signal(|| false);
+            control.set(Some(disabled));
+            rsx! {
+                InputGroup { id: "outer-row", label: "Search", is_disabled: disabled(),
+                    InputGroup { id: "inner-row", label: "Filters",
+                        Button { id: "apply", label: "Apply" }
+                        Button { id: "reset", label: "Reset", is_disabled: true }
+                        input { id: "query", "aria-label": "Query" }
+                    }
+                }
+            }
+        },
+        Rc::clone(&control),
+    );
+    dom.rebuild_to_vec();
+    let mut disabled = control.get().expect("mounted state control");
+
+    for is_disabled in [false, true, false] {
+        disabled.set(is_disabled);
+        // Render the prop change, then the notifications from each of the two group providers.
+        for _ in 0..3 {
+            dom.render_immediate_to_vec();
+        }
+        let html = render(&dom);
+        let tag = |id: &str| {
+            html.split('<')
+                .filter_map(|part| part.split_once('>').map(|(tag, _)| tag))
+                .find(|tag| tag.contains(&format!(" id=\"{id}\"")))
+                .unwrap_or_else(|| panic!("missing {id}: {html}"))
+        };
+        for id in ["outer-row", "inner-row", "apply"] {
+            assert_eq!(
+                tag(id).contains("aria-disabled=\"true\""),
+                is_disabled,
+                "{id}, expected disabled={is_disabled}: {html}"
+            );
+        }
+        assert!(tag("reset").contains("aria-disabled=\"true\""), "{html}");
+        assert!(!tag("query").contains("disabled"), "{html}");
+    }
 }
 
 #[test]

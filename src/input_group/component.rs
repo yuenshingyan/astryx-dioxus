@@ -3,9 +3,7 @@ use dioxus::prelude::*;
 
 use crate::{ElementSize, Field, FieldStatusInput, FieldStatusPlacement, SizeProvider, use_size};
 
-use super::input_group_internal_context::{
-    InputGroupInternalContext, InputGroupInternalState, use_input_group_internal,
-};
+use super::input_group_internal_context::{InputGroupInternalContext, InputGroupInternalState};
 
 /// Composes a labeled row of input controls and addons. Native controls remain
 /// caller-owned, including their own label and disabled state.
@@ -47,7 +45,10 @@ pub fn InputGroup(
     attributes: Vec<Attribute>,
 ) -> Element {
     let size = use_size(size);
-    let is_disabled = is_disabled || use_input_group_internal().is_disabled;
+    // Capture the parent before providing our own context, which would shadow it on rerenders.
+    let parent = use_hook(try_consume_context::<InputGroupInternalContext>);
+    let is_parent_disabled = parent.is_some_and(|context| (context.0)().is_disabled);
+    let is_disabled = is_disabled || is_parent_disabled;
     let state = InputGroupInternalState { is_disabled };
     let InputGroupInternalContext(mut context) =
         use_context_provider(|| InputGroupInternalContext(Signal::new(state)));
