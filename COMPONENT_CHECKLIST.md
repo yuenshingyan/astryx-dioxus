@@ -2798,8 +2798,9 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Actual behavior, without invented variants**
     - [x] No documented size/color/orientation choice: a horizontal separator between compound-menu row groups.
-    - [ ] `role="separator"`; never an arrow-key stop. Data equivalent `{type: 'divider'}` uses the same component/theme target.
-    - [ ] Host ID/data/ARIA attributes and handlers reach separator; role/orientation remain component-owned; `xstyle` customizes spacing/layout, not a fixed visual variant.
+    - [ ] Compound separator role/orientation, arrow traversal in both directions, and rejection of programmatic focus verified in PR #241 Chrome. Data equivalence (`{type: 'divider'}`) is blocked on pointer-data inputs and routing in DropdownMenu, ContextMenu, and BreadcrumbItem.
+    - [ ] Host ID/data/ARIA/class/style and owned semantics verified in SSR; listener registration and runtime click dispatch verified. Native click/mount delivery and computed caller spacing override remain unverified for the `class`/`style` adaptation of `xstyle`.
+  - Completion also requires a rendered comparison against pinned **MenuSeparator** and manual screen-reader verification. See [DropdownMenuDivider verification](docs/dropdown-menu-divider-port.md).
 
 - [ ] **[Dropdown Menu Group](https://astryx.atmeta.com/components/DropdownMenuGroup)**
 
