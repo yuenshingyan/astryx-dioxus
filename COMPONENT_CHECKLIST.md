@@ -2586,6 +2586,8 @@ These changes are available for review. The table records focused evidence, not 
 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/CheckboxList/CheckboxList.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/CheckboxList).
 
+  - [Port evidence and remaining gates](docs/checkbox-list-port.md): the native group keeps caller-owned rows; detached status references fall back to a generated ID when the supplied ID is unusable.
+
   - **Choices and group modes**
     - [ ] `density`: `compact`, `balanced` (default), `spacious`; `hasDividers=false` default.
     - [ ] Collection mode value string array/onChange; without value, children may manage direct standalone checked state. No group defaultValue documented.

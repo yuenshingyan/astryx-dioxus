@@ -32,9 +32,13 @@ pub fn CheckboxList(
             .as_ref()
             .is_some_and(|message| !message.is_empty())
         {
-            status
-                .message_id
-                .get_or_insert_with(|| format!("{id}-status"));
+            // A message has one ID; whitespace would split its ARIA reference.
+            status.message_id = Some(
+                status
+                    .message_id
+                    .filter(|id| !id.is_empty() && !id.contains(char::is_whitespace))
+                    .unwrap_or_else(|| format!("{id}-status")),
+            );
         } else {
             status.message_id = None;
         }
