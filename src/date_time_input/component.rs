@@ -21,6 +21,12 @@ pub fn DateTimeInput(
     #[props(default)]
     status: Option<FieldStatusInput>,
     #[props(default)] has_seconds: bool,
+    /// Inclusive lower bound in local ISO datetime format.
+    #[props(default)]
+    min: Option<String>,
+    /// Inclusive upper bound in local ISO datetime format.
+    #[props(default)]
+    max: Option<String>,
     #[props(default)] is_required: bool,
     #[props(default)] is_disabled: bool,
     #[props(default)] width: Option<SizeValue>,
@@ -42,6 +48,31 @@ pub fn DateTimeInput(
     } else {
         (String::new(), time_draft.read().clone())
     };
+    let Ok(min_bound) = min
+        .as_deref()
+        .map(|value| parse_bound(value, has_seconds))
+        .transpose()
+    else {
+        return VNode::empty();
+    };
+    let Ok(max_bound) = max
+        .as_deref()
+        .map(|value| parse_bound(value, has_seconds))
+        .transpose()
+    else {
+        return VNode::empty();
+    };
+    if min_bound
+        .as_ref()
+        .zip(max_bound.as_ref())
+        .is_some_and(|(min, max)| min > max)
+    {
+        return VNode::empty();
+    }
+    let min_date = min_bound.as_ref().map(|(date, _)| date.clone());
+    let max_date = max_bound.as_ref().map(|(date, _)| date.clone());
+    let time_min = bound_time(min_bound.as_ref(), &date).map(str::to_owned);
+    let time_max = bound_time(max_bound.as_ref(), &date).map(str::to_owned);
     let date_id = format!("{id}-date");
     let time_id = format!("{id}-time");
     let time_value = time.clone().unwrap_or_default();
@@ -70,7 +101,7 @@ pub fn DateTimeInput(
         Field { class: "astryx-date-time-input", label, input_id: date_id.clone(), is_required, is_disabled,
             width, description, description_id, status, status_variant: FieldStatusPlacement::Detached,
             div { class: "astryx-date-time-input__segments",
-                input { id: date_id, class: "astryx-date-input__control", r#type: "date", value: date.clone(),
+                input { id: date_id, class: "astryx-date-input__control", r#type: "date", value: date.clone(), min: min_date, max: max_date,
                     required: is_required, disabled: is_disabled, "aria-describedby": described_by.clone(),
                     "aria-invalid": invalid, "data-status": severity.map(InputStatusType::as_str),
                     onchange: move |event| {
@@ -84,14 +115,18 @@ pub fn DateTimeInput(
                         } else if is_valid_date(&next) {
                             if let Some(time) = &time {
                                 time_draft.set(None);
+                                let time = clamp_time(time, &next, min_bound.as_ref(), max_bound.as_ref());
                                 change.call(Some(format!("{next}T{time}")));
                             } else {
                                 pending_date.set(Some(next.clone()));
+                                let min_bound = min_bound.clone();
+                                let max_bound = max_bound.clone();
                                 spawn(async move {
                                     let result = document::eval(include_str!("local_time.js")).join::<String>().await;
                                     if let Ok(time) = result && pending_date.peek().as_deref() == Some(&next) {
                                         pending_date.set(None);
                                         let time = normalize_time(time, has_seconds);
+                                        let time = clamp_time(&time, &next, min_bound.as_ref(), max_bound.as_ref());
                                         change.call(Some(format!("{next}T{time}")));
                                     }
                                 });
@@ -100,7 +135,7 @@ pub fn DateTimeInput(
                     },
                 }
                 input { id: time_id, class: "astryx-time-input__control", r#type: "time", value: time_value,
-                    "aria-label": time_label, step: if has_seconds { "1" } else { "60" },
+                    "aria-label": time_label, min: time_min, max: time_max, step: if has_seconds { "1" } else { "60" },
                     required: is_required, disabled: is_disabled, "aria-describedby": described_by,
                     "aria-invalid": invalid, "data-status": severity.map(InputStatusType::as_str),
                     onchange: move |event| {
@@ -128,6 +163,35 @@ pub fn DateTimeInput(
             }
         }
     }
+}
+
+type DateTimeBound = (String, String);
+
+fn parse_bound(value: &str, has_seconds: bool) -> Result<DateTimeBound, ()> {
+    let (date, time) = value.split_once('T').ok_or(())?;
+    if !is_valid_date(date) || !is_valid_time(time, has_seconds) {
+        return Err(());
+    }
+    Ok((
+        date.to_owned(),
+        normalize_time(time.to_owned(), has_seconds),
+    ))
+}
+
+fn bound_time<'a>(bound: Option<&'a DateTimeBound>, date: &str) -> Option<&'a str> {
+    bound
+        .filter(|(bound_date, _)| bound_date == date)
+        .map(|(_, time)| time.as_str())
+}
+
+fn clamp_time<'a>(
+    time: &'a str,
+    date: &str,
+    min: Option<&'a DateTimeBound>,
+    max: Option<&'a DateTimeBound>,
+) -> &'a str {
+    let time = bound_time(min, date).map_or(time, |min| time.max(min));
+    bound_time(max, date).map_or(time, |max| time.min(max))
 }
 
 fn normalize_time(mut time: String, has_seconds: bool) -> String {

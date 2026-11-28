@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8302'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8307'});
   const form = "document.querySelector('#date-time-input-examples form')";
   const date = `${form}.querySelector('input[type=date]')`;
   const time = `${form}.querySelector('input[type=time]')`;
@@ -13,18 +13,26 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(`${form} && ${date} && ${time}`);
   assert.equal(await evaluate(`${date}.labels[0].textContent`), 'Meeting time');
   assert.equal(await evaluate(`${time}.getAttribute('aria-label')`), 'Time');
-  await change(time, '14:25');
+  assert.deepEqual(await evaluate(`[${date}.min, ${date}.max, ${time}.min, ${time}.max]`), ['2024-02-29', '2024-03-02', '', '']);
+  await change(time, '13:00');
   assert.equal(await evaluate(output), 'No date and time selected');
   await change(date, '2024-02-29');
   await waitFor(`${output} === '2024-02-29T14:25'`);
   assert.deepEqual(await evaluate(`Array.from(new FormData(${form}))`), [['meeting', '2024-02-29T14:25']]);
+  assert.deepEqual(await evaluate(`[${time}.min, ${time}.max, ${time}.validity.valid]`), ['14:25', '', true]);
+  assert.ok(await evaluate(`${time}.value = '14:24'; ${time}.validity.rangeUnderflow`));
   await change(time, '16:30');
   await waitFor(`${output} === '2024-02-29T16:30'`);
+  await change(date, '2024-03-02');
+  await waitFor(`${output} === '2024-03-02T15:00' && ${time}.max === '15:00'`);
+  assert.deepEqual(await evaluate(`[${time}.min, ${time}.validity.valid]`), ['', true]);
+  assert.ok(await evaluate(`${time}.value = '15:01'; ${time}.validity.rangeOverflow`));
   await change(date, '');
   await waitFor(`${output} === 'No date and time selected' && ${time}.value === ''`);
   await change(date, '2024-03-01');
   await waitFor(`${output}.startsWith('2024-03-01T')`);
   assert.match(await evaluate(output), /^2024-03-01T\d{2}:\d{2}$/);
+  assert.deepEqual(await evaluate(`[${time}.min, ${time}.max]`), ['', '']);
   const example = "document.getElementById('date-time-input-status-example')";
   const descriptions = ['Choose an available review slot.', 'This review slot is already booked.'];
   for (const type of ['date', 'time']) {
