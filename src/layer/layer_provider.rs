@@ -16,6 +16,7 @@ struct LayerContext(Signal<Option<LayerInset>>);
 
 /// Supplies viewport insets without adding a DOM wrapper. An omitted inset
 /// inherits from the nearest provider; a supplied inset replaces all edges.
+/// An empty inset clears the reservation for this subtree.
 #[component]
 pub fn LayerProvider(children: Element, #[props(default)] inset: Option<LayerInset>) -> Element {
     // Capture the parent before this scope installs its own context.
@@ -35,18 +36,19 @@ fn consume_inset() -> Option<LayerInset> {
 
 pub(crate) fn layer_inset_style() -> Option<String> {
     let inset = consume_inset()?;
-    Some(
-        [
-            ("block-start", inset.block_start),
-            ("block-end", inset.block_end),
-            ("inline-start", inset.inline_start),
-            ("inline-end", inset.inline_end),
-        ]
-        .into_iter()
-        .filter_map(|(edge, value)| {
-            let value = value?.as_css().ok()?;
-            Some(format!("--_astryx-layer-inset-{edge}:{value};"))
-        })
-        .collect(),
-    )
+    let style: String = [
+        ("block-start", inset.block_start),
+        ("block-end", inset.block_end),
+        ("inline-start", inset.inline_start),
+        ("inline-end", inset.inline_end),
+    ]
+    .into_iter()
+    .filter_map(|(edge, value)| {
+        let value = value?.as_css().ok()?;
+        Some(format!("--_astryx-layer-inset-{edge}:{value};"))
+    })
+    .collect();
+    // Keep empty overrides in context, but do not activate consumer inset
+    // rules when there is no edge to serialize.
+    (!style.is_empty()).then_some(style)
 }
