@@ -63,9 +63,11 @@ pub fn InputGroup(
         .map(|_| format!("{input_id}-desc"));
     let status = status.map(|mut status| {
         if status.message.as_ref().is_some_and(|text| !text.is_empty()) {
-            status
+            // An ID with ASCII whitespace cannot be a single aria-describedby reference.
+            status.message_id = status
                 .message_id
-                .get_or_insert_with(|| format!("{input_id}-status"));
+                .filter(|id| !id.is_empty() && !id.bytes().any(|byte| byte.is_ascii_whitespace()))
+                .or_else(|| Some(format!("{input_id}-status")));
         } else {
             status.message_id = None;
         }
