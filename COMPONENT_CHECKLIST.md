@@ -3137,14 +3137,14 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Choices and behavior**
     - [x] `size`: `static` (default; intrinsic, does not grow/shrink), `fill` (remaining space). Pinned declarations, SSR reflection, and prior Chrome fill geometry agree.
-    - [ ] `crossAlignSelf`: `start`, `center`, `end`, `stretch`; overrides parent cross-axis alignment. All four map to pinned CSS; actual override geometry awaits the expanded browser suite.
-    - [ ] `isScrollable`: false (default), true; min-width/min-height reset means fill + scrolling forms a complete flex scroll region. Prior vertical proof predates the shared observer; rerun and verify both axes and cleanup.
-    - [ ] Polymorphic `as` (default div); div/span overflow region becomes a group named by aria-label or translated `Content`; other element types preserve their own role. Optional children and root ref/style integration. Shared-catalog fallback, live root/ref, AX and manual AT evidence remain open.
+    - [x] `crossAlignSelf`: `start`, `center`, `end`, `stretch`; overrides parent cross-axis alignment. Pinned CSS mappings, SSR classes, and PR #241 Chrome geometry against a centered VStack agree.
+    - [ ] `isScrollable`: false (default), true; min-width/min-height reset means fill + scrolling forms a complete flex scroll region. PR #241 verified programmatic scrolling on both axes and vertical overflow transitions with the shared observer; release on disable/unmount is unverified. Static-path PR1 differs from the pinned hook-free implementation.
+    - [ ] Polymorphic `as` (default div); div/span overflow region becomes a group named by aria-label or translated `Content`; other element types preserve their own role. Optional children and root ref/style integration. SSR passthrough and Chrome AX names for caller labels passed; automatic catalog fallback, live mounted-root identity, and manual keyboard/screen-reader verification remain open.
 
   - **Examples and named templates**
-    - [ ] TSX example: HStack with static Logo, fill Content, static Actions. Added to the showcase; corrected end-to-end SSR assertion and browser geometry still need a run.
-    - [ ] [`StackItemFill`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemFill.doc.mjs) — “StackItem — Fill”: intrinsic-width neighbor and remaining-space item. Actual template visual comparison pending.
-    - [ ] [`StackItemShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemShowcase.doc.mjs) — “StackItem” / “Stack Item”: optional wrapper inside HStack/VStack for sizing/alignment. Actual template visual comparison pending.
+    - [x] TSX example: HStack with static Logo, fill Content, static Actions; pinned gap and composition checked in source, with passing focused SSR and PR #241 Chrome geometry.
+    - [ ] [`StackItemFill`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemFill.doc.mjs) — “StackItem — Fill”: intrinsic-width neighbor and remaining-space item. Pinned composition, SSR, and Rust Chrome geometry verified; matched upstream/Rust appearance comparison pending.
+    - [ ] [`StackItemShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemShowcase.doc.mjs) — “StackItem” / “Stack Item”: optional wrapper inside HStack/VStack for sizing/alignment. Pinned composition, SSR, and Rust Chrome geometry verified; matched upstream/Rust appearance comparison pending.
 
 - [ ] **[V Stack](https://astryx.atmeta.com/components/VStack)**
 
