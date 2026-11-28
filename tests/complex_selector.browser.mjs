@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8316'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8331'});
   const trigger = "document.querySelector('#complex-selector-examples [role=combobox]')";
   const panel = `document.getElementById(${trigger}.getAttribute('aria-controls'))`;
   const focused = "document.activeElement.getAttribute('aria-label')";
@@ -16,7 +16,11 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(trigger);
   await send('Page.bringToFront');
   await waitFor('document.hasFocus()');
-  await evaluate(`${trigger}.scrollIntoView({block:'center'}); ${trigger}.focus()`);
+  const toggle = "document.getElementById('complex-selector-toggle-loading')";
+  const spinner = `${trigger}.querySelector('.astryx-spinner[aria-hidden=true]')`;
+  await evaluate(`${trigger}.scrollIntoView({block:'center'}); ${trigger}.focus(); ${toggle}.click()`);
+  await waitFor(`${trigger}.getAttribute('aria-busy') === 'true' && ${spinner}`);
+  assert.ok(await evaluate(`document.activeElement === ${trigger} && !${trigger}.hasAttribute('aria-disabled')`));
   await press('ArrowDown', 40);
   await waitFor(`${open} && ${focused} === 'Apple, Juicy'`);
   const {nodes} = await send('Accessibility.getFullAXTree');
@@ -25,6 +29,9 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await press('Enter', 13, '\r');
   const closed = `!${open} && document.activeElement === ${trigger}`;
   await waitFor(`${closed} && ${trigger}.textContent.includes('Pear · Peak') && document.getElementById('fruit-blend-status')`);
+  assert.ok(await evaluate(`${trigger}.getAttribute('aria-busy') === 'true'`));
+  await evaluate(`${toggle}.click()`);
+  await waitFor(`!${trigger}.hasAttribute('aria-busy') && !${spinner} && document.activeElement === ${trigger}`);
   assert.equal(await evaluate(`document.getElementById('fruit-blend-status').dataset.variant`), 'attached');
   assert.equal(await evaluate(`${trigger}.getAttribute('aria-invalid')`), null);
   const {nodes: withWarning} = await send('Accessibility.getFullAXTree');

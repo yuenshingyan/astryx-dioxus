@@ -4,6 +4,7 @@ use dioxus::prelude::*;
 use crate::popover::use_popover;
 use crate::{
     Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, LayerPlacement, SizeValue,
+    Spinner, SpinnerSize,
 };
 
 /// Bindings for caller-rendered selector content.
@@ -38,6 +39,9 @@ pub fn ComplexSelector<T: Clone + PartialEq + 'static>(
     #[props(default)] width: Option<SizeValue>,
     #[props(default)] is_label_hidden: bool,
     #[props(default)] is_disabled: bool,
+    /// Show caller-owned progress without disabling the trigger or popup content.
+    #[props(default)]
+    is_loading: bool,
     #[props(default = LayerPlacement::Below)] placement: LayerPlacement,
     #[props(default)] on_open_change: Option<EventHandler<bool>>,
 ) -> Element {
@@ -90,6 +94,7 @@ pub fn ComplexSelector<T: Clone + PartialEq + 'static>(
                 "data-status": severity.map(InputStatusType::as_str),
                 "aria-expanded": (is_open && !is_disabled).to_string(), "aria-controls": id.clone(),
                 "aria-disabled": is_disabled.then_some("true"),
+                "aria-busy": is_loading.then_some("true"),
                 onclick: move |_| { if !is_disabled { request.call(!is_open); } },
                 onkeydown: move |event: KeyboardEvent| {
                     if !is_disabled && !event.is_composing() && event.key() == Key::ArrowDown {
@@ -97,7 +102,11 @@ pub fn ComplexSelector<T: Clone + PartialEq + 'static>(
                         request.call(true);
                     }
                 },
-                {trigger_content} span { "aria-hidden": "true", "⌄" }
+                {trigger_content}
+                span { class: "astryx-complex-selector__affordances", "aria-hidden": "true",
+                    if is_loading { Spinner { size: SpinnerSize::Small, is_decorative: true } }
+                    span { "⌄" }
+                }
             }
             div { id: id.clone(), class: "astryx-popover astryx-complex-selector__popup", popover: "manual", tabindex: -1,
                 role: "dialog", "aria-label": label, "data-open": (is_open && !is_disabled).to_string(),

@@ -7,11 +7,13 @@ type Blend = (&'static str, &'static str);
 #[component]
 pub(super) fn ComplexSelectorExamples() -> Element {
     let mut value = use_signal(|| ("Apple", "Juicy"));
+    let mut is_loading = use_signal(|| false);
     let (fruit, ripeness) = value();
     rsx! {
         section { id: "complex-selector-examples",
             h2 { "Complex Selector" }
-            ComplexSelector { label: "Fruit blend", width: Some(280.into()), value: value(),
+            button { id: "complex-selector-toggle-loading", r#type: "button", onclick: move |_| is_loading.toggle(), "Toggle simulated loading" }
+            ComplexSelector { label: "Fruit blend", width: Some(280.into()), value: value(), is_loading: is_loading(),
                 description: "Choose a fruit and ripeness in one control.",
                 trigger_label: rsx! { "{fruit} · {ripeness}" },
                 status: (ripeness == "Peak").then(|| FieldStatusInput {
