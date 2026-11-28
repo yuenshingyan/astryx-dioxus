@@ -1732,12 +1732,14 @@ These changes are available for review. The table records focused evidence, not 
     - [ ] Arbitrary width/height/maxWidth/minHeight and children; heading-plus-Stack, settings/form/sidebar regions; muted emphasizes particular area.
 
   - **Named inline example**
-    - [ ] **Center a Section with a maximum width**: explicit auto marginInlineStart/marginInlineEnd in StyleX (shorthand may lose against compiled component margins).
+    - [x] **Center a Section with a maximum width**: explicit auto marginInlineStart/marginInlineEnd in StyleX (shorthand may lose against compiled component margins). The Rust inline-style counterpart measured 1280px with equal 80px margins in a 1440px host in PR #241 Chrome.
 
   - **Named templates**
     - [ ] `SectionVariants` — **Section — Variants**: section/muted/transparent comparison.
-    - [ ] `SectionWashHighlight` — **Section — Default with Wash**: default region plus full-width muted callout.
+    - [x] `SectionWashHighlight` — **Section — Default with Wash**: default region plus full-width muted callout. PR #241 Chrome measured both regions at the example's full width.
     - [x] `SectionWithDividers` — **Section — With Dividers**: adjacent same-surface settings sections, bottom borders.
+
+  - [Section verification notes](docs/section-port.md#remaining-parent-evidence): PR #241 Chrome checked local light/dark computed backgrounds, not upstream raster parity. Renderer sizing and native interaction, manual screen-reader checks, and Layout's reset at the AppShell root remain open.
 
 - [ ] **[Stack](https://astryx.atmeta.com/components/Stack)**
 
