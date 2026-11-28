@@ -3,7 +3,7 @@ use std::collections::HashSet;
 use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
-use crate::{Field, SizeValue};
+use crate::{Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue};
 
 /// A plain-text option for a native selector.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -25,6 +25,12 @@ pub fn Selector(
     on_change: EventHandler<String>,
     #[props(default = "Select an option".to_owned())] placeholder: String,
     #[props(default)] description: Option<String>,
+    /// Caller-supplied feedback, independent of native required validation.
+    #[props(default)]
+    status: Option<FieldStatusInput>,
+    /// Placement of the validation message.
+    #[props(default)]
+    status_variant: FieldStatusPlacement,
     #[props(default)] html_name: Option<String>,
     #[props(default)] width: Option<SizeValue>,
     #[props(default)] is_disabled: bool,
@@ -51,16 +57,32 @@ pub fn Selector(
         .as_ref()
         .filter(|text| !text.is_empty())
         .map(|_| format!("{id}-desc"));
-    let described_by = description_id.clone();
+    let severity = status.as_ref().map(|status| status.status_type);
+    let status_id = status
+        .as_ref()
+        .filter(|status| status.message.as_ref().is_some_and(|text| !text.is_empty()))
+        .map(|status| {
+            status
+                .message_id
+                .clone()
+                .unwrap_or_else(|| format!("{id}-status"))
+        });
+    let described_by = [description_id.as_deref(), status_id.as_deref()]
+        .into_iter()
+        .flatten()
+        .collect::<Vec<_>>()
+        .join(" ");
     let allowed = options
         .iter()
         .filter(|choice| !choice.is_disabled)
         .map(|choice| choice.value.clone())
         .collect::<Vec<_>>();
     rsx! {
-        Field { label, input_id: id.clone(), description, description_id, width, is_label_hidden, is_required, is_disabled,
+        Field { label, input_id: id.clone(), description, description_id, width, is_label_hidden, is_required, is_disabled, status, status_variant,
             select { id, class: "astryx-selector__control", name: html_name, required: is_required, disabled: is_disabled,
-                "aria-describedby": described_by, "data-astryx-selector-value": value.clone(),
+                "aria-describedby": (!described_by.is_empty()).then_some(described_by),
+                "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
+                "data-status": severity.map(InputStatusType::as_str), "data-astryx-selector-value": value.clone(),
                 onmounted: move |_| {
                     if let Some(eval) = *controller.peek() { let _ = eval.send(()); }
                     let eval = document::eval(include_str!("sync_selector.js"));
