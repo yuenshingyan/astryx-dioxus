@@ -4,7 +4,12 @@ const itemSelector = '[role="treeitem"]';
 const owned = item => item?.closest('[role="tree"]') === root;
 const visible = () => [...root.querySelectorAll(itemSelector)].filter(item =>
   owned(item) && !item.closest('[hidden],[inert]') && item.getClientRects().length);
-let current;
+// Seed Tab entry once; later selection changes must not reset the roving stop.
+const initialItems = visible();
+const enabledItems = initialItems.filter(item => item.getAttribute('aria-disabled') !== 'true');
+const active = document.activeElement;
+let current = initialItems.includes(active) ? active :
+  enabledItems.find(item => item.getAttribute('aria-selected') === 'true') ?? enabledItems[0] ?? initialItems[0];
 const typeahead = createTreeTypeahead();
 const sync = () => {
   const items = visible();

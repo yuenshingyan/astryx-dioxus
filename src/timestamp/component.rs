@@ -1,5 +1,8 @@
 use dioxus::prelude::*;
 
+use crate::text::Text;
+use crate::theme::{TextColor, TextType};
+
 /// Absolute timestamp formats supported by the UTC renderer.
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum TimestampFormat {
@@ -14,7 +17,8 @@ pub enum TimestampFormat {
 }
 
 /// A semantic timestamp for a whole-second instant, rendered without a clock.
-/// Values outside Gregorian years 1–9999 render nothing.
+/// Uses supporting typography and secondary text color. Values outside Gregorian
+/// years 1–9999 render nothing.
 #[component]
 pub fn Timestamp(value: i64, format: TimestampFormat) -> Element {
     if !(-62_135_596_800..=253_402_300_799).contains(&value) {
@@ -36,7 +40,14 @@ pub fn Timestamp(value: i64, format: TimestampFormat) -> Element {
         TimestampFormat::SystemTime => ("system_time", time),
         TimestampFormat::UnixSeconds => ("unix_seconds", value.to_string()),
     };
-    rsx! { time { class: "astryx-timestamp", "data-format": name, datetime, "{text}" } }
+    rsx! {
+        Text {
+            text_type: TextType::SUPPORTING,
+            color: TextColor::SECONDARY,
+            has_truncate_tooltip: false,
+            time { class: "astryx-timestamp", "data-format": name, datetime, "{text}" }
+        }
+    }
 }
 
 // March-based Gregorian conversion, adapted from Howard Hinnant's public-domain

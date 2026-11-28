@@ -32,9 +32,12 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(`${input}.getAttribute('aria-busy') === 'true'`);
   assert.ok(await evaluate(`${input}.parentElement.querySelector('.astryx-spinner[aria-hidden=true]') && document.activeElement === ${input}`));
   assert.deepEqual(await evaluate(`[new MouseEvent('click', {bubbles:true,cancelable:true}), new DragEvent('drop', {bubbles:true,cancelable:true,dataTransfer:new DataTransfer()})].map(event => ${input}.dispatchEvent(event))`), [false, false]);
+  const keydownResults = `['Enter', ' ', 'Tab'].map(key => ${input}.dispatchEvent(new KeyboardEvent('keydown', {key, bubbles:true, cancelable:true})))`;
+  assert.deepEqual(await evaluate(keydownResults), [false, false, true]);
   assert.ok(await evaluate(`${input}.validity.valid && new FormData(${input}.form).get('attachment').name === 'sample.txt'`));
   await evaluate(`${toggle}.click()`);
   await waitFor(`!${input}.hasAttribute('aria-busy') && !${input}.parentElement.querySelector('.astryx-spinner')`);
+  assert.deepEqual(await evaluate(keydownResults), [true, true, true]);
   await evaluate(`${input}.form.reset()`);
   assert.ok(await evaluate(`${input}.files.length === 0 && ${input}.validity.valueMissing`));
   assert.deepEqual(exceptions, []);

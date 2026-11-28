@@ -98,6 +98,11 @@ pub fn NumberInput(
                 "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
                 "data-status": severity.map(InputStatusType::as_str),
                 onmounted: move |event| input_node.set(Some(event)),
+                onkeydown: move |event: KeyboardEvent| {
+                    if should_cancel_step(event.key(), event.modifiers(), event.is_composing(), !is_disabled && !is_read_only) {
+                        event.prevent_default();
+                    }
+                },
                 onchange: move |event| {
                     if !is_disabled && !is_read_only && let Some(handler) = on_change {
                         let raw = event.value();
@@ -121,6 +126,62 @@ pub fn NumberInput(
                 } }
             }
             }
+        }
+    }
+}
+
+fn should_cancel_step(
+    key: Key,
+    modifiers: Modifiers,
+    is_composing: bool,
+    is_editable: bool,
+) -> bool {
+    // Unlike upstream's text input, a native number input can step by default.
+    // Cancel only modified arrows; leave ordinary steps and commits to the browser.
+    is_editable
+        && !is_composing
+        && matches!(key, Key::ArrowUp | Key::ArrowDown)
+        && modifiers
+            .intersects(Modifiers::ALT | Modifiers::CONTROL | Modifiers::META | Modifiers::SHIFT)
+}
+
+#[cfg(test)]
+mod tests {
+    use dioxus::prelude::*;
+
+    use super::should_cancel_step;
+
+    #[test]
+    fn cancels_modified_vertical_arrows_in_editable_fields() {
+        for key in [Key::ArrowUp, Key::ArrowDown] {
+            for modifier in [
+                Modifiers::ALT,
+                Modifiers::CONTROL,
+                Modifiers::META,
+                Modifiers::SHIFT,
+            ] {
+                assert!(
+                    should_cancel_step(key.clone(), modifier, false, true),
+                    "{key:?} with {modifier:?}"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn preserves_native_defaults_outside_modified_editable_steps() {
+        for (key, modifiers, is_composing, is_editable) in [
+            (Key::ArrowUp, Modifiers::empty(), false, true),
+            (Key::ArrowDown, Modifiers::empty(), false, true),
+            (Key::Enter, Modifiers::SHIFT, false, true),
+            (Key::ArrowLeft, Modifiers::SHIFT, false, true),
+            (Key::ArrowDown, Modifiers::SHIFT, true, true),
+            (Key::ArrowUp, Modifiers::SHIFT, false, false),
+        ] {
+            assert!(
+                !should_cancel_step(key.clone(), modifiers, is_composing, is_editable),
+                "{key:?} with {modifiers:?}"
+            );
         }
     }
 }
