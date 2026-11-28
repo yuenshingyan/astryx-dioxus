@@ -4,6 +4,19 @@ use dioxus_ssr::render;
 use astryx_dioxus::{AppShell, AppShellVariant, LayoutHeight};
 
 #[test]
+fn layout_boundary_is_on_the_shell_root() {
+    let mut dom = VirtualDom::new(|| rsx! { AppShell { class: "caller-shell", "Workspace" } });
+    dom.rebuild_in_place();
+    let html = render(&dom);
+    let root = html.split('>').next().unwrap();
+    assert!(
+        root.contains("class=\"astryx-app-shell astryx-layout-root caller-shell\""),
+        "{html}"
+    );
+    assert_eq!(html.matches("astryx-layout-root").count(), 1, "{html}");
+}
+
+#[test]
 fn skip_link_targets_main_with_or_without_navigation() {
     let mut dom = VirtualDom::new(|| {
         rsx! {

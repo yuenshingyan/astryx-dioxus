@@ -48,7 +48,7 @@ pub fn AppShell(
         AppShellVariant::Elevated => "elevated",
     };
     rsx! {
-        div { class: format!("astryx-app-shell {class}"), style,
+        div { class: format!("astryx-app-shell astryx-layout-root {class}"), style,
             "data-variant": variant, "data-height": if is_fill { "fill" } else { "auto" },
             a { class: "astryx-app-shell-skip", href: skip_href, "{skip_label}" }
             Layout { height, padding: SpacingStep::Zero, default_has_dividers: has_dividers, header, start: side_nav,

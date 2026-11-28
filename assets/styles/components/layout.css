@@ -158,6 +158,32 @@
 }
 
 @layer astryx-base {
+  /* A layout root has no ancestor inset to bleed into; readers of inherited
+     layout and Section defaults must fall back without losing theme values. */
+  :where(.astryx-layout-root) {
+    --container-padding-inline-start: 0px;
+    --container-padding-inline-end: 0px;
+    --container-padding-block-start: 0px;
+    --container-padding-block-end: 0px;
+    --container-corner-start-start: 0px;
+    --container-corner-start-end: 0px;
+    --container-corner-end-start: 0px;
+    --container-corner-end-end: 0px;
+    --_container-bleed-block-start: 0px;
+    --_container-bleed-block-end: 0px;
+    --layout-padding-outer-x: initial;
+    --layout-padding-outer-y: initial;
+    --layout-padding-own-outer-x: initial;
+    --layout-padding-own-outer-y: initial;
+    --layout-padding-inner-x: initial;
+    --layout-padding-inner-y: initial;
+    --_section-padding-propagated: initial;
+    --layout-content-width: initial;
+    --layout-alignment-width: initial;
+    --_layout-flush-block-start: initial;
+    --_layout-flush-block-end: initial;
+    --container-max-height: initial;
+  }
   .astryx-layout {
     margin-inline-start: calc(-1 * var(--container-padding-inline-start, 0px));
     margin-inline-end: calc(-1 * var(--container-padding-inline-end, 0px));
