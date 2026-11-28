@@ -27,13 +27,13 @@ pub fn DateRangeInput(
     invalid_range_message: String,
     #[props(default)] min: Option<String>,
     #[props(default)] max: Option<String>,
-    /// Minimum span in calendar days, counting both endpoints.
+    /// Minimum span for new selections in calendar days, counting both endpoints.
     #[props(default)]
     min_range_span: Option<u32>,
-    /// Maximum span in calendar days, counting both endpoints.
+    /// Maximum span for new selections in calendar days, counting both endpoints.
     #[props(default)]
     max_range_span: Option<u32>,
-    /// Message shown when an otherwise valid range violates the span limits.
+    /// Message shown when an otherwise valid draft violates the span limits.
     #[props(default = "Choose a range within the allowed number of days.".to_owned())]
     invalid_span_message: String,
     #[props(default)] is_disabled: bool,
@@ -76,27 +76,39 @@ pub fn DateRangeInput(
     let style = width
         .map(|width| width.as_css().map(|width| format!("inline-size:{width}")))
         .transpose()?;
-    let (start, end) = draft
+    let draft_endpoints = draft
         .read()
         .as_ref()
         .filter(|draft| draft.base == value)
-        .map(|draft| (draft.start.clone(), draft.end.clone()))
+        .map(|draft| (draft.start.clone(), draft.end.clone()));
+    let span_bounds = (min_range_span, max_range_span);
+    // Span limits constrain new selections, not the caller's committed value.
+    let displayed_span_bounds = if draft_endpoints.is_some() {
+        span_bounds
+    } else {
+        (None, None)
+    };
+    let (start, end) = draft_endpoints
         .or_else(|| {
             value
                 .as_ref()
                 .map(|range| (Some(range.start.clone()), Some(range.end.clone())))
         })
         .unwrap_or_default();
-    let span_bounds = (min_range_span, max_range_span);
     let message = start
         .as_deref()
         .zip(end.as_deref())
         .and_then(|(start, end)| {
-            range_error(start, end, min.as_deref(), max.as_deref(), span_bounds).map(|error| {
-                match error {
-                    RangeError::Endpoints => invalid_range_message.as_str(),
-                    RangeError::Span => invalid_span_message.as_str(),
-                }
+            range_error(
+                start,
+                end,
+                min.as_deref(),
+                max.as_deref(),
+                displayed_span_bounds,
+            )
+            .map(|error| match error {
+                RangeError::Endpoints => invalid_range_message.as_str(),
+                RangeError::Span => invalid_span_message.as_str(),
             })
         });
     let described_by = message
