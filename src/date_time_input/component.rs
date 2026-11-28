@@ -4,7 +4,9 @@ use dioxus::prelude::*;
 use crate::date_input::is_valid_date;
 use crate::field::input_clear_button::InputClearButton;
 use crate::time_input::is_valid_time;
-use crate::{Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue};
+use crate::{
+    Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue, Spinner, SpinnerSize,
+};
 
 /// A local Gregorian date and time, entered through separate native controls.
 /// The value uses `YYYY-MM-DDTHH:MM`, or includes seconds when enabled.
@@ -30,6 +32,9 @@ pub fn DateTimeInput(
     max: Option<String>,
     #[props(default)] is_required: bool,
     #[props(default)] is_disabled: bool,
+    /// Lock both segments during caller-owned work without excluding the form value.
+    #[props(default)]
+    is_loading: bool,
     /// Show a clear action when the combined value is set and the field is enabled.
     #[props(default)]
     has_clear: bool,
@@ -41,6 +46,12 @@ pub fn DateTimeInput(
     let id = use_hook(|| format!("astryx-date-time-input-{}", current_scope_id().0));
     let mut time_draft = use_signal(|| None::<String>);
     let mut pending_date = use_signal(|| None::<String>);
+    let is_locked = is_disabled || is_loading;
+    let report = use_callback(move |next: Option<String>| {
+        if !is_locked && let Some(change) = on_change {
+            change.call(next);
+        }
+    });
     let (date, time) = if let Some(value) = value.as_deref() {
         let Some((date, time)) = value.split_once('T') else {
             return VNode::empty();
@@ -104,7 +115,7 @@ pub fn DateTimeInput(
         .join(" ");
     let described_by = (!described_by.is_empty()).then_some(described_by);
     let invalid = (severity == Some(InputStatusType::Error)).then_some("true");
-    let should_show_clear = has_clear && value.is_some() && !is_disabled;
+    let should_show_clear = has_clear && value.is_some() && !is_locked;
     let clear_label = clear_label
         .filter(|text| !text.trim().is_empty())
         .unwrap_or_else(|| format!("Clear {label}"));
@@ -113,21 +124,22 @@ pub fn DateTimeInput(
             width, description, description_id, status, status_variant: FieldStatusPlacement::Detached,
             div { class: "astryx-date-time-input__segments",
                 input { id: date_id, class: "astryx-date-input__control", r#type: "date", value: date.clone(), min: min_date, max: max_date,
-                    required: is_required, disabled: is_disabled, "aria-describedby": described_by.clone(),
+                    required: is_required, disabled: is_disabled, readonly: is_loading, "aria-describedby": described_by.clone(),
+                    "aria-busy": is_loading.then_some("true"), "aria-disabled": is_loading.then_some("true"),
                     "aria-invalid": invalid, "data-status": severity.map(InputStatusType::as_str),
                     onchange: move |event| {
+                        if is_locked { return; }
                         pending_date.set(None);
-                        if is_disabled { return; }
-                        let Some(change) = on_change else { return };
+                        if on_change.is_none() { return; }
                         let next = event.value();
                         if next.is_empty() {
                             time_draft.set(None);
-                            change.call(None);
+                            report.call(None);
                         } else if is_valid_date(&next) {
                             if let Some(time) = &time {
                                 time_draft.set(None);
                                 let time = clamp_time(time, &next, min_bound.as_ref(), max_bound.as_ref());
-                                change.call(Some(format!("{next}T{time}")));
+                                report.call(Some(format!("{next}T{time}")));
                             } else {
                                 pending_date.set(Some(next.clone()));
                                 let min_bound = min_bound.clone();
@@ -138,7 +150,7 @@ pub fn DateTimeInput(
                                         pending_date.set(None);
                                         let time = normalize_time(time, has_seconds);
                                         let time = clamp_time(&time, &next, min_bound.as_ref(), max_bound.as_ref());
-                                        change.call(Some(format!("{next}T{time}")));
+                                        report.call(Some(format!("{next}T{time}")));
                                     }
                                 });
                             }
@@ -147,33 +159,37 @@ pub fn DateTimeInput(
                 }
                 input { id: time_id, class: "astryx-time-input__control", r#type: "time", value: time_value,
                     "aria-label": time_label, min: time_min, max: time_max, step: if has_seconds { "1" } else { "60" },
-                    required: is_required, disabled: is_disabled, "aria-describedby": described_by,
+                    required: is_required, disabled: is_disabled, readonly: is_loading, "aria-describedby": described_by,
+                    "aria-busy": is_loading.then_some("true"), "aria-disabled": is_loading.then_some("true"),
                     "aria-invalid": invalid, "data-status": severity.map(InputStatusType::as_str),
                     onchange: move |event| {
-                        if is_disabled { return; }
+                        if is_locked { return; }
                         let next = event.value();
                         if next.is_empty() {
                             pending_date.set(None);
                             time_draft.set(None);
-                            if !date.is_empty() && let Some(change) = on_change { change.call(None); }
+                            if !date.is_empty() { report.call(None); }
                         } else if is_valid_time(&next, has_seconds) {
                             let next = normalize_time(next, has_seconds);
                             let selected_date = pending_date.take();
                             if let Some(date) = selected_date.as_deref().or_else(|| (!date.is_empty()).then_some(date.as_str())) {
                                 time_draft.set(None);
-                                if let Some(change) = on_change { change.call(Some(format!("{date}T{next}"))); }
+                                report.call(Some(format!("{date}T{next}")));
                             } else {
                                 time_draft.set(Some(next));
                             }
                         }
                     },
                 }
+                if is_loading {
+                    span { class: "astryx-date-time-input__loading", Spinner { size: SpinnerSize::Small, is_decorative: true } }
+                }
                 if should_show_clear {
                     InputClearButton { label: clear_label, onclick: move |_| {
                         pending_date.set(None);
                         time_draft.set(None);
                         // Native picker mode avoids programmatically refocusing a segment.
-                        if let Some(change) = on_change { change.call(None); }
+                        report.call(None);
                     } }
                 }
             }

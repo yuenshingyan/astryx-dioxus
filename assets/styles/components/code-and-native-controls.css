@@ -27,7 +27,8 @@
   .astryx-tree-list__item[aria-expanded="false"] > .astryx-tree-list__row > .astryx-tree-list__marker:dir(rtl) { transform: scaleX(-1); }
   .astryx-date-time-input__segments { display: flex; flex-wrap: wrap; gap: var(--spacing-2); }
   .astryx-date-time-input__segments > input { flex: 1 1 auto; }
-  .astryx-date-time-input__segments > .astryx-input-clear-button { align-self: center; }
+  .astryx-date-time-input__segments > .astryx-input-clear-button, .astryx-date-time-input__loading { align-self: center; }
+  .astryx-date-time-input__loading { display: flex; flex: none; }
   .astryx-date-time-input, .astryx-date-input, .astryx-time-input, .astryx-number-input { display: flex; flex-direction: column; gap: var(--spacing-2); max-inline-size: 100%; }
   .astryx-date-input__control, .astryx-time-input__control, .astryx-number-input__control, .astryx-number-input__entry[data-units] {
     min-inline-size: 0;

@@ -5,6 +5,7 @@ use astryx_dioxus::{DateTimeInput, FieldStatusInput, InputStatusType};
 #[component]
 pub(super) fn DateTimeInputExamples() -> Element {
     let mut meeting = use_signal(|| None::<String>);
+    let mut is_loading = use_signal(|| false);
     let display = meeting().unwrap_or_else(|| "No date and time selected".to_owned());
     rsx! {
         section { id: "date-time-input-examples",
@@ -12,9 +13,10 @@ pub(super) fn DateTimeInputExamples() -> Element {
             form { onsubmit: move |event| event.prevent_default(),
                 DateTimeInput { label: "Meeting time", value: meeting(), html_name: "meeting",
                     width: Some(320.into()), min: "2024-02-29T14:25", max: "2024-03-02T15:00", has_clear: true,
-                    on_change: move |next| meeting.set(next),
+                    is_loading: is_loading(), on_change: move |next| meeting.set(next),
                 }
                 output { id: "date-time-input-value", "{display}" }
+                button { id: "date-time-input-toggle-loading", r#type: "button", onclick: move |_| is_loading.toggle(), "Toggle simulated loading" }
             }
             div { id: "date-time-input-status-example",
                 DateTimeInput { label: "Review date", time_label: "Review time", value: "2026-04-29T12:00",
