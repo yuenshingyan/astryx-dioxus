@@ -256,6 +256,7 @@
   .astryx-checkbox-input__control[data-size="sm"] { inline-size: 20px; block-size: 20px; }
   .astryx-checkbox-input__control > input { position: absolute; inset: 0; margin: 0; inline-size: 100%; block-size: 100%; opacity: 0; cursor: pointer; }
   .astryx-checkbox-input__control > input:is([aria-disabled], [aria-readonly]) { cursor: default; }
+  .astryx-checkbox-input__control > .astryx-checkbox-indicator { pointer-events: none; }
   .astryx-checkbox-input__control > input:focus-visible + .astryx-checkbox-indicator { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
   .astryx-field-label__group { display: flex; flex-direction: column; }
   .astryx-field-label__row { display: inline-flex; align-items: center; vertical-align: top; gap: var(--spacing-1); }
