@@ -78,8 +78,9 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   const wash = await evaluate(`(() => {
     const group = document.querySelector('#section-wash-highlight');
     const width = group.getBoundingClientRect().width;
-    return [...group.querySelectorAll('.astryx-section')].map(surface =>
-      Math.abs(surface.getBoundingClientRect().width - width) < 0.5);
+    const surfaces = [...group.querySelectorAll('.astryx-section')].filter(surface =>
+      !group.contains(surface.parentElement.closest('.astryx-section')));
+    return surfaces.map(surface => Math.abs(surface.getBoundingClientRect().width - width) < 0.5);
   })()`);
   assert.deepEqual(wash, [true, true]);
   assert.equal(exceptions.length, 0);

@@ -17,6 +17,7 @@ fn SpanCard(label: &'static str, #[props(default = true)] has_fixed_height: bool
 
 #[component]
 pub(super) fn GridSpanExamples() -> Element {
+    let mut mounted = use_signal(|| None);
     let mut mounted_size = use_signal(|| None::<(f64, f64)>);
     rsx! {
         section { id: "grid-span-examples", "data-astryx-theme": "neutral",
@@ -47,17 +48,21 @@ pub(super) fn GridSpanExamples() -> Element {
                     class: "grid-span-caller", style: "grid-column:2;grid-row:2;color:inherit",
                     "data-mounted-size": mounted_size().map(|(width, height)| format!("{width},{height}")),
                     attributes: vec![onmounted(move |event: MountedEvent| {
-                        spawn(async move {
-                            if let Ok(rect) = event.get_client_rect().await {
-                                mounted_size.set(Some((rect.size.width, rect.size.height)));
-                            }
-                        });
+                        mounted.set(Some(event.data()));
                     })],
                     a { id: "grid-span-long-link", href: "#grid-span-explicit",
                         style: "min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis",
                         "A long focusable child whose full label remains in the document"
                     }
-                    button { id: "grid-span-next-control", "Next control" }
+                    button { id: "grid-span-next-control", onclick: move |_| {
+                        if let Some(target) = mounted() {
+                            spawn(async move {
+                                if let Ok(rect) = target.get_client_rect().await {
+                                    mounted_size.set(Some((rect.size.width, rect.size.height)));
+                                }
+                            });
+                        }
+                    }, "Next control" }
                 }
             }
         }

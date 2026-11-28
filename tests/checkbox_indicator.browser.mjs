@@ -25,6 +25,9 @@ await withTarget(async ({send, evaluate, waitFor}) => {
   })`), [['true', 0, true, false], ['true', 0, true, false]]);
   assert.equal(await evaluate('document.getElementById("ci-star").textContent.trim()'), '★');
 
+  await waitFor(`!![...document.styleSheets].some(sheet => [...sheet.cssRules].some(rule => rule.selectorText === '#ci-restyle .astryx-checkbox-indicator'))`);
+  await evaluate('document.getElementById("ci-brand-checked").scrollIntoView({block:"center"})');
+  await waitFor(`getComputedStyle(document.getElementById('ci-brand-checked')).backgroundColor !== 'rgba(0, 0, 0, 0)'`);
   const brand = await evaluate(`['unchecked', 'checked', 'disabled'].map(state => {
     const css = getComputedStyle(document.getElementById('ci-brand-' + state));
     return {width: css.borderTopWidth, radius: css.borderTopLeftRadius, fill: css.backgroundColor};
@@ -37,6 +40,8 @@ await withTarget(async ({send, evaluate, waitFor}) => {
   assert.notEqual(brand[1].fill, brand[2].fill);
 
   const owner = `document.getElementById('ci-native-owner')`;
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
   await evaluate(`${owner}.focus()`);
   assert.equal(await evaluate(`${owner} === document.activeElement && ${owner}.labels[0].textContent.trim() === 'Show completed tasks'`), true);
   assert.equal(await evaluate(`getComputedStyle(${owner}.nextElementSibling).outlineStyle`), 'solid');

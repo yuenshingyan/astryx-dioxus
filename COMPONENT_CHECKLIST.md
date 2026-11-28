@@ -13,7 +13,7 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 
 ## Completion audit
 
-The latest audit added evidence for 33 detailed items across ten components. All ten parent entries remain open. The integrated WASM showcase builds, and eight Chrome suites passed. Three browser checks still fail: Grid Span’s mounted-wrapper measurement, Section’s wash-highlight width, and Checkbox Indicator’s restyle outline. Visual comparisons, manual assistive-technology checks, and shared dependency gaps remain open where documented in the component port notes.
+The latest audit added evidence for 33 detailed items across ten components. All ten parent entries remain open. The integrated WASM showcase builds, and all eleven Chrome suites passed. This includes Grid Span’s mounted-wrapper measurement, Section’s wash-highlight width, and Checkbox Indicator’s restyle and native focus checks. Visual comparisons, manual assistive-technology checks, and shared dependency gaps remain open where documented in the component port notes.
 
 ## Latest follow-ups
 

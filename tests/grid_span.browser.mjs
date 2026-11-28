@@ -51,6 +51,7 @@ await withTarget(async ({send, evaluate, waitFor}) => {
       native: true, shrinkable: true,
     }, dir);
   }
+  await evaluate('document.getElementById("grid-span-next-control").click()');
   await waitFor('!!document.getElementById("grid-span-full")?.dataset.mountedSize');
   assert.equal(await evaluate(`(() => {
     const span = document.getElementById('grid-span-full');
