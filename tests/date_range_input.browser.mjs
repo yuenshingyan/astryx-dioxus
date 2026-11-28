@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8303'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8308'});
   const root = `document.querySelector('#date-range-input-examples fieldset')`;
   const input = index => `${root}.querySelectorAll('input')[${index}]`;
   const output = `document.getElementById('date-range-value').textContent`;
@@ -31,6 +31,12 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await change(0, '2026-04-10');
   await waitFor(`${output} === '2026-04-10 to 2026-04-10' && ${status} === ''`);
   assert.ok(await evaluate(`Array.from(${root}.querySelectorAll('input')).every(el => !el.hasAttribute('aria-invalid') && !el.hasAttribute('aria-describedby'))`));
+  await change(1, '2026-04-17');
+  await waitFor(`${status} === 'Choose no more than seven days.'`);
+  assert.equal(await evaluate(output), '2026-04-10 to 2026-04-10');
+  assert.ok(await evaluate(`Array.from(${root}.querySelectorAll('input')).every(el => el.getAttribute('aria-invalid') === 'true' && el.validity.valid)`));
+  await change(1, '2026-04-16');
+  await waitFor(`${output} === '2026-04-10 to 2026-04-16' && ${status} === ''`);
   await change(1, '');
   await waitFor(`${output} === 'No range selected'`);
   assert.deepEqual(exceptions, []);
