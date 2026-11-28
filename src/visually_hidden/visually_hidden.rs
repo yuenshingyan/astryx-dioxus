@@ -13,8 +13,16 @@ pub struct VisuallyHiddenRenderProps {
 /// Renders the hidden content in one caller-selected element.
 pub type VisuallyHiddenElement = Callback<VisuallyHiddenRenderProps, Element>;
 
-/// Keep content in the accessibility tree with the original fixed clip block.
-/// There is no styling target, and raw caller styling cannot replace the block.
+/// Clip content visually without hiding it from assistive technology.
+///
+/// Use for text such as icon-only labels, supplementary context, or a live
+/// region (`as_element` rendering a `div` with `aria-live` set by the caller).
+/// Do not put interactive controls inside: clipping does not remove them from
+/// the tab order. To hide content from everyone, omit it or pass `hidden`.
+///
+/// There is no styling target. Caller classes and inline styles are discarded;
+/// a raw `"xstyle"` attribute is likewise ignored, matching the upstream 0.7.2
+/// compatibility behavior without adding a StyleX prop to the Rust API.
 #[component]
 pub fn VisuallyHidden(
     /// Content to clip visually.
@@ -24,11 +32,12 @@ pub fn VisuallyHidden(
     as_element: Option<VisuallyHiddenElement>,
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
-    let attributes: Vec<_> = attributes
-        .into_iter()
-        .filter(|attr| !matches!(attr.name, "style" | "class" | "className" | "xstyle"))
-        .collect();
     let mut attributes = attributes;
+    // Dioxus also accepts individual CSS properties as style-namespaced attributes.
+    attributes.retain(|attr| {
+        attr.namespace != Some("style")
+            && !matches!(attr.name, "style" | "class" | "className" | "xstyle")
+    });
     attributes.push(Attribute::new("style", "position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-style:none;inset-block-start:0;inset-inline-start:0;pointer-events:none;user-select:none", None, false));
     attributes.sort_by_key(|attribute| attribute.name);
     if let Some(render) = as_element {
