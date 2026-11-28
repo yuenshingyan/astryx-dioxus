@@ -32,10 +32,31 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   assert.ok(await evaluate(`${marks(0)}[0].getBoundingClientRect().x > ${marks(0)}[4].getBoundingClientRect().x`));
   await press('ArrowLeft', 37);
   await waitFor(`${ranges}[0].dataset.value === '52'`);
+  await press('PageUp', 33);
+  await waitFor(`${caption}.textContent === '62%' && ${ranges}[0].getAttribute('aria-valuetext') === '62%'`);
+  assert.deepEqual(await evaluate(`Array.from(new FormData(${form}))`), [['volume', '62']]);
+  await press('PageDown', 34);
+  await waitFor(`${ranges}[0].dataset.value === '52'`);
   await evaluate(`${ranges}[1].focus()`);
   await press('ArrowUp', 38);
   await waitFor(`${ranges}[1].dataset.value === '30'`);
-  await evaluate(`${ranges}[2].focus()`);
+  await press('PageUp', 33);
+  await waitFor(`${ranges}[1].dataset.value === '80'`);
+  await press('PageUp', 33);
+  await waitFor(`${ranges}[1].dataset.value === '100'`);
+  await press('PageDown', 34);
+  await waitFor(`${ranges}[1].dataset.value === '50'`);
+  await evaluate(`(() => {
+    const input = ${ranges}[2];
+    window.fixedVolumePageEvents = [];
+    for (const type of ['input', 'change']) {
+      input.addEventListener(type, () => window.fixedVolumePageEvents.push([type, input.value]));
+    }
+    input.focus();
+  })()`);
+  await press('PageUp', 33);
+  await waitFor(`window.fixedVolumePageEvents.length >= 2 && ${ranges}[2].value === '30'`);
+  assert.deepEqual(await evaluate('window.fixedVolumePageEvents'), [['input', '40'], ['change', '40']]);
   await press('End', 35);
   await waitFor(`${ranges}[2].value === '30'`);
   assert.deepEqual(await evaluate(`Array.from(new FormData(${form}))`), [['volume', '52']]);
@@ -44,5 +65,5 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await press('Home', 36);
   await waitFor(`${ranges}[0].dataset.value === '0' && ${marks(0)}.filter(el => el.hasAttribute('data-filled')).length === 1`);
   assert.deepEqual(exceptions, []);
-  console.log('Slider: accessible name, LTR/RTL and vertical keys, controlled rollback and disabled form exclusion passed');
+  console.log('Slider: accessible name, arrows and ten-step Page keys, controlled rollback and disabled form exclusion passed');
 });
