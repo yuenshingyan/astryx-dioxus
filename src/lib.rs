@@ -354,7 +354,7 @@ pub use toggle_button::{
     ToggleButtonProps,
 };
 pub use token::{InvalidTokenColor, Token, TokenColor, TokenProps, TokenSize};
-pub use tokenizer::{Tokenizer, TokenizerChange, TokenizerProps};
+pub use tokenizer::{Tokenizer, TokenizerChange, TokenizerProps, TokenizerWithClear};
 pub use toolbar::{Toolbar, ToolbarOrientation, ToolbarProps};
 pub use tooltip::{Tooltip, TooltipProps};
 pub use top_nav::{

@@ -13,6 +13,7 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
     await send('Input.dispatchKeyEvent', {type:'keyUp', key, code:key, windowsVirtualKeyCode});
   };
   await waitFor(input);
+  await evaluate(`void (window.originalTagsSearch = ${input})`);
   assert.equal(await evaluate(`${input}.labels[0].textContent.trim()`), 'Tags');
   assert.equal(await evaluate(values), '["1","2"]');
   await send('Page.bringToFront');
@@ -41,6 +42,33 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await press('Enter', 13, '\r');
   await waitFor(`${values} === '["3","5"]' && !${input}.hasAttribute('aria-invalid')`);
   assert.equal(await evaluate(`document.getElementById(${input}.getAttribute('aria-describedby')).textContent`), 'Choose tags for the project.');
+  const clear = "document.querySelector('#tokenizer-examples [aria-label=\"Clear all\"]')";
+  const lastChange = "document.getElementById('tokenizer-last-change').textContent";
+  const announcement = `document.querySelector('[data-astryx-live-region="polite"]')?.textContent`;
+  assert.equal(await evaluate(`${clear}.type`), 'button');
+  await evaluate(`${clear}.focus()`);
+  await press('Enter', 13, '\r');
+  await waitFor(`${values} === '[]' && !${clear} && document.activeElement === ${input}`);
+  assert.equal(await evaluate(`${lastChange}`), 'Change 5: Removed Research');
+  assert.equal(await evaluate(`${input} === window.originalTagsSearch`), true);
+  await waitFor(`${announcement} === 'All items removed'`);
+
+  await send('Input.insertText', {text:'Design'});
+  await waitFor(`${list}.querySelectorAll('[role=option]').length === 1`);
+  await press('ArrowDown', 40);
+  await press('Enter', 13, '\r');
+  await waitFor(`${values} === '["1"]' && !!${clear}`);
+  await send('Input.insertText', {text:'Sales'});
+  await waitFor(`${input}.value === 'Sales'`);
+  const point = await evaluate(`(() => {
+    ${clear}.scrollIntoView({block:'center'});
+    const r = ${clear}.getBoundingClientRect();
+    return {x:r.x+r.width/2,y:r.y+r.height/2};
+  })()`);
+  await send('Input.dispatchMouseEvent', {type:'mousePressed', ...point, button:'left', clickCount:1});
+  await send('Input.dispatchMouseEvent', {type:'mouseReleased', ...point, button:'left', clickCount:1});
+  await waitFor(`${values} === '[]' && ${input}.value === 'Sales' && document.activeElement === ${input}`);
+  assert.equal(await evaluate(`${lastChange}`), 'Change 7: Removed Design');
   assert.deepEqual(exceptions, []);
-  console.log('Tokenizer: labeled input, filtered choices, add/remove, repeated form values, and focus return passed');
+  console.log('Tokenizer: labeling, filtering, add/remove, Clear all, form values, and focus return passed');
 });
