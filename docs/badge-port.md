@@ -62,6 +62,8 @@ Use the existing [Chrome/CDP setup](button-port.md#browser-checks); CDP_URL and 
 
 Rust tests cover the 56 built-in tone/content combinations, scalar formatting, exact large integers, empty/rich slot rules, escaped content, required-label compile failure, default/open/invalid variants, native title/ref/event/ARIA/state forwarding, direct icon order/semantics/sizing and plain-versus-rich direction. Shared classifier tests cover the complete scalar fingerprint and boundary corpus.
 
+The title-precedence regression in `tests/badge.rs` covers FR4 and ORD1: the pinned root spreads caller props after the derived title. An explicit `title=""` therefore stays empty on the root rather than falling back to the label or being omitted (which would allow an ancestor's title to apply). The full label remains in the label span. This is SSR markup evidence, not a test of pointer or assistive-technology behavior; no production change was needed.
+
 Browser assertions include all 28 original controls in both modes, all 14 tones, actual AX full text despite clipping, no invented role/tab/live/press machinery, caller icons, native ref/event callbacks, grid/stack/content width, constrained row/cell bounds, larger text versus empty slots, custom layered theme geometry, Neutral's gray extension, actual rendered character positions in both directions, silent static updates, mobile layout, and forced-color status outlines. The five existing component suites and two renderer-boundary suites remain regression checks.
 
 ## Contrast and source limitations
