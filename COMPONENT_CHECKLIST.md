@@ -2793,7 +2793,7 @@ These changes are available for review. The table records focused evidence, not 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/DropdownMenu/DropdownMenuDivider.doc.mjs). No own named inline examples or templates.
 
   - **Actual behavior, without invented variants**
-    - [ ] No documented size/color/orientation choice: a horizontal separator between compound-menu row groups.
+    - [x] No documented size/color/orientation choice: a horizontal separator between compound-menu row groups.
     - [ ] `role="separator"`; never an arrow-key stop. Data equivalent `{type: 'divider'}` uses the same component/theme target.
     - [ ] Host ID/data/ARIA attributes and handlers reach separator; role/orientation remain component-owned; `xstyle` customizes spacing/layout, not a fixed visual variant.
 
