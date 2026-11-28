@@ -30,6 +30,27 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
     fits: true, cap: 'none', ghost: ['0px', '16px', 'rgba(0, 0, 0, 0)'], avatarOffset: 20, nameHeight: 20,
     densities: ['balanced', 'compact', 'spacious'],
   });
+  const reflow = await evaluate(`(() => {
+    const fixture = document.getElementById('chat-bubble-narrow');
+    const name = fixture.querySelector('[data-chat-name]');
+    const metadata = fixture.querySelector('.astryx-chat-message-bubble__metadata');
+    const lineCount = element => {
+      const range = document.createRange();
+      range.selectNodeContents(element);
+      return range.getClientRects().length;
+    };
+    return {
+      width: fixture.clientWidth,
+      fits: [fixture, name, metadata].every(element => element.scrollWidth <= element.clientWidth),
+      nameFitsVertically: name.scrollHeight <= name.clientHeight,
+      nameGrows: name.clientHeight > ${state.nameHeight},
+      nameWraps: lineCount(name) > 1,
+      metadataWraps: lineCount(metadata) > 1,
+    };
+  })()`);
+  assert.deepEqual(reflow, {
+    width: 320, fits: true, nameFitsVertically: true, nameGrows: true, nameWraps: true, metadataWraps: true,
+  });
   assert.deepEqual(exceptions, []);
-  console.log('ChatMessageBubble: logical corners, name-row avatar offset, densities and full-width ghost passed');
+  console.log('ChatMessageBubble: logical corners, name-row avatar offset, densities, full-width ghost and narrow slot reflow passed');
 });

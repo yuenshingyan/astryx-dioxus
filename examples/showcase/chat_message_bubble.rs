@@ -47,6 +47,16 @@ pub(super) fn ChatMessageBubbleExamples() -> Element {
                 ChatMessage { sender: ChatMessageSender::User,
                     ChatMessageBubble { metadata: rsx! { ChatMessageMetadata { status: ChatMessageStatus::Read } }, "Thank you!" }
                 }
+                h3 { "Narrow slot reflow" }
+                div { id: "chat-bubble-narrow", style: "width:min(100%, 320px)",
+                    ChatMessage { sender: ChatMessageSender::Assistant,
+                        ChatMessageBubble {
+                            name: rsx! { "LongUnbrokenSenderNameThatNeedsToWrapInANarrowTranscript" },
+                            metadata: rsx! { "LongUnbrokenReferenceThatNeedsToWrapInANarrowTranscript" },
+                            "Short reply."
+                        }
+                    }
+                }
                 h3 { "Custom content" }
                 ChatMessage { sender: ChatMessageSender::User, ChatMessageBubble { "Show me the output." } }
                 ChatMessage { sender: ChatMessageSender::Assistant,
