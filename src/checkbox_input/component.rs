@@ -73,6 +73,7 @@ pub fn CheckboxInput(
                         "data-astryx-checkbox-owner": owner.clone(), "data-checked": is_checked.to_string(), "data-mixed": is_mixed.to_string(),
                         "aria-checked": is_mixed.then_some("mixed"), "aria-disabled": is_disabled.then_some("true"),
                         "aria-readonly": is_read_only.then_some("true"), "aria-busy": is_loading.then_some("true"),
+                        "aria-required": is_required.then_some("true"),
                         "aria-invalid": (is_error || is_required).then(|| is_error.to_string()),
                         "aria-describedby": (!described_by.is_empty()).then_some(described_by), "aria-labelledby": labelled_by,
                         onmounted: move |_| {
