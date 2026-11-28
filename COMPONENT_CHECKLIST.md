@@ -3272,8 +3272,8 @@ These changes are available for review. The table records focused evidence, not 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/NavIcon/NavIcon.doc.mjs). Templates in `NavIcon/` under [pinned root](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components).
 
   - **Actual behavior**
-    - [ ] No finite variants/size/color props: circular accent-background container with required icon ReactNode.
-    - [ ] Display-only navigation-header visual anchor, not button; Icon or similarly sized glyph; TopNavHeading/PageNavHeader composition.
+    - [x] No finite variants/size/color props: circular accent-background container with required icon (ReactNode upstream, `Element` in Rust). See [NavIcon evidence](docs/nav-icon-port.md).
+    - [ ] Display-only navigation-header visual anchor, not button; Icon or similarly sized glyph; TopNavHeading/PageNavHeader composition (PageNavHeader is not ported).
 
   - **Named templates**
     - [ ] `NavIconBasic` — **NavIcon — Basic**: semantic icons as logo/accent visuals.
