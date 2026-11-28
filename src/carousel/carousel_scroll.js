@@ -4,12 +4,29 @@ const scroller = root?.querySelector(':scope > .astryx-carousel__scroller');
 if (!scroller) return;
 
 const rtl = () => getComputedStyle(scroller).direction === 'rtl';
+const wheel = event => {
+  if (event.defaultPrevented || !event.shiftKey || event.deltaY === 0 || event.deltaX !== 0) return;
+  // Use the physical delta, even in RTL or at an edge. The browser clamps or snaps the scroll.
+  event.preventDefault();
+  scroller.scrollBy({left: event.deltaY, behavior: 'auto'});
+};
+let hasWheelListener = false;
+const syncWheelListener = hasOverflow => {
+  if (hasWheelListener === hasOverflow) return;
+  // A fitting row shouldn't block the page's native wheel behavior.
+  if (hasOverflow) scroller.addEventListener('wheel', wheel, {passive: false});
+  else scroller.removeEventListener('wheel', wheel);
+  hasWheelListener = hasOverflow;
+};
 const update = () => {
   const max = scroller.scrollWidth - scroller.clientWidth;
+  const hasOverflow = max > 1;
   const position = Math.max(0, rtl() ? -scroller.scrollLeft : scroller.scrollLeft);
   const canScrollStart = position > 1;
   const canScrollEnd = position < max - 1;
-  if (scroller.tabIndex !== (max > 1 ? 0 : -1)) scroller.tabIndex = max > 1 ? 0 : -1;
+  syncWheelListener(hasOverflow);
+  const tabIndex = hasOverflow ? 0 : -1;
+  if (scroller.tabIndex !== tabIndex) scroller.tabIndex = tabIndex;
   for (const [side, canScroll] of [['start', canScrollStart], ['end', canScrollEnd]]) {
     const attribute = `data-overflow-${side}`;
     if (scroller.hasAttribute(attribute) !== canScroll) scroller.toggleAttribute(attribute, canScroll);
@@ -45,6 +62,7 @@ try {
 } finally {
   resize.disconnect();
   mutations.disconnect();
+  syncWheelListener(false);
   scroller.removeEventListener('scroll', update);
   root.removeEventListener('click', click);
 }

@@ -28,6 +28,7 @@ pub(super) fn CarouselExamples() -> Element {
             div { style: "max-width:500px",
                 Carousel { label: "Workflow steps", slides, has_snap: true, has_buttons: false }
             }
+            p { "Try Shift + mouse wheel over either row below. The first scrolls left to right; the second is right to left." }
             div { style: "width:220px;max-width:100%",
                 Carousel { label: "No fade example", slides: vec![CarouselSlide {
                     key: "wide".to_owned(), content: rsx! { div { style: "width:320px", "Wide slide without edge fade" } },
