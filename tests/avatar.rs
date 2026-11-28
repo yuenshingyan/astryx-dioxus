@@ -1,3 +1,4 @@
+use dioxus::core::Runtime;
 use dioxus::prelude::*;
 use dioxus_ssr::{render, render_element};
 
@@ -101,7 +102,9 @@ fn reported_status_names_follow_mount_change_clear_removal_and_remount() {
     let mut dom = VirtualDom::new(status_lifecycle);
     dom.rebuild_in_place();
     let mut status = dom.in_runtime(|| {
-        consume_context_from_scope::<Signal<Option<&'static str>>>(ScopeId::APP).unwrap()
+        Runtime::current()
+            .consume_context::<Signal<Option<&'static str>>>(ScopeId::APP)
+            .unwrap()
     });
     for (label, expected_status) in [
         (Some("Online"), Some("Online")),
