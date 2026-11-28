@@ -210,7 +210,7 @@ fn dimension_keyword(value: &str) -> Option<CssWideKeyword> {
                 chars.next();
                 hex.push(digit);
             }
-            if !hex.is_empty() {
+            let decoded = if !hex.is_empty() {
                 if chars
                     .peek()
                     .is_some_and(|ch| matches!(ch, ' ' | '\t' | '\n' | '\r' | '\u{c}'))
@@ -220,14 +220,16 @@ fn dimension_keyword(value: &str) -> Option<CssWideKeyword> {
                         chars.next();
                     }
                 }
-                if let Ok(code) = u32::from_str_radix(&hex, 16)
-                    && let Some(decoded) = char::from_u32(code)
-                {
-                    without_comments.push(decoded);
-                }
-            } else if let Some(escaped) = chars.next() {
-                without_comments.push(escaped);
+                let code = u32::from_str_radix(&hex, 16).ok()?;
+                char::from_u32(code)?
+            } else {
+                chars.next()?
+            };
+            // Escaped whitespace belongs to the identifier, not its surrounding trivia.
+            if !decoded.is_ascii_alphabetic() && decoded != '-' {
+                return None;
             }
+            without_comments.push(decoded);
         } else {
             without_comments.push(ch);
         }
@@ -242,7 +244,7 @@ fn dimension_keyword(value: &str) -> Option<CssWideKeyword> {
     .into_iter()
     .find(|keyword| {
         without_comments
-            .trim()
+            .trim_matches([' ', '\t', '\n', '\r', '\u{c}'])
             .eq_ignore_ascii_case(keyword.as_str())
     })
 }
