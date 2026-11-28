@@ -136,7 +136,8 @@ pub fn Token(
     let id = format!("token-{}", current_scope_id().0);
     let is_rejected = href.as_deref().is_some_and(|url| !is_safe_url(url));
     let role = use_interactive_role(href.is_some(), on_click.is_some(), is_disabled);
-    let is_link = href.is_some() && (role == InteractiveRole::Link || on_click.is_none());
+    // A disabled href falls back to a link only if no button role takes precedence.
+    let is_link = href.is_some() && role != InteractiveRole::Button;
     let is_button = !is_link && role == InteractiveRole::Button;
     let is_blocked = is_disabled || is_rejected;
     let has_surface = is_button || (is_link && on_remove.is_some());
