@@ -16,6 +16,16 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   for (const name of ['Ordered steps', 'Settings']) {
     assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'list' && node.name?.value === name), name);
   }
+  assert.equal(await evaluate(`(() => {
+    const rows = [...document.querySelectorAll('#native-rows-list > li')];
+    if (rows.length !== 2) return false;
+    const [first, second] = rows.map(row => row.getBoundingClientRect());
+    return first.width > 0 && first.bottom <= second.top && first.width === second.width;
+  })()`), true, 'native rows should stack instead of occupying adjacent marker tracks');
+  await evaluate(`document.querySelector('#native-rows-list > li:first-child > a').focus()`);
+  await send('Input.dispatchKeyEvent', {type: 'keyDown', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9});
+  await send('Input.dispatchKeyEvent', {type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9});
+  await waitFor(`document.activeElement?.matches('#native-rows-list > li:last-child > a')`);
   assert.deepEqual(exceptions, []);
-  console.log('List: named native ordered and unordered lists, start, and spacing passed');
+  console.log('List: native semantics, ordered row placement, and Tab order passed');
 });

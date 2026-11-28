@@ -3693,7 +3693,8 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   }
   .astryx-list-item:is(.astryx-list-item--divided, .astryx-list-item--bleed) { border-radius: 0; }
   .astryx-list-item--divided:not(:last-child) { border-block-end: var(--border-width) solid var(--color-border); }
-  .astryx-list[data-list-style="decimal"] > .astryx-list-item { grid-column: 1 / -1; }
+  /* The marker tracks belong to the list; every direct native row spans both. */
+  .astryx-list[data-list-style="decimal"] > :is(li, .astryx-list-item) { grid-column: 1 / -1; }
   .astryx-list-item:has(> .astryx-list-item__marker) { counter-increment: astryx-list; }
   .astryx-list-item__marker { display: flex; align-items: center; justify-content: center; flex: none; inline-size: var(--spacing-4); color: var(--color-text-primary); }
   .astryx-list-item__marker:is([data-kind="disc"], [data-kind="circle"])::before { content: ""; box-sizing: border-box; inline-size: 6px; block-size: 6px; border-radius: 50%; border: 1px solid currentColor; }

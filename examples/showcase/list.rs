@@ -18,6 +18,10 @@ pub(super) fn ListExamples() -> Element {
                     ListItem { key: "{step}", label: step }
                 }
             }
+            List { id: "native-rows-list", header: rsx! { h3 { "Setup resources" } }, list_style: ListMarkerStyle::Decimal,
+                li { a { href: "#settings-list", "Review settings" } }
+                li { a { href: "#steps-list", "Read the installation steps" } }
+            }
             h3 { "ListItem: Bullets and dividers" }
             List { id: "list-item-features", list_style: ListMarkerStyle::Circle,
                 edge: ListEdge::Flush, density: ListDensity::Spacious, has_dividers: true,
