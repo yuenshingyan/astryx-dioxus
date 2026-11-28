@@ -7,15 +7,18 @@ use crate::theme::{TextColor, TextSize, TextWeight};
 use crate::utils::is_renderable::is_renderable;
 
 /// Identifies a product or suite in the top navigation and optionally links to it.
+/// The product name is navigation text, not a heading in the page outline.
 #[component]
 pub fn TopNavHeading(
     /// Product name. Without it, only the logo is shown.
     #[props(default)]
     heading: Option<String>,
-    /// Product logo or other leading artwork.
+    /// Product logo or other leading artwork. In linked configurations, use passive
+    /// artwork here and place independent controls in `header_end_content`.
     #[props(default)]
     logo: Option<Element>,
-    /// Accessible name for a linked logo without adjacent text.
+    /// Name for a linked logo without adjacent text. Supply it for a logo-only link
+    /// if the artwork does not already provide an accessible name.
     #[props(default)]
     logo_label: Option<String>,
     /// Destination for the product heading or logo.
@@ -33,7 +36,7 @@ pub fn TopNavHeading(
     /// Independent destination for the text below the product name.
     #[props(default)]
     subheading_href: Option<String>,
-    /// Trailing content, kept outside any heading link.
+    /// Trailing content when `heading` is present, kept outside any heading link.
     #[props(default)]
     header_end_content: Option<Element>,
     /// Overrides the provider renderer for whole-heading and logo links.
@@ -54,6 +57,14 @@ pub fn TopNavHeading(
 ) -> Element {
     let renderer = use_link_component(render_link);
     let heading = heading.filter(|text| !text.is_empty());
+    let logo_label = logo_label.filter(|label| !label.trim().is_empty());
+    let heading_href = heading_href.filter(|href| !href.is_empty());
+    let superheading = superheading.filter(|text| !text.is_empty());
+    let subheading = subheading.filter(|text| !text.is_empty());
+    // A destination on an omitted line must not split the visible product link.
+    let superheading_href =
+        superheading_href.filter(|href| superheading.is_some() && !href.is_empty());
+    let subheading_href = subheading_href.filter(|href| subheading.is_some() && !href.is_empty());
     let has_independent_links = superheading_href.is_some() || subheading_href.is_some();
     let mut attributes: Vec<_> = attributes
         .into_iter()
@@ -111,7 +122,7 @@ pub fn TopNavHeading(
     let content = rsx! {
         {logo}
         span { class: text_class,
-            if let Some(text) = superheading.filter(|text| !text.is_empty()) {
+            if let Some(text) = superheading {
                 if let Some(href) = superheading_href {
                     Link { href, color: TextColor::SECONDARY, size: TextSize::ExtraSmall, "{text}" }
                 } else { span { class: "astryx-top-nav-heading__secondary", "{text}" } }
@@ -119,7 +130,7 @@ pub fn TopNavHeading(
             if let Some(href) = title_href {
                 Link { href, color: TextColor::PRIMARY, weight: TextWeight::Semibold, "{heading}" }
             } else { span { class: "astryx-top-nav-heading__title", "{heading}" } }
-            if let Some(text) = subheading.filter(|text| !text.is_empty()) {
+            if let Some(text) = subheading {
                 if let Some(href) = subheading_href {
                     Link { href, color: TextColor::SECONDARY, size: TextSize::ExtraSmall, "{text}" }
                 } else { span { class: "astryx-top-nav-heading__secondary", "{text}" } }

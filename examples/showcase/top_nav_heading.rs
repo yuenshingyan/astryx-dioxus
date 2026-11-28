@@ -15,6 +15,7 @@ fn AppIcon() -> Element {
 
 #[component]
 pub(super) fn TopNavHeadingExamples() -> Element {
+    let mut settings_activations = use_signal(|| 0);
     rsx! {
         section { id: "top-nav-heading-examples", "data-astryx-theme": "neutral",
             h2 { "TopNavHeading" }
@@ -42,8 +43,12 @@ pub(super) fn TopNavHeadingExamples() -> Element {
             h3 { "Narrow heading" }
             TopNavHeading { id: "top-nav-narrow", style: "width:160px", dir: "rtl",
                 heading: "Acme Platform product and account", heading_href: "#top-nav-heading-examples",
-                logo: rsx! { AppIcon {} }, header_end_content: rsx! { button { r#type: "button", "Settings" } },
+                subheading_href: "#unused-account",
+                logo: rsx! { AppIcon {} }, header_end_content: rsx! {
+                    button { r#type: "button", onclick: move |_| settings_activations += 1, "Settings" }
+                },
             }
+            output { id: "top-nav-settings-activations", "{settings_activations}" }
             TopNavHeading { id: "top-nav-narrow-links", style: "width:160px",
                 heading: "Acme Platform product account", heading_href: "#top-nav-heading-examples", superheading: "Choose a workspace", superheading_href: "#top-nav-heading-examples",
                 logo: rsx! { AppIcon {} },
