@@ -19,5 +19,28 @@ await withTarget(async ({send, evaluate, waitFor}) => {
     const disabled = scheme === 'light' ? 'rgb(145, 145, 145)' : 'rgb(82, 82, 82)';
     assert.deepEqual(roots, [[16, 16, 'true', enabled], [16, 16, 'true', disabled], [16, 16, 'true', enabled]]);
   }
-  console.log('CheckIndicator: decorative root, absent unchecked mark, replacement size and Neutral colors passed');
+  const host = 'document.getElementById("check-example-host")';
+  const mark = 'document.getElementById("check-example-selection")';
+  const pending = 'document.getElementById("check-example-pending")';
+  const press_enter = async () => {
+    await send('Input.dispatchKeyEvent', {type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13, text: '\r'});
+    await send('Input.dispatchKeyEvent', {type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13});
+  };
+  await waitFor(`${mark}?.matches('.astryx-icon[aria-hidden="true"]')`);
+  await evaluate(`${host}.focus()`);
+  await press_enter();
+  await waitFor(`${host}.getAttribute('aria-pressed') === 'false' && !${mark}`);
+  assert.equal(await evaluate(`document.activeElement === ${host}`), true);
+
+  await evaluate(`${pending}.click()`);
+  await waitFor(`${host}.getAttribute('aria-busy') === 'true' && !!${mark}?.querySelector('.astryx-spinner')`);
+  assert.equal(await evaluate(`${mark}.matches('span[aria-hidden="true"]:not(.astryx-icon)')`), true);
+  assert.equal(await evaluate(`${host}.getAttribute('aria-pressed')`), 'false');
+  await evaluate(`${host}.focus()`);
+  await press_enter();
+  await waitFor(`${host}.getAttribute('aria-pressed') === 'true' && !!${mark}?.querySelector('.astryx-spinner')`);
+  await evaluate(`${pending}.click()`);
+  await waitFor(`${host}.getAttribute('aria-busy') === 'false' && ${mark}?.matches('.astryx-icon')`);
+  assert.equal(await evaluate(`document.activeElement === ${host}`), true);
+  console.log('CheckIndicator: decorative roots, geometry, Neutral colors and host selection/busy transitions passed');
 });
