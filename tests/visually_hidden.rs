@@ -1,3 +1,4 @@
+use dioxus::core::{AttributeValue, Mutation};
 use dioxus::prelude::*;
 use dioxus_ssr::render_element;
 
@@ -106,6 +107,47 @@ fn caller_renderer_keeps_heading_semantics_without_a_wrapper() {
         "{html}"
     );
     assert!(!html.contains("<span"), "{html}");
+}
+
+#[test]
+fn mount_and_click_listeners_are_registered_on_the_custom_root() {
+    let mut dom = VirtualDom::new(|| {
+        rsx! {
+            VisuallyHidden {
+                as_element: Callback::new(|root: VisuallyHiddenRenderProps| rsx! {
+                    div { ..root.attributes, {root.children} }
+                }),
+                id: "custom-hidden-root",
+                attributes: vec![onmounted(|_| {}), onclick(|_| {})],
+                "Hidden status"
+            }
+        }
+    });
+    let mutations = dom.rebuild_to_vec();
+    let root_id = mutations
+        .edits
+        .iter()
+        .find_map(|edit| match edit {
+            Mutation::SetAttribute {
+                name: "id",
+                value: AttributeValue::Text(value),
+                id,
+                ..
+            } if value == "custom-hidden-root" => Some(*id),
+            _ => None,
+        })
+        .expect("custom root ID mutation");
+    for event in ["mounted", "click"] {
+        let targets: Vec<_> = mutations
+            .edits
+            .iter()
+            .filter_map(|edit| match edit {
+                Mutation::NewEventListener { name, id } if name == event => Some(*id),
+                _ => None,
+            })
+            .collect();
+        assert_eq!(targets, [root_id], "listener target for {event}");
+    }
 }
 
 #[test]

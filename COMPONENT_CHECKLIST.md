@@ -1732,12 +1732,14 @@ These changes are available for review. The table records focused evidence, not 
     - [ ] Arbitrary width/height/maxWidth/minHeight and children; heading-plus-Stack, settings/form/sidebar regions; muted emphasizes particular area.
 
   - **Named inline example**
-    - [ ] **Center a Section with a maximum width**: explicit auto marginInlineStart/marginInlineEnd in StyleX (shorthand may lose against compiled component margins).
+    - [x] **Center a Section with a maximum width**: explicit auto marginInlineStart/marginInlineEnd in StyleX (shorthand may lose against compiled component margins). The Rust inline-style counterpart measured 1280px with equal 80px margins in a 1440px host in PR #241 Chrome.
 
   - **Named templates**
     - [ ] `SectionVariants` — **Section — Variants**: section/muted/transparent comparison.
-    - [ ] `SectionWashHighlight` — **Section — Default with Wash**: default region plus full-width muted callout.
+    - [x] `SectionWashHighlight` — **Section — Default with Wash**: default region plus full-width muted callout. PR #241 Chrome measured both regions at the example's full width.
     - [x] `SectionWithDividers` — **Section — With Dividers**: adjacent same-surface settings sections, bottom borders.
+
+  - [Section verification notes](docs/section-port.md#remaining-parent-evidence): PR #241 Chrome checked local light/dark computed backgrounds, not upstream raster parity. Renderer sizing and native interaction, manual screen-reader checks, and Layout's reset at the AppShell root remain open.
 
 - [ ] **[Stack](https://astryx.atmeta.com/components/Stack)**
 
@@ -2383,6 +2385,7 @@ These changes are available for review. The table records focused evidence, not 
 - [ ] **[VisuallyHidden](https://astryx.atmeta.com/components/VisuallyHidden)**
 
   - Source: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/VisuallyHidden/VisuallyHidden.doc.mjs).
+  - [Port evidence](docs/visually-hidden-port.md#verification-and-completion-blockers): PR #241 passed the focused Chrome checks for computed clipping, accessibility-tree exposure, and both persistent polite-region updates. The 13 clip declarations match the pinned source, and the focused Rust suite verifies custom-root mount/click listener registration, not native delivery. The parent remains open for manual speech/focus, coordinated browser delivery and non-Chromium checks, pinned recipe raster comparisons, shared dependency audits, and FR3/OQ1 approval.
 
   - **Semantics and content patterns**
     - [x] Truly no visual variants, sizes, or colors: intentionally invisible but exposed to accessibility tree; `xstyle` accepted and ignored only for 0.7.2 compatibility (ignored as a raw attribute in Dioxus).
@@ -2419,9 +2422,10 @@ These changes are available for review. The table records focused evidence, not 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Avatar/AvatarStatusDot.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/AvatarStatusDot).
 
   - **Choices and semantics**
-    - [ ] `variant`: `success` (default, green filled), `neutral` (gray ring), `error` (red minus); distinct shapes prevent color-only status.
-    - [x] Size comes from avatar context, not a separate size prop; optional custom `icon` replaces shape glyph and hides at tiny sizes. Public Avatar SSR covers all three tiers and empty icon inputs.
-    - [ ] Accessible `label` joins parent avatar name; standalone dot exposes labelled `role="img"`.
+    - [ ] `variant`: `success` (default, green filled), `neutral` (gray ring), `error` (red minus); distinct shapes prevent color-only status. PR #241 verifies computed styles and glyph metadata, not rendered parity or forced-color legibility.
+    - [x] Size comes from avatar context, not a separate size prop; optional custom `icon` replaces shape glyph and hides at tiny sizes. Public Avatar SSR covers all three tiers and empty icon inputs; PR #241 confirms mounted icon-tier geometry.
+    - [ ] Accessible `label` joins parent avatar name; standalone dot exposes labelled `role="img"`. PR #241 confirms standalone and Variants-row AX names. Avatar-owned initial/commit-phase composition and manual screen-reader verification remain open.
+    - Other open gates: live root `onmounted` forwarding and theming approval for an unmatched-variant baseline. See [port audit](docs/avatar-status-dot-port.md).
   - **Templates**
     - [x] **AvatarStatusDot** (`AvatarStatusDotShowcase.doc.mjs`): presence and automatic sizing. Pinned composition verified in SSR.
     - [x] **AvatarStatusDot — Variants** (`AvatarStatusDotVariants.doc.mjs`): success, neutral, error in status slot. Pinned composition verified in SSR.
@@ -2798,8 +2802,9 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Actual behavior, without invented variants**
     - [x] No documented size/color/orientation choice: a horizontal separator between compound-menu row groups.
-    - [ ] `role="separator"`; never an arrow-key stop. Data equivalent `{type: 'divider'}` uses the same component/theme target.
-    - [ ] Host ID/data/ARIA attributes and handlers reach separator; role/orientation remain component-owned; `xstyle` customizes spacing/layout, not a fixed visual variant.
+    - [ ] Compound separator role/orientation, arrow traversal in both directions, and rejection of programmatic focus verified in PR #241 Chrome. Data equivalence (`{type: 'divider'}`) is blocked on pointer-data inputs and routing in DropdownMenu, ContextMenu, and BreadcrumbItem.
+    - [ ] Host ID/data/ARIA/class/style and owned semantics verified in SSR; listener registration and runtime click dispatch verified. Native click/mount delivery and computed caller spacing override remain unverified for the `class`/`style` adaptation of `xstyle`.
+  - Completion also requires a rendered comparison against pinned **MenuSeparator** and manual screen-reader verification. See [DropdownMenuDivider verification](docs/dropdown-menu-divider-port.md).
 
 - [ ] **[Dropdown Menu Group](https://astryx.atmeta.com/components/DropdownMenuGroup)**
 
@@ -2942,13 +2947,14 @@ These changes are available for review. The table records focused evidence, not 
     - [x] Required state `unchecked`, `checked`, `indeterminate`; persistent empty box, checkmark, bar respectively. This is multiSelection, not a native input.
     - [x] `size`: `sm` (20px), `md` (24px, default); `isDisabled=false` default, purely visual.
     - [x] `children` replaces mark inside chrome, e.g. pending Spinner. Upstream shallow `isRenderable` excludes null/undefined/booleans/empty string; Rust callers map those inputs to `None`. `Some(Element)` replaces the mark even if the element or container renders nothing.
-    - [ ] Always aria-hidden, non-interactive; owning control retains role/name/state/keyboard and paints focus ring on single indicator root; replacement root radius determines ring shape. Hover/press comes from owner's ancestor CSS marker, not extra props.
-    - [ ] Theme restyle checkbox-indicator/check/dash targets or replace `indicators.checkbox`; token-driven colors/radius/borders, forced-color-visible check/bar and reduced-motion transition handling in source.
+    - [ ] Always aria-hidden, non-interactive; owning control retains role/name/state/keyboard and paints focus ring on single indicator root; replacement root radius determines ring shape. PR #241 verified native focus and Space activation, the built-in outline and synthetic ancestor hover in Chrome. CheckboxInput still lacks the enabled-row marker, host press treatment and replacement-root focus targeting; manual screen-reader verification is open.
+    - [ ] Theme restyle checkbox-indicator/check/dash targets or replace `indicators.checkbox`; token-driven colors/radius/borders, forced-color-visible check/bar and reduced-motion transition handling in source. PR #241 verified computed reduced-motion duration and distinct forced-color mark/box colors, not raster visibility. Theme registry and host wiring remain open.
   - **Named family/source examples**
-    - [ ] **Restyle an indicator (the common path)**: rounded box, thicker border, checked/disabled styling through theme targets.
-    - [ ] **Replace an indicator with your own component**: BrandCheckbox, token styles, aria-hidden and children-first replacement handling.
-    - [ ] **Use radio visuals for single selection**: family example changes check indicator, not checkbox's three-state contract.
+    - [ ] **Restyle an indicator (the common path)**: rounded box, thicker border, checked/disabled styling through theme targets. The checkbox demo matches the pinned declarations and PR #241 passed its scoped computed-style checks; the cross-host theme example (including radio targets) and rendered upstream comparison remain open.
+    - [ ] **Replace an indicator with your own component**: BrandCheckbox, token styles, aria-hidden and children-first replacement handling. Direct composition verified; theme-installed replacement is blocked by the registry and host wiring.
+    - [ ] **Use radio visuals for single selection**: family example changes check indicator, not checkbox's three-state contract. Blocked by `indicators.check` and rich Selector options.
     - [x] TSX example: indeterminate sm checkbox visual.
+  - [Port evidence and remaining gates](docs/checkbox-indicator-port.md).
 
 - [ ] **[Check Indicator](https://astryx.atmeta.com/components/CheckIndicator)**
 
@@ -2965,7 +2971,7 @@ These changes are available for review. The table records focused evidence, not 
     - [ ] **Replace an indicator with your own component**: family replacement contract, token use, children-first behavior.
     - [ ] **Use radio visuals for single selection**: map check to RadioIndicator globally.
     - [ ] Source examples: checked/unchecked selection expression with size sm; replace check with RadioIndicator through defineTheme.
-  - [Port audit](docs/check-indicator-port.md): Rust `Option<Element>` preserves the shallow slot choice; the standalone render contract is source-verified. The nearest-theme resolver, exact family recipes, and current browser/visual/AT evidence remain open.
+  - [Port audit](docs/check-indicator-port.md): PR #241 passed full CI, the integrated WASM showcase build, and the focused Chrome DOM, computed-style, and interaction regression. Parent remains open: nearest-theme resolver and family recipes, port-to-pinned raster comparison, second browser engine, manual AT, root mount delivery, and the ref/API decision.
 
 - [ ] **[Radio Indicator](https://astryx.atmeta.com/components/RadioIndicator)**
 
@@ -2973,14 +2979,14 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Decorative state and size**
     - [x] Required state `unchecked`, `checked`; no partial/indeterminate public state in singleSelection family.
-    - [ ] `size`: `sm` (20px circle/8px dot), `md` (default, 24px circle/10px dot); isDisabled false (default) / true visual dimming only.
+    - [x] `size`: `sm` (20px circle/8px dot), `md` (default, 24px circle/10px dot); isDisabled false (default) / true visual dimming only. Pinned source/CSS and integrated Chrome geometry and opacity checks; raster comparison remains open.
     - [x] Empty circle when unchecked versus filled circle/dot checked; circle remains circular independent of radius-full theme token.
     - [ ] children replace inner state mark when shallow isRenderable accepts them; excludes null/undefined/booleans/empty string, not empty-rendering element/container descendants.
-    - [ ] Decorative aria-hidden root, no input/role/focus/keyboard ownership; owner supplies semantics/focus ring; hover/press via ancestor CSS, reduced-motion no transition, forced-color dot stays perceivable.
+    - [ ] Decorative aria-hidden root, no input/role/focus/keyboard ownership; owner supplies semantics/focus ring and press paint. Scoped hover, reduced motion, and forced-color computed styles verified in Chrome; real-host keyboard/focus, manual AT, and forced-color raster still open. The existing passthrough API differs from the pin on `role`/`tabindex`.
     - [ ] Theme restyling radio-indicator/radio-indicator-dot versus whole radio replacement; mapping check to RadioIndicator also draws unchecked circles for selection slots.
 
   - **Named family inline examples and source example**
-    - [ ] **Restyle an indicator (the common path)**: shared circle/dot component targets, state overrides.
+    - [x] **Restyle an indicator (the common path)**: scoped author CSS uses the canonical circle/dot targets; integrated Chrome verifies border, dot radius, and checked+disabled state override.
     - [ ] **Replace an indicator with your own component**: family replacement recipe, token styles and isRenderable; example uses checkbox, not a claimed extra radio state.
     - [ ] **Use radio visuals for single selection**: theme check indicator replaced by RadioIndicator.
     - [x] Source example: checked md RadioIndicator (showcase and SSR).
@@ -3028,12 +3034,12 @@ These changes are available for review. The table records focused evidence, not 
     - [x] `axis`: `both` (default), `horizontal`, `vertical`; single-axis behavior follows logical flex main/cross axes in vertical writing, not guaranteed physical names.
     - [x] `isInline=false` default versus inline-flex for inline icon/badge content.
     - [x] Each of `padding`, `paddingInline`, `paddingInlineStart`, `paddingInlineEnd`, `paddingBlock`, `paddingBlockStart`, `paddingBlockEnd` accepts `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; axis overrides all-padding, edge overrides axis.
-    - [ ] Children and arbitrary width/height/maxWidth/minHeight; selected axis needs available space. Layout only, adds no role/name; children retain semantics. SSR covers semantics and size serialization; browser verification of the CSS-wide sizing fix is pending.
+    - [x] Children and arbitrary width/height/maxWidth/minHeight; selected axis needs available space. Layout only, adds no role/name; children retain semantics. SSR covers semantics and size serialization; PR #241 Chrome verified inherited width, max-width, and min-height.
   - **Templates**
     - [x] **Center — Horizontal Center** (`CenterHorizontal.doc.mjs`): formatting controls, writing-mode caveat.
     - [x] **Center — Vertical & Horizontal Center** (`CenterInsideACard.doc.mjs`): fixed-height empty state with icon, bold body-text title, and description.
     - [x] **Center** (`CenterShowcase.doc.mjs`): both-axis fixed-height content.
-  - [Verification and remaining closure evidence](docs/center-port.md): pinned template composition, SSR and bundled declarations; template checks do not imply published visual parity.
+  - [Verification and remaining closure evidence](docs/center-port.md): pinned composition, SSR and integrated Chrome layout. Independent upstream raster comparisons, manual screen-reader checks, and live root-adapter evidence remain open.
 
 - [ ] **[Grid Span](https://astryx.atmeta.com/components/GridSpan)**
 
@@ -3041,12 +3047,14 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Span behavior**
     - [x] `columns`: arbitrary numeric count or finite sentinel `full` (all explicit tracks); `rows`: numeric span. Counts are layout data, not a closed size scale.
-    - [ ] Child content inside Grid; explicit columns/rows replace corresponding grid-column/grid-row inline styles; wrapper ref and host styling supported.
+    - [x] Child content inside Grid; explicit spans replace normal-priority inline placement on the corresponding axes. The native wrapper mount callback and caller styling passed SSR/VDOM and integrated Chrome checks for the existing Rust API.
     - [x] No other documented size/color/variant API.
 
   - **Named templates**
-    - [ ] `GridSpanColumns` — **GridSpan — Columns**: two-of-three-column asymmetric composition.
-    - [ ] `GridSpanShowcase` — **GridSpan**: multiple column/row spanning and masonry-style composition.
+    - [ ] `GridSpanColumns` — **GridSpan — Columns**: pinned composition and two-of-three geometry verified in Chrome (LTR/RTL); rendered upstream appearance comparison pending.
+    - [ ] `GridSpanShowcase` — **GridSpan**: pinned composition and masonry geometry at auto row heights verified in Chrome (LTR/RTL); rendered upstream appearance comparison pending.
+
+  - [Verification and remaining gates](docs/grid-span-port.md): both template appearance comparisons with shared Grid/Card/Text, layout outside Chrome, and manual screen-reader reading order and reachability.
 
 - [ ] **[H Stack](https://astryx.atmeta.com/components/HStack)**
 
@@ -3130,14 +3138,14 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Choices and behavior**
     - [x] `size`: `static` (default; intrinsic, does not grow/shrink), `fill` (remaining space). Pinned declarations, SSR reflection, and prior Chrome fill geometry agree.
-    - [ ] `crossAlignSelf`: `start`, `center`, `end`, `stretch`; overrides parent cross-axis alignment. All four map to pinned CSS; actual override geometry awaits the expanded browser suite.
-    - [ ] `isScrollable`: false (default), true; min-width/min-height reset means fill + scrolling forms a complete flex scroll region. Prior vertical proof predates the shared observer; rerun and verify both axes and cleanup.
-    - [ ] Polymorphic `as` (default div); div/span overflow region becomes a group named by aria-label or translated `Content`; other element types preserve their own role. Optional children and root ref/style integration. Shared-catalog fallback, live root/ref, AX and manual AT evidence remain open.
+    - [x] `crossAlignSelf`: `start`, `center`, `end`, `stretch`; overrides parent cross-axis alignment. Pinned CSS mappings, SSR classes, and PR #241 Chrome geometry against a centered VStack agree.
+    - [ ] `isScrollable`: false (default), true; min-width/min-height reset means fill + scrolling forms a complete flex scroll region. PR #241 verified programmatic scrolling on both axes and vertical overflow transitions with the shared observer; release on disable/unmount is unverified. Static-path PR1 differs from the pinned hook-free implementation.
+    - [ ] Polymorphic `as` (default div); div/span overflow region becomes a group named by aria-label or translated `Content`; other element types preserve their own role. Optional children and root ref/style integration. SSR passthrough and Chrome AX names for caller labels passed; automatic catalog fallback, live mounted-root identity, and manual keyboard/screen-reader verification remain open.
 
   - **Examples and named templates**
-    - [ ] TSX example: HStack with static Logo, fill Content, static Actions. Added to the showcase; corrected end-to-end SSR assertion and browser geometry still need a run.
-    - [ ] [`StackItemFill`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemFill.doc.mjs) — “StackItem — Fill”: intrinsic-width neighbor and remaining-space item. Actual template visual comparison pending.
-    - [ ] [`StackItemShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemShowcase.doc.mjs) — “StackItem” / “Stack Item”: optional wrapper inside HStack/VStack for sizing/alignment. Actual template visual comparison pending.
+    - [x] TSX example: HStack with static Logo, fill Content, static Actions; pinned gap and composition checked in source, with passing focused SSR and PR #241 Chrome geometry.
+    - [ ] [`StackItemFill`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemFill.doc.mjs) — “StackItem — Fill”: intrinsic-width neighbor and remaining-space item. Pinned composition, SSR, and Rust Chrome geometry verified; matched upstream/Rust appearance comparison pending.
+    - [ ] [`StackItemShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemShowcase.doc.mjs) — “StackItem” / “Stack Item”: optional wrapper inside HStack/VStack for sizing/alignment. Pinned composition, SSR, and Rust Chrome geometry verified; matched upstream/Rust appearance comparison pending.
 
 - [ ] **[V Stack](https://astryx.atmeta.com/components/VStack)**
 
