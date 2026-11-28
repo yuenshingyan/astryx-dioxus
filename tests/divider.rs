@@ -172,6 +172,37 @@ fn caller_semantics_are_forwarded_while_the_visual_target_axes_are_protected() {
 }
 
 #[test]
+fn unset_native_semantics_keep_the_separator_role_and_visual_orientation() {
+    let html = render(|| {
+        rsx! {
+            Divider {
+                orientation: DividerOrientation::Vertical,
+                label: "Between sections",
+                attributes: vec![
+                    Attribute::new("role", AttributeValue::None, None, false),
+                    Attribute::new("aria-orientation", AttributeValue::None, None, false),
+                ],
+            }
+        }
+    });
+    assert_eq!(html.matches("role=\"separator\"").count(), 1, "{html}");
+    assert_eq!(
+        html.matches("aria-orientation=\"vertical\"").count(),
+        1,
+        "{html}"
+    );
+    assert_eq!(
+        html.matches("data-orientation=\"vertical\"").count(),
+        1,
+        "{html}"
+    );
+    assert!(
+        html.contains("aria-labelledby=\"astryx-divider-label-"),
+        "{html}"
+    );
+}
+
+#[test]
 fn native_ref_events_styling_and_aria_inputs_compose_without_installing_a_controller() {
     let html = render(|| {
         rsx! {
