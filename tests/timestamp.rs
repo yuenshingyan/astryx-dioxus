@@ -4,6 +4,32 @@ use dioxus_ssr::render;
 use astryx_dioxus::{Timestamp, TimestampFormat};
 
 #[test]
+fn absolute_timestamp_uses_supporting_secondary_text_around_the_native_time() {
+    let render_timestamp = || {
+        let mut dom = VirtualDom::new(|| {
+            rsx! { Timestamp { value: 1_774_440_000, format: TimestampFormat::SystemDateTime } }
+        });
+        dom.rebuild_in_place();
+        render(&dom)
+    };
+    let html = render_timestamp();
+    let (wrapper, time) = html.split_once("<time ").expect("native time element");
+    assert!(wrapper.starts_with("<span "), "{html}");
+    for attribute in [r#"data-type="supporting""#, r#"data-color="secondary""#] {
+        assert!(wrapper.contains(attribute), "{html}");
+    }
+    assert!(time.contains(r#"class="astryx-timestamp""#), "{html}");
+    assert!(time.contains(r#"data-format="system_date_time""#), "{html}");
+    assert!(
+        time.ends_with(r#"datetime="2026-03-25T12:00:00Z">2026-03-25 12:00:00</time></span>"#),
+        "{html}"
+    );
+    assert!(!html.contains("tabindex"), "{html}");
+    assert!(!html.contains("aria-label"), "{html}");
+    assert_eq!(html, render_timestamp());
+}
+
+#[test]
 fn utc_timestamps_handle_pre_epoch_leap_days_and_year_bounds() {
     let mut dom = VirtualDom::new(|| {
         rsx! {
