@@ -197,7 +197,9 @@
   .astryx-input-clear-icon { color: var(--color-icon-secondary); }
 
   .astryx-text-area {
-    position: relative; --_textarea-inline-padding: var(--spacing-2); --_textarea-border: var(--color-border-emphasized);
+    /* Keep the native resize corner flush with the painted frame and above attached status. */
+    position: relative; z-index: 1; display: block; padding-block: 0; padding-inline: 0;
+    --_textarea-inline-padding: var(--spacing-2); --_textarea-border: var(--color-border-emphasized);
     border: var(--border-width) solid var(--_textarea-border); border-radius: var(--radius-element);
     background: var(--color-background-surface);
   }
@@ -208,8 +210,8 @@
   .astryx-text-area:focus-within { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); }
   .astryx-text-area-control {
     display: block; box-sizing: border-box; width: 100%; min-width: 0;
-    border: 0; border-radius: inherit; outline: none; background: transparent;
-    padding: var(--spacing-1) var(--_textarea-inline-padding); resize: vertical;
+    margin: 0; border: 0; border-radius: inherit; outline: none; background: transparent;
+    padding-block: var(--spacing-1); padding-inline: var(--_textarea-inline-padding); resize: vertical;
     font-family: var(--font-family-body); font-size: var(--text-body-size); line-height: var(--text-body-leading);
     color: var(--color-text-primary);
   }
