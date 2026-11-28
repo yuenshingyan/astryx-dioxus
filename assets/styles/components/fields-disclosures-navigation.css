@@ -234,13 +234,19 @@
 
   .astryx-radio-list { display: flex; flex-direction: column; gap: var(--spacing-2); }
   .astryx-radio-list[data-orientation="horizontal"] { flex-direction: row; gap: var(--spacing-5); }
-  .astryx-item.astryx-radio-list-item { --_item-inset-inline: 0px; padding-block: 0; border-radius: 0; }
+  .astryx-item.astryx-radio-list-item { --_item-inset-inline: 0px; padding-block: 0; border-radius: 0; min-width: 0; }
+  .astryx-radio-list-item:not([data-disabled]) { cursor: pointer; }
+  .astryx-radio-list-item[data-disabled] > :is(.astryx-item__content, .astryx-item__end) { opacity: 0.5; }
   .astryx-radio-list-item > .astryx-item__start { align-items: center; gap: var(--spacing-2); }
-  .astryx-radio-list-item__control { position: relative; display: grid; place-items: center; flex: none; inline-size: 24px; block-size: 24px; }
+  .astryx-radio-list-item__control { position: relative; display: grid; place-items: center; flex: none; inline-size: 24px; block-size: 24px; border-radius: 50%; }
   .astryx-radio-list-item__control[data-size="sm"] { inline-size: 20px; block-size: 20px; }
-  .astryx-radio-list-item__control > input { position: absolute; inset: 0; margin: 0; inline-size: 100%; block-size: 100%; opacity: 0; cursor: pointer; }
+  .astryx-radio-list-item__control > input { position: absolute; inset: 50% auto auto 50%; translate: -50% -50%; z-index: 1; margin: 0; inline-size: 100%; block-size: 100%; opacity: 0; cursor: pointer; }
   .astryx-radio-list-item__control > input:disabled { cursor: default; }
-  .astryx-radio-list-item__control > input:focus-visible + .astryx-radio-indicator { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
+  @media (pointer: coarse) {
+    .astryx-radio-list-item__control > input { min-inline-size: 24px; min-block-size: 24px; }
+  }
+  /* Only the radio's own keyboard focus rings; other row controls keep their own cue. */
+  .astryx-radio-list-item__control:has(> input:focus-visible) { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
   .astryx-checkbox-list-item--selected { background-color: var(--color-accent-muted); }
   .astryx-checkbox-list-item__description { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .astryx-checkbox-input__row { display: flex; align-items: center; gap: var(--spacing-2); }
