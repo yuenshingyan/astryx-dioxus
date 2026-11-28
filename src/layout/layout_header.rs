@@ -1,5 +1,6 @@
 //! Top layout region adapted from Astryx Layout/LayoutHeader.tsx.
 
+use dioxus::core::AttributeValue;
 use dioxus::prelude::*;
 
 use super::layout_divider_context::LayoutDividerContext;
@@ -58,15 +59,25 @@ pub fn LayoutHeader(
             spacing_step_css(padding)
         ));
     }
+    let mut aria_label = label.map_or(AttributeValue::None, AttributeValue::Text);
     let attributes: Vec<_> = attributes
         .into_iter()
-        .filter(|attr| !matches!(attr.name, "class" | "style" | "data-divider"))
+        .filter_map(|attr| match attr.name {
+            "class" | "style" | "data-divider" => None,
+            "aria-label" => {
+                // Native attributes follow `label` upstream. Emit only one name
+                // so SSR and client DOM agree on which value wins.
+                aria_label = attr.value;
+                None
+            }
+            _ => Some(attr),
+        })
         .collect();
     rsx! {
         div {
             class: "astryx-layout-header {class}",
             style: (!outer_style.is_empty()).then_some(outer_style),
-            "aria-label": label,
+            "aria-label": aria_label,
             "data-divider": has_divider.then_some("true"),
             ..attributes,
             div { class: "astryx-layout-header__inner", style: (!inner_style.is_empty()).then_some(inner_style), {children} }
