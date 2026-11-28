@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use astryx_dioxus::{
     Card, CardVariant, Grid, GridColumns, GridRepeat, GridSpan, GridSpanColumns, SizeValue,
-    SpacingStep, Stack, StackDirection, Text, TextColor, TextDisplay, TextType,
+    SpacingStep, Stack, StackDirection, Text, TextDisplay, TextType,
 };
 
 #[component]
@@ -15,40 +15,6 @@ fn GridLabel(title: &'static str, detail: String, #[props(default)] is_spaced: b
         rsx! { Stack { direction: StackDirection::Vertical, gap: SpacingStep::One, {text} } }
     } else {
         text
-    }
-}
-
-#[component]
-fn SpanCard(label: &'static str, #[props(default = true)] has_fixed_height: bool) -> Element {
-    rsx! {
-        Card { height: has_fixed_height.then(|| SizeValue::from(80)),
-            Text { color: TextColor::SECONDARY, "{label}" }
-        }
-    }
-}
-
-#[component]
-pub(super) fn GridSpanExamples() -> Element {
-    rsx! {
-        section { id: "grid-span-examples", "data-astryx-theme": "neutral",
-            h2 { "GridSpan — original patterns" }
-            h3 { "Showcase" }
-            Grid { id: "grid-span-showcase", columns: GridColumns::Fixed(4), gap: SpacingStep::Three, width: SizeValue::from(400),
-                GridSpan { columns: GridSpanColumns::Count(3), SpanCard { label: "Spans 3 columns" } }
-                SpanCard { label: "1 col" }
-                GridSpan { rows: 2, SpanCard { label: "1 col", has_fixed_height: false } }
-                GridSpan { columns: GridSpanColumns::Count(3), SpanCard { label: "Full-width row" } }
-                SpanCard { label: "1 col" }
-                GridSpan { columns: GridSpanColumns::Count(2), SpanCard { label: "Spans 2 columns" } }
-            }
-            h3 { "Columns" }
-            Grid { id: "grid-span-columns", columns: GridColumns::Fixed(3), gap: SpacingStep::Three, width: SizeValue::from(400),
-                GridSpan { columns: GridSpanColumns::Count(2), SpanCard { label: "Spans 2 columns" } }
-                SpanCard { label: "1 col" }
-                SpanCard { label: "1 col" }
-                GridSpan { columns: GridSpanColumns::Count(2), SpanCard { label: "Spans 2 columns" } }
-            }
-        }
     }
 }
 

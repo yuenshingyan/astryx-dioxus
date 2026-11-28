@@ -22,6 +22,26 @@
   .astryx-center--inline { display: inline-flex; }
   .astryx-center:is([data-axis="both"], [data-axis="horizontal"]) { justify-content: center; }
   .astryx-center:is([data-axis="both"], [data-axis="vertical"]) { align-items: center; }
+  .astryx-center--width-inherit { width: inherit; }
+  .astryx-center--width-initial { width: initial; }
+  .astryx-center--width-unset { width: unset; }
+  .astryx-center--width-revert { width: revert; }
+  .astryx-center--width-revert-layer { width: revert-layer; }
+  .astryx-center--height-inherit { height: inherit; }
+  .astryx-center--height-initial { height: initial; }
+  .astryx-center--height-unset { height: unset; }
+  .astryx-center--height-revert { height: revert; }
+  .astryx-center--height-revert-layer { height: revert-layer; }
+  .astryx-center--max-width-inherit { max-width: inherit; }
+  .astryx-center--max-width-initial { max-width: initial; }
+  .astryx-center--max-width-unset { max-width: unset; }
+  .astryx-center--max-width-revert { max-width: revert; }
+  .astryx-center--max-width-revert-layer { max-width: revert-layer; }
+  .astryx-center--min-height-inherit { min-height: inherit; }
+  .astryx-center--min-height-initial { min-height: initial; }
+  .astryx-center--min-height-unset { min-height: unset; }
+  .astryx-center--min-height-revert { min-height: revert; }
+  .astryx-center--min-height-revert-layer { min-height: revert-layer; }
 }
 
 @layer astryx-base {

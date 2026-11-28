@@ -11,6 +11,10 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
 - [AspectRatio](docs/aspect-ratio-port.md), Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), [Skeleton](docs/skeleton-port.md), [StatusDot](docs/status-dot-port.md), [ProgressBar](docs/progress-bar-port.md), [Card](docs/card-port.md), [SelectableCard](docs/selectable-card-port.md), [ClickableCard](docs/clickable-card-port.md), and [Blockquote](docs/blockquote-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
+## Completion audit
+
+The latest audit added evidence for 33 detailed items across ten components. All ten parent entries remain open. The integrated WASM showcase builds, and all eleven Chrome suites passed. This includes Grid Span’s mounted-wrapper measurement, Section’s wash-highlight width, and Checkbox Indicator’s restyle and native focus checks. Visual comparisons, manual assistive-technology checks, and shared dependency gaps remain open where documented in the component port notes.
+
 ## Latest follow-ups
 
 These changes are available for review. The table records focused evidence, not completion of a migration task. Browser and full-suite verification for this batch remain pending.
@@ -1723,8 +1727,8 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Surfaces, borders, and content**
     - [ ] variant `section` (default), `transparent`, `muted`; page grouping, not discrete Card object.
-    - [ ] dividers explicit sides `top`, `bottom`, `start`, `end`; optional independent sides, no invented combination matrix.
-    - [ ] padding default 4; padding, paddingInline, paddingInlineStart, paddingInlineEnd, paddingBlock, paddingBlockStart, paddingBlockEnd each `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; zero full-bleed, edge overrides axis overrides all.
+    - [x] dividers explicit sides `top`, `bottom`, `start`, `end`; optional independent sides, no invented combination matrix.
+    - [x] padding default 4; padding, paddingInline, paddingInlineStart, paddingInlineEnd, paddingBlock, paddingBlockStart, paddingBlockEnd each `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; zero full-bleed, edge overrides axis overrides all.
     - [ ] Arbitrary width/height/maxWidth/minHeight and children; heading-plus-Stack, settings/form/sidebar regions; muted emphasizes particular area.
 
   - **Named inline example**
@@ -1733,7 +1737,7 @@ These changes are available for review. The table records focused evidence, not 
   - **Named templates**
     - [ ] `SectionVariants` — **Section — Variants**: section/muted/transparent comparison.
     - [ ] `SectionWashHighlight` — **Section — Default with Wash**: default region plus full-width muted callout.
-    - [ ] `SectionWithDividers` — **Section — With Dividers**: adjacent same-surface settings sections, bottom borders.
+    - [x] `SectionWithDividers` — **Section — With Dividers**: adjacent same-surface settings sections, bottom borders.
 
 - [ ] **[Stack](https://astryx.atmeta.com/components/Stack)**
 
@@ -2381,15 +2385,15 @@ These changes are available for review. The table records focused evidence, not 
   - Source: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/VisuallyHidden/VisuallyHidden.doc.mjs).
 
   - **Semantics and content patterns**
-    - [ ] Truly no visual variants, sizes, or colors: intentionally invisible but exposed to accessibility tree; `xstyle` accepted and ignored only for 0.7.2 compatibility.
-    - [ ] `as` is open ElementType, default `span`; documented block `div` for aria-live region; children supply accessible content.
+    - [x] Truly no visual variants, sizes, or colors: intentionally invisible but exposed to accessibility tree; `xstyle` accepted and ignored only for 0.7.2 compatibility (ignored as a raw attribute in Dioxus).
+    - [x] `as` is open ElementType (open `as_element` renderer in Rust), default `span`; documented block `div` for aria-live region; children supply accessible content.
     - [ ] Accessible name for icon-only control; polite dynamic announcement/result-count/drag-drop region; supplementary screen-reader context; structural hidden heading.
-    - [ ] Not equivalent to hidden/remove-from-everyone; do not put interactive controls inside invisible, non-pointer-reachable content.
+    - [x] Not equivalent to hidden/remove-from-everyone; do not put interactive controls inside invisible, non-pointer-reachable content.
   - **Every associated template**
-    - [ ] **VisuallyHidden — Structural Heading** (`VisuallyHiddenStructuralHeading`): name visually implicit section for screen-reader navigation. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenStructuralHeading.doc.mjs).
+    - [x] **VisuallyHidden — Structural Heading** (`VisuallyHiddenStructuralHeading`): name visually implicit section for screen-reader navigation. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenStructuralHeading.doc.mjs).
     - [ ] **VisuallyHidden — Live Region** (`VisuallyHiddenLiveRegion`): polite aria-live announces visual-only state changes. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenLiveRegion.doc.mjs).
-    - [ ] **VisuallyHidden — Supplementary Context** (`VisuallyHiddenSupplementaryContext`): stat-card up/down arrows get explanatory screen-reader text (“increase from last month”), not just terse numerical change. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenSupplementaryContext.doc.mjs).
-    - [ ] **VisuallyHidden** showcase (`VisuallyHiddenShowcase`): composition with IconButton/Card/stacks/Text/Icon; metadata lists download/share/audio/delete glyph aliases but no additional finite styling modes. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenShowcase.doc.mjs).
+    - [x] **VisuallyHidden — Supplementary Context** (`VisuallyHiddenSupplementaryContext`): stat-card up/down arrows get explanatory screen-reader text (“increase from last month”), not just terse numerical change. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenSupplementaryContext.doc.mjs).
+    - [x] **VisuallyHidden** showcase (`VisuallyHiddenShowcase`): composition with IconButton/Card/stacks/Text/Icon; metadata lists download/share/audio/delete glyph aliases but no additional finite styling modes. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenShowcase.doc.mjs).
 
 ## Additional Components and Subcomponents from the Sidebar
 
@@ -2416,11 +2420,11 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Choices and semantics**
     - [ ] `variant`: `success` (default, green filled), `neutral` (gray ring), `error` (red minus); distinct shapes prevent color-only status.
-    - [ ] Size comes from avatar context, not a separate size prop; optional custom `icon` replaces shape glyph and hides at tiny sizes.
+    - [x] Size comes from avatar context, not a separate size prop; optional custom `icon` replaces shape glyph and hides at tiny sizes. Public Avatar SSR covers all three tiers and empty icon inputs.
     - [ ] Accessible `label` joins parent avatar name; standalone dot exposes labelled `role="img"`.
   - **Templates**
-    - [ ] **AvatarStatusDot** (`AvatarStatusDotShowcase.doc.mjs`): presence and automatic sizing.
-    - [ ] **AvatarStatusDot — Variants** (`AvatarStatusDotVariants.doc.mjs`): success, neutral, error in status slot.
+    - [x] **AvatarStatusDot** (`AvatarStatusDotShowcase.doc.mjs`): presence and automatic sizing. Pinned composition verified in SSR.
+    - [x] **AvatarStatusDot — Variants** (`AvatarStatusDotVariants.doc.mjs`): success, neutral, error in status slot. Pinned composition verified in SSR.
 
 - [ ] **[Breadcrumb Item](https://astryx.atmeta.com/components/BreadcrumbItem)**
 
@@ -2793,7 +2797,7 @@ These changes are available for review. The table records focused evidence, not 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/DropdownMenu/DropdownMenuDivider.doc.mjs). No own named inline examples or templates.
 
   - **Actual behavior, without invented variants**
-    - [ ] No documented size/color/orientation choice: a horizontal separator between compound-menu row groups.
+    - [x] No documented size/color/orientation choice: a horizontal separator between compound-menu row groups.
     - [ ] `role="separator"`; never an arrow-key stop. Data equivalent `{type: 'divider'}` uses the same component/theme target.
     - [ ] Host ID/data/ARIA attributes and handlers reach separator; role/orientation remain component-owned; `xstyle` customizes spacing/layout, not a fixed visual variant.
 
@@ -2935,41 +2939,42 @@ These changes are available for review. The table records focused evidence, not 
   - Sources: [owning English Indicator family doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/Indicator.doc.mjs), [original TSX](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/CheckboxIndicator.tsx), [type contract](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/types.ts). Own ID doc is absent because API belongs to Indicator family; resolved from pinned family/source. No own templates supplied.
 
   - **Decorative states and customization**
-    - [ ] Required state `unchecked`, `checked`, `indeterminate`; persistent empty box, checkmark, bar respectively. This is multiSelection, not a native input.
-    - [ ] `size`: `sm` (20px), `md` (24px, default); `isDisabled=false` default, purely visual.
-    - [ ] `children` replaces mark inside chrome, e.g. pending Spinner. Use shallow isRenderable: null/undefined/booleans/empty string do not replace; elements/containers do even if descendants render nothing.
+    - [x] Required state `unchecked`, `checked`, `indeterminate`; persistent empty box, checkmark, bar respectively. This is multiSelection, not a native input.
+    - [x] `size`: `sm` (20px), `md` (24px, default); `isDisabled=false` default, purely visual.
+    - [x] `children` replaces mark inside chrome, e.g. pending Spinner. Upstream shallow `isRenderable` excludes null/undefined/booleans/empty string; Rust callers map those inputs to `None`. `Some(Element)` replaces the mark even if the element or container renders nothing.
     - [ ] Always aria-hidden, non-interactive; owning control retains role/name/state/keyboard and paints focus ring on single indicator root; replacement root radius determines ring shape. Hover/press comes from owner's ancestor CSS marker, not extra props.
     - [ ] Theme restyle checkbox-indicator/check/dash targets or replace `indicators.checkbox`; token-driven colors/radius/borders, forced-color-visible check/bar and reduced-motion transition handling in source.
   - **Named family/source examples**
     - [ ] **Restyle an indicator (the common path)**: rounded box, thicker border, checked/disabled styling through theme targets.
     - [ ] **Replace an indicator with your own component**: BrandCheckbox, token styles, aria-hidden and children-first replacement handling.
     - [ ] **Use radio visuals for single selection**: family example changes check indicator, not checkbox's three-state contract.
-    - [ ] TSX example: indeterminate sm checkbox visual.
+    - [x] TSX example: indeterminate sm checkbox visual.
 
 - [ ] **[Check Indicator](https://astryx.atmeta.com/components/CheckIndicator)**
 
   - Sources: [owning English family doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/Indicator.doc.mjs), [original TSX](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/CheckIndicator.tsx), [types](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/types.ts). Own doc absent; family ownership resolved. No own template metadata supplied.
 
   - **Decorative choices and behavior**
-    - [ ] Required state `unchecked`, `checked`; default unchecked renders nothing/no reserved chrome, checked draws glyph. No indeterminate state in singleSelection family.
-    - [ ] `size`: `sm`, `md` (default); both source mappings use sm Icon. `isDisabled=false` default; accent versus disabled icon foreground.
-    - [ ] Renderable children replace mark in either state, e.g. pending Spinner even when unchecked; shallow renderability excludes null/undefined/booleans/empty string, not empty-rendering elements.
-    - [ ] Always decorative aria-hidden, no role/name/keyboard/focus ownership; host owns semantics. Check has no separate chrome/theme target: host target shares Icon element; replacement-content branch forwards props to span.
+    - [x] Required state `unchecked`, `checked`; default unchecked renders nothing/no reserved chrome, checked draws glyph. No indeterminate state in singleSelection family.
+    - [x] `size`: `sm`, `md` (default); both source mappings use sm Icon. `isDisabled=false` default; accent versus disabled icon foreground.
+    - [x] Renderable children replace mark in either state, e.g. pending Spinner even when unchecked; shallow renderability excludes null/undefined/booleans/empty string, not empty-rendering elements.
+    - [x] Always decorative aria-hidden, no role/name/keyboard/focus ownership; host owns semantics. Check has no separate chrome/theme target: host target shares Icon element; replacement-content branch forwards props to span.
     - [ ] Theme `indicators.check` replacement can draw both states, e.g. RadioIndicator gives unchecked empty circle; host always mounts indicator rather than hiding it based on selection.
   - **Named family/source examples**
     - [ ] **Restyle an indicator (the common path)**: family target override recipe.
     - [ ] **Replace an indicator with your own component**: family replacement contract, token use, children-first behavior.
     - [ ] **Use radio visuals for single selection**: map check to RadioIndicator globally.
     - [ ] Source examples: checked/unchecked selection expression with size sm; replace check with RadioIndicator through defineTheme.
+  - [Port audit](docs/check-indicator-port.md): Rust `Option<Element>` preserves the shallow slot choice; the standalone render contract is source-verified. The nearest-theme resolver, exact family recipes, and current browser/visual/AT evidence remain open.
 
 - [ ] **[Radio Indicator](https://astryx.atmeta.com/components/RadioIndicator)**
 
-  - Sources: [Indicator family English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/Indicator.doc.mjs), [RadioIndicator.tsx](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/RadioIndicator.tsx). No standalone doc or supplied templates.
+  - Sources: [Indicator family English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/Indicator.doc.mjs), [RadioIndicator.tsx](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/RadioIndicator.tsx). No standalone doc or supplied templates. [Pinned audit, evidence and remaining blockers](docs/radio-indicator-port.md).
 
   - **Decorative state and size**
-    - [ ] Required state `unchecked`, `checked`; no partial/indeterminate public state in singleSelection family.
+    - [x] Required state `unchecked`, `checked`; no partial/indeterminate public state in singleSelection family.
     - [ ] `size`: `sm` (20px circle/8px dot), `md` (default, 24px circle/10px dot); isDisabled false (default) / true visual dimming only.
-    - [ ] Empty circle when unchecked versus filled circle/dot checked; circle remains circular independent of radius-full theme token.
+    - [x] Empty circle when unchecked versus filled circle/dot checked; circle remains circular independent of radius-full theme token.
     - [ ] children replace inner state mark when shallow isRenderable accepts them; excludes null/undefined/booleans/empty string, not empty-rendering element/container descendants.
     - [ ] Decorative aria-hidden root, no input/role/focus/keyboard ownership; owner supplies semantics/focus ring; hover/press via ancestor CSS, reduced-motion no transition, forced-color dot stays perceivable.
     - [ ] Theme restyling radio-indicator/radio-indicator-dot versus whole radio replacement; mapping check to RadioIndicator also draws unchecked circles for selection slots.
@@ -2978,7 +2983,7 @@ These changes are available for review. The table records focused evidence, not 
     - [ ] **Restyle an indicator (the common path)**: shared circle/dot component targets, state overrides.
     - [ ] **Replace an indicator with your own component**: family replacement recipe, token styles and isRenderable; example uses checkbox, not a claimed extra radio state.
     - [ ] **Use radio visuals for single selection**: theme check indicator replaced by RadioIndicator.
-    - [ ] Source example: checked md RadioIndicator.
+    - [x] Source example: checked md RadioIndicator (showcase and SSR).
 
 - [ ] **[Item](https://astryx.atmeta.com/components/Item)**
 
@@ -3020,23 +3025,24 @@ These changes are available for review. The table records focused evidence, not 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Center/Center.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/Center).
 
   - **Layout choices**
-    - [ ] `axis`: `both` (default), `horizontal`, `vertical`; single-axis behavior follows logical flex main/cross axes in vertical writing, not guaranteed physical names.
-    - [ ] `isInline=false` default versus inline-flex for inline icon/badge content.
-    - [ ] Each of `padding`, `paddingInline`, `paddingInlineStart`, `paddingInlineEnd`, `paddingBlock`, `paddingBlockStart`, `paddingBlockEnd` accepts `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; axis overrides all-padding, edge overrides axis.
-    - [ ] Children and arbitrary width/height/maxWidth/minHeight; selected axis needs available space. Layout only, adds no role/name; children retain semantics.
+    - [x] `axis`: `both` (default), `horizontal`, `vertical`; single-axis behavior follows logical flex main/cross axes in vertical writing, not guaranteed physical names.
+    - [x] `isInline=false` default versus inline-flex for inline icon/badge content.
+    - [x] Each of `padding`, `paddingInline`, `paddingInlineStart`, `paddingInlineEnd`, `paddingBlock`, `paddingBlockStart`, `paddingBlockEnd` accepts `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; axis overrides all-padding, edge overrides axis.
+    - [ ] Children and arbitrary width/height/maxWidth/minHeight; selected axis needs available space. Layout only, adds no role/name; children retain semantics. SSR covers semantics and size serialization; browser verification of the CSS-wide sizing fix is pending.
   - **Templates**
-    - [ ] **Center — Horizontal Center** (`CenterHorizontal.doc.mjs`): formatting controls, writing-mode caveat.
-    - [ ] **Center — Vertical & Horizontal Center** (`CenterInsideACard.doc.mjs`): fixed-height empty state icon/heading/description.
-    - [ ] **Center** (`CenterShowcase.doc.mjs`): both-axis fixed-height content.
+    - [x] **Center — Horizontal Center** (`CenterHorizontal.doc.mjs`): formatting controls, writing-mode caveat.
+    - [x] **Center — Vertical & Horizontal Center** (`CenterInsideACard.doc.mjs`): fixed-height empty state with icon, bold body-text title, and description.
+    - [x] **Center** (`CenterShowcase.doc.mjs`): both-axis fixed-height content.
+  - [Verification and remaining closure evidence](docs/center-port.md): pinned template composition, SSR and bundled declarations; template checks do not imply published visual parity.
 
 - [ ] **[Grid Span](https://astryx.atmeta.com/components/GridSpan)**
 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Grid/GridSpan.doc.mjs). Templates in `GridSpan/` under [pinned root](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components).
 
   - **Span behavior**
-    - [ ] `columns`: arbitrary numeric count or finite sentinel `full` (all explicit tracks); `rows`: numeric span. Counts are layout data, not a closed size scale.
+    - [x] `columns`: arbitrary numeric count or finite sentinel `full` (all explicit tracks); `rows`: numeric span. Counts are layout data, not a closed size scale.
     - [ ] Child content inside Grid; explicit columns/rows replace corresponding grid-column/grid-row inline styles; wrapper ref and host styling supported.
-    - [ ] No other documented size/color/variant API.
+    - [x] No other documented size/color/variant API.
 
   - **Named templates**
     - [ ] `GridSpanColumns` — **GridSpan — Columns**: two-of-three-column asymmetric composition.
@@ -3120,16 +3126,18 @@ These changes are available for review. The table records focused evidence, not 
 
   - Sources: [owning Stack family API](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Stack/Stack.doc.mjs), [original StackItem TSX](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Stack/StackItem.tsx). No standalone English doc exists; the family contains its full member documentation, so this is resolved rather than a missing API.
 
+  - Audit and integrator handoff: [StackItem port notes](docs/stack-item-port.md).
+
   - **Choices and behavior**
-    - [ ] `size`: `static` (default; intrinsic, does not grow/shrink), `fill` (remaining space).
-    - [ ] `crossAlignSelf`: `start`, `center`, `end`, `stretch`; overrides parent cross-axis alignment.
-    - [ ] `isScrollable`: false (default), true; min-width/min-height reset means fill + scrolling forms a complete flex scroll region.
-    - [ ] Polymorphic `as` (default div); div/span overflow region becomes a group named by aria-label or translated `Content`; other element types preserve their own role. Optional children and root ref/style integration.
+    - [x] `size`: `static` (default; intrinsic, does not grow/shrink), `fill` (remaining space). Pinned declarations, SSR reflection, and prior Chrome fill geometry agree.
+    - [ ] `crossAlignSelf`: `start`, `center`, `end`, `stretch`; overrides parent cross-axis alignment. All four map to pinned CSS; actual override geometry awaits the expanded browser suite.
+    - [ ] `isScrollable`: false (default), true; min-width/min-height reset means fill + scrolling forms a complete flex scroll region. Prior vertical proof predates the shared observer; rerun and verify both axes and cleanup.
+    - [ ] Polymorphic `as` (default div); div/span overflow region becomes a group named by aria-label or translated `Content`; other element types preserve their own role. Optional children and root ref/style integration. Shared-catalog fallback, live root/ref, AX and manual AT evidence remain open.
 
   - **Examples and named templates**
-    - [ ] TSX example: HStack with static Logo, fill Content, static Actions.
-    - [ ] [`StackItemFill`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemFill.doc.mjs) — “StackItem — Fill”: fixed-width neighbor and remaining-space item.
-    - [ ] [`StackItemShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemShowcase.doc.mjs) — “StackItem” / “Stack Item”: optional wrapper inside HStack/VStack for sizing/alignment.
+    - [ ] TSX example: HStack with static Logo, fill Content, static Actions. Added to the showcase; corrected end-to-end SSR assertion and browser geometry still need a run.
+    - [ ] [`StackItemFill`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemFill.doc.mjs) — “StackItem — Fill”: intrinsic-width neighbor and remaining-space item. Actual template visual comparison pending.
+    - [ ] [`StackItemShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemShowcase.doc.mjs) — “StackItem” / “Stack Item”: optional wrapper inside HStack/VStack for sizing/alignment. Actual template visual comparison pending.
 
 - [ ] **[V Stack](https://astryx.atmeta.com/components/VStack)**
 

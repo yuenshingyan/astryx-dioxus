@@ -2,7 +2,8 @@ use std::future::Future;
 use std::pin::Pin;
 
 use astryx_dioxus::{
-    Button, ButtonElevation, ButtonSize, ButtonType, ButtonVariant, DropdownMenuDivider, STYLES,
+    Button, ButtonElevation, ButtonSize, ButtonType, ButtonVariant, DropdownMenu,
+    DropdownMenuDivider, DropdownMenuItem, DropdownMenuItemVariant, STYLES,
 };
 use dioxus::prelude::*;
 
@@ -160,6 +161,8 @@ mod file_input;
 mod form_layout;
 #[path = "showcase/grid.rs"]
 mod grid;
+#[path = "showcase/grid_span.rs"]
+mod grid_span;
 #[path = "showcase/h_stack.rs"]
 mod h_stack;
 #[path = "showcase/heading.rs"]
@@ -270,6 +273,8 @@ mod slider;
 mod spinner;
 #[path = "showcase/stack.rs"]
 mod stack;
+#[path = "showcase/stack_item.rs"]
+mod stack_item;
 #[path = "showcase/status_dot.rs"]
 mod status_dot;
 #[path = "showcase/stepper.rs"]
@@ -421,7 +426,8 @@ use field_label::FieldLabelExamples;
 use field_status::FieldStatusExamples;
 use file_input::FileInputExamples;
 use form_layout::FormLayoutExamples;
-use grid::{GridExamples, GridSpanExamples};
+use grid::GridExamples;
+use grid_span::GridSpanExamples;
 use h_stack::HStackExamples;
 use heading::HeadingExamples;
 use hover_card::HoverCardExamples;
@@ -476,7 +482,8 @@ use side_nav_section::SideNavSectionExamples;
 use skeleton::SkeletonExamples;
 use slider::SliderExamples;
 use spinner::SpinnerExamples;
-use stack::{StackExamples, StackItemExamples};
+use stack::StackExamples;
+use stack_item::StackItemExamples;
 use status_dot::StatusDotExamples;
 use stepper::StepperExamples;
 use switch::SwitchExamples;
@@ -1040,10 +1047,10 @@ fn App() -> Element {
             ContextMenuGroupExamples {}
             section { id: "dropdown-menu-divider-example", "data-astryx-theme": "neutral",
                 h2 { "DropdownMenuDivider" }
-                div { style: "max-width:240px",
-                    div { "Edit" }
+                DropdownMenu { label: "Open divider evidence",
+                    DropdownMenuItem { label: "Edit" }
                     DropdownMenuDivider { id: "dropdown-menu-divider-demo" }
-                    div { "Delete" }
+                    DropdownMenuItem { label: "Delete", variant: DropdownMenuItemVariant::Destructive }
                 }
             }
             FieldStatusExamples {}

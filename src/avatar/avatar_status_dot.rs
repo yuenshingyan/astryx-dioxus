@@ -4,6 +4,7 @@ use std::borrow::Cow;
 use std::error::Error;
 use std::fmt::{Display, Formatter};
 
+use dioxus::core::{DynamicNode, TemplateNode};
 use dioxus::prelude::*;
 
 use super::avatar_size_context::AvatarSizeContext;
@@ -114,6 +115,27 @@ fn glyph(variant: &AvatarStatusDotVariant, geometry: Geometry) -> Element {
     }
 }
 
+fn has_icon(icon: &Element) -> bool {
+    // Ignore direct empty content without resolving caller components or inspecting containers.
+    icon.as_ref().map_or(true, |node| {
+        node.template.roots.iter().any(|root| match root {
+            TemplateNode::Text { text } => !text.is_empty(),
+            TemplateNode::Dynamic { id } => match node.dynamic_root(*id) {
+                Some(DynamicNode::Placeholder(_)) | None => false,
+                Some(DynamicNode::Text(text)) => !text.value.is_empty(),
+                // RSX also uses a single-placeholder fragment for an inactive conditional.
+                Some(DynamicNode::Fragment(nodes)) => match nodes.as_slice() {
+                    [] => false,
+                    [child] => *child != VNode::placeholder(),
+                    _ => true,
+                },
+                Some(DynamicNode::Component(_)) => true,
+            },
+            TemplateNode::Element { .. } => true,
+        })
+    })
+}
+
 /// Compact status plate. A standalone dot uses the smallest avatar tier.
 #[component]
 pub fn AvatarStatusDot(
@@ -149,7 +171,7 @@ pub fn AvatarStatusDot(
                 && !(is_named && matches!(attribute.name, "role" | "aria-label"))
         })
         .collect();
-    let artwork = match icon.filter(|_| geometry.icon > 0) {
+    let artwork = match icon.filter(|icon| geometry.icon > 0 && has_icon(icon)) {
         Some(icon) => {
             rsx! { span { class: "astryx-avatar-status-dot-icon", "aria-hidden": "true", style: "width:{geometry.icon}px;height:{geometry.icon}px", {icon} } }
         }

@@ -2,8 +2,8 @@ use dioxus::prelude::*;
 
 use astryx_dioxus::{
     Button, ButtonVariant, HStack, Heading, HeadingLevel, Icon, IconSize, Section, SectionDivider,
-    SectionVariant, SpacingStep, StackCrossAlignment, Text, TextColor, TextType, TextWeight,
-    VStack,
+    SectionVariant, SizeValue, SpacingStep, StackCrossAlignment, Text, TextColor, TextType,
+    TextWeight, VStack,
 };
 
 #[component]
@@ -21,7 +21,18 @@ pub(super) fn SectionExamples() -> Element {
     rsx! {
         section { id: "section-examples", "data-astryx-theme": "neutral",
             h2 { "Section — original patterns" }
-            h3 { "Variants" }
+            h3 { "Center a Section with a maximum width" }
+            div { id: "section-centered",
+                Section {
+                    max_width: SizeValue::from(1280),
+                    style: "margin-inline-start:auto; margin-inline-end:auto;",
+                    VStack { gap: SpacingStep::One,
+                        Heading { level: HeadingLevel::Four, "Profile settings" }
+                        Text { color: TextColor::SECONDARY, "Manage the information on your profile." }
+                    }
+                }
+            }
+            h3 { "Section — Variants" }
             VStack { id: "section-variants", gap: SpacingStep::Six,
                 Section { padding: SpacingStep::Five, VariantContent { title: "Section", description: "White background." } }
                 Section { variant: SectionVariant::MUTED, padding: SpacingStep::Five, VariantContent { title: "Wash", description: "Gray background." } }
@@ -29,7 +40,7 @@ pub(super) fn SectionExamples() -> Element {
                     VariantContent { title: "Transparent", description: "No background, shows the color behind it." }
                 } }
             }
-            h3 { "With dividers" }
+            h3 { "Section — With Dividers" }
             VStack { id: "section-with-dividers", gap: SpacingStep::Zero,
                 for (title, description, has_divider) in [("Account", "Manage your profile, email, and password.", true), ("Notifications", "Choose what updates you receive and how.", true), ("Privacy", "Control who can see your activity and data.", false)] {
                     Section { key: "{title}", padding: SpacingStep::Five, dividers: if has_divider { vec![SectionDivider::Bottom] } else { vec![] },
@@ -40,7 +51,7 @@ pub(super) fn SectionExamples() -> Element {
                     }
                 }
             }
-            h3 { "Wash highlight" }
+            h3 { "Section — Default with Wash" }
             VStack { id: "section-wash-highlight", gap: SpacingStep::Two,
                 Section { padding: SpacingStep::Four,
                     VStack { gap: SpacingStep::Three, h_align: StackCrossAlignment::Center,

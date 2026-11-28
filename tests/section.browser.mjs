@@ -15,6 +15,36 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
     [['section','20px','1px'],['section','20px','1px'],['section','20px','0px']],
     [['section','16px','0px'],['muted','24px','0px']],
   ]);
+  const paint = await evaluate(`(() => {
+    const group = document.querySelector('#section-variants');
+    const surfaces = [...group.querySelectorAll('.astryx-section')];
+    const probe = document.createElement('div');
+    group.append(probe);
+    const token = name => {
+      probe.style.backgroundColor = 'var(--color-background-' + name + ')';
+      return getComputedStyle(probe).backgroundColor;
+    };
+    const results = ['light', 'dark'].map(scheme => {
+      group.style.colorScheme = scheme;
+      const actual = surfaces.map(surface => getComputedStyle(surface).backgroundColor);
+      return [actual[0] === token('surface'), actual[1] === token('muted'), actual[2]];
+    });
+    group.style.removeProperty('color-scheme');
+    probe.remove();
+    return results;
+  })()`);
+  assert.deepEqual(paint, [[true, true, 'rgba(0, 0, 0, 0)'], [true, true, 'rgba(0, 0, 0, 0)']]);
+  const centered = await evaluate(`(() => {
+    const host = document.querySelector('#section-centered');
+    const wrapper = host.firstElementChild;
+    host.style.width = '1440px';
+    const rect = wrapper.getBoundingClientRect();
+    const hostRect = host.getBoundingClientRect();
+    const measured = [rect.width, rect.left - hostRect.left, hostRect.right - rect.right];
+    host.style.removeProperty('width');
+    return measured;
+  })()`);
+  assert.deepEqual(centered, [1280, 80, 80]);
   const geometry = await evaluate(`(() => {
     const wrapper = document.querySelector('#section-with-dividers .astryx-section-wrapper');
     const surface = wrapper.firstElementChild;
@@ -45,6 +75,14 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
     return [inherited,themed,inset()];
   })()`);
   assert.deepEqual(nested, ['24px','6px','16px']);
-  assert.equal(exceptions.length,0);
-  console.log('Section: three patterns, nested padding, overlay reset, explicit height and RTL divider/bleed passed');
+  const wash = await evaluate(`(() => {
+    const group = document.querySelector('#section-wash-highlight');
+    const width = group.getBoundingClientRect().width;
+    const surfaces = [...group.querySelectorAll('.astryx-section')].filter(surface =>
+      !group.contains(surface.parentElement.closest('.astryx-section')));
+    return surfaces.map(surface => Math.abs(surface.getBoundingClientRect().width - width) < 0.5);
+  })()`);
+  assert.deepEqual(wash, [true, true]);
+  assert.equal(exceptions.length, 0);
+  console.log('Section: three patterns, centered width, paint, nested padding, overlay reset, explicit height and RTL divider/bleed passed');
 });
