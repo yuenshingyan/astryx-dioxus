@@ -205,19 +205,20 @@ pub fn Divider(
         (label.is_some() && text_attribute(&attributes, "aria-label").is_none())
             .then(|| label_id.clone())
     });
+    let mut attributes: Vec<_> = attributes
+        .into_iter()
+        .filter(|attribute| match attribute.name {
+            "class" | "style" | "data-variant" | "data-orientation" | "aria-labelledby" => false,
+            // An unset optional attribute is not an explicit semantic override.
+            "role" | "aria-orientation" => !matches!(attribute.value, AttributeValue::None),
+            "onmounted" => onmounted.is_none(),
+            _ => true,
+        })
+        .collect();
     let has_role = attributes.iter().any(|attribute| attribute.name == "role");
     let has_aria_orientation = attributes
         .iter()
         .any(|attribute| attribute.name == "aria-orientation");
-    let mut attributes: Vec<_> = attributes
-        .into_iter()
-        .filter(|attribute| {
-            !matches!(
-                attribute.name,
-                "class" | "style" | "data-variant" | "data-orientation" | "aria-labelledby"
-            ) && (onmounted.is_none() || attribute.name != "onmounted")
-        })
-        .collect();
     if let Some(handler) = onmounted {
         attributes.push(mounted_attribute(move |event| handler.call(event)));
     }
