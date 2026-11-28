@@ -2416,11 +2416,11 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Choices and semantics**
     - [ ] `variant`: `success` (default, green filled), `neutral` (gray ring), `error` (red minus); distinct shapes prevent color-only status.
-    - [ ] Size comes from avatar context, not a separate size prop; optional custom `icon` replaces shape glyph and hides at tiny sizes.
+    - [x] Size comes from avatar context, not a separate size prop; optional custom `icon` replaces shape glyph and hides at tiny sizes. Public Avatar SSR covers all three tiers and empty icon inputs.
     - [ ] Accessible `label` joins parent avatar name; standalone dot exposes labelled `role="img"`.
   - **Templates**
-    - [ ] **AvatarStatusDot** (`AvatarStatusDotShowcase.doc.mjs`): presence and automatic sizing.
-    - [ ] **AvatarStatusDot — Variants** (`AvatarStatusDotVariants.doc.mjs`): success, neutral, error in status slot.
+    - [x] **AvatarStatusDot** (`AvatarStatusDotShowcase.doc.mjs`): presence and automatic sizing. Pinned composition verified in SSR.
+    - [x] **AvatarStatusDot — Variants** (`AvatarStatusDotVariants.doc.mjs`): success, neutral, error in status slot. Pinned composition verified in SSR.
 
 - [ ] **[Breadcrumb Item](https://astryx.atmeta.com/components/BreadcrumbItem)**
 
