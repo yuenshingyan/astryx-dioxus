@@ -10,7 +10,7 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
       window.copiedCode = text;
     }}});
   `});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8306'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8309'});
   const block = `document.querySelector('#code-block-examples')`;
   const pre = `${block}.querySelector('pre')`;
   const button = `${block}.querySelector('button')`;
@@ -63,6 +63,14 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   assert.ok(await evaluate(`!${corner}.querySelector('.astryx-code-block__header')`));
   assert.ok(await evaluate(`${corner}.querySelector('pre').getBoundingClientRect().right <= ${corner}.querySelector('.astryx-code-block__actions').getBoundingClientRect().left`));
   assert.deepEqual(await evaluate(`Array.from(${corner}.querySelectorAll('a,button'), el => el.textContent.trim())`), ['See full excerpt', 'Copy code']);
+  const widthDemo = "document.getElementById('code-block-width-example')";
+  const widths = `Array.from(${widthDemo}.querySelectorAll('.astryx-code-block'), el => el.getBoundingClientRect().width)`;
+  assert.deepEqual(await evaluate(widths), [240, 360]);
+  await evaluate(`${widthDemo}.style.inlineSize = '180px'`);
+  assert.deepEqual(await evaluate(widths), [180, 180]);
+  await evaluate(`${corner}.parentElement.style.inlineSize = '180px'; ${corner}.dir = 'rtl'`);
+  assert.equal(await evaluate(`${corner}.getBoundingClientRect().width`), 180);
+  assert.ok(await evaluate(`${corner}.querySelector('pre').getBoundingClientRect().left >= ${corner}.querySelector('.astryx-code-block__actions').getBoundingClientRect().right`));
   assert.deepEqual(exceptions, []);
   console.log('Code Block: line gutter, exact-source copy and failure status passed');
 });
