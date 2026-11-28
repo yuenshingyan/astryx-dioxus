@@ -2419,9 +2419,10 @@ These changes are available for review. The table records focused evidence, not 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Avatar/AvatarStatusDot.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/AvatarStatusDot).
 
   - **Choices and semantics**
-    - [ ] `variant`: `success` (default, green filled), `neutral` (gray ring), `error` (red minus); distinct shapes prevent color-only status.
-    - [x] Size comes from avatar context, not a separate size prop; optional custom `icon` replaces shape glyph and hides at tiny sizes. Public Avatar SSR covers all three tiers and empty icon inputs.
-    - [ ] Accessible `label` joins parent avatar name; standalone dot exposes labelled `role="img"`.
+    - [ ] `variant`: `success` (default, green filled), `neutral` (gray ring), `error` (red minus); distinct shapes prevent color-only status. PR #241 verifies computed styles and glyph metadata, not rendered parity or forced-color legibility.
+    - [x] Size comes from avatar context, not a separate size prop; optional custom `icon` replaces shape glyph and hides at tiny sizes. Public Avatar SSR covers all three tiers and empty icon inputs; PR #241 confirms mounted icon-tier geometry.
+    - [ ] Accessible `label` joins parent avatar name; standalone dot exposes labelled `role="img"`. PR #241 confirms standalone and Variants-row AX names. Avatar-owned initial/commit-phase composition and manual screen-reader verification remain open.
+    - Other open gates: live root `onmounted` forwarding and theming approval for an unmatched-variant baseline. See [port audit](docs/avatar-status-dot-port.md).
   - **Templates**
     - [x] **AvatarStatusDot** (`AvatarStatusDotShowcase.doc.mjs`): presence and automatic sizing. Pinned composition verified in SSR.
     - [x] **AvatarStatusDot — Variants** (`AvatarStatusDotVariants.doc.mjs`): success, neutral, error in status slot. Pinned composition verified in SSR.
