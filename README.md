@@ -149,7 +149,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/badge/`, `src/button/`, `src/button_group/`, `src/card/`, `src/clickable_card/`, `src/divider/`, `src/icon/`, `src/icon_button/`, `src/kbd/`, `src/progress_bar/`, `src/skeleton/`, `src/spinner/`, `src/status_dot/`: upstream-owned component modules, named using Rust conventions.
 - `src/blockquote/`: semantic quote and bare attribution; no layout/typography dependency.
 - `src/carousel/`: [Carousel](docs/carousel-port.md), with native scrolling, optional snap, and logical navigation. Optional edge fades indicate overflow. Looping remains open.
-- `src/overflow_list/`: [Overflow List](docs/overflow-list-port.md), with single-row measurement and a caller-rendered overflow indicator. Multi-row layout and parent observation remain open.
+- `src/overflow_list/`: [Overflow List](docs/overflow-list-port.md), with single-row measurement, a caller-rendered overflow indicator, and opt-in overflow change notifications. Multi-row layout and parent observation remain open.
 - `src/toolbar/`: [Toolbar](docs/toolbar-port.md), with named action lanes and roving keyboard focus. Tab rail integration remains pending.
 - `src/stepper/`: [Stepper and Step](docs/stepper-port.md), with ordered progress and optional navigation. Responsive collapse and on-track indicators remain open.
 - `src/segmented_control/`: [Segmented Control and Item](docs/segmented-control-port.md), with controlled radio selection and keyboard navigation. Touch drag and selection animation remain open.

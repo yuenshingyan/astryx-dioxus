@@ -1,7 +1,14 @@
 use dioxus::prelude::*;
 
-pub(crate) fn use_overflow(id: String) -> (ReadSignal<Option<usize>>, EventHandler<MountedEvent>) {
-    let mut count = use_signal(|| None::<usize>);
+type OverflowMeasurement = (usize, usize);
+
+pub(crate) fn use_overflow(
+    id: String,
+) -> (
+    ReadSignal<Option<OverflowMeasurement>>,
+    EventHandler<MountedEvent>,
+) {
+    let mut measurement = use_signal(|| None::<OverflowMeasurement>);
     let mut controller = use_signal(|| None::<document::Eval>);
     use_drop(move || {
         if let Some(eval) = *controller.peek() {
@@ -16,12 +23,12 @@ pub(crate) fn use_overflow(id: String) -> (ReadSignal<Option<usize>>, EventHandl
         let _ = eval.send(id.clone());
         controller.set(Some(eval));
         spawn(async move {
-            while let Ok(next) = eval.recv::<usize>().await {
-                if *count.peek() != Some(next) {
-                    count.set(Some(next));
+            while let Ok(next) = eval.recv::<OverflowMeasurement>().await {
+                if *measurement.peek() != Some(next) {
+                    measurement.set(Some(next));
                 }
             }
         });
     });
-    (count.into(), mount)
+    (measurement.into(), mount)
 }
