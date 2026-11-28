@@ -14,9 +14,12 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(`${card}.matches(':popover-open')`);
   assert.equal(await evaluate(`${card}.getAttribute('role')`), 'group');
   assert.match(await evaluate(`${card}.textContent`), /Jane Doe.*Software Engineer/);
-  for (const type of ['keyDown', 'keyUp']) {
-    await send('Input.dispatchKeyEvent', {type, key:'Escape', code:'Escape', windowsVirtualKeyCode:27});
-  }
+  const escape = async () => {
+    for (const type of ['keyDown', 'keyUp']) {
+      await send('Input.dispatchKeyEvent', {type, key:'Escape', code:'Escape', windowsVirtualKeyCode:27});
+    }
+  };
+  await escape();
   await waitFor(`!${card}.matches(':popover-open') && document.activeElement === ${trigger}`);
   await evaluate(`${trigger}.blur()`);
   const moveTo = async selector => {
@@ -31,6 +34,37 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   assert.ok(await evaluate(`${card}.matches(':popover-open')`));
   await send('Input.dispatchMouseEvent', {type:'mouseMoved', x:1, y:1});
   await waitFor(`!${card}.matches(':popover-open')`);
+  const controlled = "document.querySelector('#controlled-hover-card-example .astryx-hover-card')";
+  const controlledTrigger = "document.getElementById('controlled-hover-card-trigger')";
+  const show = "document.getElementById('controlled-hover-card-show')";
+  const close = "document.getElementById('controlled-hover-card-close')";
+  const requests = "document.getElementById('controlled-hover-card-requests').textContent";
+  const allowDelays = () => new Promise(resolve => setTimeout(resolve, 400));
+  await evaluate(`${controlledTrigger}.scrollIntoView({block:'center'})`);
+  await moveTo(controlledTrigger);
+  await allowDelays();
+  assert.ok(await evaluate(`!${controlled}.matches(':popover-open')`));
+  assert.equal(await evaluate(requests), 'Visibility requests: 0');
+
+  await evaluate(`${show}.click()`);
+  await waitFor(`${controlled}.matches(':popover-open')`);
+  await evaluate(`${close}.focus()`);
+  await escape();
+  await waitFor(`${requests} === 'Visibility requests: 1 (close)'`);
+  assert.ok(await evaluate(`${controlled}.matches(':popover-open') && document.activeElement === ${close}`));
+
+  await send('Input.dispatchMouseEvent', {type:'mouseMoved', x:1, y:1});
+  await evaluate(`${show}.focus()`);
+  await allowDelays();
+  assert.ok(await evaluate(`${controlled}.matches(':popover-open')`));
+  assert.equal(await evaluate(requests), 'Visibility requests: 1 (close)');
+
+  await evaluate(`${close}.focus(); ${close}.click()`);
+  await waitFor(`!${controlled}.matches(':popover-open') && document.activeElement === ${controlledTrigger}`);
+  await evaluate(`${controlledTrigger}.blur(); ${controlledTrigger}.focus()`);
+  await allowDelays();
+  assert.ok(await evaluate(`!${controlled}.matches(':popover-open')`));
+  assert.equal(await evaluate(requests), 'Visibility requests: 1 (close)');
   assert.deepEqual(exceptions, []);
-  console.log('HoverCard: keyboard focus, Escape, mouse entry, hover transfer and dismissal passed');
+  console.log('HoverCard: uncontrolled desktop behavior and caller-controlled visibility passed');
 });
