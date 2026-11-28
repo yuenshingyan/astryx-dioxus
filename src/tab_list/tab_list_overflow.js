@@ -12,6 +12,7 @@ let previousSelection;
 let previousWidth;
 let previousContentWidth;
 let canFade = true;
+let selectionChanged = false;
 
 const leftFade = 'data-tab-overflow-left';
 const rightFade = 'data-tab-overflow-right';
@@ -63,7 +64,8 @@ const measure = () => {
   canFade = !focused || focused.getBoundingClientRect().width + 2 * inset <= width;
   const target = focused ?? selected;
   const hasNewFocus = focused !== null && focused !== previousFocus;
-  const hasNewSelection = selected !== previousSelection;
+  const hasNewSelection = selectionChanged || selected !== previousSelection;
+  selectionChanged = false;
   const hasResized = width !== previousWidth || contentWidth !== previousContentWidth;
   if (target && contentWidth > width && (hasNewFocus || hasNewSelection || hasResized)) {
     reveal(target, canFade ? inset : padding, style.direction === 'rtl');
@@ -75,7 +77,12 @@ const measure = () => {
   updateFades();
 };
 const schedule = () => { if (frame === undefined) frame = requestAnimationFrame(measure); };
-const mutations = new MutationObserver(schedule);
+const mutations = new MutationObserver(records => {
+  // A selection can change and return to its previous value before the frame.
+  selectionChanged ||= records.some(({attributeName, target}) =>
+    (attributeName === 'aria-current' || attributeName === 'aria-selected') && ownsStop(target));
+  schedule();
+});
 mutations.observe(strip, { subtree: true, childList: true, characterData: true, attributes: true,
   attributeFilter: ['aria-current', 'aria-selected', 'class', 'style', 'dir', 'hidden'] });
 for (let ancestor = strip.parentElement; ancestor; ancestor = ancestor.parentElement) {
