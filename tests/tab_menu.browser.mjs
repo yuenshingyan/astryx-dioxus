@@ -24,7 +24,15 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(`${open} && document.activeElement === ${radio(0)}`);
   const {nodes} = await send('Accessibility.getFullAXTree');
   assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'menu' && node.name?.value === 'More'));
+  for (const name of ['Settings', 'Integrations', 'Billing']) {
+    assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'menuitemradio' && node.name?.value === name));
+  }
+  assert.equal(await evaluate(`${panel}.firstElementChild.textContent`), 'More');
   assert.equal(await evaluate(`${radio(0)}.getAttribute('aria-checked')`), 'true');
+  await press('b', 66, 'b');
+  await waitFor(`document.activeElement === ${radio(2)}`);
+  await press('Home', 36);
+  await waitFor(`document.activeElement === ${radio(0)}`);
   await press('ArrowDown', 40);
   await waitFor(`document.activeElement === ${radio(1)}`);
   await press('Enter', 13, '\r');

@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 
 use super::tab_list_context::TabListContext;
 use crate::popover::use_popover;
-use crate::{NavHeadingMenu, use_size};
+use crate::{CheckIndicator, CheckIndicatorState, NavHeadingMenu, use_size};
 
 /// A named choice in a navigation tab menu.
 #[derive(Clone, PartialEq)]
@@ -44,7 +44,8 @@ pub fn TabMenu(label: String, options: Vec<TabMenuOption>) -> Element {
             span { class: "astryx-tab-indicator", "aria-hidden": "true" }
         }
         NavHeadingMenu { id: id.clone(), class: "astryx-tab-menu", style: position, popover: "manual",
-            "aria-label": label, tabindex: -1, "data-open": is_open.to_string(), "data-popover-menu-focus": "true", onmounted,
+            "aria-label": label.clone(), tabindex: -1, "data-open": is_open.to_string(), "data-popover-menu-focus": "true", onmounted,
+            span { class: "astryx-tab-menu__heading", role: "presentation", "{label}" }
             for option in options {
                 {
                     let checked = state.value == option.value;
@@ -52,12 +53,19 @@ pub fn TabMenu(label: String, options: Vec<TabMenuOption>) -> Element {
                     rsx! {
                         button { key: "{option.value}", class: "astryx-nav-heading-menu-item astryx-tab-menu__option",
                             r#type: "button", role: "menuitemradio", tabindex: -1, "aria-checked": checked.to_string(),
+                            // The shared typeahead reads aria-label before textContent, which can include decorative artwork.
+                            "aria-label": option.label.clone(),
                             onclick: move |_| {
                                 if !checked { change.call(option.value.clone()); }
                                 request.call(false);
                             },
-                            if let Some(icon) = option.icon { span { "aria-hidden": "true", {icon} } }
-                            "{option.label}"
+                            span { class: "astryx-tab-menu__option-content",
+                                if let Some(icon) = option.icon { span { "aria-hidden": "true", {icon} } }
+                                "{option.label}"
+                            }
+                            if checked {
+                                CheckIndicator { state: CheckIndicatorState::Checked, class: "astryx-tab-menu__check" }
+                            }
                         }
                     }
                 }
