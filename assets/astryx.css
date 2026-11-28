@@ -3347,6 +3347,16 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 
 @layer astryx-base {
   .astryx-tokenizer { min-inline-size: 0; }
+  .astryx-tokenizer[data-has-clear] {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: var(--spacing-1);
+  }
+  .astryx-tokenizer[data-has-clear] > .astryx-tokenizer__tokens { grid-column: 1 / -1; }
+  /* Keep the suggestions as wide as the whole field, including the clear action. */
+  .astryx-tokenizer[data-has-clear] > .astryx-base-typeahead { position: static; }
   .astryx-tokenizer__tokens {
     display: flex;
     flex-wrap: wrap;
