@@ -5,7 +5,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8299'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8324'});
   const selector = '#file-input-examples input[name=attachment]';
   const input = `document.querySelector('${selector}')`;
   await waitFor(input);
@@ -25,6 +25,16 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   assert.equal(await evaluate(`document.getElementById('attachment-status').dataset.variant`), 'detached');
   const {nodes} = await send('Accessibility.getFullAXTree');
   assert.ok(nodes.some(node => !node.ignored && node.name?.value === 'Attachments' && node.description?.value.includes('The previous attachments are out of date.')));
+  const toggle = "document.getElementById('file-input-toggle-loading')";
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
+  await evaluate(`${input}.focus(); ${toggle}.click()`);
+  await waitFor(`${input}.getAttribute('aria-busy') === 'true'`);
+  assert.ok(await evaluate(`${input}.parentElement.querySelector('.astryx-spinner[aria-hidden=true]') && document.activeElement === ${input}`));
+  assert.deepEqual(await evaluate(`[new MouseEvent('click', {bubbles:true,cancelable:true}), new DragEvent('drop', {bubbles:true,cancelable:true,dataTransfer:new DataTransfer()})].map(event => ${input}.dispatchEvent(event))`), [false, false]);
+  assert.ok(await evaluate(`${input}.validity.valid && new FormData(${input}.form).get('attachment').name === 'sample.txt'`));
+  await evaluate(`${toggle}.click()`);
+  await waitFor(`!${input}.hasAttribute('aria-busy') && !${input}.parentElement.querySelector('.astryx-spinner')`);
   await evaluate(`${input}.form.reset()`);
   assert.ok(await evaluate(`${input}.files.length === 0 && ${input}.validity.valueMissing`));
   assert.deepEqual(exceptions, []);
