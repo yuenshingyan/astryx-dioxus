@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 
 use crate::date_input::is_valid_date;
 use crate::time_input::is_valid_time;
-use crate::{FieldLabel, SizeValue};
+use crate::{Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue};
 
 /// A local Gregorian date and time, entered through separate native controls.
 /// The value uses `YYYY-MM-DDTHH:MM`, or includes seconds when enabled.
@@ -14,6 +14,12 @@ pub fn DateTimeInput(
     #[props(default)] on_change: Option<EventHandler<Option<String>>>,
     #[props(default = "Time".to_owned())] time_label: String,
     #[props(default)] html_name: Option<String>,
+    /// Describes both date and time controls.
+    #[props(default)]
+    description: Option<String>,
+    /// Caller-owned feedback for the combined value, shown below the controls.
+    #[props(default)]
+    status: Option<FieldStatusInput>,
     #[props(default)] has_seconds: bool,
     #[props(default)] is_required: bool,
     #[props(default)] is_disabled: bool,
@@ -36,18 +42,37 @@ pub fn DateTimeInput(
     } else {
         (String::new(), time_draft.read().clone())
     };
-    let style = width
-        .map(|size| size.as_css().map(|width| format!("inline-size:{width}")))
-        .transpose()?;
     let date_id = format!("{id}-date");
     let time_id = format!("{id}-time");
     let time_value = time.clone().unwrap_or_default();
+    let description_id = description
+        .as_ref()
+        .filter(|text| !text.is_empty())
+        .map(|_| format!("{date_id}-desc"));
+    let severity = status.as_ref().map(|status| status.status_type);
+    let status_id = status
+        .as_ref()
+        .filter(|status| status.message.as_ref().is_some_and(|text| !text.is_empty()))
+        .map(|status| {
+            status
+                .message_id
+                .clone()
+                .unwrap_or_else(|| format!("{date_id}-status"))
+        });
+    let described_by = [description_id.as_deref(), status_id.as_deref()]
+        .into_iter()
+        .flatten()
+        .collect::<Vec<_>>()
+        .join(" ");
+    let described_by = (!described_by.is_empty()).then_some(described_by);
+    let invalid = (severity == Some(InputStatusType::Error)).then_some("true");
     rsx! {
-        div { class: "astryx-date-time-input", style,
-            FieldLabel { label, input_id: date_id.clone(), is_required, is_disabled }
+        Field { class: "astryx-date-time-input", label, input_id: date_id.clone(), is_required, is_disabled,
+            width, description, description_id, status, status_variant: FieldStatusPlacement::Detached,
             div { class: "astryx-date-time-input__segments",
                 input { id: date_id, class: "astryx-date-input__control", r#type: "date", value: date.clone(),
-                    required: is_required, disabled: is_disabled,
+                    required: is_required, disabled: is_disabled, "aria-describedby": described_by.clone(),
+                    "aria-invalid": invalid, "data-status": severity.map(InputStatusType::as_str),
                     onchange: move |event| {
                         pending_date.set(None);
                         if is_disabled { return; }
@@ -76,7 +101,8 @@ pub fn DateTimeInput(
                 }
                 input { id: time_id, class: "astryx-time-input__control", r#type: "time", value: time_value,
                     "aria-label": time_label, step: if has_seconds { "1" } else { "60" },
-                    required: is_required, disabled: is_disabled,
+                    required: is_required, disabled: is_disabled, "aria-describedby": described_by,
+                    "aria-invalid": invalid, "data-status": severity.map(InputStatusType::as_str),
                     onchange: move |event| {
                         if is_disabled { return; }
                         let next = event.value();
