@@ -1,5 +1,24 @@
 # Time Input: native picker checkpoint
 
+## Native range commit follow-up
+
+The supplied TimeInput source and spec blob IDs below were verified against
+upstream's tree at the pinned commit. TimeInput passes `min` and `max` to
+`NativeTimeSegment`, which checks the range before committing (FR6). The Rust
+native control now also withholds `on_change` for nonempty out-of-range edits
+instead of relying on native form validation to stop a callback. Bounds are
+inclusive, omitted seconds compare as zero, and an empty edit still reports
+`None`. Unlike the upstream linear range check, the port preserves HTML's
+overnight range when `min` is later than `max`.
+
+Focused Rust tests exercise the callback decision for ordinary and one-sided
+bounds, mixed precision, clearing, and overnight ranges. Native picker and
+form validation remain browser-owned; this follow-up does not implement
+FR13–FR15 rejection messages, announcements, or blur restoration, and did not
+rerun browser checks. The checklist remains open.
+
+## Earlier checkpoints
+
 `src/time_input/` pairs Field with a native time input. Caller-supplied status can be attached or detached and is linked alongside the field description. An error sets `aria-invalid` without changing native time constraints. The browser owns editing and constraint validation. Values and bounds are local times without a date or time zone. By default the field accepts `HH:MM`; enabling seconds also accepts `HH:MM:SS` and reports changes with second precision. Clearing the field reports `None` on native change.
 
 Pinned Meta Astryx sources at `476a3153417dbf75c565f7df05b0784e94ddd59e`: `TimeInput/TimeInput.tsx` (`9af114b38e0f90812530bcfe23134235a063471d`), its spec (`ccbb5e61220861ca01a54d3a0f0d016ce7e8e1a1`), and the Time showcase (`8334d58b3b06f7808919c4a57eaa57f3a6d4b140`). The adapted example keeps the label and empty initial value but uses the native picker presentation and adds bounds.
