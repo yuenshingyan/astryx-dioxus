@@ -4,11 +4,13 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8199'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8320'});
   const all = `document.getElementById('checkbox-select-all')`;
   const blocked = `document.getElementById('checkbox-disabled')`;
   await waitFor(`${all}?.indeterminate`);
   assert.ok(await evaluate(`${blocked}.form === null && !${blocked}.hasAttribute('name')`));
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
   await evaluate(`${blocked}.focus(); ${blocked}.click()`);
   assert.ok(await evaluate(`document.activeElement === ${blocked} && !${blocked}.checked`));
   await evaluate(`${all}.focus()`);
@@ -19,6 +21,21 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   assert.ok(nodes.some(node => node.role?.value === 'checkbox' && node.name?.value === 'Select all notifications'));
   await evaluate(`document.getElementById('checkbox-unchecked').click()`);
   await waitFor(`!document.getElementById('checkbox-unchecked').checked`);
+  const loading = "document.getElementById('checkbox-loading')";
+  const toggle = "document.getElementById('checkbox-toggle-loading')";
+  const space = async () => {
+    for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key:' ', code:'Space', windowsVirtualKeyCode:32});
+  };
+  await evaluate(`${toggle}.click()`);
+  await waitFor(`${loading}.getAttribute('aria-busy') === 'true'`);
+  assert.ok(await evaluate(`${loading}.nextElementSibling.querySelector('.astryx-spinner[aria-hidden=true]') !== null`));
+  await evaluate(`${loading}.focus(); ${loading}.click()`);
+  await space();
+  assert.ok(await evaluate(`!${loading}.checked && ${loading}.dataset.checked === 'false' && document.activeElement === ${loading}`));
+  await evaluate(`${toggle}.click()`);
+  await waitFor(`!${loading}.hasAttribute('aria-busy') && !${loading}.nextElementSibling.querySelector('.astryx-spinner')`);
+  await space();
+  await waitFor(`${loading}.checked && ${loading}.dataset.checked === 'true'`);
   assert.deepEqual(exceptions, []);
   console.log('CheckboxInput: native mixed state, Space activation, controlled restore and disabled form exclusion passed');
 });

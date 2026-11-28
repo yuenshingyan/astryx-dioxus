@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 
 use crate::{
     CheckboxIndicator, CheckboxIndicatorState, FieldLabel, FieldStatus, FieldStatusInput,
-    FieldStatusVariant, IndicatorSize, InputStatusType,
+    FieldStatusVariant, IndicatorSize, InputStatusType, Spinner, SpinnerShade, SpinnerSize,
 };
 
 /// Controlled native checkbox with a decorative indicator and field label.
@@ -24,6 +24,9 @@ pub fn CheckboxInput(
     #[props(default)] status: Option<FieldStatusInput>,
     #[props(default)] is_disabled: bool,
     #[props(default)] is_read_only: bool,
+    /// Block activation and show progress during a caller-owned operation.
+    #[props(default)]
+    is_loading: bool,
     #[props(default)] is_required: bool,
     #[props(default)] is_label_hidden: bool,
     #[props(default)] size: IndicatorSize,
@@ -69,7 +72,7 @@ pub fn CheckboxInput(
                         form: is_disabled.then_some(String::new()), required: is_required, checked: is_checked,
                         "data-astryx-checkbox-owner": owner.clone(), "data-checked": is_checked.to_string(), "data-mixed": is_mixed.to_string(),
                         "aria-checked": is_mixed.then_some("mixed"), "aria-disabled": is_disabled.then_some("true"),
-                        "aria-readonly": is_read_only.then_some("true"),
+                        "aria-readonly": is_read_only.then_some("true"), "aria-busy": is_loading.then_some("true"),
                         "aria-invalid": (is_error || is_required).then(|| is_error.to_string()),
                         "aria-describedby": (!described_by.is_empty()).then_some(described_by), "aria-labelledby": labelled_by,
                         onmounted: move |_| {
@@ -78,12 +81,14 @@ pub fn CheckboxInput(
                             let _ = eval.send(owner.clone());
                             controller.set(Some(eval));
                         },
-                        onclick: move |event| { if is_disabled || is_read_only { event.prevent_default(); } },
+                        onclick: move |event| { if is_disabled || is_read_only || is_loading { event.prevent_default(); } },
                         onchange: move |event| {
-                            if !is_disabled && !is_read_only && let Some(handler) = on_change { handler.call(event.checked()); }
+                            if !is_disabled && !is_read_only && !is_loading && let Some(handler) = on_change { handler.call(event.checked()); }
                         },
                     }
-                    CheckboxIndicator { state: value, size, is_disabled }
+                    CheckboxIndicator { state: value, size, is_disabled,
+                        replacement: is_loading.then(|| rsx! { Spinner { size: SpinnerSize::Small, shade: SpinnerShade::Inherit, is_decorative: true } }),
+                    }
                 }
                 FieldLabel { label, input_id: label_input_id, is_label_hidden, is_disabled, is_required,
                     description: description.map(|message| rsx! { "{message}" }), description_id,

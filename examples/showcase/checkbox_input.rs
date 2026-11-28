@@ -14,6 +14,8 @@ fn state(checked: bool) -> CheckboxIndicatorState {
 pub(super) fn CheckboxInputExamples() -> Element {
     let mut choices = use_signal(|| [true, false, false, false]);
     let mut enabled = use_signal(|| false);
+    let mut is_loading = use_signal(|| false);
+    let mut backup = use_signal(|| false);
     let count = choices.read().iter().filter(|&&checked| checked).count();
     let all = match count {
         0 => CheckboxIndicatorState::Unchecked,
@@ -33,6 +35,11 @@ pub(super) fn CheckboxInputExamples() -> Element {
             CheckboxInput { label: "Indeterminate", value: CheckboxIndicatorState::Indeterminate, description: "This checkbox represents a partial selection." }
             h3 { "Showcase" }
             CheckboxInput { label: "Enable alerts", value: state(enabled()), on_change: move |checked| enabled.set(checked) }
+            h3 { "Loading" }
+            CheckboxInput { id: "checkbox-loading", label: "Include backups", value: state(backup()),
+                is_loading: is_loading(), on_change: move |checked| backup.set(checked),
+            }
+            button { id: "checkbox-toggle-loading", r#type: "button", onclick: move |_| is_loading.toggle(), "Toggle simulated loading" }
             h3 { "Indeterminate" }
             CheckboxInput { id: "checkbox-select-all", label: "Select all notifications", value: all,
                 description: format!("{count} of 4 enabled"), on_change: move |checked| choices.set([checked; 4]),
