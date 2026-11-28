@@ -4,6 +4,14 @@ use astryx_dioxus::{
 };
 use dioxus::prelude::*;
 
+fn mark_mounted_root(_event: MountedEvent) {
+    // Mark the callback's element directly, not a node found by the caller ID.
+    #[cfg(target_arch = "wasm32")]
+    if let Some(element) = _event.data().downcast::<web_sys::Element>() {
+        let _ = element.set_attribute("data-stack-item-mounted", "true");
+    }
+}
+
 /// Pinned StackItem patterns and focused layout and overflow probes.
 #[component]
 pub fn StackItemExamples() -> Element {
@@ -48,17 +56,19 @@ pub fn StackItemExamples() -> Element {
             h3 { "Scrollable item" }
             button { id: "stack-item-toggle-overflow", onclick: move |_| is_tall.toggle(), "Toggle overflow" }
             VStack { height: SizeValue::from(100),
-                StackItem { id: "stack-item-scroll", size: StackItemSize::Fill, is_scrollable: true, scroll_label: "Scrollable example",
+                StackItem { id: "stack-item-scroll", size: StackItemSize::Fill, is_scrollable: true,
+                    scroll_label: "Scrollable example", attributes: vec![onmounted(mark_mounted_root)],
                     div { style: if is_tall() { "height:240px" } else { "height:24px" }, "Content" }
                 }
             }
             HStack { width: SizeValue::from(160),
                 StackItem { id: "stack-item-scroll-span", root: StackItemRoot::Span, size: StackItemSize::Fill,
-                    is_scrollable: true, "aria-label": "Wide content",
+                    is_scrollable: true, "aria-label": "Wide content", attributes: vec![onmounted(mark_mounted_root)],
                     span { style: "display:block;width:280px", "Wide content" }
                 }
             }
             StackItem { id: "stack-item-scroll-article", is_scrollable: true, style: "height:48px",
+                attributes: vec![onmounted(mark_mounted_root)],
                 root: StackItemRoot::Custom(Callback::new(|props: StackRenderProps| rsx! { article { ..props.attributes, {props.children} } })),
                 div { style: "height:100px", "Native article" }
             }
