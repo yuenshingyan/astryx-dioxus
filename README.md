@@ -200,7 +200,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/code_block/`: [Code Block](docs/code-block-port.md), with plain source, unified diff rows, a line gutter, and copy feedback. Language syntax highlighting remains open.
 - `src/timestamp/`: [Timestamp](docs/timestamp-port.md), with deterministic absolute UTC formats. Localized and relative formats remain open.
 - `src/thumbnail/`: [Thumbnail](docs/thumbnail-port.md), with attachment preview states and separate Open and Remove actions.
-- `src/form_layout/`: [FormLayout](docs/form-layout-port.md), with responsive field arrangement and layer-scoped defaults. FieldLabel consumes the optionality default; input integration remains pending.
+- `src/form_layout/`: [FormLayout](docs/form-layout-port.md), with responsive field arrangement, layer-scoped defaults, and five source-derived examples using existing controls. Entry-error policy and input-family optionality integration remain incomplete.
 - `src/date_range_input/`: [Date Range Input](docs/date-range-input-port.md), with two native endpoints and inclusive range validation. Calendar and preset integration remain open.
 - `src/date_time_input/`: [Date and Time Input](docs/date-time-input-port.md), with separate native pickers and one combined ISO value. Custom pickers and bounds remain open.
 - `src/calendar/`: [Calendar](docs/calendar-port.md), with a Gregorian month grid, single-date selection, and inclusive bounds. Range selection and localization remain open.
