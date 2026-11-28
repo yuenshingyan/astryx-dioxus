@@ -1,8 +1,8 @@
 use dioxus::prelude::*;
 
 use astryx_dioxus::{
-    Badge, HStack, Heading, HeadingLevel, SpacingStep, StackMainAlignment, Text, TextColor,
-    TextType, VStack,
+    Badge, Card, HStack, Heading, HeadingLevel, Item, SpacingStep, StackMainAlignment, Text,
+    TextColor, TextType, VStack,
 };
 
 #[component]
@@ -28,6 +28,17 @@ pub(super) fn VStackExamples() -> Element {
                         }
                     }
                 }
+            }
+            h3 { "Playground" }
+            VStack { id: "v-stack-playground", gap: SpacingStep::Two,
+                for index in 1..=3 {
+                    Card { key: "{index}", padding: SpacingStep::Three, "Item {index}" }
+                }
+            }
+            h3 { "With Items" }
+            VStack { id: "v-stack-with-items", gap: SpacingStep::Two,
+                Item { label: "Item 1" }
+                Item { label: "Item 2" }
             }
         }
     }
