@@ -134,11 +134,15 @@ fn Face(
 ) -> Element {
     let mut failed_primary = use_signal(|| None::<String>);
     let mut failed_fallback = use_signal(|| None::<String>);
-    if let Some(src) = src.filter(|src| failed_primary.read().as_ref() != Some(src)) {
+    if let Some(src) =
+        src.filter(|src| !src.is_empty() && failed_primary.read().as_ref() != Some(src))
+    {
         let failed = src.clone();
         return rsx! { img { key: "primary:{src}", class: "astryx-avatar__image", src, alt: "", onerror: move |_| failed_primary.set(Some(failed.clone())) } };
     }
-    if let Some(src) = fallback_src.filter(|src| failed_fallback.read().as_ref() != Some(src)) {
+    if let Some(src) =
+        fallback_src.filter(|src| !src.is_empty() && failed_fallback.read().as_ref() != Some(src))
+    {
         let failed = src.clone();
         return rsx! { img { key: "fallback:{src}", class: "astryx-avatar__image", src, alt: "", onerror: move |_| failed_fallback.set(Some(failed.clone())) } };
     }
