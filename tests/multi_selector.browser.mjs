@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8274'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8315'});
   const select = "document.querySelector('#multi-selector-examples select')";
   const output = "document.querySelector('#multi-selector-examples output').textContent";
   const values = `Array.from(${select}.selectedOptions, option => option.value)`;
@@ -20,8 +20,15 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await choose(['Name', 'Role']);
   await waitFor(`${output} === 'Role, Name'`);
   await choose(['Created']);
-  await waitFor(`JSON.stringify(${values}) === '["Name","Role"]'`);
+  await waitFor(`JSON.stringify(${values}) === '["Name","Role"]' && ${select}.getAttribute('aria-invalid') === 'true'`);
+  assert.ok(await evaluate(`${select}.validity.valid`));
+  assert.equal(await evaluate("document.getElementById('multi-selector-columns-error').dataset.variant"), 'attached');
+  const {nodes} = await send('Accessibility.getFullAXTree');
+  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'listbox' && node.name?.value.includes('Columns') && /Choose columns for the report\..*Created is not available for this report\./.test(node.description?.value ?? '')));
   assert.deepEqual(await evaluate(`new FormData(${select}.form).getAll('columns')`), ['Name', 'Role']);
+  await choose(['Name']);
+  await waitFor(`${output} === 'Name' && !${select}.hasAttribute('aria-invalid') && !document.getElementById('multi-selector-columns-error')`);
+  assert.equal(await evaluate(`document.getElementById(${select}.getAttribute('aria-describedby')).textContent`), 'Choose columns for the report.');
   assert.deepEqual(exceptions, []);
   console.log('MultiSelector: native label, required state, selection order, rollback and repeated form values passed');
 });
