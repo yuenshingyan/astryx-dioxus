@@ -1,8 +1,8 @@
 use dioxus::prelude::*;
 
 use astryx_dioxus::{
-    Card, CardVariant, Center, Layout, LayoutContent, LayoutFooter, LayoutHeader, LayoutPanel,
-    SizeValue,
+    Card, CardVariant, Center, Divider, Layout, LayoutContent, LayoutFooter, LayoutHeader,
+    LayoutHeight, LayoutPanel, SizeValue, SpacingStep,
 };
 
 #[component]
@@ -34,6 +34,47 @@ fn PanelPattern(id: &'static str, #[props(default)] is_full: bool) -> Element {
 }
 
 #[component]
+fn PanelGeometry(is_narrow: bool) -> Element {
+    rsx! {
+        Card { id: "layout-panel-geometry", variant: CardVariant::TRANSPARENT, padding: SpacingStep::Two,
+            width: SizeValue::from(260),
+            Layout { height: LayoutHeight::Auto, padding: SpacingStep::Six, default_has_dividers: true,
+                header: rsx! { LayoutHeader { "Header" } },
+                start: rsx! {
+                    LayoutPanel { id: "layout-panel-gap", width: SizeValue::from("calc(100px + 12px)"),
+                        is_scrollable: false,
+                        Divider { is_full_bleed: true }
+                    }
+                },
+                end: rsx! {
+                    LayoutPanel { id: "layout-panel-divider", width: SizeValue::from(if is_narrow { 0 } else { 160 }),
+                        has_divider: true, is_scrollable: false, role: "complementary", label: "Inspector",
+                        Divider { is_full_bleed: true }
+                    }
+                },
+                div { id: "layout-panel-neighbor", style: "color:var(--color-border);height:32px" }
+            }
+            Layout { height: LayoutHeight::Auto, padding: SpacingStep::Six,
+                footer: rsx! { LayoutFooter { "Footer" } },
+                start: rsx! {
+                    LayoutPanel { id: "layout-panel-explicit", width: SizeValue::from(112), padding: SpacingStep::OneAndHalf,
+                        is_scrollable: false,
+                        Divider { is_full_bleed: true }
+                    }
+                },
+                end: rsx! {
+                    LayoutPanel { id: "layout-panel-bleed", width: SizeValue::from(112), padding: SpacingStep::Zero,
+                        is_scrollable: false,
+                        Divider { is_full_bleed: true }
+                    }
+                },
+                div { style: "height:32px" }
+            }
+        }
+    }
+}
+
+#[component]
 pub(super) fn LayoutPanelExamples() -> Element {
     let mut is_narrow = use_signal(|| false);
     rsx! {
@@ -49,6 +90,8 @@ pub(super) fn LayoutPanelExamples() -> Element {
                 style: "height:96px", scroll_label: "Scrollable panel example",
                 div { style: "height:240px", "Panel content" }
             }
+            h3 { "Side-slot insets and dividers" }
+            PanelGeometry { is_narrow: is_narrow() }
         }
     }
 }

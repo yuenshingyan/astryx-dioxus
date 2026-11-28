@@ -68,7 +68,8 @@ pub fn LayoutPanel(
         ("end", area.is_end_panel == Some(true)),
         ("open-header", !slots.has_header),
         ("open-footer", !slots.has_footer),
-        ("divider", has_divider),
+        // Even with border-box sizing, a 1px border keeps a zero-width panel 1px wide.
+        ("divider", has_divider && !is_zero_width),
         (
             "collapse-gap",
             !has_divider && padding.is_none() && !is_zero_width,

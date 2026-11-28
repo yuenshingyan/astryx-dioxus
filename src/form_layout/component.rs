@@ -58,40 +58,109 @@ pub fn FormLayout(
 
 #[cfg(test)]
 mod tests {
+    use dioxus::core::{Runtime, ScopeId};
     use dioxus::prelude::*;
-    use dioxus_ssr::render_element;
+    use dioxus_ssr::render;
 
     use super::FormLayout;
     use crate::form_layout::form_layout_context::{
-        EntryErrorBehavior, FormLayoutContext, FormLayoutDirection, FormOptionality,
+        EntryErrorBehavior, FormLayoutContext, FormLayoutDirection, FormLayoutSettings,
+        FormOptionality,
     };
     use crate::layer::LayerContentBoundary;
 
     #[component]
-    fn SettingsProbe() -> Element {
+    fn SettingsProbe(id: &'static str) -> Element {
         let settings = use_context::<FormLayoutContext>()();
-        let direction = format!("{:?}", settings.direction);
+        let direction = settings.direction.as_str();
         let optionality = format!("{:?}", settings.default_optionality);
         let errors = format!("{:?}", settings.default_entry_error_behavior);
-        rsx! { output { "{direction};{optionality};{errors}" } }
+        rsx! { output { id, "{direction};{optionality};{errors}" } }
+    }
+
+    #[derive(Clone, Copy)]
+    struct OuterProps(Signal<FormLayoutSettings>);
+
+    fn scoped_layouts() -> Element {
+        let outer = use_signal(|| FormLayoutSettings {
+            direction: FormLayoutDirection::HorizontalLabels,
+            default_optionality: Some(FormOptionality::Required),
+            default_entry_error_behavior: Some(EntryErrorBehavior::BlurOrEnter),
+        });
+        use_context_provider(|| OuterProps(outer));
+        let settings = outer();
+        rsx! {
+            FormLayout {
+                direction: settings.direction,
+                default_optionality: settings.default_optionality,
+                default_entry_error_behavior: settings.default_entry_error_behavior,
+                SettingsProbe { id: "outer-before" }
+                FormLayout { SettingsProbe { id: "nested-unset" } }
+                FormLayout {
+                    direction: FormLayoutDirection::Horizontal,
+                    default_optionality: FormOptionality::Optional,
+                    default_entry_error_behavior: EntryErrorBehavior::Complete,
+                    SettingsProbe { id: "nested-explicit" }
+                }
+                LayerContentBoundary {
+                    SettingsProbe { id: "layer-reset" }
+                    FormLayout {
+                        default_entry_error_behavior: EntryErrorBehavior::BlurOrEnter,
+                        SettingsProbe { id: "layer-local" }
+                    }
+                }
+                SettingsProbe { id: "outer-after" }
+            }
+        }
+    }
+
+    fn assert_probe(html: &str, id: &str, settings: &str) {
+        assert!(
+            html.contains(&format!("<output id=\"{id}\">{settings}</output>")),
+            "wrong settings at {id}: {html}"
+        );
     }
 
     #[test]
-    fn nested_layout_and_layer_reset_all_defaults() {
-        let html = render_element(rsx! { FormLayout {
-            direction: FormLayoutDirection::HorizontalLabels, default_optionality: FormOptionality::Required,
-            default_entry_error_behavior: EntryErrorBehavior::BlurOrEnter,
-            SettingsProbe {}
-            FormLayout { direction: FormLayoutDirection::Horizontal, default_optionality: FormOptionality::Optional, SettingsProbe {} }
-            LayerContentBoundary { SettingsProbe {} }
-            SettingsProbe {}
-        } });
-        assert_eq!(
-            html.matches("HorizontalLabels;Some(Required);Some(BlurOrEnter)")
-                .count(),
-            2
-        );
-        assert!(html.contains("Horizontal;Some(Optional);None"));
-        assert!(html.contains("Vertical;None;None"));
+    fn form_layout_updates_the_nearest_provider_without_leaking_across_scopes() {
+        let mut dom = VirtualDom::new(scoped_layouts);
+        dom.rebuild_in_place();
+        let mut outer = dom.in_runtime(|| {
+            Runtime::current()
+                .consume_context::<OuterProps>(ScopeId::APP)
+                .unwrap()
+                .0
+        });
+        for (settings, expected) in [
+            (
+                dom.in_runtime(|| *outer.peek()),
+                "horizontal-labels;Some(Required);Some(BlurOrEnter)",
+            ),
+            (
+                FormLayoutSettings {
+                    direction: FormLayoutDirection::Horizontal,
+                    default_optionality: Some(FormOptionality::Optional),
+                    default_entry_error_behavior: Some(EntryErrorBehavior::Complete),
+                },
+                "horizontal;Some(Optional);Some(Complete)",
+            ),
+            (FormLayoutSettings::default(), "vertical;None;None"),
+        ] {
+            dom.in_runtime(|| outer.set(settings));
+            dom.render_immediate_to_vec();
+            // The provider update schedules its consumers after the parent render.
+            dom.render_immediate_to_vec();
+            let html = render(&dom);
+            assert_probe(&html, "outer-before", expected);
+            assert_probe(&html, "outer-after", expected);
+            assert_probe(&html, "nested-unset", "vertical;None;None");
+            assert_probe(
+                &html,
+                "nested-explicit",
+                "horizontal;Some(Optional);Some(Complete)",
+            );
+            assert_probe(&html, "layer-reset", "vertical;None;None");
+            assert_probe(&html, "layer-local", "vertical;None;Some(BlurOrEnter)");
+        }
     }
 }

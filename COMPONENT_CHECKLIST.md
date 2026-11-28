@@ -1650,14 +1650,14 @@ These changes are available for review. The table records focused evidence, not 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Layout/Layout.doc.mjs). Templates in `Layout/` under [pinned root](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components).
 
   - **Regions, sizing, and defaults**
-    - [ ] Slots: `header`, `start`, `content`, `end`, `footer`; arbitrary nodes or LayoutHeader/LayoutPanel/LayoutContent/LayoutFooter wrappers.
+    - [x] Slots: `header`, `start`, `content`, `end`, `footer`; SSR verifies caller-native nodes, region components and slot order.
     - [ ] `children` is content shorthand; explicit content wins. false/null/undefined hides a region and neighboring regions move to edge.
     - [ ] `height`: `fill` (default; needs height-constrained parent), `auto` (content growth).
     - [ ] `padding`: `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`. Own layout regions only; nested Layout does not inherit it, using enclosing container padding or spacing-4 default inset.
-    - [ ] `defaultHasDividers`: true/false; unset inherits parent context and supplies only header/footer defaults, not panel divider policy.
+    - [x] `defaultHasDividers`: true/false; SSR verifies nested inheritance, explicit region override, layer context reset and panel independence.
     - [ ] `contentWidth` centers aligned region content, full-bleed dividers. No panel: scrollbar at outer edge; one panel: aligned frame with content extending open edge; two panels: width includes middle composition.
     - [ ] Percentage/intrinsic/bare-var arithmetic widths retain constrained composition; guaranteed length calc(var(...)) can use open-side arithmetic. Values such as 640/960 are recommendations, not finite widths.
-    - [ ] Layout adds no role/name; caller gives region landmark role/label when appropriate. AppShell, not Layout, owns app navigation shell.
+    - [x] Layout adds no role/name; SSR verifies caller role/label on the root and unmodified native slot semantics. AppShell, not Layout, owns the navigation shell. This is markup evidence, not AX or spoken output.
 
   - **Named inline example**
     - [ ] **Page with a details panel inside AppShell**: page header, complementary end panel, main content, default inner inset in full-bleed shell.
@@ -3081,7 +3081,7 @@ These changes are available for review. The table records focused evidence, not 
     - [ ] `isScrollable`: true (default) / false; arithmetic contentWidth scrollport extends through open sides with aligned child insets.
     - [ ] `padding`: `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`, overriding enclosing layout padding.
     - [ ] Arbitrary children and optional landmark role/label; scroll region label defaults to translated `Content` if omitted; root ref supported.
-    - [ ] No own color/size/variant enum.
+    - [x] No own color/size/variant enum (public props audited against the pin).
 
   - **Named templates**
     - [ ] `LayoutContentBasic` — **LayoutContent — Basic**: scrolling main content below fixed header.
@@ -3124,7 +3124,7 @@ These changes are available for review. The table records focused evidence, not 
     - [ ] `padding`: `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`; replaces automatic inset/shared gap; zero full-bleed.
     - [ ] Fixed arbitrary `width` versus `resizable` region/props, which owns width; region axis `horizontal`/`vertical` must match adjacent ResizeHandle.
     - [ ] Hook-owned region slides collapsed/expanded from handle edge; hand-built props do not slide. Both move contained focus to handle and make collapsed panel inert, also supported for adjacent panel sized from region.size.
-    - [ ] Arbitrary navigation/settings/inspector children; no finite background variants.
+    - [x] Arbitrary navigation/settings/inspector children; no finite background variants. Pinned source and public props leave content to the caller; SSR verifies direct semantic children and caller styling on the panel root.
 
   - **Named templates**
     - [ ] `LayoutPanelNavigation` — **LayoutPanel — Navigation**: fixed-width nav list beside content.
@@ -3298,12 +3298,12 @@ These changes are available for review. The table records focused evidence, not 
   - Source: [English API](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/SideNav/SideNavHeading.doc.mjs).
 
   - **Content and interaction patterns**
-    - [ ] No finite visual variant/size/color is documented. Required heading; optional icon, superheading, subheading; each text tier has its own optional href.
+    - [x] No finite visual variant/size/color is documented. Required heading; optional icon, superheading, subheading; each text tier has its own optional href (pinned API and focused SSR).
     - [ ] Optional menu popover; smart link/menu interaction boundaries rather than one nested interactive target.
     - [ ] `headerEndContent` between text and chevron: badge, status indicator or compact action; hidden when rail collapses.
 
   - **Named templates**
-    - [ ] [`SideNavHeadingBasic`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/SideNavHeading/SideNavHeadingBasic.doc.mjs) — “SideNavHeading — Basic”: icon and linked title in header slot.
+    - [x] [`SideNavHeadingBasic`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/SideNavHeading/SideNavHeadingBasic.doc.mjs) — “SideNavHeading — Basic”: icon and linked title in the `SideNav` header slot (SSR composition; not visual parity).
     - [ ] [`SideNavHeadingShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/SideNavHeading/SideNavHeadingShowcase.doc.mjs) — “SideNavHeading” / “Side Nav Heading”: logo, heading, superheading and subheading.
 
 - [ ] **[Side Nav Item](https://astryx.atmeta.com/components/SideNavItem)**
@@ -3342,8 +3342,9 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Content and interaction modes**
     - [ ] No finite style variants documented. Logo as image/NavIcon/arbitrary node; heading; optional superheading/subheading and independent href for each; trailing headerEndContent badge/status.
-    - [ ] No menu and only headingHref: entire heading is one link. Menu with no hrefs: entire header triggers popover. Menu with hrefs: independent inline links plus chevron trigger.
-    - [ ] Menu adds automatic chevron; custom link `as` overrides LinkProvider and must accept href/className/style/children.
+    - [x] No menu: only `headingHref` on visible content yields one link for logo and text (a native anchor by default); independent destinations render separate links; trailing controls remain siblings. Static product identity does not add a page heading (SSR: `tests/top_nav_heading.rs`).
+    - [x] No menu: the custom link renderer (`render_link`, upstream `as`) overrides LinkProvider on the whole-heading and logo links; independent text links still use LinkProvider (SSR: `tests/top_nav_heading.rs`). Custom renderers are responsible for forwarding href/class/style/children.
+    - [ ] Menu without hrefs: the entire header opens the popover. Menu with hrefs: independent inline links plus a menu trigger. Both modes add an automatic chevron.
 
   - **Named templates**
     - [ ] [`TopNavHeadingBasic`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/TopNavHeading/TopNavHeadingBasic.doc.mjs) — “TopNavHeading — Basic”: linked logo heading.
