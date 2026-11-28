@@ -3886,8 +3886,9 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-chat-message-bubble:not([data-sender="user"]):is([data-group="last"], [data-group="middle"]) { border-start-start-radius: var(--radius-inner); }
   .astryx-chat-message-bubble[data-sender="user"]:is([data-group="first"], [data-group="middle"]) { border-end-end-radius: var(--radius-inner); }
   .astryx-chat-message-bubble[data-sender="user"]:is([data-group="last"], [data-group="middle"]) { border-start-end-radius: var(--radius-inner); }
-  .astryx-chat-message-bubble__name { display: flex; align-items: center; height: var(--spacing-5); margin-block-end: calc(-1 * var(--spacing-1-5)); }
+  .astryx-chat-message-bubble__name { display: flex; align-items: center; min-height: var(--spacing-5); margin-block-end: calc(-1 * var(--spacing-1-5)); }
   .astryx-chat-message-bubble__metadata { margin-block-start: calc(-1 * var(--spacing-1-5)); }
+  :is(.astryx-chat-message-bubble__name, .astryx-chat-message-bubble__metadata) { overflow-wrap: anywhere; }
   :is(.astryx-chat-message-bubble__name, .astryx-chat-message-bubble__metadata)[data-sender="user"] { text-align: end; }
 
   .astryx-chat-message-metadata {
