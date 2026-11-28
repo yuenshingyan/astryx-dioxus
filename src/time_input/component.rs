@@ -2,7 +2,9 @@ use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
 use crate::field::input_clear_button::InputClearButton;
-use crate::{Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue};
+use crate::{
+    Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue, Spinner, SpinnerSize,
+};
 
 /// Native time-of-day field for the browser picker presentation.
 /// Values and bounds use `HH:MM` or `HH:MM:SS` without a date or time zone.
@@ -25,6 +27,9 @@ pub fn TimeInput(
     #[props(default)] width: Option<SizeValue>,
     #[props(default)] is_required: bool,
     #[props(default)] is_disabled: bool,
+    /// Show progress for caller-owned work without locking the native time control.
+    #[props(default)]
+    is_loading: bool,
     #[props(default)] is_optional: bool,
     /// Show a clear action when a time is set and the field is enabled.
     #[props(default)]
@@ -71,11 +76,12 @@ pub fn TimeInput(
     rsx! {
         Field { class: "astryx-time-input", label, input_id: id.clone(), is_label_hidden, is_disabled, is_required, is_optional,
             width, description, description_id, status, status_variant,
-            div { class: "astryx-time-input__entry", "data-has-clear": should_show_clear.then_some("true"),
+            div { class: "astryx-time-input__entry", "data-has-clear": should_show_clear.then_some("true"), "data-loading": is_loading.then_some("true"),
             input { class: "astryx-time-input__control", id, r#type: "time", name: html_name,
                 value: value.unwrap_or_default(), min, max, step: if has_seconds { "1" } else { "60" },
                 required: is_required, disabled: is_disabled,
                 "aria-describedby": (!described_by.is_empty()).then_some(described_by),
+                "aria-busy": is_loading.then_some("true"),
                 "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
                 "data-status": severity.map(InputStatusType::as_str),
                 onchange: move |event| {
@@ -89,6 +95,7 @@ pub fn TimeInput(
                     }
                 },
             }
+            if is_loading { Spinner { size: SpinnerSize::Small, is_decorative: true } }
             if should_show_clear {
                 InputClearButton { label: clear_label, onclick: move |_| {
                     // Focusing the native time input can reopen the picker on iOS.
