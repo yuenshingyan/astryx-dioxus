@@ -15,3 +15,9 @@ Following FR4 in the pinned `ScrollableArea.spec.md`, only the viewport opts int
 ```sh
 SHOWCASE_URL=http://127.0.0.1:8142 node tests/scrollable_area.browser.mjs
 ```
+
+## Inline Rail full-bleed composition
+
+The pinned `ScrollableAreaInlineRail.tsx` template (blob `5836cea981ba7ed117e6a49661842251e3868030`) places the named inline region in a padded Card, rather than using a standalone fixed-width scroller. The showcase now follows that arrangement: the viewport consumes the Card's inherited inset, while its content publishes independent spacing steps (`4` inline, `0.5` block start, `4` block end). It uses the seven source file cards; the “View all” link targets the existing Workspace files demo instead of the upstream placeholder fragment.
+
+The SSR regression checks the rendered example's region, bleed opt-in, content insets, and cards. The browser probe adds checks for the viewport reaching the Card's inside border, the first card aligning with the heading within the Card's border adjustment, and actual inline overflow. That probe was not run for this change; raster and assistive-technology parity are not verified, and the checklist remains open.

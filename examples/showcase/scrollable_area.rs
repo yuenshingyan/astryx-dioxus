@@ -1,8 +1,9 @@
 use dioxus::prelude::*;
 
 use astryx_dioxus::{
-    Card, ScrollAxis, ScrollOverscroll, ScrollableArea, ScrollableAreaStickyContainment, SizeValue,
-    SpacingStep,
+    Card, CardVariant, HStack, Heading, HeadingLevel, Link, ScrollAxis, ScrollOverscroll,
+    ScrollableArea, ScrollableAreaRole, ScrollableAreaStickyContainment, SizeValue, SpacingStep,
+    StackCrossAlignment, StackMainAlignment, Text, TextType, TextWeight, VStack,
 };
 
 const GROUPS: [(&str, [&str; 4]); 4] = [
@@ -58,6 +59,47 @@ fn FileGroup(index: usize, #[props(default)] is_sticky: bool) -> Element {
 }
 
 #[component]
+fn ScrollableAreaInlineRail() -> Element {
+    const FILES: [(&str, &str); 7] = [
+        ("Q3 launch brief", "Edited 2 days ago"),
+        ("Pricing rework", "Edited 3 days ago"),
+        ("Onboarding flow v4", "Edited 4 days ago"),
+        ("Support macros", "Edited last week"),
+        ("Brand refresh", "Priya Raman"),
+        ("Checkout audit", "Tomas Lindqvist"),
+        ("Partner deck", "Ines Okafor"),
+    ];
+    rsx! {
+        Card { id: "scroll-area-rail-card", width: SizeValue::from(460), padding: SpacingStep::Four,
+            VStack { gap: SpacingStep::Three,
+                HStack { h_align: StackMainAlignment::Between, v_align: StackCrossAlignment::Center,
+                    VStack { gap: SpacingStep::Half,
+                        Heading { id: "scroll-area-rail-heading", level: HeadingLevel::Three, "Workspace files" }
+                        Text { text_type: TextType::SUPPORTING, "Recently opened" }
+                    }
+                    Link { href: "#scroll-area-block", "View all" }
+                }
+                ScrollableArea {
+                    id: "scroll-area-inline", axis: ScrollAxis::Inline, role: ScrollableAreaRole::Region,
+                    label: "Recently opened files", is_full_bleed: true, padding_inline: SpacingStep::Four,
+                    padding_block_start: SpacingStep::Half, padding_block_end: SpacingStep::Four,
+                    HStack { gap: SpacingStep::Two,
+                        for (title, details) in FILES {
+                            Card { key: "{title}", variant: CardVariant::MUTED, padding: SpacingStep::Three, width: SizeValue::from(170),
+                                VStack { gap: SpacingStep::One,
+                                    Text { weight: TextWeight::Medium, max_lines: 1, "{title}" }
+                                    Text { text_type: TextType::SUPPORTING, max_lines: 1, "{details}" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#[component]
 pub(super) fn ScrollableAreaExamples() -> Element {
     let mut is_tall = use_signal(|| true);
     rsx! {
@@ -71,13 +113,7 @@ pub(super) fn ScrollableAreaExamples() -> Element {
                 }
             }
             h3 { "Inline rail" }
-            ScrollableArea { id: "scroll-area-inline", label: "Recently opened files", axis: ScrollAxis::Inline, width: SizeValue::from(460),
-                div { style: "display:flex;gap:12px",
-                    for (_, files) in GROUPS.into_iter().take(2) {
-                        for file in files { div { key: "{file}", style: "width:170px;padding:12px;background:var(--color-background-muted)", "{file}" } }
-                    }
-                }
-            }
+            ScrollableAreaInlineRail {}
             h3 { "Sticky group headers" }
             ScrollableArea { id: "scroll-area-sticky", label: "Workspace files with sticky groups", width: SizeValue::from(460), height: SizeValue::from(300),
                 for index in [0, 1, 3] { FileGroup { key: "{index}", index, is_sticky: true } }

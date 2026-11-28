@@ -15,6 +15,35 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
     ['hidden','auto','auto','0'], ['auto','hidden','auto','0'], ['auto','auto','auto','0'],
     ['clip','clip','auto',null], ['hidden','auto','auto',null], ['hidden','auto','auto','0'], ['hidden','auto','contain','0'],
   ]);
+  const rail = await evaluate(`(() => {
+    const viewport = ${get('inline')};
+    const content = viewport.querySelector(':scope > [data-scroll-content]');
+    const card = document.getElementById('scroll-area-rail-card');
+    const heading = document.getElementById('scroll-area-rail-heading');
+    const first = content.querySelector('.astryx-card');
+    const outer = card.getBoundingClientRect();
+    const bounds = viewport.getBoundingClientRect();
+    const cardStyle = getComputedStyle(card);
+    const contentStyle = getComputedStyle(content);
+    return {
+      leftGap: bounds.left - outer.left - parseFloat(cardStyle.borderLeftWidth),
+      rightGap: outer.right - bounds.right - parseFloat(cardStyle.borderRightWidth),
+      headingDelta: first.getBoundingClientRect().left - heading.getBoundingClientRect().left,
+      border: parseFloat(cardStyle.borderLeftWidth),
+      firstWidth: first.getBoundingClientRect().width,
+      blockStart: contentStyle.paddingBlockStart,
+      blockEnd: contentStyle.paddingBlockEnd,
+      inlineEnd: contentStyle.paddingInlineEnd,
+      overflow: viewport.scrollWidth - viewport.clientWidth,
+    };
+  })()`);
+  assert.ok(Math.abs(rail.leftGap) < 1 && Math.abs(rail.rightGap) < 1, JSON.stringify(rail));
+  // The Rust Card subtracts its border when publishing insets; rail content uses the full spacing step.
+  assert.ok(Math.abs(rail.headingDelta) <= rail.border + 0.5, JSON.stringify(rail));
+  assert.equal(rail.firstWidth, 170);
+  assert.ok(parseFloat(rail.blockStart) > 0 && parseFloat(rail.blockStart) < parseFloat(rail.blockEnd));
+  assert.equal(rail.blockEnd, rail.inlineEnd);
+  assert.ok(rail.overflow > 0);
   const {viewportType, contentType, supportsScrollState} = await evaluate(`(() => {
     const viewport = ${get('both')};
     const content = viewport.querySelector(':scope > [data-scroll-content]');
