@@ -33,7 +33,9 @@ pub fn RadioList(
     /// Native form name shared by RadioListItem descendants.
     #[props(default)]
     html_name: Option<String>,
-    #[props(default)] is_disabled: bool,
+    /// Disables RadioListItem descendants and overrides caller `aria-disabled` on the group.
+    #[props(default)]
+    is_disabled: bool,
     #[props(default = IndicatorSize::Medium)] size: IndicatorSize,
     #[props(default)] description: Option<String>,
     #[props(default)] label_tooltip: Option<String>,
@@ -112,6 +114,19 @@ pub fn RadioList(
             .as_ref()
             .and_then(|status| status.message_id.as_deref()),
     ]);
+    // The caller's ARIA state describes the group; only is_disabled changes the controls.
+    let aria_disabled = if is_disabled {
+        Some("true".to_owned())
+    } else {
+        attributes
+            .iter()
+            .filter(|attr| attr.name == "aria-disabled")
+            .find_map(|attr| match &attr.value {
+                AttributeValue::Text(text) => Some(text.clone()),
+                AttributeValue::Bool(value) => Some(value.to_string()),
+                _ => None,
+            })
+    };
     let orientation = match orientation {
         RadioListOrientation::Vertical => "vertical",
         RadioListOrientation::Horizontal => "horizontal",
@@ -141,7 +156,7 @@ pub fn RadioList(
             div { class: "astryx-radio-list", role: "radiogroup", "data-orientation": orientation,
                 "aria-labelledby": labelled_by, "aria-describedby": described_by,
                 "aria-invalid": is_invalid.then_some("true"), "aria-required": is_effectively_required.then_some("true"),
-                "aria-disabled": is_disabled.then_some("true"), "data-astryx-radio-list": group_id,
+                "aria-disabled": aria_disabled, "data-astryx-radio-list": group_id,
                 onmounted: move |_| {
                     if let Some(eval) = *controller.peek() { let _ = eval.send(()); }
                     let eval = document::eval(include_str!("sync_radios.js"));
