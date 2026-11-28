@@ -8,6 +8,7 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   const tree = "document.querySelector('#tree-list-examples [role=tree]')";
   const row = label => `${tree}.querySelector('[aria-label="${label}"]')`;
   const isFocused = label => `document.activeElement === ${row(label)}`;
+  const city = label => `document.querySelector('[aria-label="Cities"] [aria-label="${label}"]')`;
   const key = async (key, windowsVirtualKeyCode) => {
     for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key, code:key, windowsVirtualKeyCode});
   };
@@ -17,7 +18,22 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   const {nodes} = await send('Accessibility.getFullAXTree');
   assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'tree' && node.name?.value === 'Project files'));
   assert.ok(!nodes.some(node => !node.ignored && node.role?.value === 'treeitem' && node.name?.value === 'Button.tsx'));
-  await evaluate(`${row('src')}.focus()`);
+  // Tab starts on the first enabled city and on the selected nested project row.
+  for (const [heading, stop] of [['h3', city('El Paso')], ['h2', row('App.tsx')]]) {
+    await waitFor(`${stop}?.tabIndex === 0`);
+    assert.equal(await evaluate(`${stop}.closest('[role=tree]').querySelectorAll('[tabindex="0"]').length`), 1);
+    await evaluate(`(() => {
+      const heading = document.querySelector('#tree-list-examples ${heading}');
+      heading.tabIndex = -1;
+      heading.focus();
+    })()`);
+    await key('Tab', 9);
+    await waitFor(`document.activeElement === ${stop}`);
+  }
+  await key('Home', 36);
+  await waitFor(isFocused('src'));
+  assert.equal(await evaluate(`${row('src')}.tabIndex`), 0);
+  assert.equal(await evaluate(`${row('App.tsx')}.tabIndex`), -1);
   await key('ArrowRight', 39);
   await waitFor(isFocused('components'));
   await key('ArrowRight', 39);
@@ -37,7 +53,6 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(isFocused('README.md'));
   await key('b', 66); // Button.tsx is hidden by its collapsed parent.
   assert.ok(await evaluate(isFocused('README.md')));
-  const city = label => `document.querySelector('[aria-label="Cities"] [aria-label="${label}"]')`;
   const focusCity = label => waitFor(`document.activeElement === ${city(label)}`);
   await evaluate(`${city('El Paso')}.focus()`);
   // The key buffer is isolated per tree: the earlier 'b' cannot pollute this match.
@@ -53,5 +68,5 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await key('d', 68);
   await focusCity('Odense');
   assert.deepEqual(exceptions, []);
-  console.log('TreeList: named tree, visible-only traversal, branch expansion, RTL and selection passed');
+  console.log('TreeList: named tree, initial Tab entry, visible-only traversal, branch expansion, RTL and selection passed');
 });
