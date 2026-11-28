@@ -20,7 +20,7 @@ re-export does not transfer ownership to CodeBlock. No CodeBlock module is added
 | style / StyleX xstyle | native CSS `style` and consumer `class`, following the existing port convention; no StyleX runtime or StyleX object adapter |
 | DOM / data / ARIA props | extended Dioxus `GlobalAttributes` / `attributes`, on the root |
 | native events | direct `onclick` convenience prop; all other Dioxus event builders in `attributes`, including keyboard, pointer, focus, clipboard and drag handlers; no component interception |
-| dir | defaults to `ltr`; caller replaces it, including `rtl` / `auto` |
+| dir | defaults to `ltr` when omitted or supplied as `None`; caller values such as `rtl` / `auto` replace it |
 
 Example of a native event without a dedicated convenience prop:
 
@@ -104,6 +104,11 @@ paint, owned reflection precedence and RTL browser behavior. The new SSR/browser
 checks explicitly cover these; upstream coverage is not presumed sufficient.
 
 ## Verification
+
+The native Rust regression covers FR6 with `Code { dir: direction, ... }` inside
+RTL prose: `None` retains `dir="ltr"`, while explicit `rtl` and `auto` survive.
+It also checks Dioxus renderer mutations when the override is cleared and set
+again. These checks verify attribute forwarding, not visual bidi order or speech.
 
 Run from the root (all cargo commands use `CARGO_INCREMENTAL=0`):
 
