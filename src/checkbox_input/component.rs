@@ -67,6 +67,8 @@ pub fn CheckboxInput(
     rsx! {
         div { class: "astryx-checkbox-input",
             div { class: "astryx-checkbox-input__row", "data-label-hidden": is_label_hidden.then_some("true"),
+                // The whole enabled row drives indicator hover, even while busy.
+                "data-astryx-indicator-scope": (!is_disabled).then_some(""),
                 span { class: "astryx-checkbox-input__control", "data-size": if size == IndicatorSize::Small { "sm" } else { "md" },
                     input { r#type: "checkbox", id: id.clone(), name: (!is_disabled).then_some(html_name).flatten(),
                         form: is_disabled.then_some(String::new()), required: is_required, checked: is_checked,
