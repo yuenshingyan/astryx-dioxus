@@ -123,6 +123,30 @@ fn css_wide_dimensions_apply_to_real_properties_and_classification_does_not_merg
 }
 
 #[test]
+fn css_wide_dimensions_distinguish_keyword_trivia_from_identifier_characters() {
+    let html = render(|| {
+        let width = " \\69 nherit /* trailing comment */";
+        let height = "\tunset\n";
+        rsx! { Skeleton { width, height } }
+    });
+    assert!(html.contains("astryx-skeleton--width-inherit"), "{html}");
+    assert!(html.contains("astryx-skeleton--height-unset"), "{html}");
+
+    let html = render(|| {
+        rsx! {
+            for (width, height) in [("\u{a0}inherit", "unset\u{a0}"), (r"\ inherit", r"unset\20"), ("\\\ninherit", "unset\u{b}")] {
+                Skeleton { width, height }
+            }
+        }
+    });
+    assert_eq!(html.matches("<div").count(), 3, "{html}");
+    assert!(!html.contains("astryx-skeleton--width-"), "{html}");
+    assert!(!html.contains("astryx-skeleton--height-"), "{html}");
+    assert!(html.contains(r"--_skeleton-width:\ inherit;"), "{html}");
+    assert!(html.contains(r"--_skeleton-height:unset\20;"), "{html}");
+}
+
+#[test]
 fn changed_geometry_keeps_the_root_contract_and_stagger_is_not_cached() {
     #[component]
     fn App() -> Element {
