@@ -21,6 +21,9 @@ pub(super) fn LayerProviderExamples() -> Element {
                 LayerProvider { inset: LayerInset { inline_start: Some(24.into()), ..LayerInset::default() },
                     InsetPreview { label: "Local inset" }
                 }
+                LayerProvider { inset: LayerInset::default(),
+                    InsetPreview { label: "Cleared inset" }
+                }
             }
             InsetPreview { label: "No provider" }
         }
