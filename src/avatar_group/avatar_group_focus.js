@@ -1,21 +1,22 @@
-const owner = await dioxus.recv();
+const [owner, hintId] = await dioxus.recv();
 const root = document.querySelector(`[data-astryx-avatar-group="${owner}"]`);
 if (!root) return;
-const hint = root.querySelector(':scope > [data-astryx-avatar-group-hint]');
 const originalTabs = new Map();
 let active;
+let hasInteractiveItems = false;
 const items = () => [...root.querySelectorAll(`[data-avatar-item][data-astryx-avatar-group-member="${owner}"]`)]
   .filter(item => !item.matches(':disabled,[aria-disabled="true"]') && !item.closest('[hidden],[inert]'));
 const describe = enabled => {
   const current = root.getAttribute('aria-describedby');
-  const ids = (current ?? '').split(/\s+/).filter(id => id && id !== hint.id);
-  if (enabled) ids.push(hint.id);
-  const next = ids.join(' ') || null;
+  const ids = (current ?? '').split(/\s+/).filter(Boolean);
+  if (!enabled && !ids.includes(hintId)) return;
+  const nextIds = ids.filter(id => id !== hintId);
+  if (enabled) nextIds.push(hintId);
+  const next = nextIds.join(' ') || null;
   if (next !== current) {
     if (next) root.setAttribute('aria-describedby', next);
     else root.removeAttribute('aria-describedby');
   }
-  if (hint.hidden === enabled) hint.hidden = !enabled;
 };
 const restore = (item, tab) => {
   if (tab === null) item.removeAttribute('tabindex');
@@ -35,7 +36,12 @@ const sync = () => {
     const index = item === active ? 0 : -1;
     if (item.getAttribute('tabindex') !== String(index)) item.tabIndex = index;
   }
-  describe(members.length > 0);
+  if (hasInteractiveItems !== (members.length > 0)) {
+    hasInteractiveItems = members.length > 0;
+    dioxus.send(hasInteractiveItems);
+  }
+  // Only reference the hint once the component has rendered it.
+  describe(hasInteractiveItems && root.querySelector(`:scope > #${hintId}`) !== null);
 };
 const onFocus = event => {
   if (!event.defaultPrevented && items().includes(event.target)) {
