@@ -42,6 +42,41 @@ fn spinner_defaults_are_indeterminate_svg_not_border_approximation() {
 }
 
 #[test]
+fn decorative_track_and_rotor_are_hidden_on_exposed_indicators() {
+    for html in [
+        render(|| rsx! { Spinner {} }),
+        render(|| rsx! { Spinner { label: "Loading records" } }),
+    ] {
+        let tags = || {
+            html.split('<')
+                .filter_map(|part| part.split_once('>').map(|(tag, _)| tag))
+        };
+        for (part, marker) in [
+            ("track", "astryx-spinner__track"),
+            ("rotor", "data-astryx-spinner-rotor="),
+        ] {
+            let tag = tags()
+                .find(|tag| tag.contains(marker))
+                .unwrap_or_else(|| panic!("missing {part}: {html}"));
+            assert!(
+                tag.contains("aria-hidden=\"true\""),
+                "{part} must be hidden: {html}"
+            );
+        }
+        let indicator = tags()
+            .find(|tag| tag.contains("role=\"progressbar\""))
+            .unwrap_or_else(|| panic!("missing progressbar: {html}"));
+        let root = tags().next().expect("spinner root");
+        for tag in [root, indicator] {
+            assert!(
+                !tag.contains("aria-hidden=\"true\""),
+                "must remain exposed: {tag}"
+            );
+        }
+    }
+}
+
+#[test]
 fn spinner_sizes_and_shades_preserve_upstream_geometry_and_alpha() {
     let html = render(|| {
         rsx! {
