@@ -1691,11 +1691,14 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   :is(.astryx-date-input__control, .astryx-time-input__control, .astryx-number-input__control)[data-status="success"] { border-color: var(--color-text-success); }
   .astryx-date-input__control:disabled, .astryx-time-input__control:disabled, .astryx-number-input__control:disabled { color: var(--color-text-secondary); background: var(--color-background-muted); }
   .astryx-date-input__control:focus-visible, .astryx-time-input__control:focus-visible, .astryx-number-input__control:focus-visible { outline: 2px solid var(--focus-outline-color); outline-offset: 2px; }
-  .astryx-number-input__entry:not([data-units], [data-has-clear]), .astryx-date-input__entry:not([data-has-clear]), .astryx-time-input__entry:not([data-has-clear]) { display: contents; }
+  .astryx-number-input__entry:not([data-units], [data-has-clear]), .astryx-date-input__entry:not([data-has-clear], [data-loading]), .astryx-time-input__entry:not([data-has-clear]) { display: contents; }
   .astryx-number-input__entry[data-has-clear] > .astryx-input-clear-button { flex: none; }
   .astryx-number-input__entry[data-units][data-has-clear] > .astryx-input-clear-button { margin-inline-end: var(--spacing-1); }
   :is(.astryx-date-input__entry, .astryx-time-input__entry, .astryx-number-input__entry:not([data-units]))[data-has-clear] { display: flex; align-items: center; gap: var(--spacing-1); }
   :is(.astryx-date-input__entry, .astryx-time-input__entry, .astryx-number-input__entry)[data-has-clear] > :is(.astryx-date-input__control, .astryx-time-input__control, .astryx-number-input__control) { flex: 1 1 0; }
+  .astryx-date-input__entry[data-loading] { display: flex; align-items: center; gap: var(--spacing-1); }
+  .astryx-date-input__entry[data-loading] > .astryx-date-input__control { flex: 1 1 0; }
+  .astryx-date-input__entry[data-loading] > .astryx-spinner { flex: none; }
   .astryx-number-input__entry[data-units] { display: flex; align-items: center; gap: var(--spacing-2); padding: 0; }
   .astryx-number-input__entry[data-units] > .astryx-number-input__control { flex: 1 1 0; border: 0; background: transparent; }
   .astryx-number-input__entry[data-units]:has(> :focus-visible) { outline: 2px solid var(--focus-outline-color); outline-offset: 2px; }

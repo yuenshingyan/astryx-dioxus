@@ -5,16 +5,18 @@ use astryx_dioxus::{DateInput, FieldStatusInput, FieldStatusPlacement, InputStat
 #[component]
 pub(super) fn DateInputExamples() -> Element {
     let mut date = use_signal(|| None::<String>);
+    let mut is_loading = use_signal(|| false);
     let display = date().unwrap_or_else(|| "No date selected".to_owned());
     rsx! {
         section { id: "date-input-examples",
             h2 { "Date Input" }
             form { onsubmit: move |event| event.prevent_default(),
                 DateInput { label: "Start date", value: date(), html_name: "start", width: Some(320.into()),
-                    min: "2024-01-01", max: "2024-12-31", is_required: true, has_clear: true,
+                    min: "2024-01-01", max: "2024-12-31", is_required: true, has_clear: true, is_loading: is_loading(),
                     description: "Choose a date in 2024.", on_change: move |value| date.set(value),
                 }
                 output { id: "date-input-value", "{display}" }
+                button { id: "date-input-toggle-loading", r#type: "button", onclick: move |_| is_loading.toggle(), "Toggle simulated loading" }
                 DateInput { label: "Unavailable date", value: "2024-03-01", is_disabled: true, has_clear: true, html_name: "unavailable" }
             }
             div { id: "date-input-status-example",

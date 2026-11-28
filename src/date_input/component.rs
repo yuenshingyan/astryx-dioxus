@@ -2,7 +2,9 @@ use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
 use crate::field::input_clear_button::InputClearButton;
-use crate::{Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue};
+use crate::{
+    Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue, Spinner, SpinnerSize,
+};
 
 /// Gregorian date field for the native picker presentation. Values and bounds
 /// use `YYYY-MM-DD`; invalid dates or reversed bounds render no field.
@@ -27,6 +29,9 @@ pub fn DateInput(
     #[props(default)] width: Option<SizeValue>,
     #[props(default)] is_required: bool,
     #[props(default)] is_disabled: bool,
+    /// Lock editing while caller-owned work runs, without removing the value from form data.
+    #[props(default)]
+    is_loading: bool,
     #[props(default)] is_optional: bool,
     /// Show a clear action when a date is set and the field is enabled.
     #[props(default)]
@@ -78,7 +83,7 @@ pub fn DateInput(
     .flat_map(str::split_ascii_whitespace)
     .collect::<Vec<_>>()
     .join(" ");
-    let should_show_clear = has_clear && value.is_some() && !is_disabled;
+    let should_show_clear = has_clear && value.is_some() && !is_disabled && !is_loading;
     let clear_label = clear_label
         .filter(|text| !text.trim().is_empty())
         .unwrap_or_else(|| format!("Clear {label}"));
@@ -87,9 +92,11 @@ pub fn DateInput(
         Field { class: "astryx-date-input", label, input_id: id.clone(), is_label_hidden, is_disabled, is_required, is_optional,
             width, description, description_id, status, status_variant,
             div { class: "astryx-date-input__entry", "data-has-clear": should_show_clear.then_some("true"),
+                "data-loading": is_loading.then_some("true"),
             input { class: "astryx-date-input__control", id, r#type: "date", name: html_name,
                 value: value.unwrap_or_default(), min, max,
-                required: is_required, disabled: is_disabled,
+                required: is_required, disabled: is_disabled, readonly: is_loading,
+                "aria-busy": is_loading.then_some("true"), "aria-disabled": is_loading.then_some("true"),
                 "aria-describedby": (!described_by.is_empty()).then_some(described_by),
                 "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
                 "data-status": severity.map(InputStatusType::as_str),
@@ -98,13 +105,14 @@ pub fn DateInput(
                     if let Some(handler) = onmounted { handler.call(event); }
                 },
                 onchange: move |event| {
-                    if !is_disabled && let Some(handler) = on_change {
+                    if !is_disabled && !is_loading && let Some(handler) = on_change {
                         let date = event.value();
                         if date.is_empty() { handler.call(None); }
                         else if is_valid_date(&date) { handler.call(Some(date)); }
                     }
                 },
             }
+            if is_loading { Spinner { size: SpinnerSize::Small, is_decorative: true } }
             if should_show_clear {
                 InputClearButton { label: clear_label, onclick: move |_| {
                     let input = input_node.peek().clone();
