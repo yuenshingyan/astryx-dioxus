@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8300'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8310'});
   const input = "document.querySelector('#date-input-examples input[name=start]')";
   const output = "document.getElementById('date-input-value').textContent";
   await waitFor(input);
@@ -16,8 +16,14 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await evaluate(`${input}.value = '2024-02-29'; ${input}.dispatchEvent(new Event('change', {bubbles:true}))`);
   await waitFor(`${output} === '2024-02-29'`);
   assert.deepEqual(await evaluate(`Array.from(new FormData(${input}.form))`), [['start', '2024-02-29']]);
-  await evaluate(`${input}.value = ''; ${input}.dispatchEvent(new Event('change', {bubbles:true}))`);
-  await waitFor(`${output} === 'No date selected'`);
+  const clear = `${input}.form.querySelector('button[aria-label="Clear Start date"]')`;
+  assert.equal(await evaluate(`${input}.form.querySelectorAll('.astryx-input-clear-button').length`), 1);
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
+  await evaluate(`window.nativeDateEvents = 0; for (const type of ['input','change']) ${input}.addEventListener(type, () => window.nativeDateEvents++); ${clear}.focus()`);
+  for (const type of ['keyDown','keyUp']) await send('Input.dispatchKeyEvent', {type, key:'Enter', code:'Enter', windowsVirtualKeyCode:13, ...(type === 'keyDown' ? {text:'\r'} : {})});
+  await waitFor(`${output} === 'No date selected' && document.activeElement === ${input} && !${clear}`);
+  assert.ok(await evaluate(`${input}.validity.valueMissing && window.nativeDateEvents === 0`));
   const review = "document.querySelector('#date-input-status-example input')";
   assert.ok(await evaluate(`${review}.validity.valid && ${review}.getAttribute('aria-invalid') === 'true'`));
   assert.deepEqual(await evaluate(`${review}.getAttribute('aria-describedby').split(' ').map(id => document.getElementById(id).textContent.trim())`), ['Choose a working day.', 'This date falls on a weekend.']);
