@@ -3039,7 +3039,7 @@ These changes are available for review. The table records focused evidence, not 
     - [x] **Center — Horizontal Center** (`CenterHorizontal.doc.mjs`): formatting controls, writing-mode caveat.
     - [x] **Center — Vertical & Horizontal Center** (`CenterInsideACard.doc.mjs`): fixed-height empty state with icon, bold body-text title, and description.
     - [x] **Center** (`CenterShowcase.doc.mjs`): both-axis fixed-height content.
-  - [Verification and remaining closure evidence](docs/center-port.md): pinned composition, SSR and integrated Chrome layout. Independent upstream raster comparisons, manual screen-reader checks, and live root-adapter evidence remain open.
+  - [Verification and remaining closure evidence](docs/center-port.md): pinned composition, SSR and integrated Chrome layout. PR #243 verified the Rust live root adapters and caller width precedence. Independent raster comparisons and manual screen-reader checks remain open.
 
 - [ ] **[Grid Span](https://astryx.atmeta.com/components/GridSpan)**
 
