@@ -7,6 +7,8 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8293'});
   const trigger = `document.querySelector('#dropdown-menu-examples [aria-haspopup="menu"]')`;
   const menu = `document.getElementById(${trigger}.getAttribute('aria-controls'))`;
+  const divider = `document.getElementById('dropdown-menu-actions-divider')`;
+  const output = `document.querySelector('#dropdown-menu-examples output')`;
   const focused = `document.activeElement.textContent.trim()`;
   const after = `document.getElementById('dropdown-menu-after')`;
   const press = async (key, code, windowsVirtualKeyCode) => {
@@ -26,14 +28,38 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(`${focused} === 'Duplicate'`);
   assert.equal(await evaluate(`document.activeElement.getAttribute('aria-disabled')`), 'true');
   await press('Enter', 'Enter', 13);
-  assert.ok(await evaluate(`${menu}.matches(':popover-open') && document.querySelector('#dropdown-menu-examples output').textContent === 'No action selected'`));
+  assert.ok(await evaluate(`${menu}.matches(':popover-open') && ${output}.textContent === 'No action selected'`));
+  await waitFor(`${divider}?.dataset.mounted === 'true'`);
+  assert.deepEqual(await evaluate(`(() => {
+    const node = ${divider};
+    const css = getComputedStyle(node);
+    return [node.parentElement === ${menu}, node.getAttribute('role'),
+      node.getAttribute('aria-orientation'), node.hasAttribute('tabindex'),
+      ['astryx-divider', 'astryx-dropdown-menu-divider', 'actions-divider'].every(name => node.classList.contains(name)),
+      css.marginBlockStart, css.marginBlockEnd];
+  })()`), [true, 'separator', 'horizontal', false, true, '8px', '8px']);
+  await press('ArrowDown', 'ArrowDown', 40);
+  await waitFor(`${focused} === 'Delete'`);
+  await press('ArrowUp', 'ArrowUp', 38);
+  await waitFor(`${focused} === 'Duplicate'`);
+  const point = await evaluate(`(() => {
+    const {left, top, width, height} = ${divider}.getBoundingClientRect();
+    return {x: left + width / 2, y: top + height / 2};
+  })()`);
+  assert.ok(await evaluate(`${divider}.contains(document.elementFromPoint(${point.x}, ${point.y}))`));
+  for (const type of ['mousePressed', 'mouseReleased']) {
+    await send('Input.dispatchMouseEvent', {type, ...point, button: 'left', clickCount: 1});
+  }
+  await waitFor(`${output}.dataset.dividerClicks === '1'`);
+  assert.ok(await evaluate(`${menu}.matches(':popover-open') && ${output}.textContent === 'No action selected' && document.activeElement !== ${divider}`));
+  await evaluate(`${divider}.previousElementSibling.focus()`);
   await press('End', 'End', 35);
   await waitFor(`${focused} === 'Delete'`);
   await press('e', 'KeyE', 69);
   await waitFor(`${focused} === 'Edit'`);
   await press('Enter', 'Enter', 13);
   const closed = `!${menu}.matches(':popover-open')`;
-  await waitFor(`${closed} && document.activeElement === ${trigger} && document.querySelector('#dropdown-menu-examples output').textContent === 'Edit'`);
+  await waitFor(`${closed} && document.activeElement === ${trigger} && ${output}.textContent === 'Edit'`);
   await press('ArrowUp', 'ArrowUp', 38);
   await waitFor(`${focused} === 'Delete'`);
   await press('Escape', 'Escape', 27);
