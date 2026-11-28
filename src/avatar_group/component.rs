@@ -56,6 +56,7 @@ pub fn AvatarGroup(
         settings_signal.set(settings);
     }
     use_context_provider(|| AvatarGroupContext(Some(settings_signal)));
+    let mut has_interactive_items = use_signal(|| false);
     let mut controller = use_signal(|| None::<document::Eval>);
     use_drop(move || {
         if let Some(eval) = *controller.peek() {
@@ -86,6 +87,7 @@ pub fn AvatarGroup(
         })
         .collect();
     let hint_id = format!("astryx-avatar-group-hint-{owner}");
+    let controller_hint_id = hint_id.clone();
     rsx! {
         div { class: "astryx-avatar-group {class}", style: "--_avatar-group-overlap:{overlap}px;{style}",
             "data-astryx-avatar-group": owner.to_string(), "data-size": size.selector(), "data-shape": shape.selector(),
@@ -94,14 +96,21 @@ pub fn AvatarGroup(
             onfocus: move |event| { if let Some(handler) = onfocus { handler.call(event); } },
             onmounted: move |event| {
                 if let Some(previous) = *controller.peek() { let _ = previous.send(false); }
-                let eval = document::eval(include_str!("avatar_group_focus.js"));
-                let _ = eval.send(owner);
+                let mut eval = document::eval(include_str!("avatar_group_focus.js"));
+                let _ = eval.send((owner, &controller_hint_id));
                 controller.set(Some(eval));
+                spawn(async move {
+                    while let Ok(has_items) = eval.recv::<bool>().await {
+                        has_interactive_items.set(has_items);
+                    }
+                });
                 if let Some(callback) = onmounted { callback.call(event); }
             },
             ..attributes,
             {children}
-            VisuallyHidden { id: hint_id, "data-astryx-avatar-group-hint": "", hidden: true, "{keyboard_hint}" }
+            if has_interactive_items() {
+                VisuallyHidden { id: hint_id, "data-astryx-avatar-group-hint": "", "{keyboard_hint}" }
+            }
         }
     }
 }

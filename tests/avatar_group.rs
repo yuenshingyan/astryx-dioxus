@@ -7,6 +7,7 @@ use astryx_dioxus::{Avatar, AvatarGroup, AvatarGroupOverflow, AvatarShape, Avata
 fn group_overrides_member_shape_and_size_without_adding_static_tab_stops() {
     let html = render_element(rsx! { AvatarGroup {
         size: AvatarSize::Large, shape: AvatarShape::Rounded, "aria-label": "Reviewers",
+        "aria-describedby": "reviewer-details", keyboard_hint: "Move between reviewers",
         Avatar { name: "Alex", size: AvatarSize::Small }
         AvatarGroupOverflow { count: 3 }
     } });
@@ -14,4 +15,6 @@ fn group_overrides_member_shape_and_size_without_adding_static_tab_stops() {
     assert_eq!(html.matches("data-shape=\"rounded\"").count(), 3);
     assert!(html.contains("--_avatar-size:48px") && html.contains("--_avatar-overflow-size:48px"));
     assert!(!html.contains("tabindex="));
+    assert!(html.contains("aria-describedby=\"reviewer-details\""));
+    assert!(!html.contains("Move between reviewers"));
 }
