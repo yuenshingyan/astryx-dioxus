@@ -1,8 +1,8 @@
 use dioxus::prelude::*;
 
 use astryx_dioxus::{
-    Card, CardVariant, Grid, GridColumns, GridRepeat, GridSpan, GridSpanColumns, SizeValue,
-    SpacingStep, Stack, StackDirection, Text, TextDisplay, TextType,
+    Card, CardVariant, Grid, GridAlignment, GridColumns, GridRepeat, GridSpan, GridSpanColumns,
+    SizeValue, SpacingStep, Stack, StackDirection, Text, TextDisplay, TextType,
 };
 
 #[component]
@@ -79,6 +79,24 @@ pub(super) fn GridExamples() -> Element {
                 }
                 GridSpan { columns: GridSpanColumns::Full,
                     Card { variant: CardVariant::CYAN, GridLabel { title: "Community Showcase", detail: "See how teams are building with Astryx across the organization", is_spaced: true } }
+                }
+            }
+            h3 { "Item alignment" }
+            div { id: "grid-alignment-examples",
+                for (name, label, align, justify) in [
+                    ("normal", "Browser default", None, None),
+                    ("start", "Block start, inline end", Some(GridAlignment::Start), Some(GridAlignment::End)),
+                    ("center", "Block center, inline start", Some(GridAlignment::Center), Some(GridAlignment::Start)),
+                    ("end", "Block end, inline center", Some(GridAlignment::End), Some(GridAlignment::Center)),
+                    ("stretch", "Stretch on both axes", Some(GridAlignment::Stretch), Some(GridAlignment::Stretch)),
+                ] {
+                    div { key: "{name}",
+                        p { "{label}" }
+                        Grid { id: "grid-align-{name}", width: SizeValue::from(160), row_height: 80.0,
+                            align: align, justify: justify, style: "outline:1px solid var(--color-border)",
+                            div { style: "min-width:40px;min-height:20px;background:var(--color-border)", "aria-hidden": "true" }
+                        }
+                    }
                 }
             }
         }

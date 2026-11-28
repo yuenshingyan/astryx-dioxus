@@ -30,6 +30,34 @@ fn native_root_keeps_order_and_adds_no_accessibility_semantics() {
 }
 
 #[test]
+fn caller_root_props_compose_without_replacing_alignment_or_dimensions() {
+    let html = render(|| {
+        rsx! { Grid {
+            id: "named-grid", "aria-label": "Results", class: "caller-layout",
+            align: GridAlignment::Start, justify: GridAlignment::Stretch,
+            "data-align": "spoof", "data-justify": "spoof", "data-gap": "spoof",
+            style: "color:red;width:1px;height:2px;max-width:3px;min-height:4px",
+            width: SizeValue::from("100%"), height: SizeValue::from(80),
+            max_width: SizeValue::from("40rem"), min_height: SizeValue::from(40),
+            "Caller content"
+        } }
+    });
+    for expected in [
+        "id=\"named-grid\"",
+        "aria-label=\"Results\"",
+        "class=\"astryx-grid caller-layout\"",
+        "data-align=\"start\"",
+        "data-justify=\"stretch\"",
+        "color:red;width:1px;height:2px;max-width:3px;min-height:4px;width:100%;height:80px;max-width:40rem;min-height:40px;",
+        "Caller content",
+    ] {
+        assert!(html.contains(expected), "missing {expected:?}: {html}");
+    }
+    assert!(!html.contains("spoof"), "{html}");
+    assert!(!html.contains("data-gap="), "{html}");
+}
+
+#[test]
 fn responsive_cap_uses_column_gap_and_reflects_only_numeric_columns() {
     let html = render(|| {
         rsx! { Grid {
