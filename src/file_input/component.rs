@@ -2,6 +2,7 @@ use dioxus::core::current_scope_id;
 use dioxus::html::FileData;
 use dioxus::prelude::*;
 
+use crate::utils::disabled_interaction::cancel_disabled_key;
 use crate::{
     Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue, Spinner, SpinnerSize,
 };
@@ -64,6 +65,8 @@ pub fn FileInput(
                 "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
                 "data-status": severity.map(InputStatusType::as_str),
                 "aria-busy": is_loading.then_some("true"),
+                // Cancel activation without disabling the native input or removing its file from the form.
+                onkeydown: move |event| { if is_loading { cancel_disabled_key(&event); } },
                 onclick: move |event| { if is_loading { event.prevent_default(); } },
                 ondrop: move |event| { if is_loading { event.prevent_default(); } },
                 onchange: move |event| {
