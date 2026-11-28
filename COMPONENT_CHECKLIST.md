@@ -11,6 +11,10 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
 - [AspectRatio](docs/aspect-ratio-port.md), Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), [Skeleton](docs/skeleton-port.md), [StatusDot](docs/status-dot-port.md), [ProgressBar](docs/progress-bar-port.md), [Card](docs/card-port.md), [SelectableCard](docs/selectable-card-port.md), [ClickableCard](docs/clickable-card-port.md), and [Blockquote](docs/blockquote-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
+## Completion audit
+
+The latest audit added evidence for 33 detailed items across ten components. All ten parent entries remain open. The integrated WASM showcase builds, and eight Chrome suites passed. Three browser checks still fail: Grid Span’s mounted-wrapper measurement, Section’s wash-highlight width, and Checkbox Indicator’s restyle outline. Visual comparisons, manual assistive-technology checks, and shared dependency gaps remain open where documented in the component port notes.
+
 ## Latest follow-ups
 
 These changes are available for review. The table records focused evidence, not completion of a migration task. Browser and full-suite verification for this batch remain pending.
