@@ -1,3 +1,4 @@
+use dioxus::events::onmounted;
 use dioxus::prelude::*;
 #[cfg(target_arch = "wasm32")]
 use web_sys::Element as WebElement;
@@ -107,14 +108,14 @@ pub(super) fn CenterExamples() -> Element {
                 style: "width:112px;height:48px", axis: CenterAxis::Horizontal,
                 "data-axis": "spoof", "data-caller": "kept", lang: "en", role: "group",
                 "aria-label": "Caller group",
-                onmounted: move |_event: MountedEvent| {
+                attributes: vec![onmounted(move |_event: MountedEvent| {
                     // Mark the renderer's node rather than looking it up by ID.
                     #[cfg(target_arch = "wasm32")]
                     if let Some(node) = _event.data().downcast::<WebElement>() {
                         node.set_attribute("data-center-mounted", "true")
                             .expect("mark the mounted Center fixture node");
                     }
-                },
+                })],
                 onclick: move |_| root_clicks += 1,
                 "Native root"
             }
