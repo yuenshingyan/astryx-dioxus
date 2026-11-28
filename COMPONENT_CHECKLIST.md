@@ -590,7 +590,7 @@ These changes are available for review. The table records focused evidence, not 
   - **Typography and semantics**
     - [ ] Required `level`: `1`, `2`, `3`, `4`, `5`, `6`, selecting h1–h6 and default themed visual style.
     - [ ] `type`: `display-1`, `display-2`, `display-3` visual overrides; theme extensions are open-ended and do not change semantic tag.
-    - [ ] `accessibilityLevel`: `1`, `2`, `3`, `4`, `5`, `6`; differing value sets aria-level.
+    - [x] `accessibilityLevel`: `1`, `2`, `3`, `4`, `5`, `6`; differing value sets `aria-level` (SSR and native-root mutation checks; not a speech audit).
     - [ ] `weight`: `normal`, `medium`, `semibold`, `bold`; overrides type/level weight.
     - [ ] `color`: `primary` (default), `secondary`, `disabled`, `placeholder`, `accent`, `inherit`; custom theme colors remain open-ended.
     - [ ] `display`: `inline`, `block` (default); line clamp or Capsize forces block.

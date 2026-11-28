@@ -1,7 +1,11 @@
+use std::cell::Cell;
+use std::rc::Rc;
+
 use astryx_dioxus::{
     Heading, HeadingLevel, HeadingType, LayerPlacement, TextColor, TextDisplay, TextJustify,
     TextWeight, TextWrap, WordBreak,
 };
+use dioxus::core::{AttributeValue, Mutation};
 use dioxus::prelude::*;
 
 fn render<F: FnOnce() -> Element + Clone + 'static>(render: F) -> String {
@@ -79,26 +83,87 @@ fn visual_types_and_weights_do_not_change_outline() {
 
 #[test]
 fn accessibility_override_and_raw_caller_precedence() {
-    let html = render(|| {
-        rsx! {
-            Heading { level: HeadingLevel::Two, accessibility_level: HeadingLevel::Three, "Outline" }
+    for native in 1..=6 {
+        for outline in 1..=6 {
+            let level = HeadingLevel::try_from(native).unwrap();
+            let accessibility_level = HeadingLevel::try_from(outline).unwrap();
+            let html = render(move || rsx! { Heading { level, accessibility_level, "Outline" } });
+            assert!(html.starts_with(&format!("<h{native} ")), "{html}");
+            if native == outline {
+                assert!(!html.contains("aria-level="), "{html}");
+            } else {
+                assert_eq!(html.matches("aria-level=").count(), 1, "{html}");
+                assert!(html.contains(&format!("aria-level={outline}")), "{html}");
+            }
         }
-    });
-    assert!(html.starts_with("<h2 "));
-    assert!(html.contains("aria-level=3"), "{html}");
-    let equal = render(|| {
-        rsx! {
-            Heading { level: HeadingLevel::Two, accessibility_level: HeadingLevel::Two, "Equal" }
-        }
-    });
-    assert!(!equal.contains("aria-level"));
+    }
     let caller = render(|| {
         rsx! {
             Heading { level: HeadingLevel::Two, accessibility_level: HeadingLevel::Three, "aria-level": "4", "Caller" }
         }
     });
     assert!(caller.contains("aria-level=\"4\""), "{caller}");
-    assert!(!caller.contains("aria-level=3"), "{caller}");
+    assert_eq!(caller.matches("aria-level=").count(), 1, "{caller}");
+}
+
+#[test]
+fn removing_caller_aria_level_restores_the_typed_override_on_the_same_root() {
+    type Outline = (HeadingLevel, Option<&'static str>);
+    let outline = Rc::new(Cell::new((HeadingLevel::Three, Some("4"))));
+    let mut dom = VirtualDom::new_with_props(
+        |outline: Rc<Cell<Outline>>| {
+            let (accessibility_level, caller_level) = outline.get();
+            let attributes: Vec<_> = caller_level
+                .map(|value| Attribute::new("aria-level", value, None, false))
+                .into_iter()
+                .collect();
+            rsx! {
+                Heading { level: HeadingLevel::Two, accessibility_level, attributes,
+                    id: "outline", heading_type: HeadingType::DISPLAY_1, "Title"
+                }
+            }
+        },
+        outline.clone(),
+    );
+    let initial = dom.rebuild_to_vec();
+    let root = initial.edits.iter().find_map(|edit| match edit {
+        Mutation::SetAttribute {
+            name: "id",
+            value: AttributeValue::Text(value),
+            id,
+            ..
+        } if value == "outline" => Some(*id),
+        _ => None,
+    });
+    let root = root.expect("heading ID mutation");
+
+    for (next, expected) in [
+        ((HeadingLevel::Three, None), AttributeValue::Int(3)),
+        (
+            (HeadingLevel::Three, Some("4")),
+            AttributeValue::Text("4".to_string()),
+        ),
+        ((HeadingLevel::Three, None), AttributeValue::Int(3)),
+        ((HeadingLevel::Two, None), AttributeValue::None),
+    ] {
+        outline.set(next);
+        dom.mark_dirty(ScopeId::APP);
+        let changes = dom.render_immediate_to_vec();
+        let outline_edits: Vec<_> = changes
+            .edits
+            .iter()
+            .filter_map(|edit| match edit {
+                Mutation::SetAttribute {
+                    name: "aria-level",
+                    value,
+                    id,
+                    ..
+                } => Some((*id, value)),
+                _ => None,
+            })
+            .collect();
+        assert_eq!(outline_edits, [(root, &expected)], "outline {next:?}");
+    }
 }
 
 #[test]
