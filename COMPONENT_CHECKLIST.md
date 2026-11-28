@@ -2773,8 +2773,8 @@ These changes are available for review. The table records focused evidence, not 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Drawer/DrawerHeader.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/DrawerHeader).
 
   - **Content, options, and semantics**
-    - [ ] Title inline/non-interactive h2, optional inline subtitle (Link permitted), startContent, endContent before close; no independent size/color enum.
-    - [ ] onOpenChange present gives close button calling false, absent none; Drawer itself has no close control.
+    - [x] Title inline/non-interactive h2, optional inline subtitle (Link permitted), startContent, endContent before close; no independent size/color enum.
+    - [x] onOpenChange present gives close button calling false, absent none; Drawer itself has no close control.
     - [ ] `hasDivider` true/false; omitted inherits Layout.defaultHasDividers, unlike DialogHeader's explicit true default.
     - [ ] `endContentEdgeCompensation`: `inline`, `block`, `all`; omitted automatic close-action compensation.
     - [ ] Compose in Layout header to avoid double inset. Unlike DialogHeader, does not autofocus or label drawer; parent Drawer label/data-autofocus owns those contracts.
