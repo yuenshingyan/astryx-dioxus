@@ -15,11 +15,14 @@ pub(super) fn RadioListExamples() -> Element {
                     label { key: "{label}", input { r#type: "radio", name: "notification-channel", checked: index == 0 }, " {label}" }
                 }
             }
-            RadioList { label: "Size", id: "size-radio-group", orientation: RadioListOrientation::Horizontal,
-                value: size(), on_change: move |value| size.set(value), html_name: "radio-preview-size",
-                RadioListItem { value: "Small", label: "Small", is_disabled: true }
-                RadioListItem { value: "Medium", label: "Medium" }
-                RadioListItem { value: "Large", label: rsx! { strong { "Large" } }, description: Some("Extra room".into()) }
+            form {
+                RadioList { label: "Size", id: "size-radio-group", orientation: RadioListOrientation::Horizontal,
+                    value: size(), on_change: move |value| size.set(value), html_name: "radio-preview-size",
+                    RadioListItem { value: "Small", label: "Small", is_disabled: true }
+                    RadioListItem { value: "Medium", label: "Medium" }
+                    RadioListItem { value: "Large", label: rsx! { strong { "Large" } }, description: Some("Extra room".into()) }
+                }
+                button { r#type: "reset", "Reset native form" }
             }
             ShippingMethod { id: "radio-list-item-basic", title: "RadioListItem — Basic" }
             ShippingMethod { id: "radio-list-item-showcase", title: "RadioListItem", show_disabled: true }
