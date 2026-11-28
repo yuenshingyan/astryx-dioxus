@@ -1650,14 +1650,14 @@ These changes are available for review. The table records focused evidence, not 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Layout/Layout.doc.mjs). Templates in `Layout/` under [pinned root](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components).
 
   - **Regions, sizing, and defaults**
-    - [ ] Slots: `header`, `start`, `content`, `end`, `footer`; arbitrary nodes or LayoutHeader/LayoutPanel/LayoutContent/LayoutFooter wrappers.
+    - [x] Slots: `header`, `start`, `content`, `end`, `footer`; SSR verifies caller-native nodes, region components and slot order.
     - [ ] `children` is content shorthand; explicit content wins. false/null/undefined hides a region and neighboring regions move to edge.
     - [ ] `height`: `fill` (default; needs height-constrained parent), `auto` (content growth).
     - [ ] `padding`: `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`. Own layout regions only; nested Layout does not inherit it, using enclosing container padding or spacing-4 default inset.
-    - [ ] `defaultHasDividers`: true/false; unset inherits parent context and supplies only header/footer defaults, not panel divider policy.
+    - [x] `defaultHasDividers`: true/false; SSR verifies nested inheritance, explicit region override, layer context reset and panel independence.
     - [ ] `contentWidth` centers aligned region content, full-bleed dividers. No panel: scrollbar at outer edge; one panel: aligned frame with content extending open edge; two panels: width includes middle composition.
     - [ ] Percentage/intrinsic/bare-var arithmetic widths retain constrained composition; guaranteed length calc(var(...)) can use open-side arithmetic. Values such as 640/960 are recommendations, not finite widths.
-    - [ ] Layout adds no role/name; caller gives region landmark role/label when appropriate. AppShell, not Layout, owns app navigation shell.
+    - [x] Layout adds no role/name; SSR verifies caller role/label on the root and unmodified native slot semantics. AppShell, not Layout, owns the navigation shell. This is markup evidence, not AX or spoken output.
 
   - **Named inline example**
     - [ ] **Page with a details panel inside AppShell**: page header, complementary end panel, main content, default inner inset in full-bleed shell.

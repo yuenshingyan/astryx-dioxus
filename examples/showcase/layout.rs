@@ -2,8 +2,8 @@ use dioxus::prelude::*;
 
 use astryx_dioxus::{
     Badge, BadgeVariant, Button, ButtonVariant, Card, HStack, Heading, HeadingLevel, Layout,
-    LayoutContent, LayoutFooter, LayoutHeader, LayoutPanel, Section, SectionVariant, SizeValue,
-    SpacingStep, StackMainAlignment, Text, VStack,
+    LayoutContent, LayoutFooter, LayoutHeader, LayoutHeight, LayoutPanel, Section, SectionVariant,
+    SizeValue, SpacingStep, StackMainAlignment, Text, VStack,
 };
 
 #[component]
@@ -29,6 +29,43 @@ fn DemoList(items: &'static [&'static str], selected: &'static str) -> Element {
                 style: if item == selected { "padding:8px;background:var(--color-background-muted)" } else { "padding:8px" }, "{item}" }
         }
     } }
+}
+
+#[component]
+fn GeometryProbes() -> Element {
+    rsx! {
+        h3 { "Geometry and inset boundaries" }
+        Layout { id: "layout-arbitrary-content", style: "width:600px;height:180px", content_width: SizeValue::from(360),
+            start: rsx! { LayoutPanel { width: SizeValue::from(120), padding: SpacingStep::Zero,
+                LayoutContent { padding: SpacingStep::Zero, "Panel content" }
+            } },
+            section { id: "layout-arbitrary-lane", "Arbitrary main content" }
+        }
+        for (id, width) in [("layout-string-zero", SizeValue::from("0")), ("layout-numeric-zero", SizeValue::from(0))] {
+            Layout { key: "{id}", id, style: "width:600px;height:100px", padding: SpacingStep::Zero, content_width: width,
+                LayoutContent { "Zero alignment width" }
+            }
+        }
+        for (id, height) in [("layout-fill-probe", LayoutHeight::Fill), ("layout-auto-probe", LayoutHeight::Auto)] {
+            Section { key: "{id}", width: SizeValue::from(600), height: SizeValue::from(180),
+                padding_inline_start: SpacingStep::Two, padding_inline_end: SpacingStep::Three,
+                padding_block_start: SpacingStep::Four, padding_block_end: SpacingStep::Six,
+                Layout { id, height,
+                    header: rsx! { LayoutHeader { "Title" } },
+                    LayoutContent { div { style: "height:300px", "Tall content" } }
+                }
+            }
+        }
+        Section { width: SizeValue::from(600), padding: SpacingStep::Six,
+            Layout { padding: SpacingStep::Zero, content_width: SizeValue::from(360),
+                header: rsx! { LayoutHeader { id: "layout-outer-inset", "Outer title" } },
+                Layout { id: "layout-nested-inset", role: "region", aria_label: "Nested workspace",
+                    header: rsx! { LayoutHeader { "Nested title" } },
+                    LayoutContent { "Nested content" }
+                }
+            }
+        }
+    }
 }
 
 #[component]
@@ -127,6 +164,7 @@ pub(super) fn LayoutExamples() -> Element {
                 start: rsx! { if has_panel() { LayoutPanel { id: "layout-test-panel", width: SizeValue::from(120), has_divider: true, "Start" } } },
                 LayoutContent { id: "layout-test-content", div { style: "height:340px", "Content" } }
             }
+            GeometryProbes {}
         }
     }
 }
