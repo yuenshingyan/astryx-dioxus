@@ -22,10 +22,11 @@ pub fn AlertDialog(
     let id = use_hook(|| format!("astryx-alert-dialog-{}", current_scope_id().0));
     let title_id = format!("{id}-title");
     let description_id = format!("{id}-description");
+    // Keep the visible title authoritative even in Dialog's fallback label.
     rsx! {
         Dialog { class: "astryx-alert-dialog", is_open, on_open_change, is_inline, width,
             purpose: DialogPurpose::Form, role: if is_inline { "group" } else { "alertdialog" },
-            labelled_by: title_id.clone(), "aria-describedby": description_id.clone(),
+            label: title.clone(), labelled_by: title_id.clone(), "aria-describedby": description_id.clone(),
             Heading { level: HeadingLevel::Two, id: title_id, "{title}" }
             p { class: "astryx-alert-dialog__description", id: description_id, "{description}" }
             div { class: "astryx-alert-dialog__actions",

@@ -6,6 +6,13 @@ use crate::{Button, ButtonSize, ButtonVariant, SizeValue, VisuallyHidden};
 
 use super::tokenizer::{DiffLineKind, classify_diff_line};
 
+enum CopyFeedback {
+    Idle,
+    Pending,
+    Succeeded(String),
+    Failed(String),
+}
+
 /// Source display with optional unified diff, line gutter, and exact-source copy.
 #[component]
 pub fn CodeBlock(
@@ -40,8 +47,7 @@ pub fn CodeBlock(
     #[props(default = "Copied code".to_owned())] copied_message: String,
     #[props(default = "Could not copy code".to_owned())] copy_error_message: String,
 ) -> Element {
-    let mut copy_status = use_signal(String::new);
-    let mut is_copying = use_signal(|| false);
+    let mut copy_feedback = use_signal(|| CopyFeedback::Idle);
     let style = match max_height {
         Some(value) => format!("max-block-size:{}", value.as_css()?),
         None => String::new(),
@@ -82,17 +88,19 @@ pub fn CodeBlock(
             if has_copy_button {
                 Button { label: copy_label, variant: ButtonVariant::Ghost, size: ButtonSize::Small,
                     onclick: move |_| {
-                        if *is_copying.peek() { return; }
-                        is_copying.set(true);
-                        copy_status.set(String::new());
+                        if matches!(*copy_feedback.peek(), CopyFeedback::Pending) { return; }
+                        copy_feedback.set(CopyFeedback::Pending);
                         let source = copy_source.clone();
                         let success = copied_message.clone();
                         let failure = copy_error_message.clone();
                         spawn(async move {
                             let eval = document::eval(include_str!("copy_code.js"));
                             let copied = eval.send(source).is_ok() && eval.join::<bool>().await.unwrap_or(false);
-                            copy_status.set(if copied { success } else { failure });
-                            is_copying.set(false);
+                            copy_feedback.set(if copied {
+                                CopyFeedback::Succeeded(success)
+                            } else {
+                                CopyFeedback::Failed(failure)
+                            });
                         });
                     },
                 }
@@ -104,6 +112,7 @@ pub fn CodeBlock(
     } else {
         (None, actions)
     };
+    let feedback = copy_feedback.read();
     rsx! {
         div { class: "astryx-code-block", style: root_style,
             "data-intrinsic-width": has_intrinsic_width.then_some("true"),
@@ -157,7 +166,14 @@ pub fn CodeBlock(
             }
             {corner_actions}
             if has_copy_button {
-                VisuallyHidden { "data-code-block-status": "", role: "status", "{copy_status}" }
+                // Mount both live regions before updating either so a copy result
+                // changes content without changing announcement priority in place.
+                VisuallyHidden { "data-code-block-status": "", role: "status",
+                    if let CopyFeedback::Succeeded(message) = &*feedback { "{message}" }
+                }
+                VisuallyHidden { "data-code-block-error": "", role: "alert",
+                    if let CopyFeedback::Failed(message) = &*feedback { "{message}" }
+                }
             }
         }
     }

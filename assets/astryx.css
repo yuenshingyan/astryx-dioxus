@@ -3152,6 +3152,8 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     background: var(--color-background-surface); border: var(--border-width) solid var(--color-border);
   }
   .astryx-citation__icon img { width: var(--spacing-3); height: var(--spacing-3); }
+  a.astryx-citation[href] { cursor: pointer; }
+  a.astryx-citation[href][aria-disabled="true"] { cursor: default; }
   @media (hover: hover) {
     a.astryx-citation:hover:not([aria-disabled="true"]) { background-color: var(--color-overlay-hover); }
     a.astryx-citation[data-variant="label"]:hover:not([aria-disabled="true"]) { color: var(--color-text-primary); }
