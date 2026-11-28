@@ -2381,15 +2381,15 @@ These changes are available for review. The table records focused evidence, not 
   - Source: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/VisuallyHidden/VisuallyHidden.doc.mjs).
 
   - **Semantics and content patterns**
-    - [ ] Truly no visual variants, sizes, or colors: intentionally invisible but exposed to accessibility tree; `xstyle` accepted and ignored only for 0.7.2 compatibility.
-    - [ ] `as` is open ElementType, default `span`; documented block `div` for aria-live region; children supply accessible content.
+    - [x] Truly no visual variants, sizes, or colors: intentionally invisible but exposed to accessibility tree; `xstyle` accepted and ignored only for 0.7.2 compatibility (ignored as a raw attribute in Dioxus).
+    - [x] `as` is open ElementType (open `as_element` renderer in Rust), default `span`; documented block `div` for aria-live region; children supply accessible content.
     - [ ] Accessible name for icon-only control; polite dynamic announcement/result-count/drag-drop region; supplementary screen-reader context; structural hidden heading.
-    - [ ] Not equivalent to hidden/remove-from-everyone; do not put interactive controls inside invisible, non-pointer-reachable content.
+    - [x] Not equivalent to hidden/remove-from-everyone; do not put interactive controls inside invisible, non-pointer-reachable content.
   - **Every associated template**
-    - [ ] **VisuallyHidden — Structural Heading** (`VisuallyHiddenStructuralHeading`): name visually implicit section for screen-reader navigation. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenStructuralHeading.doc.mjs).
+    - [x] **VisuallyHidden — Structural Heading** (`VisuallyHiddenStructuralHeading`): name visually implicit section for screen-reader navigation. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenStructuralHeading.doc.mjs).
     - [ ] **VisuallyHidden — Live Region** (`VisuallyHiddenLiveRegion`): polite aria-live announces visual-only state changes. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenLiveRegion.doc.mjs).
-    - [ ] **VisuallyHidden — Supplementary Context** (`VisuallyHiddenSupplementaryContext`): stat-card up/down arrows get explanatory screen-reader text (“increase from last month”), not just terse numerical change. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenSupplementaryContext.doc.mjs).
-    - [ ] **VisuallyHidden** showcase (`VisuallyHiddenShowcase`): composition with IconButton/Card/stacks/Text/Icon; metadata lists download/share/audio/delete glyph aliases but no additional finite styling modes. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenShowcase.doc.mjs).
+    - [x] **VisuallyHidden — Supplementary Context** (`VisuallyHiddenSupplementaryContext`): stat-card up/down arrows get explanatory screen-reader text (“increase from last month”), not just terse numerical change. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenSupplementaryContext.doc.mjs).
+    - [x] **VisuallyHidden** showcase (`VisuallyHiddenShowcase`): composition with IconButton/Card/stacks/Text/Icon; metadata lists download/share/audio/delete glyph aliases but no additional finite styling modes. [Metadata](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/VisuallyHidden/VisuallyHiddenShowcase.doc.mjs).
 
 ## Additional Components and Subcomponents from the Sidebar
 
