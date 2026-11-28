@@ -7,11 +7,13 @@ use crate::theme::{TextColor, TextSize, TextWeight};
 use crate::utils::is_renderable::is_renderable;
 
 /// Identifies a product, suite, or account in the side navigation header.
+///
+/// Like the upstream identity block, the title is not a document-outline heading.
 #[component]
 pub fn SideNavHeading(
     /// Name of the product or application.
     heading: String,
-    /// Leading product artwork.
+    /// Leading noninteractive product artwork. Use `header_end_content` for controls.
     #[props(default)]
     icon: Option<Element>,
     /// Destination for the product heading.
@@ -49,6 +51,11 @@ pub fn SideNavHeading(
     attributes: Vec<Attribute>,
 ) -> Element {
     let renderer = use_link_component(render_link);
+    // Upstream treats empty hrefs as absent. Leave nonempty values untouched for
+    // the shared destination policy and the caller's router.
+    let heading_href = heading_href.filter(|href| !href.is_empty());
+    let superheading_href = superheading_href.filter(|href| !href.is_empty());
+    let subheading_href = subheading_href.filter(|href| !href.is_empty());
     let is_whole_link =
         heading_href.is_some() && superheading_href.is_none() && subheading_href.is_none();
     let end = header_end_content.filter(is_renderable);
