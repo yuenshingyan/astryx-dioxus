@@ -22,6 +22,10 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(`${panel}.matches(':popover-open')`);
   await evaluate(`document.getElementById('popover-preview-outside').click()`);
   await waitFor(`!${panel}.matches(':popover-open')`);
+  // Use a fresh anchor for the viewport cases so the browser has no prior
+  // anchor-scroll adjustment from the normal in-flow example.
+  await send('Page.navigate', {url: new URL('?fixture=popover-flips', process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8292').href});
+  await waitFor(`location.search === '?fixture=popover-flips' && ${trigger}?.getAttribute('aria-expanded') === 'false'`);
   // Give this fixture a preferred side on each axis. Leave Popover's fallback list intact.
   const cornerCases = [
     {name: 'room on both axes', inset: '40vh auto auto 40vw', flipBlock: false, flipInline: false},
