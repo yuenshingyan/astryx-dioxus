@@ -1,8 +1,12 @@
 use dioxus::prelude::*;
 
+#[path = "../examples/showcase/stack_item.rs"]
+mod showcase;
+
 use astryx_dioxus::{
     StackItem, StackItemCrossAlignSelf, StackItemRoot, StackItemSize, StackRenderProps,
 };
+use showcase::StackItemExamples;
 
 fn render(app: fn() -> Element) -> String {
     let mut dom = VirtualDom::new(app);
@@ -61,4 +65,64 @@ fn caller_role_wins_on_scrollable_span() {
     assert!(html.starts_with("<span"), "{html}");
     assert!(html.contains("role=\"region\""));
     assert!(!html.contains("aria-label") && !html.contains("data-astryx-item-scroll"));
+}
+
+#[test]
+fn overflow_semantics_are_deferred_without_losing_the_caller_label() {
+    let html = render(|| {
+        rsx! { StackItem { root: StackItemRoot::Span, is_scrollable: true, "aria-label": "Items" } }
+    });
+    assert!(html.starts_with("<span"), "{html}");
+    assert!(html.contains("aria-label=\"Items\""), "{html}");
+    assert!(
+        !html.contains("role=") && !html.contains("tabindex="),
+        "{html}"
+    );
+}
+
+#[test]
+fn showcase_renders_the_pinned_static_fill_sequences_and_all_alignment_choices() {
+    let html = render(StackItemExamples);
+    for (id, sizes, labels, width) in [
+        (
+            "showcase",
+            &["static", "fill", "static"][..],
+            &["Static Width", "Fills remaining space", "Static Width"][..],
+            Some("500px"),
+        ),
+        (
+            "fill",
+            &["static", "fill"][..],
+            &["Static", "Fills remaining space"][..],
+            Some("400px"),
+        ),
+        (
+            "source-example",
+            &["static", "fill", "static"][..],
+            &["Logo", "Content", "Actions"][..],
+            None,
+        ),
+    ] {
+        let (before_id, _) = html.split_once(&format!("id=\"stack-item-{id}\"")).unwrap();
+        let tag_start = before_id.rfind('<').unwrap();
+        let row = html[tag_start..].split_once("<h3>").unwrap().0;
+        assert_eq!(row.matches("data-size=\"").count(), sizes.len(), "{row}");
+        let mut remaining = row;
+        for (size, label) in sizes.iter().zip(labels) {
+            remaining = remaining
+                .split_once(&format!("data-size=\"{size}\""))
+                .unwrap()
+                .1;
+            remaining = remaining.split_once(label).unwrap().1;
+        }
+        if let Some(width) = width {
+            assert!(row.contains(&format!("max-width:{width}")), "{row}");
+        }
+    }
+    for alignment in ["start", "center", "end", "stretch"] {
+        assert!(
+            html.contains(&format!("astryx-stack-item--{alignment}")),
+            "{alignment}"
+        );
+    }
 }

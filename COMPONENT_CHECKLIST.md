@@ -3120,16 +3120,18 @@ These changes are available for review. The table records focused evidence, not 
 
   - Sources: [owning Stack family API](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Stack/Stack.doc.mjs), [original StackItem TSX](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Stack/StackItem.tsx). No standalone English doc exists; the family contains its full member documentation, so this is resolved rather than a missing API.
 
+  - Audit and integrator handoff: [StackItem port notes](docs/stack-item-port.md).
+
   - **Choices and behavior**
-    - [ ] `size`: `static` (default; intrinsic, does not grow/shrink), `fill` (remaining space).
-    - [ ] `crossAlignSelf`: `start`, `center`, `end`, `stretch`; overrides parent cross-axis alignment.
-    - [ ] `isScrollable`: false (default), true; min-width/min-height reset means fill + scrolling forms a complete flex scroll region.
-    - [ ] Polymorphic `as` (default div); div/span overflow region becomes a group named by aria-label or translated `Content`; other element types preserve their own role. Optional children and root ref/style integration.
+    - [x] `size`: `static` (default; intrinsic, does not grow/shrink), `fill` (remaining space). Pinned declarations, SSR reflection, and prior Chrome fill geometry agree.
+    - [ ] `crossAlignSelf`: `start`, `center`, `end`, `stretch`; overrides parent cross-axis alignment. All four map to pinned CSS; actual override geometry awaits the expanded browser suite.
+    - [ ] `isScrollable`: false (default), true; min-width/min-height reset means fill + scrolling forms a complete flex scroll region. Prior vertical proof predates the shared observer; rerun and verify both axes and cleanup.
+    - [ ] Polymorphic `as` (default div); div/span overflow region becomes a group named by aria-label or translated `Content`; other element types preserve their own role. Optional children and root ref/style integration. Shared-catalog fallback, live root/ref, AX and manual AT evidence remain open.
 
   - **Examples and named templates**
-    - [ ] TSX example: HStack with static Logo, fill Content, static Actions.
-    - [ ] [`StackItemFill`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemFill.doc.mjs) — “StackItem — Fill”: fixed-width neighbor and remaining-space item.
-    - [ ] [`StackItemShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemShowcase.doc.mjs) — “StackItem” / “Stack Item”: optional wrapper inside HStack/VStack for sizing/alignment.
+    - [ ] TSX example: HStack with static Logo, fill Content, static Actions. Added to the showcase; corrected end-to-end SSR assertion and browser geometry still need a run.
+    - [ ] [`StackItemFill`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemFill.doc.mjs) — “StackItem — Fill”: intrinsic-width neighbor and remaining-space item. Actual template visual comparison pending.
+    - [ ] [`StackItemShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/StackItem/StackItemShowcase.doc.mjs) — “StackItem” / “Stack Item”: optional wrapper inside HStack/VStack for sizing/alignment. Actual template visual comparison pending.
 
 - [ ] **[V Stack](https://astryx.atmeta.com/components/VStack)**
 

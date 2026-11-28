@@ -10,12 +10,15 @@ use dioxus::prelude::*;
 mod avatar;
 #[path = "../../src/tooltip/pattern_tooltip.rs"]
 mod pattern_tooltip;
+#[path = "stack_item.rs"]
+mod stack_item;
 #[path = "../../src/toast/pattern.rs"]
 mod toast;
 #[path = "../../src/token/pattern.rs"]
 mod token;
 
 use avatar::PatternAvatar;
+pub use stack_item::StackItemExamples;
 use toast::{DemoToastViewport, use_demo_toasts};
 use token::PatternToken;
 const DEMO_CSS: &str = "
@@ -23,35 +26,6 @@ const DEMO_CSS: &str = "
 .stack-probe > span { display:block; flex:none; width:30px; height:20px; background:currentColor; }
 .stack-class-override { gap:13px; padding-inline-start:17px; }
 ";
-
-#[component]
-pub fn StackItemExamples() -> Element {
-    let mut is_tall = use_signal(|| true);
-    rsx! {
-        section { id: "stack-item-examples", "data-astryx-theme": "neutral",
-            h2 { "StackItem — original patterns" }
-            for (id, max_width, labels) in [("stack-item-showcase", 500, &["Static Width", "Fills remaining space", "Static Width"][..]), ("stack-item-fill", 400, &["Static", "Fills remaining space"][..])] {
-                Stack { key: "{id}", id, direction: StackDirection::Horizontal, gap: SpacingStep::Three,
-                    v_align: StackAlignment::Center, width: SizeValue::from("100%"), max_width: SizeValue::from(max_width),
-                    for (index, label) in labels.iter().enumerate() {
-                        StackItem { key: "{index}", size: if index == 1 { StackItemSize::Fill } else { StackItemSize::Static },
-                            Card { padding: SpacingStep::Three,
-                                Text { text_type: TextType::SUPPORTING, color: TextColor::SECONDARY, "{label}" }
-                            }
-                        }
-                    }
-                }
-            }
-            h3 { "Scrollable item" }
-            button { id: "stack-item-toggle-overflow", onclick: move |_| is_tall.toggle(), "Toggle overflow" }
-            Stack { height: SizeValue::from(100),
-                StackItem { id: "stack-item-scroll", size: StackItemSize::Fill, is_scrollable: true, scroll_label: "Scrollable example",
-                    div { style: if is_tall() { "height:240px" } else { "height:24px" }, "Content" }
-                }
-            }
-        }
-    }
-}
 
 /// Standalone Stack patterns with private, upstream-owned supporting slices.
 /// The published action text is observable; no standalone supporting port is claimed.
