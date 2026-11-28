@@ -2660,6 +2660,8 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-switch-control[data-size="sm"] { inline-size: 32px; block-size: 20px; --_switch-padding: 2px; --_switch-off: 14px; --_switch-on: 16px; }
   .astryx-switch-control > input { position: absolute; z-index: 1; inset: 0; inline-size: 100%; block-size: 100%; margin: 0; opacity: 0; cursor: pointer; }
   .astryx-switch-control > input[aria-disabled="true"] { cursor: default; }
+  .astryx-switch-control > input[aria-busy="true"] { cursor: progress; }
+  .astryx-switch-thumb:has(> .astryx-spinner) { display: grid; place-items: center; }
   .astryx-switch { display: block; position: relative; box-sizing: border-box; border: 1px solid transparent; border-radius: var(--radius-full); background: var(--color-background-gray); }
   .astryx-switch-thumb { position: absolute; inset-block: 0; margin-block: auto; inset-inline-start: var(--_switch-padding); inline-size: var(--_switch-off); block-size: var(--_switch-off); border-radius: var(--radius-full); background: var(--color-background-surface); }
   .astryx-switch-control > input:checked + .astryx-switch { background: var(--color-accent); }
