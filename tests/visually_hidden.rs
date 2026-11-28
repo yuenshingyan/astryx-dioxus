@@ -81,6 +81,29 @@ fn fixed_clip_and_native_attributes_survive_ssr() {
 }
 
 #[test]
+fn mixed_case_styling_names_cannot_shadow_the_fixed_style_in_ssr() {
+    let html = render_element(rsx! {
+        VisuallyHidden {
+            "STYLE": "position:static",
+            "CLASS": "caller-class",
+            "CLASSNAME": "caller-class-name",
+            "XStyle": "compat-style",
+            "data-style": "kept",
+            "Hidden label"
+        }
+    });
+    // HTML ignores duplicate attributes after folding their names to lowercase.
+    let normalized = html.to_ascii_lowercase();
+    assert_eq!(normalized.matches(" style=").count(), 1, "{html}");
+    assert!(normalized.contains(" style=\"position:absolute;"), "{html}");
+    assert!(normalized.contains(";clip:rect(0,0,0,0);"), "{html}");
+    assert!(html.contains("data-style=\"kept\""), "{html}");
+    for absent in [" class=", " classname=", " xstyle="] {
+        assert!(!normalized.contains(absent), "{html}");
+    }
+}
+
+#[test]
 fn callers_can_explicitly_hide_content_from_assistive_technology() {
     let html = render_element(
         rsx! { VisuallyHidden { hidden: true, inert: true, aria_hidden: "true", "Removed" } },

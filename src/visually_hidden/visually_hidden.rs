@@ -33,10 +33,13 @@ pub fn VisuallyHidden(
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     let mut attributes = attributes;
-    // Dioxus also accepts individual CSS properties as style-namespaced attributes.
+    // Raw names are case-sensitive in Dioxus, but HTML folds them to lowercase.
+    // A mixed-case STYLE before the fixed style would win during HTML parsing.
     attributes.retain(|attr| {
         attr.namespace != Some("style")
-            && !matches!(attr.name, "style" | "class" | "className" | "xstyle")
+            && !["style", "class", "className", "xstyle"]
+                .iter()
+                .any(|name| attr.name.eq_ignore_ascii_case(name))
     });
     attributes.push(Attribute::new("style", "position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-style:none;inset-block-start:0;inset-inline-start:0;pointer-events:none;user-select:none", None, false));
     attributes.sort_by_key(|attribute| attribute.name);

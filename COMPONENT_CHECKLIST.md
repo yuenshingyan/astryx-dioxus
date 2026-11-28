@@ -2385,7 +2385,7 @@ These changes are available for review. The table records focused evidence, not 
 - [ ] **[VisuallyHidden](https://astryx.atmeta.com/components/VisuallyHidden)**
 
   - Source: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/VisuallyHidden/VisuallyHidden.doc.mjs).
-  - [Port evidence](docs/visually-hidden-port.md#verification-and-completion-blockers): PR #241 passed the focused Chrome checks for computed clipping, accessibility-tree exposure, and both persistent polite-region updates. The 13 clip declarations match the pinned source, and the focused Rust suite verifies custom-root mount/click listener registration, not native delivery. The parent remains open for manual speech/focus, coordinated browser delivery and non-Chromium checks, pinned recipe raster comparisons, shared dependency audits, and FR3/OQ1 approval.
+  - [Port evidence](docs/visually-hidden-port.md#verification-and-completion-blockers): PR #241 verified Chrome computed clipping, AX exposure, and persistent polite-region DOM updates. PR #243 verified custom-root event delivery in Chrome. The 13 clip declarations match the pinned source; mixed-case raw styling attributes no longer shadow the fixed style in SSR. The parent remains open for manual speech/focus, non-Chromium checks, pinned recipe raster comparisons, shared dependency audits, and FR3/OQ1 approval.
 
   - **Semantics and content patterns**
     - [x] Truly no visual variants, sizes, or colors: intentionally invisible but exposed to accessibility tree; `xstyle` accepted and ignored only for 0.7.2 compatibility (ignored as a raw attribute in Dioxus).
@@ -2758,8 +2758,8 @@ These changes are available for review. The table records focused evidence, not 
   - **Content, focus, and choices**
     - [ ] Title non-empty/non-interactive inline ReactNode in focusable h2; receives initial focus and labels dialog unless parent supplies explicit aria-label/labelledby.
     - [ ] Subtitle supports inline Link, not block elements; optional startContent (e.g. back), endContent before close.
-    - [ ] onOpenChange present renders close button calling false; absent omits button. `hasDivider=true` default versus no border.
-    - [ ] `endContentEdgeCompensation`: `inline`, `block`, `all`; omitted preserves automatic close-action compensation. No independent size/color enum documented.
+    - [ ] onOpenChange present renders a named close button calling false; absent omits it. Pinned TSX forwards `hasDivider` to LayoutHeader (omitted inherits Layout; explicit true/false override).
+    - [ ] `endContentEdgeCompensation`: `inline`, `block`, `all`; omitted preserves automatic close-action compensation. No independent size/color enum documented. See [verification limits](docs/dialog-header-port.md#follow-up-verification).
   - **Named inline examples and templates**
     - [ ] Inline **Basic**: title/subtitle, no close callback.
     - [ ] Inline **With close button**: callback false.
@@ -2773,8 +2773,8 @@ These changes are available for review. The table records focused evidence, not 
   - Sources: [English doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Drawer/DrawerHeader.doc.mjs), [templates](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/DrawerHeader).
 
   - **Content, options, and semantics**
-    - [ ] Title inline/non-interactive h2, optional inline subtitle (Link permitted), startContent, endContent before close; no independent size/color enum.
-    - [ ] onOpenChange present gives close button calling false, absent none; Drawer itself has no close control.
+    - [x] Title inline/non-interactive h2, optional inline subtitle (Link permitted), startContent, endContent before close; no independent size/color enum.
+    - [x] onOpenChange present gives close button calling false, absent none; Drawer itself has no close control.
     - [ ] `hasDivider` true/false; omitted inherits Layout.defaultHasDividers, unlike DialogHeader's explicit true default.
     - [ ] `endContentEdgeCompensation`: `inline`, `block`, `all`; omitted automatic close-action compensation.
     - [ ] Compose in Layout header to avoid double inset. Unlike DialogHeader, does not autofocus or label drawer; parent Drawer label/data-autofocus owns those contracts.
@@ -3039,7 +3039,7 @@ These changes are available for review. The table records focused evidence, not 
     - [x] **Center — Horizontal Center** (`CenterHorizontal.doc.mjs`): formatting controls, writing-mode caveat.
     - [x] **Center — Vertical & Horizontal Center** (`CenterInsideACard.doc.mjs`): fixed-height empty state with icon, bold body-text title, and description.
     - [x] **Center** (`CenterShowcase.doc.mjs`): both-axis fixed-height content.
-  - [Verification and remaining closure evidence](docs/center-port.md): pinned composition, SSR and integrated Chrome layout. Independent upstream raster comparisons, manual screen-reader checks, and live root-adapter evidence remain open.
+  - [Verification and remaining closure evidence](docs/center-port.md): pinned composition, SSR and integrated Chrome layout. PR #243 verified the Rust live root adapters and caller width precedence. Independent raster comparisons and manual screen-reader checks remain open.
 
 - [ ] **[Grid Span](https://astryx.atmeta.com/components/GridSpan)**
 
@@ -3272,8 +3272,8 @@ These changes are available for review. The table records focused evidence, not 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/NavIcon/NavIcon.doc.mjs). Templates in `NavIcon/` under [pinned root](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components).
 
   - **Actual behavior**
-    - [ ] No finite variants/size/color props: circular accent-background container with required icon ReactNode.
-    - [ ] Display-only navigation-header visual anchor, not button; Icon or similarly sized glyph; TopNavHeading/PageNavHeader composition.
+    - [x] No finite variants/size/color props: circular accent-background container with required icon (ReactNode upstream, `Element` in Rust). See [NavIcon evidence](docs/nav-icon-port.md).
+    - [ ] Display-only navigation-header visual anchor, not button; Icon or similarly sized glyph; TopNavHeading/PageNavHeader composition (PageNavHeader is not ported).
 
   - **Named templates**
     - [ ] `NavIconBasic` — **NavIcon — Basic**: semantic icons as logo/accent visuals.
@@ -3329,7 +3329,7 @@ These changes are available for review. The table records focused evidence, not 
   - Source: [English API](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/SideNav/SideNavSection.doc.mjs).
 
   - **Content and state**
-    - [ ] No finite style variants documented. Title (required in prop table, despite description saying optional), optional subtitle, item children, header `endContent` such as icon/badge.
+    - [x] No finite style variants documented. Required title, optional subtitle, item children, and header `endContent` such as an icon or badge (pinned source and spec; see [port evidence](docs/side-nav-section-port.md)).
     - [ ] `isHeaderHidden`: false (default), true; visually hidden header remains accessible.
 
   - **Named templates**

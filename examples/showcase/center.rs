@@ -5,8 +5,8 @@ use web_sys::Element as WebElement;
 
 use astryx_dioxus::{
     ButtonSize, ButtonVariant, Card, Center, CenterAxis, Heading, HeadingLevel, Icon, IconButton,
-    IconSize, SizeValue, SpacingStep, Stack, StackAlignment, StackDirection, Text, TextColor,
-    TextType, TextWeight,
+    IconSize, Section, SectionVariant, SizeValue, SpacingStep, Stack, StackAlignment,
+    StackDirection, Text, TextColor, TextType, TextWeight,
 };
 
 // Heroicons v2.2.0 / optimized/24/outline (MIT); see THIRD_PARTY_NOTICES.md.
@@ -47,6 +47,24 @@ fn glyph(path_data: &'static str) -> Element {
     }
 }
 
+// Storybook Default has its own raster baselines; it is not the 240px CLI recipe.
+const STORY_BOX_STYLE: &str = concat!(
+    "background-color:var(--color-background-blue);color:var(--color-text-blue);",
+    "border:1px solid var(--color-border-blue);border-radius:var(--radius-element);",
+    "padding-block:var(--spacing-4);padding-inline:var(--spacing-6);font-weight:500;",
+);
+
+#[component]
+pub(super) fn CenterDefaultStory() -> Element {
+    rsx! {
+        Section { id: "center-story-default", variant: SectionVariant::MUTED, width: SizeValue::from("100%"),
+            Center { axis: CenterAxis::Both, width: SizeValue::from("100%"), height: SizeValue::from(200),
+                div { style: STORY_BOX_STYLE, "Centered Content" }
+            }
+        }
+    }
+}
+
 #[component]
 pub(super) fn CenterExamples() -> Element {
     let mut root_clicks = use_signal(|| 0);
@@ -82,6 +100,8 @@ pub(super) fn CenterExamples() -> Element {
                     Text { color: TextColor::SECONDARY, "Horizontally and vertically aligned." }
                 }
             }
+            h3 { "Storybook Default" }
+            CenterDefaultStory {}
             h3 { "Vertical Center with logical padding" }
             Center { id: "center-vertical", axis: CenterAxis::Vertical,
                 width: SizeValue::from(160), height: SizeValue::from(96),
