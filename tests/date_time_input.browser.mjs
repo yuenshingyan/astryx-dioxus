@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8307'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8312'});
   const form = "document.querySelector('#date-time-input-examples form')";
   const date = `${form}.querySelector('input[type=date]')`;
   const time = `${form}.querySelector('input[type=time]')`;
@@ -33,6 +33,15 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(`${output}.startsWith('2024-03-01T')`);
   assert.match(await evaluate(output), /^2024-03-01T\d{2}:\d{2}$/);
   assert.deepEqual(await evaluate(`[${time}.min, ${time}.max]`), ['', '']);
+  const clear = `${form}.querySelector('button[aria-label="Clear Meeting time"]')`;
+  await waitFor(clear);
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
+  await evaluate(`window.segmentEvents = 0; for (const segment of [${date}, ${time}]) for (const type of ['focus','input','change']) segment.addEventListener(type, () => window.segmentEvents++); ${clear}.focus()`);
+  for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key:'Enter', code:'Enter', windowsVirtualKeyCode:13, ...(type === 'keyDown' ? {text:'\r'} : {})});
+  await waitFor(`${output} === 'No date and time selected' && ${date}.value === '' && ${time}.value === '' && !${clear}`);
+  assert.equal(await evaluate('window.segmentEvents'), 0);
+  assert.deepEqual(await evaluate(`Array.from(new FormData(${form}))`), [['meeting', '']]);
   const example = "document.getElementById('date-time-input-status-example')";
   const descriptions = ['Choose an available review slot.', 'This review slot is already booked.'];
   for (const type of ['date', 'time']) {

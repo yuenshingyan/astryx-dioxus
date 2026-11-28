@@ -11,7 +11,7 @@ pub(super) fn DateTimeInputExamples() -> Element {
             h2 { "Date and Time Input" }
             form { onsubmit: move |event| event.prevent_default(),
                 DateTimeInput { label: "Meeting time", value: meeting(), html_name: "meeting",
-                    width: Some(320.into()), min: "2024-02-29T14:25", max: "2024-03-02T15:00",
+                    width: Some(320.into()), min: "2024-02-29T14:25", max: "2024-03-02T15:00", has_clear: true,
                     on_change: move |next| meeting.set(next),
                 }
                 output { id: "date-time-input-value", "{display}" }
