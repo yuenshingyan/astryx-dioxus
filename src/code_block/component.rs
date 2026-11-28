@@ -1,6 +1,7 @@
 use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
+use crate::utils::is_renderable::is_renderable;
 use crate::{Button, ButtonSize, ButtonVariant, SizeValue, VisuallyHidden};
 
 use super::tokenizer::{DiffLineKind, classify_diff_line};
@@ -28,6 +29,9 @@ pub fn CodeBlock(
     #[props(default)] is_wrapped: bool,
     #[props(default)] max_height: Option<SizeValue>,
     #[props(default)] has_copy_button: bool,
+    /// Caller-owned actions shown before Copy, outside the disclosure control.
+    #[props(default)]
+    end_content: Option<Element>,
     #[props(default = "Copy code".to_owned())] copy_label: String,
     #[props(default = "Copied code".to_owned())] copied_message: String,
     #[props(default = "Could not copy code".to_owned())] copy_error_message: String,
@@ -56,9 +60,40 @@ pub fn CodeBlock(
         (_, true) => "diff".to_owned(),
         (title, false) => title.unwrap_or_default().to_owned(),
     };
+    let has_header = title.is_some() || is_diff;
+    let end_content = end_content.filter(is_renderable);
+    let has_actions = has_copy_button || end_content.is_some();
+    let actions = has_actions.then(|| rsx! {
+        div { class: "astryx-code-block__actions", {end_content}
+            if has_copy_button {
+                Button { label: copy_label, variant: ButtonVariant::Ghost, size: ButtonSize::Small,
+                    onclick: move |_| {
+                        if *is_copying.peek() { return; }
+                        is_copying.set(true);
+                        copy_status.set(String::new());
+                        let source = copy_source.clone();
+                        let success = copied_message.clone();
+                        let failure = copy_error_message.clone();
+                        spawn(async move {
+                            let eval = document::eval(include_str!("copy_code.js"));
+                            let copied = eval.send(source).is_ok() && eval.join::<bool>().await.unwrap_or(false);
+                            copy_status.set(if copied { success } else { failure });
+                            is_copying.set(false);
+                        });
+                    },
+                }
+            }
+        }
+    });
+    let (header_actions, corner_actions) = if has_header {
+        (actions, None)
+    } else {
+        (None, actions)
+    };
     rsx! {
         div { class: "astryx-code-block", style: "--_code-block-digits:{digits}ch",
-            if title.is_some() || has_copy_button || is_diff {
+            "data-corner-actions": (!has_header && has_actions).then_some("true"),
+            if has_header {
                 div { class: "astryx-code-block__header",
                     if can_collapse {
                         button { r#type: "button", class: "astryx-code-block__disclosure",
@@ -68,25 +103,8 @@ pub fn CodeBlock(
                             span { class: "astryx-code-block__chevron", "aria-hidden": "true", if is_collapsed { "›" } else { "⌄" } }
                             "{header_text}"
                         }
-                    } else if title.is_some() || is_diff { span { "{header_text}" } }
-                    if has_copy_button {
-                        Button { label: copy_label, variant: ButtonVariant::Ghost, size: ButtonSize::Small,
-                            onclick: move |_| {
-                                if *is_copying.peek() { return; }
-                                is_copying.set(true);
-                                copy_status.set(String::new());
-                                let source = copy_source.clone();
-                                let success = copied_message.clone();
-                                let failure = copy_error_message.clone();
-                                spawn(async move {
-                                    let eval = document::eval(include_str!("copy_code.js"));
-                                    let copied = eval.send(source).is_ok() && eval.join::<bool>().await.unwrap_or(false);
-                                    copy_status.set(if copied { success } else { failure });
-                                    is_copying.set(false);
-                                });
-                            },
-                        }
-                    }
+                    } else { span { "{header_text}" } }
+                    {header_actions}
                 }
             }
             pre { id: region_id, class: "astryx-code-block__pre", style, dir: "ltr", tabindex: 0, hidden: is_collapsed,
@@ -122,6 +140,7 @@ pub fn CodeBlock(
                     }
                 }
             }
+            {corner_actions}
             if has_copy_button {
                 VisuallyHidden { "data-code-block-status": "", role: "status", "{copy_status}" }
             }

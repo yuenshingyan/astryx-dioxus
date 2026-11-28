@@ -10,7 +10,7 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
       window.copiedCode = text;
     }}});
   `});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8294'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8306'});
   const block = `document.querySelector('#code-block-examples')`;
   const pre = `${block}.querySelector('pre')`;
   const button = `${block}.querySelector('button')`;
@@ -35,7 +35,9 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   assert.equal(await evaluate('window.copiedCode'), source);
   const disclosure = `document.getElementById('code-block-disclosure-example')`;
   const toggle = `${disclosure}.querySelector('button[aria-expanded]')`;
-  const copy = `${disclosure}.querySelector('button:not([aria-expanded])')`;
+  const actions = `${disclosure}.querySelector('.astryx-code-block__actions')`;
+  const save = `${actions}.querySelector('button:first-child')`;
+  const copy = `${actions}.querySelector('button:last-child')`;
   const region = `document.getElementById(${toggle}.getAttribute('aria-controls'))`;
   await send('Page.bringToFront');
   await waitFor('document.hasFocus()');
@@ -46,6 +48,10 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   };
   await press(' ', 'Space', 32, ' ');
   await waitFor(`${toggle}.getAttribute('aria-expanded') === 'false' && ${region}.hidden && ${region}.getClientRects().length === 0 && document.activeElement === ${toggle}`);
+  assert.deepEqual(await evaluate(`Array.from(${actions}.querySelectorAll('button'), el => el.textContent.trim())`), ['Save excerpt', 'Copy code']);
+  await evaluate(`${save}.focus()`);
+  await press('Enter', 'Enter', 13, '\r');
+  await waitFor(`${save}.textContent.trim() === 'Saved' && ${region}.hidden && document.activeElement === ${save}`);
   await evaluate(`${copy}.click()`);
   await waitFor(`${disclosure}.querySelector('[data-code-block-status]').textContent === 'Copied code'`);
   assert.equal(await evaluate('window.copiedCode'), await evaluate(`${pre}.querySelector('code').textContent`));
@@ -53,6 +59,10 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await evaluate(`${toggle}.focus()`);
   await press('Enter', 'Enter', 13, '\r');
   await waitFor(`${toggle}.getAttribute('aria-expanded') === 'true' && !${region}.hidden && window.originalCodeRegion === ${region}`);
+  const corner = `document.querySelector('#code-block-corner-example .astryx-code-block')`;
+  assert.ok(await evaluate(`!${corner}.querySelector('.astryx-code-block__header')`));
+  assert.ok(await evaluate(`${corner}.querySelector('pre').getBoundingClientRect().right <= ${corner}.querySelector('.astryx-code-block__actions').getBoundingClientRect().left`));
+  assert.deepEqual(await evaluate(`Array.from(${corner}.querySelectorAll('a,button'), el => el.textContent.trim())`), ['See full excerpt', 'Copy code']);
   assert.deepEqual(exceptions, []);
   console.log('Code Block: line gutter, exact-source copy and failure status passed');
 });
