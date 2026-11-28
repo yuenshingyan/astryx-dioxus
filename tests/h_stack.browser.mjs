@@ -23,5 +23,45 @@ await withTarget(async ({send, evaluate, waitFor}) => {
       ['flex','row','space-between','normal','8px',['Start','Middle','End'],true],
     ]);
   }
-  console.log('HStack: both original patterns, alignment, gaps and RTL DOM order passed');
+  const frame = await evaluate(`(() => {
+    const root = document.getElementById('h-stack-showcase');
+    const layout = el => {
+      const s = getComputedStyle(el);
+      return [s.display, s.flexDirection, s.rowGap];
+    };
+    return {
+      outer: [...layout(root), root.style.width, getComputedStyle(root).maxWidth],
+      groups: [...root.children].map(group => [
+        ...layout(group), group.children.length,
+        group.firstElementChild.textContent.trim(), group.lastElementChild.id,
+      ]),
+    };
+  })()`);
+  assert.deepEqual(frame, {
+    outer: ['flex', 'column', '24px', '100%', '400px'],
+    groups: [
+      ['flex', 'column', '8px', 2, 'HAlign: start', 'h-stack-start'],
+      ['flex', 'column', '8px', 2, 'HAlign: center', 'h-stack-center'],
+      ['flex', 'column', '8px', 2, 'HAlign: between', 'h-stack-between'],
+    ],
+  });
+
+  await waitFor(`document.getElementById('h-stack-native-root')?.dataset.rootMounted === 'true'`);
+  assert.deepEqual(await evaluate(`(() => {
+    const root = document.getElementById('h-stack-native-root');
+    return [root.tagName, root.parentElement.id, root.getAttribute('aria-label'),
+      root.hasAttribute('role'), root.hasAttribute('tabindex'),
+      [...root.children].map(child => [child.tagName, child.id])];
+  })()`), ['NAV', 'h-stack-examples', 'Example pages', false, false, [
+    ['A', 'h-stack-overview'], ['A', 'h-stack-patterns'],
+  ]]);
+  await evaluate(`document.getElementById('h-stack-overview').focus()`);
+  for (const type of ['keyDown', 'keyUp']) {
+    await send('Input.dispatchKeyEvent', {type, key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9});
+  }
+  assert.equal(await evaluate('document.activeElement.id'), 'h-stack-patterns');
+  await send('Input.dispatchKeyEvent', {type: 'keyDown', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13, text: '\r'});
+  await send('Input.dispatchKeyEvent', {type: 'keyUp', key: 'Enter', code: 'Enter', windowsVirtualKeyCode: 13});
+  await waitFor(`location.hash === '#h-stack-showcase' && document.getElementById('h-stack-native-root').dataset.clicks === '1'`);
+  console.log('HStack: catalog frames, RTL order, native root mounting and keyboard activation passed');
 });

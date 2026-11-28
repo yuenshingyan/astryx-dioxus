@@ -3073,6 +3073,8 @@ These changes are available for review. The table records focused evidence, not 
     - [ ] `HStackShowcase` — **HStack**: varying gaps/alignments.
     - [ ] Source example: HStack with gap 2 and sibling items; gap 2 is example data, not a documented universal default.
 
+  - [Verification and remaining gates](docs/h-stack-port.md): native-root and sizing SSR checks pass; live native mounting, keyboard activation, and rendered template comparisons remain open.
+
 - [ ] **[Layout Content](https://astryx.atmeta.com/components/LayoutContent)**
 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Layout/LayoutContent.doc.mjs). Templates in `LayoutContent/` under [pinned root](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components).
