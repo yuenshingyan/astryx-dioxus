@@ -126,7 +126,9 @@ pub fn Calendar(
                                         let iso = format!("{year:04}-{month:02}-{day:02}");
                                         let is_selected = value.as_deref() == Some(&iso);
                                         let is_disabled = !(first_day..=last_day).contains(&day);
-                                        let accessible_name = format!("{}, {month_name} {day}, {year}", WEEKDAYS[weekday].1);
+                                        // Focus lands on the button, not the cell carrying aria-selected.
+                                        let selection_suffix = if is_selected { ", selected" } else { "" };
+                                        let accessible_name = format!("{}, {month_name} {day}, {year}{selection_suffix}", WEEKDAYS[weekday].1);
                                         rsx! {
                                             td { key: "{weekday}", role: "gridcell", "aria-selected": is_selected.to_string(),
                                                 button { r#type: "button", "aria-label": accessible_name, disabled: is_disabled,
