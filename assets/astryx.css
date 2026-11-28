@@ -2848,6 +2848,7 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-radio-list-item__control > input:disabled { cursor: default; }
   .astryx-radio-list-item__control > input:focus-visible + .astryx-radio-indicator { outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color); outline-offset: var(--focus-outline-offset); }
   .astryx-checkbox-list-item--selected { background-color: var(--color-accent-muted); }
+  .astryx-checkbox-list-item--disabled > .astryx-item__content > :where(.astryx-item__label, .astryx-item__description) { color: var(--color-text-disabled); }
   .astryx-checkbox-list-item__description { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .astryx-checkbox-input__row { display: flex; align-items: center; gap: var(--spacing-2); }
   .astryx-checkbox-input__row[data-label-hidden] { gap: 0; }
