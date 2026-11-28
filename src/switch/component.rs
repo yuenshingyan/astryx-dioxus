@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 
 use crate::{
     FieldLabel, FieldStatus, FieldStatusInput, FieldStatusVariant, IndicatorSize, InputStatusType,
-    SizeValue,
+    SizeValue, Spinner, SpinnerSize,
 };
 
 /// Logical position of a switch's label.
@@ -34,6 +34,9 @@ pub fn Switch(
     #[props(default)] label_tooltip: Option<String>,
     #[props(default)] status: Option<FieldStatusInput>,
     #[props(default)] is_disabled: bool,
+    /// Keep the current value and block activation while a caller-owned operation runs.
+    #[props(default)]
+    is_loading: bool,
     #[props(default)] is_required: bool,
     #[props(default)] is_optional: bool,
     #[props(default)] is_label_hidden: bool,
@@ -92,6 +95,7 @@ pub fn Switch(
                         form: is_disabled.then(String::new), required: is_required,
                         "aria-disabled": is_disabled.then_some("true"), "aria-required": is_required.then_some("true"),
                         "aria-invalid": (is_error || is_required).then(|| is_error.to_string()),
+                        "aria-busy": is_loading.then_some("true"),
                         "aria-describedby": (!descriptions.is_empty()).then_some(descriptions),
                         "data-astryx-switch-owner": owner.clone(), "data-checked": value.to_string(),
                         onmounted: move |_| {
@@ -100,12 +104,16 @@ pub fn Switch(
                             let _ = eval.send(owner.clone());
                             controller.set(Some(eval));
                         },
-                        onclick: move |event| { if is_disabled { event.prevent_default(); } },
+                        onclick: move |event| { if is_disabled || is_loading { event.prevent_default(); } },
                         onchange: move |event| {
-                            if !is_disabled && let Some(handler) = on_change { handler.call(event.checked()); }
+                            if !is_disabled && !is_loading && let Some(handler) = on_change { handler.call(event.checked()); }
                         },
                     }
-                    span { class: "astryx-switch", "aria-hidden": "true", span { class: "astryx-switch-thumb" } }
+                    span { class: "astryx-switch", "aria-hidden": "true",
+                        span { class: "astryx-switch-thumb",
+                            if is_loading { Spinner { size: SpinnerSize::Small, is_decorative: true } }
+                        }
+                    }
                 }
                 FieldLabel { class: "astryx-switch-label", label, input_id: label_input_id, label_tooltip,
                     is_label_hidden, is_disabled, is_optional, is_required,

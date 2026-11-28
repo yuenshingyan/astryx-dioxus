@@ -4,12 +4,14 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8217'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8318'});
   const input = id => `document.getElementById('${id}')`;
   const dark = input('dark-mode-switch');
   const premium = input('premium-switch');
   const managed = input('managed-switch');
   await waitFor(`${dark}?.role === 'switch'`);
+  await send('Page.bringToFront');
+  await waitFor('document.hasFocus()');
   const center = `${dark}.parentElement.querySelector('.astryx-switch-thumb').getBoundingClientRect().x`;
   const off = await evaluate(center);
   await evaluate(`${dark}.focus()`);
@@ -24,6 +26,22 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await evaluate(`${premium}.focus(); ${premium}.click(); ${managed}.click()`);
   await waitFor(`!${managed}.checked`);
   assert.deepEqual(await evaluate(`[${premium}.checked, document.activeElement === ${premium}, Array.from(new FormData(document.getElementById('switch-form')))]`), [true, true, []]);
+  const backup = input('backup-switch');
+  const pressSpace = async () => {
+    await send('Input.dispatchKeyEvent', {type:'keyDown', key:' ', code:'Space', windowsVirtualKeyCode:32, text:' '});
+    await send('Input.dispatchKeyEvent', {type:'keyUp', key:' ', code:'Space', windowsVirtualKeyCode:32});
+  };
+  const loadingToggle = "document.getElementById('finish-switch-loading')";
+  await evaluate(`${loadingToggle}.click()`);
+  await waitFor(`${backup}.getAttribute('aria-busy') === 'true'`);
+  assert.ok(await evaluate(`${backup}.parentElement.querySelector('.astryx-switch-thumb .astryx-spinner') !== null`));
+  await evaluate(`${backup}.focus(); ${backup}.click()`);
+  await pressSpace();
+  assert.ok(await evaluate(`${backup}.checked && ${backup}.dataset.checked === 'true' && document.activeElement === ${backup}`));
+  await evaluate(`${loadingToggle}.click()`);
+  await waitFor(`!${backup}.hasAttribute('aria-busy') && !${backup}.parentElement.querySelector('.astryx-spinner')`);
+  await pressSpace();
+  await waitFor(`!${backup}.checked && ${backup}.dataset.checked === 'false'`);
   assert.deepEqual(exceptions, []);
   console.log('Switch: keyboard toggle, controlled rollback, disabled form behavior, AX, and RTL passed');
 });

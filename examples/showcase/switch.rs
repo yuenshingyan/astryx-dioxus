@@ -6,6 +6,8 @@ use astryx_dioxus::{IndicatorSize, Switch, SwitchLabelPosition, SwitchLabelSpaci
 pub(super) fn SwitchExamples() -> Element {
     let mut notifications = use_signal(|| true);
     let mut dark = use_signal(|| false);
+    let mut is_loading = use_signal(|| false);
+    let mut backup = use_signal(|| true);
     rsx! {
         section { id: "switch-examples",
             h2 { "Switch" }
@@ -22,6 +24,10 @@ pub(super) fn SwitchExamples() -> Element {
                     value: true, is_disabled: true, html_name: "premium",
                 }
                 Switch { id: "managed-switch", label: "Managed preference", value: false }
+                Switch { id: "backup-switch", label: "Automatic backup", value: backup(), is_loading: is_loading(),
+                    on_change: move |value| backup.set(value),
+                }
+                button { id: "finish-switch-loading", r#type: "button", onclick: move |_| is_loading.toggle(), "Toggle simulated loading" }
             }
         }
     }
