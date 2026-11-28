@@ -11,6 +11,23 @@ This is the single working checklist: **276 component/API tasks with 2,573 detai
 - Preserve upstream project structure and module ownership. Adapt React-specific mechanics idiomatically to Rust/Dioxus without inventing combined contexts or moving dependencies under their first consumer. Follow [AGENTS.md](AGENTS.md) and the [README migration workflow](README.md#migration-workflow).
 - [AspectRatio](docs/aspect-ratio-port.md), Button, [ButtonGroup](docs/button-group-port.md), [IconButton](docs/icon-button-port.md), [Link](docs/link-port.md), [Spinner](docs/spinner-port.md), [Badge](docs/badge-port.md), [Divider](docs/divider-port.md), [Kbd](docs/kbd-port.md), [Skeleton](docs/skeleton-port.md), [StatusDot](docs/status-dot-port.md), [ProgressBar](docs/progress-bar-port.md), [Card](docs/card-port.md), [SelectableCard](docs/selectable-card-port.md), [ClickableCard](docs/clickable-card-port.md), and [Blockquote](docs/blockquote-port.md) are complete for the source-faithful migration baseline. Their source-color audits retain the explicit [upstream-palette exception](docs/button-port.md#core-palette-contrast-conflict), not a claim that contrast targets pass. Other component parents remain unchecked, including dependencies that have not completed their own standalone migration audits. Bottom Sheet Switcher is deprecated upstream; confirm inclusion before porting.
 
+## Latest follow-ups
+
+These changes are available for review. The table records focused evidence, not completion of a migration task. Browser and full-suite verification for this batch remain pending.
+
+| Component | Follow-up | Evidence |
+| --- | --- | --- |
+| [Avatar](docs/avatar-port.md) | Skip empty image sources | Focused SSR test passed |
+| [Badge](docs/badge-port.md) | Cover explicit empty-title precedence | Focused Rust tests passed |
+| [Divider](docs/divider-port.md) | Preserve semantic defaults when attributes are unset | Focused Rust tests passed |
+| [Field Label](docs/field-label-port.md) | Cover optional and required marker precedence | Focused SSR tests passed |
+| [Link](docs/link-port.md) | Cover caller-controlled tab order in disabled forms | Focused SSR test passed |
+| [Skeleton](docs/skeleton-port.md) | Preserve CSS dimension token boundaries | Focused Rust test passed |
+| [Spinner](docs/spinner-port.md) | Cover decorative ring markup | Focused SSR test passed |
+| [Status Dot](docs/status-dot-port.md) | Cover sizing under flex shrink | Focused SSR test passed; browser regression added but not run |
+| [Text](docs/text-port.md) | Cover native heading semantics | Focused SSR test passed |
+| [Toolbar](docs/toolbar-port.md) | Cover Home and End with disabled endpoints | Focused SSR test passed; browser regression added but not run |
+
 ## Action
 
 - [x] **[Button](https://astryx.atmeta.com/components/Button)**
