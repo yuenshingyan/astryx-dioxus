@@ -1,6 +1,7 @@
 use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
+use crate::field::input_clear_button::InputClearButton;
 use crate::{Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue};
 
 /// Native numeric field with browser-owned editing and constraint validation.
@@ -29,6 +30,12 @@ pub fn NumberInput(
     #[props(default)] is_required: bool,
     #[props(default)] is_disabled: bool,
     #[props(default)] is_read_only: bool,
+    /// Show a clear action for populated, editable values.
+    #[props(default)]
+    has_clear: bool,
+    /// Accessible name of the clear action. Defaults to `Clear {label}`.
+    #[props(default)]
+    clear_label: Option<String>,
     #[props(default)] is_label_hidden: bool,
 ) -> Element {
     let id = use_hook(|| format!("astryx-number-input-{}", current_scope_id().0));
@@ -71,10 +78,16 @@ pub fn NumberInput(
     .flatten()
     .collect::<Vec<_>>()
     .join(" ");
+    let should_show_clear = has_clear && value.is_some() && !is_disabled && !is_read_only;
+    let clear_label = clear_label
+        .filter(|text| !text.trim().is_empty())
+        .unwrap_or_else(|| format!("Clear {label}"));
+    let mut input_node = use_signal(|| None::<MountedEvent>);
     rsx! {
         Field { class: "astryx-number-input", label, input_id: id.clone(), is_label_hidden, is_disabled, is_required,
             width, description, description_id, status, status_variant,
             div { class: "astryx-number-input__entry", "data-units": units.is_some().then_some("true"),
+                "data-has-clear": should_show_clear.then_some("true"),
                 "data-status": severity.map(InputStatusType::as_str),
             input { class: "astryx-number-input__control", id, r#type: "number", name: html_name,
                 value: value.map_or_else(String::new, |value| value.to_string()),
@@ -84,6 +97,7 @@ pub fn NumberInput(
                 "aria-describedby": (!described_by.is_empty()).then_some(described_by),
                 "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
                 "data-status": severity.map(InputStatusType::as_str),
+                onmounted: move |event| input_node.set(Some(event)),
                 onchange: move |event| {
                     if !is_disabled && !is_read_only && let Some(handler) = on_change {
                         let raw = event.value();
@@ -96,6 +110,15 @@ pub fn NumberInput(
             }
             if let Some(units) = units.as_ref() {
                 span { id: units_id, class: "astryx-number-input__units", "{units}" }
+            }
+            if should_show_clear {
+                InputClearButton { label: clear_label, onclick: move |_| {
+                    let input = input_node.peek().clone();
+                    if let Some(handler) = on_change { handler.call(None); }
+                    if let Some(input) = input {
+                        spawn(async move { let _ = input.data().set_focus(true).await; });
+                    }
+                } }
             }
             }
         }
