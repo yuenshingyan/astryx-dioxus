@@ -3067,7 +3067,8 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-step__indicator { display: grid; place-items: center; flex: none; inline-size: var(--spacing-4); block-size: var(--spacing-4); border-radius: var(--radius-full); background: var(--color-neutral); font-size: var(--text-supporting-size); }
   .astryx-step[data-progress="current"] .astryx-step__indicator { outline: 2px solid var(--color-accent); }
   .astryx-step__label { overflow: hidden; text-overflow: ellipsis; }
-  .astryx-step__optional, .astryx-step__description { color: var(--color-text-secondary); font-size: var(--text-supporting-size); }
+  .astryx-step__optional { display: inline-flex; align-items: baseline; gap: var(--spacing-2); color: var(--color-text-secondary); font-size: var(--text-body-size); }
+  .astryx-step__description { color: var(--color-text-secondary); font-size: var(--text-supporting-size); }
   .astryx-step[data-disabled="true"] .astryx-step__label { color: var(--color-text-disabled); }
   @media (forced-colors: active) {
     .astryx-step:is([data-progress="current"], [data-progress="completed"]) { --_step-track: Highlight; }

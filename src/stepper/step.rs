@@ -51,7 +51,12 @@ pub fn Step(
             span { class: "astryx-step__indicator", "aria-hidden": "true", "{marker}" }
         }
         span { class: "astryx-step__label", "{label}" }
-        if is_optional { span { class: "astryx-step__optional", "{optional_label}" } }
+        if is_optional && !optional_label.trim().is_empty() {
+            span { class: "astryx-step__optional",
+                span { "aria-hidden": "true", "•" }
+                "{optional_label}"
+            }
+        }
         if progress == Ordering::Less { VisuallyHidden { "{completed_label}" } }
     };
     rsx! {

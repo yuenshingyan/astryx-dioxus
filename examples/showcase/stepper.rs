@@ -13,7 +13,7 @@ pub(super) fn StepperExamples() -> Element {
                     Step { step: 0_usize, label: "Cart" }
                     Step { step: 1_usize, label: "Shipping" }
                     Step { step: 2_usize, label: "Payment" }
-                    Step { step: 3_usize, label: "Review" }
+                    Step { step: 3_usize, label: "Review", is_optional: true }
                     Step { step: 4_usize, label: "Confirm", is_disabled: true }
                 }
             }
