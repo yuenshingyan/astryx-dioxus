@@ -217,7 +217,7 @@ CSS styles target HTML/webview output, not a native renderer.
 - `src/slider/`: [Slider](docs/slider-port.md), a controlled native single-thumb range input. Dual-thumb range and custom presentation remain open.
 - `src/switch/`: [Switch](docs/switch-port.md), a controlled native on/off switch. Touch drag and async state remain open.
 - `src/checkbox_list/`: [CheckboxList](docs/checkbox-list-port.md) and [CheckboxListItem](docs/checkbox-list-item-port.md), a named group and individually controlled checkbox rows. Collection mode remains open.
-- `src/radio_list/`: [RadioList](docs/radio-list-port.md), a named group for caller-owned radios or controlled [RadioListItem](docs/radio-list-item-port.md) rows. Whole-row click delegation and disabled-reason help remain pending.
+- `src/radio_list/`: [RadioList](docs/radio-list-port.md), a named group for caller-owned radios or controlled [RadioListItem](docs/radio-list-item-port.md) rows. Row-surface clicks delegate to the native radio; focusable disabled options and disabled-reason help remain open.
 - `src/field_status/`: [FieldStatus](docs/field-status-port.md), with attached and detached validation messages and shared live announcements. Field control integration remains pending.
 - `src/context_menu/`: [Context Menu](docs/context-menu-port.md), with a desktop popup for existing menu rows. Touch and submenu integration remain open.
 - `src/more_menu/`: [More Menu](docs/more-menu-port.md), an icon-only trigger that delegates menu behavior to Dropdown Menu.

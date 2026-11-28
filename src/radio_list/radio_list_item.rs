@@ -1,7 +1,8 @@
-use dioxus::core::current_scope_id;
+use dioxus::core::{AttributeValue, current_scope_id};
 use dioxus::prelude::*;
 
 use super::radio_list_context::RadioListContext;
+use crate::hooks::use_clickable_container::INTERACTIVE_SELECTORS;
 use crate::utils::is_renderable::is_renderable;
 use crate::{IndicatorSize, Item, ItemAlign, ItemLabel, RadioIndicator, RadioIndicatorState};
 
@@ -11,7 +12,9 @@ pub fn RadioListItem(
     /// Value submitted and reported to the enclosing group.
     value: String,
     #[props(into)] label: ItemLabel,
-    #[props(default)] accessible_label: Option<String>,
+    /// Replaces the visible label as the radio's name. Include any visible label words.
+    #[props(default)]
+    accessible_label: Option<String>,
     #[props(default)] description: Option<ItemLabel>,
     #[props(default)] start_content: Option<Element>,
     #[props(default)] end_content: Option<Element>,
@@ -49,13 +52,48 @@ pub fn RadioListItem(
         RadioIndicatorState::Unchecked
     };
     let size = settings.size;
+    let size_name = if size == IndicatorSize::Small {
+        "sm"
+    } else {
+        "md"
+    };
     let requested = value.clone();
+    let mount_id = id.clone();
+    let mut delegation = use_signal(|| None::<document::Eval>);
+    use_drop(move || {
+        if let Some(eval) = *delegation.peek() {
+            let _ = eval.send(());
+        }
+    });
+    let mut attributes = attributes;
+    for (name, value) in [
+        ("data-size", Some(size_name)),
+        ("data-selected", is_checked.then_some("selected")),
+        ("data-disabled", is_disabled.then_some("disabled")),
+        ("data-astryx-indicator-scope", (!is_disabled).then_some("")),
+    ] {
+        attributes.retain(|attribute| attribute.name != name);
+        attributes.push(Attribute::new(
+            name,
+            value.map_or(AttributeValue::None, |value| {
+                AttributeValue::Text(value.into())
+            }),
+            None,
+            false,
+        ));
+    }
     rsx! {
         Item { class: format!("astryx-radio-list-item {class}"), style, align, attributes, description, end_content,
             label: rsx! { span { id: label_id, {label} } },
             start_content: rsx! {
-                span { class: "astryx-radio-list-item__control", "data-size": if size == IndicatorSize::Small { "sm" } else { "md" },
+                span { class: "astryx-radio-list-item__control", "data-size": size_name,
                     input { id, r#type: "radio", name: settings.name, value, required: settings.is_required, disabled: is_disabled,
+                        onmounted: move |_| {
+                            if let Some(eval) = *delegation.peek() { let _ = eval.send(()); }
+                            let eval = document::eval(include_str!("delegate_radio_click.js"));
+                            let _ = eval.send((mount_id.clone(), INTERACTIVE_SELECTORS));
+                            delegation.set(Some(eval));
+                        },
                         checked: is_checked, "data-radio-checked": is_checked.to_string(),
                         "aria-label": accessible_label, "aria-labelledby": labelled_by, "aria-describedby": described_by,
                         onclick: move |event| { if !is_disabled && let Some(handler) = onclick { handler.call(event); } },
