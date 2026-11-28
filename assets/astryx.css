@@ -1805,6 +1805,9 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
     color: var(--color-text-primary);
     font: inherit;
   }
+  .astryx-selector__control[data-status="error"] { border-color: var(--color-text-error); }
+  .astryx-selector__control[data-status="warning"] { border-color: var(--color-text-warning); }
+  .astryx-selector__control[data-status="success"] { border-color: var(--color-text-success); }
   .astryx-selector__control:focus-visible { outline: 2px solid var(--focus-outline-color); outline-offset: 2px; }
   .astryx-selector__control:disabled { color: var(--color-text-disabled); }
 }
