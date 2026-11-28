@@ -88,23 +88,30 @@ fn spans_replace_only_the_requested_axis_inside_grid() {
 fn named_showcase_patterns_render_the_pinned_compositions() {
     let html = render(|| rsx! { GridSpanExamples {} });
     let mut grids = html.split("<div class=\"astryx-grid ").skip(1);
-    for (id, count, spans, card_count) in [
+    // Order and sizing inputs from GridSpanShowcase.tsx and GridSpanColumns.tsx.
+    // "Full-width row" is a numeric span, and only the two-row card is unsized.
+    for (id, count, cards) in [
         (
             "grid-span-showcase",
             4,
-            vec![
-                "grid-column:span 3;",
-                "grid-row:span 2;",
-                "grid-column:span 3;",
-                "grid-column:span 2;",
-            ],
-            6,
+            &[
+                (Some("grid-column:span 3;"), Some(80), "Spans 3 columns"),
+                (None, Some(80), "1 col"),
+                (Some("grid-row:span 2;"), None, "1 col"),
+                (Some("grid-column:span 3;"), Some(80), "Full-width row"),
+                (None, Some(80), "1 col"),
+                (Some("grid-column:span 2;"), Some(80), "Spans 2 columns"),
+            ][..],
         ),
         (
             "grid-span-columns",
             3,
-            vec!["grid-column:span 2;", "grid-column:span 2;"],
-            4,
+            &[
+                (Some("grid-column:span 2;"), Some(80), "Spans 2 columns"),
+                (None, Some(80), "1 col"),
+                (None, Some(80), "1 col"),
+                (Some("grid-column:span 2;"), Some(80), "Spans 2 columns"),
+            ][..],
         ),
     ] {
         let pattern = grids.next().expect("named Grid example");
@@ -112,14 +119,43 @@ fn named_showcase_patterns_render_the_pinned_compositions() {
         assert!(pattern.contains(&format!("--_grid-columns:repeat({count}, 1fr);")));
         assert!(pattern.contains("--_grid-column-gap:var(--spacing-3);"));
         assert!(pattern.contains("width:400px;"));
-        assert_eq!(pattern.matches("class=\"astryx-card ").count(), card_count);
-        let placement: Vec<_> = pattern
-            .split("style=\"")
-            .skip(1)
-            .filter(|value| value.starts_with("grid-"))
-            .filter_map(|value| value.split_once('"').map(|(style, _)| style))
-            .collect();
-        assert_eq!(placement, spans);
+        let mut targets = pattern.split('<').filter_map(|part| {
+            let (tag, _) = part.split_once('>')?;
+            let (_, classes) = tag.split_once(" class=\"")?;
+            let (classes, _) = classes.split_once('"')?;
+            let target = classes.split_ascii_whitespace().next()?;
+            matches!(target, "astryx-grid-span" | "astryx-card" | "astryx-text")
+                .then_some((target, part))
+        });
+        for (index, &(span, height, label)) in cards.iter().enumerate() {
+            let item = format!("{id} item {} ({label})", index + 1);
+            if let Some(placement) = span {
+                let (target, wrapper) = targets.next().expect("GridSpan wrapper");
+                assert_eq!(target, "astryx-grid-span", "{item}");
+                assert!(
+                    wrapper.contains(&format!("style=\"{placement}\"")),
+                    "{item}: {wrapper}"
+                );
+            }
+            let (target, card) = targets.next().expect("Card root");
+            assert_eq!(target, "astryx-card", "{item}");
+            assert!(card.contains("data-variant=\"default\""), "{item}: {card}");
+            if let Some(height) = height {
+                assert!(
+                    card.contains(&format!("--_card-height:{height}px;")),
+                    "{item}: {card}"
+                );
+            } else {
+                assert!(!card.contains("--_card-height:"), "{item}: {card}");
+            }
+            let (target, text) = targets.next().expect("Text root");
+            assert_eq!(target, "astryx-text", "{item}");
+            let (text, content) = text.split_once('>').expect("Text opening tag");
+            assert!(text.contains("data-type=\"body\""), "{item}: {text}");
+            assert!(text.contains("data-color=\"secondary\""), "{item}: {text}");
+            assert_eq!(content, label, "{item}");
+        }
+        assert_eq!(targets.next(), None, "unexpected extra target in {id}");
     }
 }
 
