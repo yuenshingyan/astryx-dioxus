@@ -19,6 +19,11 @@
   .astryx-nav-heading-menu-item__description { font-size: var(--text-supporting-size); line-height: var(--text-supporting-leading); color: var(--color-text-secondary); }
   .astryx-nav-heading-menu-item[aria-disabled="true"] { opacity: 0.5; cursor: default; }
   .astryx-nav-heading-menu-item:focus { background-color: var(--color-overlay-hover); }
+  .astryx-nav-heading-menu .astryx-nav-heading-menu-item:focus-visible {
+    outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+    /* Keep the ring inside the row so it fits in the menu's tight spacing. */
+    outline-offset: calc(-1 * var(--focus-outline-width));
+  }
   @media (hover: hover) {
     .astryx-nav-heading-menu-item:hover:not([aria-disabled="true"]) { background-color: var(--color-overlay-hover); }
   }
