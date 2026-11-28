@@ -3044,12 +3044,14 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Span behavior**
     - [x] `columns`: arbitrary numeric count or finite sentinel `full` (all explicit tracks); `rows`: numeric span. Counts are layout data, not a closed size scale.
-    - [ ] Child content inside Grid; explicit columns/rows replace corresponding grid-column/grid-row inline styles; wrapper ref and host styling supported.
+    - [x] Child content inside Grid; explicit spans replace normal-priority inline placement on the corresponding axes. The native wrapper mount callback and caller styling passed SSR/VDOM and integrated Chrome checks for the existing Rust API.
     - [x] No other documented size/color/variant API.
 
   - **Named templates**
-    - [ ] `GridSpanColumns` — **GridSpan — Columns**: two-of-three-column asymmetric composition.
-    - [ ] `GridSpanShowcase` — **GridSpan**: multiple column/row spanning and masonry-style composition.
+    - [ ] `GridSpanColumns` — **GridSpan — Columns**: pinned composition and two-of-three geometry verified in Chrome (LTR/RTL); rendered upstream appearance comparison pending.
+    - [ ] `GridSpanShowcase` — **GridSpan**: pinned composition and masonry geometry at auto row heights verified in Chrome (LTR/RTL); rendered upstream appearance comparison pending.
+
+  - [Verification and remaining gates](docs/grid-span-port.md): both template appearance comparisons with shared Grid/Card/Text, layout outside Chrome, and manual screen-reader reading order and reachability.
 
 - [ ] **[H Stack](https://astryx.atmeta.com/components/HStack)**
 
