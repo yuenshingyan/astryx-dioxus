@@ -1,5 +1,9 @@
 
 @layer astryx-base {
+  .astryx-selector__entry:not([data-loading]) { display: contents; }
+  .astryx-selector__entry[data-loading] { display: flex; align-items: center; gap: var(--spacing-2); }
+  .astryx-selector__entry[data-loading] > select { flex: 1 1 0; min-inline-size: 0; }
+  .astryx-selector__entry[data-loading] > .astryx-spinner { flex: none; }
   .astryx-selector__control {
     box-sizing: border-box;
     inline-size: 100%;
