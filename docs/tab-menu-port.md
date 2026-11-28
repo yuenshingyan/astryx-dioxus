@@ -4,4 +4,8 @@
 
 Pinned Meta Astryx sources at `476a3153417dbf75c565f7df05b0784e94ddd59e`: `TabList/TabMenu.tsx` (`f83985b30aef1811bd8344aa54e2601644d67c5e`), its spec (`4bc04d75d6d4025c7be8fac4f6973c1f3c2f8617`), and the showcase (`c8824c30fa56c76878db267059ea48078e4c61f6`). The showcase retains Overview, Activity, and the three menu options, and adds a following button to verify Tab exit.
 
-All five Rust checks and five Chrome suites passed. The focused suite checked the selected trigger label, accessible menu name, radio state, keyboard selection, Escape focus return, and Tab exit. Panel-mode integration, touch and press-drag selection, and visual parity remain open. The checklist remains open.
+The original checkpoint passed five Rust checks and five Chrome suites. The focused Chrome suite checked the selected trigger label, accessible menu name, radio state, keyboard selection, Escape focus return, and Tab exit.
+
+The FR4 follow-up restores the visible presentational heading and a decorative check on the selected radio option. The option's explicit name also gives the existing menu typeahead a plain-text label, independent of decorative icon content. SSR tests cover the disclosure relationship, selected and fallback trigger labels, heading, radio names and states, and the hidden check decoration. The extended browser regression covers typeahead past a decorative glyph and Home navigation past the heading, but was not run for this follow-up. The markup checks do not establish visual or spoken parity.
+
+The shared menu controller still moves focus between options without promoting any option from `tabindex="-1"`; FR5's single roving option tab stop remains open. Panel-mode integration, touch and press-drag selection, and visual parity also remain open. The checklist is unchanged.

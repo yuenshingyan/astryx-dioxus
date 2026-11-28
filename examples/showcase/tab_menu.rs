@@ -14,7 +14,7 @@ pub(super) fn TabMenuExamples() -> Element {
     .map(|(value, label)| TabMenuOption {
         value: value.into(),
         label: label.into(),
-        icon: None,
+        icon: (value == "billing").then(|| rsx! { span { "$" } }),
     })
     .collect();
     rsx! {
