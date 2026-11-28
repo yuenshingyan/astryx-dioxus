@@ -152,11 +152,18 @@ node tests/heading.contrast.mjs
 ```
 
 Focused SSR: levels/validation, built-in/custom type/color baselines, weight,
-outline overrides including raw caller precedence, clamp/inline style precedence,
-shared layout treatments, all placements, rich content and native passthrough.
-Chromium: source-derived appearance above; neutral/custom theme paint, AX native
-heading role/levels, no eager layer/title/tabstop, native mounted/click/wheel/copy/
-animation/transition/drag handlers, stable native root and uncontrolled input/focus
+outline overrides across all 36 native/outline level pairs, raw caller precedence,
+clamp/inline style precedence, shared layout treatments, all placements, rich
+content and native passthrough. The typed and caller-provided `aria-level` now
+share one Dioxus attribute slot: removing the caller value restores the typed
+value on the same native root instead of deleting it after the update. The
+mutation regression covers switching in both directions and clearing the
+attribute when the typed level matches the native level. Neither SSR nor these
+mutations verify assistive-technology speech.
+
+Prior Chromium evidence: source-derived appearance above; neutral/custom theme
+paint, AX native heading role/levels, no eager layer/title/tabstop, native mounted/
+click/wheel/copy/animation/transition/drag handlers, stable native root and uncontrolled input/focus
 across clamp changes, one/multiline overflow, first hover full text, logical end
 placement LTR/RTL, disabled zero width reads/no controller, 320px ordinary reflow
 and root-font scaling.
@@ -171,5 +178,6 @@ Unrun: upstream React/StyleX execution; independent pixel/screenshot comparison;
 manual screen readers; real-device touch/pen; Firefox/WebKit; Windows High
 Contrast; iOS Dynamic Type; full existing browser regression suite; combined
 Heading/Code/final shared Tooltip integration. Parent owns final combined checks.
-No checklist completion while shared fidelity work remains. Exact local commands,
-results, commits and final integration notes are in the Heading handoff.
+The Heading port remains unchecked while shared fidelity work remains. The
+`accessibilityLevel` checklist row covers only the verified outline attribute
+contract.

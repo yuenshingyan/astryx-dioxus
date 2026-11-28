@@ -276,16 +276,6 @@ pub fn Heading(
     } else {
         style
     };
-    // Dioxus SSR preserves duplicate attributes rather than merging them. Omit
-    // the derived value when the caller supplies one so native parsing agrees.
-    let aria_level = accessibility_level
-        .filter(|value| {
-            *value != level
-                && !attributes
-                    .iter()
-                    .any(|attribute| attribute.name == "aria-level")
-        })
-        .map(HeadingLevel::number);
     // Separate dynamic slots keep optional listener changes from shifting other
     // listeners or caller attributes. No default listener may be registered:
     // even a no-op animationiteration listener changes compositor servicing.
@@ -317,6 +307,15 @@ pub fn Heading(
             )
         })
         .collect();
+    // Keep the caller and derived values in the same spread. Independent slots
+    // can remove aria-level after setting its replacement during a rerender.
+    if let Some(value) = accessibility_level.filter(|value| *value != level)
+        && !attributes
+            .iter()
+            .any(|attribute| attribute.name == "aria-level")
+    {
+        attributes.push(Attribute::new("aria-level", value.number(), None, false));
+    }
     // Dioxus diffs each spread as a name-sorted attribute list.
     attributes.sort_by_key(|attribute| attribute.name);
     macro_rules! render_tag {
@@ -331,7 +330,6 @@ pub fn Heading(
                     "data-weight": weight.map(TextWeight::as_str),
                     "data-astryx-truncation-id": tooltip_id.clone(),
                     "data-astryx-truncation-placement": truncate_tooltip_placement.unwrap_or_default().as_str(),
-                    "aria-level": aria_level,
                     onclick: onclick, ondoubleclick: ondoubleclick, oncontextmenu: oncontextmenu,
                     onmousedown: onmousedown, onmouseup: onmouseup, onmousemove: onmousemove,
                     onmouseenter: onmouseenter, onmouseleave: onmouseleave,
