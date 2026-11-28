@@ -2,6 +2,7 @@ use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
 use crate::date_input::is_valid_date;
+use crate::field::input_clear_button::InputClearButton;
 use crate::{DateInput, FieldStatusInput, InputStatusType, SizeValue};
 
 /// An inclusive Gregorian date range. Both endpoints use `YYYY-MM-DD`.
@@ -36,10 +37,17 @@ pub fn DateRangeInput(
     #[props(default = "Choose a range within the allowed number of days.".to_owned())]
     invalid_span_message: String,
     #[props(default)] is_disabled: bool,
+    /// Allow clearing a committed range. No action is shown for an incomplete draft.
+    #[props(default = true)]
+    has_clear: bool,
+    /// Accessible clear button name. Defaults to `Clear {label}`.
+    #[props(default)]
+    clear_label: Option<String>,
     #[props(default)] width: Option<SizeValue>,
 ) -> Element {
     let error_id = use_hook(|| format!("astryx-date-range-error-{}", current_scope_id().0));
     let mut draft = use_signal(|| None::<Draft>);
+    let mut start_node = use_signal(|| None::<MountedEvent>);
     use_effect(use_reactive((&value,), move |_| {
         draft.set(None);
     }));
@@ -96,6 +104,10 @@ pub fn DateRangeInput(
         message: None,
         message_id: None,
     });
+    let should_show_clear = has_clear && value.is_some() && !is_disabled;
+    let clear_label = clear_label
+        .filter(|text| !text.trim().is_empty())
+        .unwrap_or_else(|| format!("Clear {label}"));
     let current_start = start.clone();
     let current_end = end.clone();
     let min_bound = min.clone();
@@ -145,10 +157,21 @@ pub fn DateRangeInput(
             div { class: "astryx-date-range-input__segments",
                 DateInput { label: start_label, value: start, min: min.clone(), max: max.clone(), is_disabled,
                     status: endpoint_status.clone(), described_by: described_by.clone(),
+                    onmounted: move |event| start_node.set(Some(event)),
                     on_change: move |start| update.call((start, current_end.clone())), }
                 DateInput { label: end_label, value: end, min, max, is_disabled,
                     status: endpoint_status, described_by,
                     on_change: move |end| update.call((current_start.clone(), end)), }
+                if should_show_clear {
+                    InputClearButton { label: clear_label, onclick: move |_| {
+                        let start = start_node.peek().clone();
+                        draft.set(None);
+                        on_change.call(None);
+                        if let Some(start) = start {
+                            spawn(async move { let _ = start.data().set_focus(true).await; });
+                        }
+                    } }
+                }
             }
             div { id: error_id, role: "status", if let Some(message) = message { "{message}" } }
         }
