@@ -3329,7 +3329,7 @@ These changes are available for review. The table records focused evidence, not 
   - Source: [English API](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/SideNav/SideNavSection.doc.mjs).
 
   - **Content and state**
-    - [ ] No finite style variants documented. Title (required in prop table, despite description saying optional), optional subtitle, item children, header `endContent` such as icon/badge.
+    - [x] No finite style variants documented. Required title, optional subtitle, item children, and header `endContent` such as an icon or badge (pinned source and spec; see [port evidence](docs/side-nav-section-port.md)).
     - [ ] `isHeaderHidden`: false (default), true; visually hidden header remains accessible.
 
   - **Named templates**

@@ -1,17 +1,17 @@
 use dioxus::prelude::*;
 
-use astryx_dioxus::SideNavSection;
+use astryx_dioxus::{SideNav, SideNavItem, SideNavSection};
 
 #[component]
 fn Groups(#[props(default)] has_settings: bool) -> Element {
     rsx! {
         SideNavSection { title: "Overview",
-            a { href: "#side-nav-section-examples", "aria-current": "page", "Dashboard" }
-            a { href: "#side-nav-section-examples", "Analytics" }
+            SideNavItem { label: "Dashboard", href: "#side-nav-section-examples", is_selected: true }
+            SideNavItem { label: "Analytics", href: "#side-nav-section-examples" }
         }
         SideNavSection { title: "Account",
-            a { href: "#side-nav-section-examples", "Profile" }
-            if has_settings { a { href: "#side-nav-section-examples", "Settings" } }
+            SideNavItem { label: "Profile", href: "#side-nav-section-examples" }
+            if has_settings { SideNavItem { label: "Settings", href: "#side-nav-section-examples" } }
         }
     }
 }
@@ -23,9 +23,9 @@ pub(super) fn SideNavSectionExamples() -> Element {
         section { id: "side-nav-section-examples", "data-astryx-theme": "neutral",
             h2 { "SideNavSection" }
             h3 { "Basic" }
-            nav { "aria-label": "Basic navigation groups", Groups {} }
+            SideNav { label: "Basic navigation groups", Groups {} }
             h3 { "Showcase" }
-            nav { "aria-label": "Navigation groups showcase", Groups { has_settings: true } }
+            SideNav { label: "Navigation groups showcase", Groups { has_settings: true } }
             h3 { "Header visibility" }
             button { id: "side-nav-section-toggle", r#type: "button", onclick: move |_| is_hidden.toggle(), "Toggle group header" }
             SideNavSection { id: "side-nav-section-probe", dir: "rtl", style: "width:180px", title: "Workspace", subtitle: "Production", is_header_hidden: is_hidden(),
