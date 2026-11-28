@@ -18,13 +18,22 @@ export function useUser(id: string) {
 
 #[component]
 pub(super) fn CodeBlockExamples() -> Element {
+    let mut is_saved = use_signal(|| false);
     rsx! {
         section { id: "code-block-examples",
             h2 { "Code Block" }
             CodeBlock { code: SOURCE, title: "useUser.ts".to_owned(), has_line_numbers: true, has_copy_button: true }
             div { id: "code-block-disclosure-example",
                 h3 { "Collapsible source" }
-                CodeBlock { code: SOURCE, title: "Source excerpt", is_collapsible: true, has_copy_button: true }
+                CodeBlock { code: SOURCE, title: "Source excerpt", is_collapsible: true, has_copy_button: true,
+                    end_content: rsx! { button { r#type: "button", onclick: move |_| is_saved.toggle(), if is_saved() { "Saved" } else { "Save excerpt" } } },
+                }
+            }
+            div { id: "code-block-corner-example",
+                h3 { "Headerless source" }
+                CodeBlock { code: "let answer = 42;", has_copy_button: true,
+                    end_content: rsx! { a { href: "#code-block-disclosure-example", "See full excerpt" } },
+                }
             }
             div { id: "code-block-diff-example",
                 h3 { "Unified diff" }
