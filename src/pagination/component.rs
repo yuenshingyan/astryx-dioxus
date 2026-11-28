@@ -68,7 +68,7 @@ fn PageEntry(
             }
         }
     } else {
-        rsx! { span { "aria-hidden": "true", "…" } }
+        rsx! { span { class: "astryx-pagination__ellipsis", "aria-hidden": "true", "…" } }
     }
 }
 
@@ -76,27 +76,31 @@ fn entry_key(entry: Option<u32>, index: usize) -> String {
     entry.map_or_else(|| format!("gap-{index}"), |number| format!("page-{number}"))
 }
 
-// The pinned default is one sibling on each side of the current page.
 fn page_range(current: u32, total: u32) -> Vec<Option<u32>> {
-    if total <= 7 {
+    const SIBLINGS: u32 = 1;
+    const EDGE_PAGES: u32 = 3 + 2 * SIBLINGS;
+    const SLOTS: u32 = EDGE_PAGES + 2;
+
+    if total <= SLOTS {
         return (1..=total).map(Some).collect();
     }
-    if current <= 3 {
-        return (1..=5).map(Some).chain([None, Some(total)]).collect();
-    }
-    if current >= total - 2 {
-        return [Some(1), None]
-            .into_iter()
-            .chain((total - 4..=total).map(Some))
+
+    // Fill the window from an endpoint when the adjacent gap would hide at most one page.
+    if current <= 2 + SIBLINGS {
+        return (1..=EDGE_PAGES)
+            .map(Some)
+            .chain([None, Some(total)])
             .collect();
     }
-    vec![
-        Some(1),
-        None,
-        Some(current - 1),
-        Some(current),
-        Some(current + 1),
-        None,
-        Some(total),
-    ]
+    if current >= total - 1 - SIBLINGS {
+        return [Some(1), None]
+            .into_iter()
+            .chain((total - EDGE_PAGES + 1..=total).map(Some))
+            .collect();
+    }
+    [Some(1), None]
+        .into_iter()
+        .chain((current - SIBLINGS..=current + SIBLINGS).map(Some))
+        .chain([None, Some(total)])
+        .collect()
 }
