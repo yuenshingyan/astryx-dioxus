@@ -2141,13 +2141,15 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-layout-content--open-end { --_layout-content-end: var(--_layout-content-outer-x); }
   .astryx-layout-content--open-header { --_layout-content-top: var(--_layout-content-outer-y); }
   .astryx-layout-content--open-footer { --_layout-content-bottom: var(--_layout-content-outer-y); }
-  .astryx-layout-content--open-start:not(.astryx-layout-content--full-bleed) {
+  /* Only the content slot's scrollport shares the Layout middle row's query
+     box. Descendant regions must not add that Layout's gutter again. */
+  :where(.astryx-layout__middle--align > .astryx-layout__content-slot) > .astryx-layout-content--open-start:not(.astryx-layout-content--full-bleed) {
     padding-inline-start: max(var(--container-padding-inline-start), calc(100cqi - var(--layout-alignment-width, 100cqi) + var(--container-padding-inline-start)));
   }
-  .astryx-layout-content--open-end:not(.astryx-layout-content--full-bleed) {
+  :where(.astryx-layout__middle--align > .astryx-layout__content-slot) > .astryx-layout-content--open-end:not(.astryx-layout-content--full-bleed) {
     padding-inline-end: max(var(--container-padding-inline-end), calc(100cqi - var(--layout-alignment-width, 100cqi) + var(--container-padding-inline-end)));
   }
-  .astryx-layout-content--open-start.astryx-layout-content--open-end:not(.astryx-layout-content--full-bleed) {
+  :where(.astryx-layout__middle--align > .astryx-layout__content-slot) > .astryx-layout-content--open-start.astryx-layout-content--open-end:not(.astryx-layout-content--full-bleed) {
     padding-inline-start: max(var(--container-padding-inline-start), calc((100cqi - var(--layout-alignment-width, 100cqi)) / 2 + var(--container-padding-inline-start)));
     padding-inline-end: max(var(--container-padding-inline-end), calc((100cqi - var(--layout-alignment-width, 100cqi)) / 2 + var(--container-padding-inline-end)));
   }

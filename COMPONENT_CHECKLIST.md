@@ -3081,7 +3081,7 @@ These changes are available for review. The table records focused evidence, not 
     - [ ] `isScrollable`: true (default) / false; arithmetic contentWidth scrollport extends through open sides with aligned child insets.
     - [ ] `padding`: `0`, `0.5`, `1`, `1.5`, `2`, `3`, `4`, `5`, `6`, `8`, `10`, overriding enclosing layout padding.
     - [ ] Arbitrary children and optional landmark role/label; scroll region label defaults to translated `Content` if omitted; root ref supported.
-    - [ ] No own color/size/variant enum.
+    - [x] No own color/size/variant enum (public props audited against the pin).
 
   - **Named templates**
     - [ ] `LayoutContentBasic` — **LayoutContent — Basic**: scrolling main content below fixed header.
