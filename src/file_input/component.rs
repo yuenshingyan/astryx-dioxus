@@ -2,7 +2,9 @@ use dioxus::core::current_scope_id;
 use dioxus::html::FileData;
 use dioxus::prelude::*;
 
-use crate::{Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue};
+use crate::{
+    Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue, Spinner, SpinnerSize,
+};
 
 /// Native file picker. The browser owns the selection and the caller owns what
 /// happens to the selected files. The component does not upload or read them.
@@ -22,6 +24,10 @@ pub fn FileInput(
     #[props(default)] is_multiple: bool,
     #[props(default)] is_required: bool,
     #[props(default)] is_disabled: bool,
+    /// Block new selections while caller-owned work is in progress.
+    /// The current selection remains part of the form.
+    #[props(default)]
+    is_loading: bool,
     #[props(default)] is_label_hidden: bool,
     #[props(default)] width: Option<SizeValue>,
 ) -> Element {
@@ -51,14 +57,22 @@ pub fn FileInput(
     rsx! {
         Field { class: "astryx-file-input", label, input_id: id.clone(), is_label_hidden, is_required, is_disabled,
             width, description, description_id, status, status_variant,
+            div { class: "astryx-file-input__entry", "data-loading": is_loading.then_some("true"),
             input { class: "astryx-file-input__control", id, r#type: "file", name: html_name,
                 accept, multiple: is_multiple, required: is_required, disabled: is_disabled,
                 "aria-describedby": (!described_by.is_empty()).then_some(described_by),
                 "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
                 "data-status": severity.map(InputStatusType::as_str),
+                "aria-busy": is_loading.then_some("true"),
+                onclick: move |event| { if is_loading { event.prevent_default(); } },
+                ondrop: move |event| { if is_loading { event.prevent_default(); } },
                 onchange: move |event| {
-                    if !is_disabled && let Some(handler) = on_change { handler.call(event.files()); }
+                    if !is_disabled && !is_loading && let Some(handler) = on_change { handler.call(event.files()); }
                 },
+            }
+            if is_loading {
+                Spinner { size: SpinnerSize::Small, is_decorative: true }
+            }
             }
         }
     }

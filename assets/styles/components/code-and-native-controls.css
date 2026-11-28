@@ -59,6 +59,10 @@
   .astryx-number-input__entry[data-units][data-status="success"] { border-color: var(--color-text-success); }
   .astryx-number-input__units { min-inline-size: 0; max-inline-size: 50%; margin-inline-end: var(--spacing-3); color: var(--color-text-secondary); overflow-wrap: anywhere; }
   .astryx-file-input { display: flex; flex-direction: column; gap: var(--spacing-2); max-inline-size: 100%; }
+  .astryx-file-input__entry:not([data-loading]) { display: contents; }
+  .astryx-file-input__entry[data-loading] { display: flex; align-items: center; gap: var(--spacing-2); }
+  .astryx-file-input__entry[data-loading] > .astryx-file-input__control { flex: 1 1 auto; cursor: progress; }
+  .astryx-file-input__entry[data-loading] > .astryx-spinner { flex: none; }
   .astryx-file-input__control { min-inline-size: 0; font: inherit; color: inherit; }
   .astryx-file-input__control::file-selector-button {
     margin-inline-end: var(--spacing-2);
