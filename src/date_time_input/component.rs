@@ -2,6 +2,7 @@ use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
 use crate::date_input::is_valid_date;
+use crate::field::input_clear_button::InputClearButton;
 use crate::time_input::is_valid_time;
 use crate::{Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SizeValue};
 
@@ -29,6 +30,12 @@ pub fn DateTimeInput(
     max: Option<String>,
     #[props(default)] is_required: bool,
     #[props(default)] is_disabled: bool,
+    /// Show a clear action when the combined value is set and the field is enabled.
+    #[props(default)]
+    has_clear: bool,
+    /// Accessible clear button name. Defaults to `Clear {label}`.
+    #[props(default)]
+    clear_label: Option<String>,
     #[props(default)] width: Option<SizeValue>,
 ) -> Element {
     let id = use_hook(|| format!("astryx-date-time-input-{}", current_scope_id().0));
@@ -97,6 +104,10 @@ pub fn DateTimeInput(
         .join(" ");
     let described_by = (!described_by.is_empty()).then_some(described_by);
     let invalid = (severity == Some(InputStatusType::Error)).then_some("true");
+    let should_show_clear = has_clear && value.is_some() && !is_disabled;
+    let clear_label = clear_label
+        .filter(|text| !text.trim().is_empty())
+        .unwrap_or_else(|| format!("Clear {label}"));
     rsx! {
         Field { class: "astryx-date-time-input", label, input_id: date_id.clone(), is_required, is_disabled,
             width, description, description_id, status, status_variant: FieldStatusPlacement::Detached,
@@ -156,6 +167,14 @@ pub fn DateTimeInput(
                             }
                         }
                     },
+                }
+                if should_show_clear {
+                    InputClearButton { label: clear_label, onclick: move |_| {
+                        pending_date.set(None);
+                        time_draft.set(None);
+                        // Native picker mode avoids programmatically refocusing a segment.
+                        if let Some(change) = on_change { change.call(None); }
+                    } }
                 }
             }
             if let Some(name) = html_name {
