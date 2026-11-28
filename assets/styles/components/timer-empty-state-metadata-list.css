@@ -53,7 +53,11 @@
     margin: 0;
     padding: 0;
     min-height: 24px;
-    overflow-wrap: anywhere;
+  }
+  /* Only inline terms and all values opt into breaking long words. */
+  .astryx-metadata-list-item__label:where(.astryx-metadata-list-item),
+  .astryx-metadata-list-item__value {
+    word-break: break-word;
   }
   .astryx-metadata-list-item__label {
     display: flex;
