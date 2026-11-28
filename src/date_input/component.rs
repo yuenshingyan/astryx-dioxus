@@ -35,6 +35,9 @@ pub fn DateInput(
     #[props(default)]
     clear_label: Option<String>,
     #[props(default)] is_label_hidden: bool,
+    /// Receives the mounted native date control.
+    #[props(default)]
+    onmounted: Option<EventHandler<MountedEvent>>,
 ) -> Element {
     let id = use_hook(|| format!("astryx-date-input-{}", current_scope_id().0));
     if [&value, &min, &max]
@@ -90,7 +93,10 @@ pub fn DateInput(
                 "aria-describedby": (!described_by.is_empty()).then_some(described_by),
                 "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
                 "data-status": severity.map(InputStatusType::as_str),
-                onmounted: move |event| input_node.set(Some(event)),
+                onmounted: move |event: MountedEvent| {
+                    input_node.set(Some(event.clone()));
+                    if let Some(handler) = onmounted { handler.call(event); }
+                },
                 onchange: move |event| {
                     if !is_disabled && let Some(handler) = on_change {
                         let date = event.value();

@@ -1662,6 +1662,7 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
   .astryx-date-range-input { box-sizing: border-box; min-inline-size: 0; max-inline-size: 100%; margin: 0; padding: var(--spacing-2); border: var(--border-width) solid var(--color-border); border-radius: var(--radius-container); }
   .astryx-date-range-input__segments { display: flex; flex-wrap: wrap; gap: var(--spacing-2); }
   .astryx-date-range-input__segments > * { flex: 1 1 auto; }
+  .astryx-date-range-input__segments > .astryx-input-clear-button { flex: none; align-self: end; }
   .astryx-date-range-input [role="status"] { color: var(--color-text-error, var(--color-text-primary)); }
   .astryx-tree-list__row { display: flex; align-items: center; gap: var(--spacing-2); min-block-size: var(--size-element-md); padding-inline: var(--spacing-2); border-radius: var(--radius-element); color: var(--color-text-primary); }
   .astryx-tree-list__item[aria-selected="true"] > .astryx-tree-list__row { background: var(--color-overlay-pressed); }
