@@ -192,6 +192,28 @@ fn native_props_and_caller_title_pass_through_but_theme_state_is_owned() {
 }
 
 #[test]
+fn explicit_empty_title_overrides_derived_title_without_removing_label_text() {
+    let html = render(|| {
+        rsx! {
+            div { title: "Ancestor advisory text",
+                Badge { label: "Deployment completed with pending review", title: "" }
+            }
+        }
+    });
+    let root = html
+        .split_once("<span")
+        .and_then(|(_, rest)| rest.split_once('>'))
+        .map(|(attributes, _)| attributes)
+        .expect("Badge root span");
+    assert!(root.contains(" title=\"\""), "{html}");
+    assert_eq!(html.matches(" title=").count(), 2, "{html}");
+    assert!(
+        html.contains(">Deployment completed with pending review</span>"),
+        "{html}"
+    );
+}
+
+#[test]
 fn custom_variants_are_validated_open_names_without_a_neutral_fallback() {
     for invalid in ["", "two words", "red\n", "<script>", "bad/color"] {
         assert!(BadgeVariant::new(invalid).is_err());
