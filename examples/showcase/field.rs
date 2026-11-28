@@ -49,6 +49,19 @@ pub(super) fn FieldExamples() -> Element {
                     input { id: "field-backup", style: CONTROL, r#type: "email", placeholder: "you@example.com" }
                 }
             }
+            h3 { "Wrap a custom control" }
+            Field { label: "Volume", input_id: "field-volume", width: Some("320px".into()),
+                description: "Adjust the playback volume.", description_id: "field-volume-help",
+                status_variant: FieldStatusPlacement::Detached,
+                status: FieldStatusInput {
+                    status_type: InputStatusType::Success,
+                    message: Some("Volume can be adjusted.".into()),
+                    message_id: Some("field-volume-feedback".into()),
+                },
+                input { id: "field-volume", r#type: "range", min: "0", max: "100",
+                    "aria-describedby": "field-volume-help field-volume-feedback",
+                }
+            }
             h3 { "Status variants" }
             FormLayout {
                 for (id, label, description, severity, message, placement) in [
