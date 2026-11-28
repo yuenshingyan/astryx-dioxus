@@ -18,6 +18,7 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor('document.hasFocus()');
   const {nodes} = await send('Accessibility.getFullAXTree');
   assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'grid' && node.name?.value === 'April 2026'));
+  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'button' && node.name?.value === 'Wednesday, April 15, 2026, selected'));
   assert.equal(await evaluate(`${day(15)}.closest('td').getAttribute('aria-selected')`), 'true');
   assert.equal(await evaluate(`${day(1)}.closest('td').cellIndex`), 3);
   await evaluate(`${day(15)}.focus()`);
@@ -25,6 +26,8 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(`document.activeElement === ${day(16)} && ${day(16)}.tabIndex === 0`);
   await key('Enter', 13);
   await waitFor(`${day(16)}.closest('td').getAttribute('aria-selected') === 'true'`);
+  assert.equal(await evaluate(`${day(16)}.getAttribute('aria-label')`), 'Thursday, April 16, 2026, selected');
+  assert.equal(await evaluate(`${day(15)}.getAttribute('aria-label')`), 'Wednesday, April 15, 2026');
   assert.equal(await evaluate(`${day(15)}.closest('td').getAttribute('aria-selected')`), 'false');
   await evaluate(`${grid}.dir = 'rtl'`);
   await key('ArrowLeft', 37);
