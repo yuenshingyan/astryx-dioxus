@@ -5,7 +5,7 @@ use astryx_dioxus::{Center, CenterAxis, SizeValue, SpacingStep};
 #[path = "../examples/showcase/center.rs"]
 mod showcase;
 
-use showcase::CenterExamples;
+use showcase::{CenterDefaultStory, CenterExamples};
 
 fn render(app: fn() -> Element) -> String {
     let mut dom = VirtualDom::new(app);
@@ -145,6 +145,40 @@ fn pinned_patterns_are_present_in_the_showcase() {
             "missing {label}"
         );
     }
+}
+
+#[test]
+fn storybook_default_has_its_own_capture_fixture() {
+    let html = render(CenterDefaultStory);
+    let (section_wrapper, rest) = html.split_once('>').expect("Section wrapper");
+    let (surface, rest) = rest.split_once('>').expect("Section surface");
+    let (center, box_html) = rest.split_once('>').expect("Center root");
+    assert!(
+        section_wrapper.contains("id=\"center-story-default\""),
+        "{html}"
+    );
+    assert!(section_wrapper.contains("--_section-width:100%;"), "{html}");
+    assert!(surface.contains("data-variant=\"muted\""), "{html}");
+    for expected in [
+        "data-axis=\"both\"",
+        "--_center-width:100%;",
+        "--_center-height:200px;",
+    ] {
+        assert!(center.contains(expected), "{html}");
+    }
+    let (box_tag, text) = box_html.split_once('>').expect("Story box");
+    for expected in [
+        "background-color:var(--color-background-blue);",
+        "color:var(--color-text-blue);",
+        "border:1px solid var(--color-border-blue);",
+        "border-radius:var(--radius-element);",
+        "padding-block:var(--spacing-4);",
+        "padding-inline:var(--spacing-6);",
+        "font-weight:500;",
+    ] {
+        assert!(box_tag.contains(expected), "{html}");
+    }
+    assert!(text.starts_with("Centered Content</div>"), "{html}");
 }
 
 #[test]
