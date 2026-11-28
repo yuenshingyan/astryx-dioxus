@@ -4,12 +4,12 @@ use astryx_dioxus::{TreeList, TreeListItemData};
 
 #[component]
 pub(super) fn TreeListExamples() -> Element {
-    let mut selected = use_signal(|| None::<&'static str>);
+    let mut selected = use_signal(|| "app");
     let current = selected();
     let leaf = |id: &'static str, label| {
         let mut item = TreeListItemData::new(id, label);
-        item.is_selected = current == Some(id);
-        item.onclick = Some(Callback::new(move |_| selected.set(Some(id))));
+        item.is_selected = current == id;
+        item.onclick = Some(Callback::new(move |_| selected.set(id)));
         item
     };
     let mut components = TreeListItemData::new("components", "components");
@@ -42,9 +42,9 @@ pub(super) fn TreeListExamples() -> Element {
             TreeList { label: "Project files", items }
             h3 { "Type to find a city" }
             TreeList { label: "Cities", items: vec![
+                TreeListItemData { is_disabled: true, ..TreeListItemData::new("essen", "Essen") },
                 TreeListItemData::new("el-paso", "El Paso"),
                 TreeListItemData::new("evora", "Évora"),
-                TreeListItemData { is_disabled: true, ..TreeListItemData::new("essen", "Essen") },
                 TreeListItemData::new("oslo", "Oslo"),
                 TreeListItemData::new("odense", "Odense"),
             ] }
