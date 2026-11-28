@@ -45,6 +45,18 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key:'ArrowUp', code:'ArrowUp', windowsVirtualKeyCode:38});
   await evaluate(`${input}.blur()`);
   await waitFor(`${output} === '1'`);
+  await evaluate(`${input}.focus()`);
+  // CDP modifier bits: Alt (1), Ctrl (2), Meta (4), Shift (8).
+  for (const modifiers of [1, 2, 4, 8]) {
+    for (const [key, windowsVirtualKeyCode] of [['ArrowUp', 38], ['ArrowDown', 40]]) {
+      for (const type of ['keyDown', 'keyUp']) {
+        await send('Input.dispatchKeyEvent', {type, key, code: key, windowsVirtualKeyCode, modifiers});
+      }
+      assert.equal(await evaluate(`${input}.valueAsNumber`), 1, `${key} with modifier ${modifiers}`);
+    }
+  }
+  await evaluate(`${input}.blur()`);
+  assert.equal(await evaluate(output), '1');
   assert.deepEqual(await evaluate(`Array.from(new FormData(${input}.form))`), [['quantity', '1'], ['fixed', '3']]);
   assert.ok(await evaluate(`${input}.form.elements.fixed.readOnly && ${input}.form.elements.unavailable.disabled`));
   assert.ok(await evaluate(`${input}.value = '11'; ${input}.validity.rangeOverflow`));
