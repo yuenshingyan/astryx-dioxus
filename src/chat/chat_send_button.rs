@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 
+use crate::i18n::use_message;
 use crate::{Button, ButtonSize, ButtonVariant, Icon};
 
 /// Supported sizes for a chat send or stop action.
@@ -28,8 +29,12 @@ pub fn ChatSendButton(
     onclick: Option<EventHandler<MouseEvent>>,
     #[props(default)] send_icon: Option<Element>,
     #[props(default)] stop_icon: Option<Element>,
-    #[props(default = "Send".to_owned())] send_label: String,
-    #[props(default = "Stop".to_owned())] stop_label: String,
+    /// Overrides the translated send name when nonblank.
+    #[props(default)]
+    send_label: String,
+    /// Overrides the translated stop name when nonblank.
+    #[props(default)]
+    stop_label: String,
     #[props(default)] size: ChatSendButtonSize,
     #[props(default)] class: String,
     #[props(default)] style: String,
@@ -37,9 +42,19 @@ pub fn ChatSendButton(
     #[props(extends = GlobalAttributes)] attributes: Vec<Attribute>,
 ) -> Element {
     let (label, variant, icon, action) = if is_stop_shown {
-        (stop_label, ButtonVariant::Secondary, stop_icon, on_stop)
+        (
+            action_label(stop_label, "@astryx.chatSendButton.stop", "Stop"),
+            ButtonVariant::Secondary,
+            stop_icon,
+            on_stop,
+        )
     } else {
-        (send_label, ButtonVariant::Primary, send_icon, on_send)
+        (
+            action_label(send_label, "@astryx.chatSendButton.send", "Send"),
+            ButtonVariant::Primary,
+            send_icon,
+            on_send,
+        )
     };
     let size = match size {
         ChatSendButtonSize::Small => ButtonSize::Small,
@@ -66,5 +81,17 @@ pub fn ChatSendButton(
                 if let Some(onclick) = onclick { onclick.call(event); }
             },
         }
+    }
+}
+
+fn action_label(label: String, key: &str, english: &str) -> String {
+    if !label.trim().is_empty() {
+        return label;
+    }
+    let translated = use_message(key, english);
+    if translated.trim().is_empty() {
+        english.to_owned()
+    } else {
+        translated
     }
 }
