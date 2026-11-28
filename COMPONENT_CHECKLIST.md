@@ -3034,9 +3034,9 @@ These changes are available for review. The table records focused evidence, not 
   - Source: [English docs](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Grid/GridSpan.doc.mjs). Templates in `GridSpan/` under [pinned root](https://github.com/meta/astryx/tree/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components).
 
   - **Span behavior**
-    - [ ] `columns`: arbitrary numeric count or finite sentinel `full` (all explicit tracks); `rows`: numeric span. Counts are layout data, not a closed size scale.
+    - [x] `columns`: arbitrary numeric count or finite sentinel `full` (all explicit tracks); `rows`: numeric span. Counts are layout data, not a closed size scale.
     - [ ] Child content inside Grid; explicit columns/rows replace corresponding grid-column/grid-row inline styles; wrapper ref and host styling supported.
-    - [ ] No other documented size/color/variant API.
+    - [x] No other documented size/color/variant API.
 
   - **Named templates**
     - [ ] `GridSpanColumns` — **GridSpan — Columns**: two-of-three-column asymmetric composition.
