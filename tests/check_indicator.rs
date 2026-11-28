@@ -56,16 +56,20 @@ fn replacement_in_either_state_preserves_the_box_and_native_attributes() {
 
 #[test]
 fn busy_visual_leaves_state_and_name_on_the_host() {
-    let html = render_element(rsx! {
-        button { "aria-pressed": "true", "aria-busy": "true",
-            "Choose option"
-            CheckIndicator {
-                state: CheckIndicatorState::Checked,
-                size: IndicatorSize::Small,
-                replacement: rsx! { Spinner { size: SpinnerSize::Small, shade: SpinnerShade::Inherit, is_decorative: true } },
+    let mut dom = VirtualDom::new(|| {
+        rsx! {
+            button { "aria-pressed": "true", "aria-busy": "true",
+                "Choose option"
+                CheckIndicator {
+                    state: CheckIndicatorState::Checked,
+                    size: IndicatorSize::Small,
+                    replacement: rsx! { Spinner { size: SpinnerSize::Small, shade: SpinnerShade::Inherit, is_decorative: true } },
+                }
             }
         }
     });
+    dom.rebuild_in_place();
+    let html = dioxus_ssr::render(&dom);
     let (host, content) = html.split_once('>').unwrap();
     assert!(host.starts_with("<button "), "{html}");
     assert!(host.contains("aria-pressed=\"true\""), "{html}");
