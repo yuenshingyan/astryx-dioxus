@@ -9,13 +9,44 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   assert.deepEqual(await evaluate(`(() => {
     const whole = document.getElementById('side-nav-heading-basic');
     const trailing = document.getElementById('side-nav-heading-trailing');
-    trailing.querySelector('button').focus();
     return [whole.tagName, whole.getAttribute('href'), whole.offsetHeight >= 32,
-      trailing.tagName, trailing.querySelector('a').contains(document.activeElement),
-      document.activeElement.textContent, document.querySelectorAll('#side-nav-heading-examples nav').length];
-  })()`), ['A', '/', true, 'DIV', false, 'Settings', 3]);
+      !!whole.closest('nav > .astryx-side-nav__top'),
+      !!whole.querySelector('h1, h2, h3, h4, h5, h6, [role="heading"]'),
+      trailing.tagName, !!trailing.querySelector(':scope > a + span > button'),
+      !!trailing.querySelector('a button')];
+  })()`), ['A', '/', true, true, false, 'DIV', true, false]);
+
+  const {root} = await send('DOM.getDocument');
   const {nodes} = await send('Accessibility.getFullAXTree');
-  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'link' && node.name?.value === 'Analytics'));
+  for (const [selector, role, name] of [
+    ['#side-nav-heading-basic', 'link', 'Analytics'],
+    ['#side-nav-heading-trailing > a', 'link', 'Analytics'],
+    ['#side-nav-heading-trailing button', 'button', 'Settings'],
+  ]) {
+    const {nodeId} = await send('DOM.querySelector', {nodeId: root.nodeId, selector});
+    const {node: {backendNodeId}} = await send('DOM.describeNode', {nodeId});
+    const ax = nodes.find(node => node.backendDOMNodeId === backendNodeId);
+    assert.deepEqual([ax?.ignored, ax?.role?.value, ax?.name?.value], [false, role, name], selector);
+  }
+
+  const press = async (key, windowsVirtualKeyCode, text) => {
+    await send('Input.dispatchKeyEvent', {type: 'keyDown', key, code: key, windowsVirtualKeyCode, text});
+    await send('Input.dispatchKeyEvent', {type: 'keyUp', key, code: key, windowsVirtualKeyCode});
+  };
+  await evaluate(`(() => {
+    history.replaceState(history.state, '', location.pathname + location.search);
+    document.querySelector('#side-nav-heading-trailing > a').focus();
+  })()`);
+  await press('Tab', 9);
+  assert.equal(await evaluate(`document.activeElement.matches('#side-nav-heading-trailing button')`), true);
+  await press('Enter', 13, '\r');
+  await waitFor(`document.getElementById('side-nav-heading-settings-count').textContent === '1'`);
+  assert.equal(await evaluate('location.hash'), '');
+
+  await evaluate(`document.querySelector('#side-nav-heading-trailing > a').focus()`);
+  await press('Enter', 13, '\r');
+  await waitFor(`location.hash === '#side-nav-heading-examples'`);
+  assert.equal(await evaluate(`document.getElementById('side-nav-heading-settings-count').textContent`), '1');
   assert.deepEqual(exceptions, []);
-  console.log('SideNavHeading: linked rows, trailing focus target, geometry, and accessible link name passed');
+  console.log('SideNavHeading: Chrome DOM, AX names/roles, minimum geometry, and separate keyboard activation passed');
 });

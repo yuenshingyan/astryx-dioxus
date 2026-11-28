@@ -3298,12 +3298,12 @@ These changes are available for review. The table records focused evidence, not 
   - Source: [English API](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/SideNav/SideNavHeading.doc.mjs).
 
   - **Content and interaction patterns**
-    - [ ] No finite visual variant/size/color is documented. Required heading; optional icon, superheading, subheading; each text tier has its own optional href.
+    - [x] No finite visual variant/size/color is documented. Required heading; optional icon, superheading, subheading; each text tier has its own optional href (pinned API and focused SSR).
     - [ ] Optional menu popover; smart link/menu interaction boundaries rather than one nested interactive target.
     - [ ] `headerEndContent` between text and chevron: badge, status indicator or compact action; hidden when rail collapses.
 
   - **Named templates**
-    - [ ] [`SideNavHeadingBasic`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/SideNavHeading/SideNavHeadingBasic.doc.mjs) — “SideNavHeading — Basic”: icon and linked title in header slot.
+    - [x] [`SideNavHeadingBasic`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/SideNavHeading/SideNavHeadingBasic.doc.mjs) — “SideNavHeading — Basic”: icon and linked title in the `SideNav` header slot (SSR composition; not visual parity).
     - [ ] [`SideNavHeadingShowcase`](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/cli/assets/templates/blocks/components/SideNavHeading/SideNavHeadingShowcase.doc.mjs) — “SideNavHeading” / “Side Nav Heading”: logo, heading, superheading and subheading.
 
 - [ ] **[Side Nav Item](https://astryx.atmeta.com/components/SideNavItem)**
