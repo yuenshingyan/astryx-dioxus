@@ -161,6 +161,8 @@ mod file_input;
 mod form_layout;
 #[path = "showcase/grid.rs"]
 mod grid;
+#[path = "showcase/grid_span.rs"]
+mod grid_span;
 #[path = "showcase/h_stack.rs"]
 mod h_stack;
 #[path = "showcase/heading.rs"]
@@ -422,7 +424,8 @@ use field_label::FieldLabelExamples;
 use field_status::FieldStatusExamples;
 use file_input::FileInputExamples;
 use form_layout::FormLayoutExamples;
-use grid::{GridExamples, GridSpanExamples};
+use grid::GridExamples;
+use grid_span::GridSpanExamples;
 use h_stack::HStackExamples;
 use heading::HeadingExamples;
 use hover_card::HoverCardExamples;

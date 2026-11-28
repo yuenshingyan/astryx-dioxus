@@ -25,13 +25,13 @@ pub fn GridSpan(
     /// Caller CSS classes, replacing StyleX styling inputs.
     #[props(default)]
     class: String,
-    /// Caller inline CSS. Explicit spans override matching placement properties.
+    /// Caller inline CSS. Explicit spans override normal-priority placement on the same axis.
     #[props(default)]
     style: String,
     /// Unmodified caller content.
     #[props(default = rsx! {})]
     children: Element,
-    /// Native root attributes and events, including `onmounted`.
+    /// Native root attributes. Pass event listeners such as `onmounted` in this vector.
     #[props(extends = GlobalAttributes)]
     attributes: Vec<Attribute>,
 ) -> Element {
