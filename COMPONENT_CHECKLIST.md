@@ -2973,14 +2973,14 @@ These changes are available for review. The table records focused evidence, not 
 
   - **Decorative state and size**
     - [x] Required state `unchecked`, `checked`; no partial/indeterminate public state in singleSelection family.
-    - [ ] `size`: `sm` (20px circle/8px dot), `md` (default, 24px circle/10px dot); isDisabled false (default) / true visual dimming only.
+    - [x] `size`: `sm` (20px circle/8px dot), `md` (default, 24px circle/10px dot); isDisabled false (default) / true visual dimming only. Pinned source/CSS and integrated Chrome geometry and opacity checks; raster comparison remains open.
     - [x] Empty circle when unchecked versus filled circle/dot checked; circle remains circular independent of radius-full theme token.
     - [ ] children replace inner state mark when shallow isRenderable accepts them; excludes null/undefined/booleans/empty string, not empty-rendering element/container descendants.
-    - [ ] Decorative aria-hidden root, no input/role/focus/keyboard ownership; owner supplies semantics/focus ring; hover/press via ancestor CSS, reduced-motion no transition, forced-color dot stays perceivable.
+    - [ ] Decorative aria-hidden root, no input/role/focus/keyboard ownership; owner supplies semantics/focus ring and press paint. Scoped hover, reduced motion, and forced-color computed styles verified in Chrome; real-host keyboard/focus, manual AT, and forced-color raster still open. The existing passthrough API differs from the pin on `role`/`tabindex`.
     - [ ] Theme restyling radio-indicator/radio-indicator-dot versus whole radio replacement; mapping check to RadioIndicator also draws unchecked circles for selection slots.
 
   - **Named family inline examples and source example**
-    - [ ] **Restyle an indicator (the common path)**: shared circle/dot component targets, state overrides.
+    - [x] **Restyle an indicator (the common path)**: scoped author CSS uses the canonical circle/dot targets; integrated Chrome verifies border, dot radius, and checked+disabled state override.
     - [ ] **Replace an indicator with your own component**: family replacement recipe, token styles and isRenderable; example uses checkbox, not a claimed extra radio state.
     - [ ] **Use radio visuals for single selection**: theme check indicator replaced by RadioIndicator.
     - [x] Source example: checked md RadioIndicator (showcase and SSR).
