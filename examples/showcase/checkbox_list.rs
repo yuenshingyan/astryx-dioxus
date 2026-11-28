@@ -8,6 +8,7 @@ use astryx_dioxus::{
 #[component]
 pub(super) fn CheckboxListExamples() -> Element {
     let mut preferences = use_signal(|| [true, false, false]);
+    let mut disabled_requests = use_signal(|| 0);
     rsx! {
         section { id: "checkbox-list-examples",
             h2 { "CheckboxList" }
@@ -29,8 +30,15 @@ pub(super) fn CheckboxListExamples() -> Element {
                 CheckboxListItem { label: rsx! { strong { "Team access" } }, description: Some("Some teams have access".into()),
                     is_checked: CheckboxIndicatorState::Indeterminate, end_content: rsx! { Badge { label: "Partial" } },
                 }
-                CheckboxListItem { label: "Guest access", is_disabled: true }
+                CheckboxListItem { label: "Guest access", description: Some("Managed by your administrator".into()),
+                    is_checked: CheckboxIndicatorState::Checked, is_disabled: true,
+                    on_check: move |_| disabled_requests += 1,
+                }
+                CheckboxListItem { label: rsx! { span { "Pro plan " Badge { label: "Recommended" } } },
+                    accessible_label: "Pro plan Recommended option".to_owned(),
+                }
             }
+            p { id: "checkbox-list-disabled-requests", "Guest access change requests: {disabled_requests}" }
         }
     }
 }

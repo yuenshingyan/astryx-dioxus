@@ -1,6 +1,7 @@
 use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
+use crate::i18n::use_message;
 use crate::utils::is_renderable::is_renderable;
 use crate::{CheckboxIndicatorState, CheckboxInput, ItemAlign, ItemLabel, ListItem};
 
@@ -8,7 +9,7 @@ use crate::{CheckboxIndicatorState, CheckboxInput, ItemAlign, ItemLabel, ListIte
 #[component]
 pub fn CheckboxListItem(
     #[props(into)] label: ItemLabel,
-    /// Replaces the name derived from the visible label.
+    /// Replaces the name derived from the visible label. Retain all visible label words.
     #[props(default)]
     accessible_label: Option<String>,
     #[props(default)] description: Option<ItemLabel>,
@@ -30,15 +31,14 @@ pub fn CheckboxListItem(
             let input_label = accessible_label.unwrap_or_else(|| label.clone());
             (ItemLabel::Text(label), input_label, None)
         }
-        ItemLabel::Rich(content) => {
-            let labelled_by = accessible_label.is_none().then(|| label_id.clone());
-            let label = rsx! { span { id: label_id, {content} } };
-            (
-                ItemLabel::Rich(label),
-                accessible_label.unwrap_or_default(),
-                labelled_by,
-            )
-        }
+        ItemLabel::Rich(content) => match accessible_label {
+            Some(name) => (ItemLabel::Rich(content), name, None),
+            None => (
+                ItemLabel::Rich(rsx! { span { id: label_id.clone(), {content} } }),
+                use_message("@astryx.checkboxList.item.checkbox", "Checkbox"),
+                Some(label_id),
+            ),
+        },
     };
     let description = description.and_then(|description| match description {
         ItemLabel::Text(text) if !text.is_empty() => Some(rsx! {
@@ -49,15 +49,27 @@ pub fn CheckboxListItem(
     });
     let described_by = description.as_ref().map(|_| description_id);
     let description = description.map(ItemLabel::Rich);
-    let selection_class =
-        if is_checked == CheckboxIndicatorState::Checked && !is_disabled && !is_read_only {
-            "astryx-checkbox-list-item--selected"
-        } else {
-            ""
-        };
+    let is_selected =
+        is_checked == CheckboxIndicatorState::Checked && !is_disabled && !is_read_only;
+    let state_class = if is_disabled {
+        "astryx-checkbox-list-item--disabled"
+    } else if is_selected {
+        "astryx-checkbox-list-item--selected"
+    } else {
+        ""
+    };
+    // Theme state follows the fill, not the checkbox's raw value.
+    let mut attributes = attributes;
+    attributes.retain(|attribute| attribute.name != "data-selected");
+    attributes.push(Attribute::new(
+        "data-selected",
+        is_selected.then_some("selected"),
+        None,
+        false,
+    ));
     rsx! {
         ListItem { label, description, end_content, align, style, attributes,
-            class: format!("astryx-checkbox-list-item {selection_class} {class}"),
+            class: format!("astryx-checkbox-list-item {state_class} {class}"),
             start_content: rsx! {
                 CheckboxInput { label: input_label, labelled_by, described_by, value: is_checked,
                     is_label_hidden: true, is_disabled, is_read_only, on_change: on_check,
