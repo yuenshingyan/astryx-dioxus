@@ -79,6 +79,8 @@ fn LightboxCaption(id: String, caption: Element) -> Element {
                             tag: TextTag::Div,
                             text_type: TextType::BODY,
                             max_lines: if is_expanded { 0 } else { CAPTION_LINES },
+                            // Dioxus can retain the old inline declaration when style becomes empty.
+                            style: if is_expanded { "-webkit-line-clamp:none" } else { "" },
                             has_truncate_tooltip: false,
                             {caption}
                         }

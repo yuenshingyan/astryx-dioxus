@@ -22,7 +22,10 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   assert.match(await evaluate(`${panel}.querySelector('figcaption').textContent`), /scenic coastline/);
   assert.equal(await evaluate(`${panel}.querySelector('figcaption button').getClientRects().length`), 0);
   const press = async (key, windowsVirtualKeyCode) => {
-    for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key, code: key, windowsVirtualKeyCode});
+    await send('Input.dispatchKeyEvent', {
+      type: 'keyDown', key, code: key, windowsVirtualKeyCode, ...(key === 'Enter' && {text: '\r'}),
+    });
+    await send('Input.dispatchKeyEvent', {type: 'keyUp', key, code: key, windowsVirtualKeyCode});
   };
   await press('Escape', 27);
   const closed = `!${panel} && document.activeElement === ${trigger}`;
