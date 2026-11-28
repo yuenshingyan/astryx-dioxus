@@ -37,6 +37,9 @@ pub fn DateRangeInput(
     #[props(default = "Choose a range within the allowed number of days.".to_owned())]
     invalid_span_message: String,
     #[props(default)] is_disabled: bool,
+    /// Locks both date controls while caller-owned work is in progress.
+    #[props(default)]
+    is_loading: bool,
     /// Allow clearing a committed range. No action is shown for an incomplete draft.
     #[props(default = true)]
     has_clear: bool,
@@ -104,7 +107,8 @@ pub fn DateRangeInput(
         message: None,
         message_id: None,
     });
-    let should_show_clear = has_clear && value.is_some() && !is_disabled;
+    let is_locked = is_disabled || is_loading;
+    let should_show_clear = has_clear && value.is_some() && !is_locked;
     let clear_label = clear_label
         .filter(|text| !text.trim().is_empty())
         .unwrap_or_else(|| format!("Clear {label}"));
@@ -113,7 +117,7 @@ pub fn DateRangeInput(
     let min_bound = min.clone();
     let max_bound = max.clone();
     let update = Callback::new(move |(start, end): (Option<String>, Option<String>)| {
-        if is_disabled {
+        if is_locked {
             return;
         }
         let next = start
@@ -155,11 +159,11 @@ pub fn DateRangeInput(
         fieldset { class: "astryx-date-range-input", style, disabled: is_disabled,
             legend { "{label}" }
             div { class: "astryx-date-range-input__segments",
-                DateInput { label: start_label, value: start, min: min.clone(), max: max.clone(), is_disabled,
+                DateInput { label: start_label, value: start, min: min.clone(), max: max.clone(), is_disabled, is_loading,
                     status: endpoint_status.clone(), described_by: described_by.clone(),
                     onmounted: move |event| start_node.set(Some(event)),
                     on_change: move |start| update.call((start, current_end.clone())), }
-                DateInput { label: end_label, value: end, min, max, is_disabled,
+                DateInput { label: end_label, value: end, min, max, is_disabled, is_loading,
                     status: endpoint_status, described_by,
                     on_change: move |end| update.call((current_start.clone(), end)), }
                 if should_show_clear {

@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8313'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8328'});
   const root = `document.querySelector('#date-range-input-examples fieldset')`;
   const input = index => `${root}.querySelectorAll('input')[${index}]`;
   const output = `document.getElementById('date-range-value').textContent`;
@@ -49,6 +49,17 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await waitFor(`${status} === 'Choose no more than seven days.'`);
   await send('Page.bringToFront');
   await waitFor('document.hasFocus()');
+  const toggle = "document.getElementById('date-range-toggle-loading')";
+  const endpoints = `${root}.querySelectorAll('input[type=date]')`;
+  await evaluate(`${input(0)}.focus(); ${toggle}.click()`);
+  await waitFor(`Array.from(${endpoints}).every(el => el.readOnly && el.getAttribute('aria-busy') === 'true') && !${clear}`);
+  assert.ok(await evaluate(`document.activeElement === ${input(0)} && !${root}.disabled`));
+  assert.equal(await evaluate(`${root}.querySelectorAll('.astryx-spinner[aria-hidden=true]').length`), 2);
+  await change(1, '2026-04-15');
+  assert.equal(await evaluate(output), '2026-04-10 to 2026-04-16');
+  assert.equal(await evaluate(status), 'Choose no more than seven days.');
+  await evaluate(`${input(1)}.value = '2026-04-17'; ${toggle}.click()`);
+  await waitFor(`Array.from(${endpoints}).every(el => !el.readOnly && !el.hasAttribute('aria-busy')) && ${clear} && !${root}.querySelector('.astryx-spinner')`);
   await evaluate(`window.clearInputEvents = 0; for (const el of ${root}.querySelectorAll('input')) for (const type of ['input','change']) el.addEventListener(type, () => window.clearInputEvents++); ${clear}.focus()`);
   for (const type of ['keyDown', 'keyUp']) await send('Input.dispatchKeyEvent', {type, key:'Enter', code:'Enter', windowsVirtualKeyCode:13, ...(type === 'keyDown' ? {text:'\r'} : {})});
   await waitFor(`${output} === 'No range selected' && ${input(0)}.value === '' && ${input(1)}.value === '' && ${status} === '' && !${clear} && document.activeElement === ${input(0)}`);

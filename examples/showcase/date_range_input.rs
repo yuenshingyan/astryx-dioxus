@@ -4,6 +4,7 @@ use astryx_dioxus::{DateRange, DateRangeInput};
 
 #[component]
 pub(super) fn DateRangeInputExamples() -> Element {
+    let mut is_loading = use_signal(|| false);
     let mut range = use_signal(|| None::<DateRange>);
     let display = range().map_or_else(
         || "No range selected".to_owned(),
@@ -13,9 +14,10 @@ pub(super) fn DateRangeInputExamples() -> Element {
         section { id: "date-range-input-examples",
             h2 { "Date Range Input" }
             DateRangeInput { label: "Date range", value: range(), min: "2026-01-01", max: "2026-12-31",
-                max_range_span: 7, invalid_span_message: "Choose no more than seven days.",
+                is_loading: is_loading(), max_range_span: 7, invalid_span_message: "Choose no more than seven days.",
                 width: Some(400.into()), on_change: move |next| range.set(next),
             }
+            button { id: "date-range-toggle-loading", r#type: "button", onclick: move |_| is_loading.toggle(), "Toggle simulated loading" }
             output { id: "date-range-value", "{display}" }
         }
     }
