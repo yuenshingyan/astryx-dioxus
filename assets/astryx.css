@@ -3823,6 +3823,15 @@ button.astryx-link { background-color: transparent; border-style: none; padding:
 @layer astryx-base {
   .astryx-carousel { position: relative; min-inline-size: 0; }
   .astryx-carousel__scroller { display: flex; box-sizing: border-box; gap: var(--_carousel-gap); padding: var(--_carousel-padding); overflow-x: auto; }
+  .astryx-carousel__scroller[data-edge-fade] { --_carousel-flow: to right; --_carousel-reverse: to left; }
+  .astryx-carousel__scroller[data-edge-fade]:dir(rtl) { --_carousel-flow: to left; --_carousel-reverse: to right; }
+  @media (forced-colors: none) {
+    .astryx-carousel__scroller[data-edge-fade][data-overflow-start] { mask-image: linear-gradient(var(--_carousel-flow), transparent, rgb(0 0 0 / .3) 2px, black var(--spacing-1)); }
+    .astryx-carousel__scroller[data-edge-fade][data-overflow-end] { mask-image: linear-gradient(var(--_carousel-reverse), transparent, rgb(0 0 0 / .3) 2px, black var(--spacing-1)); }
+    .astryx-carousel__scroller[data-edge-fade][data-overflow-start][data-overflow-end] { mask-image: linear-gradient(to right, transparent, rgb(0 0 0 / .3) 2px, black var(--spacing-1), black calc(100% - var(--spacing-1)), rgb(0 0 0 / .3) calc(100% - 2px), transparent); }
+    .astryx-carousel:has(> .astryx-carousel__scroller[data-edge-fade]:focus-visible) { outline: 2px solid var(--focus-outline-color); }
+    .astryx-carousel__scroller[data-edge-fade]:focus-visible { outline: none; }
+  }
   .astryx-carousel__scroller[data-snap="true"] { scroll-snap-type: inline mandatory; scroll-padding-inline: var(--_carousel-padding); }
   .astryx-carousel__slide { flex: none; scroll-snap-align: start; }
   .astryx-carousel__scroller:focus-visible, .astryx-carousel__button:focus-visible { outline: 2px solid var(--focus-outline-color); }

@@ -22,6 +22,9 @@ pub fn Carousel(
     #[props(default)] padding: Option<SpacingStep>,
     #[props(default)] has_snap: bool,
     #[props(default = true)] has_buttons: bool,
+    /// Fade edges that have more slides beyond them.
+    #[props(default = true)]
+    has_edge_fade: bool,
     #[props(default = "Previous slides".to_owned())] previous_label: String,
     #[props(default = "Next slides".to_owned())] next_label: String,
     #[props(default)] slide_label: Option<Callback<(usize, usize), String>>,
@@ -48,7 +51,7 @@ pub fn Carousel(
                 controller.set(Some(eval));
             },
             div { class: "astryx-carousel__scroller", role: "group", "aria-label": label, tabindex: -1,
-                "data-snap": has_snap.then_some("true"),
+                "data-snap": has_snap.then_some("true"), "data-edge-fade": has_edge_fade.then_some("true"),
                 for (index, slide) in slides.into_iter().enumerate() {
                     div { key: "{slide.key}", class: "astryx-carousel__slide", role: "group",
                         "aria-roledescription": "slide",
