@@ -26,7 +26,9 @@ pub fn CheckboxIndicator(
     /// Use the disabled appearance.
     #[props(default)]
     is_disabled: bool,
-    /// Replace both built-in marks without removing the box. Empty content can be intentional.
+    /// Replace both built-in marks without removing the box. Pass `None` to keep the
+    /// state mark (for example, use `is_loading.then(|| rsx! { ... })`). `Some` replaces
+    /// it even when the element renders nothing. Supply decorative, non-focusable content.
     #[props(default)]
     replacement: Option<Element>,
     /// Host theme targets and caller classes.

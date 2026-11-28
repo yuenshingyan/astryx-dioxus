@@ -2935,16 +2935,16 @@ These changes are available for review. The table records focused evidence, not 
   - Sources: [owning English Indicator family doc](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/Indicator.doc.mjs), [original TSX](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/CheckboxIndicator.tsx), [type contract](https://github.com/meta/astryx/blob/476a3153417dbf75c565f7df05b0784e94ddd59e/packages/core/src/Indicator/types.ts). Own ID doc is absent because API belongs to Indicator family; resolved from pinned family/source. No own templates supplied.
 
   - **Decorative states and customization**
-    - [ ] Required state `unchecked`, `checked`, `indeterminate`; persistent empty box, checkmark, bar respectively. This is multiSelection, not a native input.
-    - [ ] `size`: `sm` (20px), `md` (24px, default); `isDisabled=false` default, purely visual.
-    - [ ] `children` replaces mark inside chrome, e.g. pending Spinner. Use shallow isRenderable: null/undefined/booleans/empty string do not replace; elements/containers do even if descendants render nothing.
+    - [x] Required state `unchecked`, `checked`, `indeterminate`; persistent empty box, checkmark, bar respectively. This is multiSelection, not a native input.
+    - [x] `size`: `sm` (20px), `md` (24px, default); `isDisabled=false` default, purely visual.
+    - [x] `children` replaces mark inside chrome, e.g. pending Spinner. Upstream shallow `isRenderable` excludes null/undefined/booleans/empty string; Rust callers map those inputs to `None`. `Some(Element)` replaces the mark even if the element or container renders nothing.
     - [ ] Always aria-hidden, non-interactive; owning control retains role/name/state/keyboard and paints focus ring on single indicator root; replacement root radius determines ring shape. Hover/press comes from owner's ancestor CSS marker, not extra props.
     - [ ] Theme restyle checkbox-indicator/check/dash targets or replace `indicators.checkbox`; token-driven colors/radius/borders, forced-color-visible check/bar and reduced-motion transition handling in source.
   - **Named family/source examples**
     - [ ] **Restyle an indicator (the common path)**: rounded box, thicker border, checked/disabled styling through theme targets.
     - [ ] **Replace an indicator with your own component**: BrandCheckbox, token styles, aria-hidden and children-first replacement handling.
     - [ ] **Use radio visuals for single selection**: family example changes check indicator, not checkbox's three-state contract.
-    - [ ] TSX example: indeterminate sm checkbox visual.
+    - [x] TSX example: indeterminate sm checkbox visual.
 
 - [ ] **[Check Indicator](https://astryx.atmeta.com/components/CheckIndicator)**
 
