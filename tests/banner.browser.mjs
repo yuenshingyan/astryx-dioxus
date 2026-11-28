@@ -12,6 +12,8 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
     url.searchParams.set('banner-test', scenario);
     await send('Page.navigate', {url: url.href});
     await waitFor(`location.href === ${JSON.stringify(url.href)} && ${root}?.querySelector('[role=alert]')`);
+    await send('Page.bringToFront');
+    await waitFor('document.hasFocus()');
     await evaluate(`(() => {
       const button = document.createElement('button');
       button.id = 'banner-test-origin';
@@ -23,6 +25,7 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
       button.focus();
       delete button.dataset.bannerStillMounted;
     })()`);
+    assert.equal(await evaluate(`document.activeElement === ${origin}`), true);
   };
 
   await open('keyboard');
