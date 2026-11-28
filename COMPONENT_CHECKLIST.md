@@ -2965,7 +2965,7 @@ These changes are available for review. The table records focused evidence, not 
     - [ ] **Replace an indicator with your own component**: family replacement contract, token use, children-first behavior.
     - [ ] **Use radio visuals for single selection**: map check to RadioIndicator globally.
     - [ ] Source examples: checked/unchecked selection expression with size sm; replace check with RadioIndicator through defineTheme.
-  - [Port audit](docs/check-indicator-port.md): Rust `Option<Element>` preserves the shallow slot choice; the standalone render contract is source-verified. The nearest-theme resolver, exact family recipes, and current browser/visual/AT evidence remain open.
+  - [Port audit](docs/check-indicator-port.md): PR #241 passed full CI, the integrated WASM showcase build, and the focused Chrome DOM, computed-style, and interaction regression. Parent remains open: nearest-theme resolver and family recipes, port-to-pinned raster comparison, second browser engine, manual AT, root mount delivery, and the ref/API decision.
 
 - [ ] **[Radio Indicator](https://astryx.atmeta.com/components/RadioIndicator)**
 
