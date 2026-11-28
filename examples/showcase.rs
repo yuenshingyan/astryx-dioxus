@@ -2,7 +2,8 @@ use std::future::Future;
 use std::pin::Pin;
 
 use astryx_dioxus::{
-    Button, ButtonElevation, ButtonSize, ButtonType, ButtonVariant, DropdownMenuDivider, STYLES,
+    Button, ButtonElevation, ButtonSize, ButtonType, ButtonVariant, DropdownMenu,
+    DropdownMenuDivider, DropdownMenuItem, DropdownMenuItemVariant, STYLES,
 };
 use dioxus::prelude::*;
 
@@ -1040,10 +1041,10 @@ fn App() -> Element {
             ContextMenuGroupExamples {}
             section { id: "dropdown-menu-divider-example", "data-astryx-theme": "neutral",
                 h2 { "DropdownMenuDivider" }
-                div { style: "max-width:240px",
-                    div { "Edit" }
+                DropdownMenu { label: "Open divider evidence",
+                    DropdownMenuItem { label: "Edit" }
                     DropdownMenuDivider { id: "dropdown-menu-divider-demo" }
-                    div { "Delete" }
+                    DropdownMenuItem { label: "Delete", variant: DropdownMenuItemVariant::Destructive }
                 }
             }
             FieldStatusExamples {}
