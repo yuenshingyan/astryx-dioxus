@@ -7,9 +7,15 @@ const rtl = () => getComputedStyle(scroller).direction === 'rtl';
 const update = () => {
   const max = scroller.scrollWidth - scroller.clientWidth;
   const position = Math.max(0, rtl() ? -scroller.scrollLeft : scroller.scrollLeft);
-  scroller.tabIndex = max > 1 ? 0 : -1;
+  const canScrollStart = position > 1;
+  const canScrollEnd = position < max - 1;
+  if (scroller.tabIndex !== (max > 1 ? 0 : -1)) scroller.tabIndex = max > 1 ? 0 : -1;
+  for (const [side, canScroll] of [['start', canScrollStart], ['end', canScrollEnd]]) {
+    const attribute = `data-overflow-${side}`;
+    if (scroller.hasAttribute(attribute) !== canScroll) scroller.toggleAttribute(attribute, canScroll);
+  }
   for (const button of root.querySelectorAll(':scope > [data-carousel-step]')) {
-    const canScroll = button.dataset.carouselStep === 'previous' ? position > 1 : position < max - 1;
+    const canScroll = button.dataset.carouselStep === 'previous' ? canScrollStart : canScrollEnd;
     if (!canScroll && document.activeElement === button) scroller.focus({preventScroll: true});
     button.hidden = !canScroll;
   }

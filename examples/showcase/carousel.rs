@@ -28,6 +28,11 @@ pub(super) fn CarouselExamples() -> Element {
             div { style: "max-width:500px",
                 Carousel { label: "Workflow steps", slides, has_snap: true, has_buttons: false }
             }
+            div { style: "width:220px;max-width:100%",
+                Carousel { label: "No fade example", slides: vec![CarouselSlide {
+                    key: "wide".to_owned(), content: rsx! { div { style: "width:320px", "Wide slide without edge fade" } },
+                }], has_edge_fade: false, has_buttons: false }
+            }
             div { style: "width:220px;max-width:100%", dir: "rtl",
                 Carousel { label: "Navigation example", slides: ["One", "Two", "Three"].into_iter().map(|name| CarouselSlide {
                     key: name.to_owned(), content: rsx! { div { style: "width:200px;padding-block:16px", "{name}" } },
