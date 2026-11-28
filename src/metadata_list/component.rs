@@ -185,17 +185,21 @@ pub fn MetadataList(
         "inline"
     };
     let mut has_toggle = false;
-    let visible = match (is_horizontal, children, max_num_of_items) {
-        (false, Ok(node), Some(limit)) => {
+    let visible = match (is_horizontal, children) {
+        (false, Ok(node)) => {
+            // Keep the same keyed children when a caller adds or removes the
+            // limit, so entries that stay visible are not remounted.
             let mut items = Vec::new();
             collect_items(&node, "item", &mut items);
-            has_toggle = items.len() > limit;
-            if !is_expanded() {
-                items.truncate(limit);
+            if let Some(limit) = max_num_of_items {
+                has_toggle = items.len() > limit;
+                if has_toggle && !is_expanded() {
+                    items.truncate(limit);
+                }
             }
             rsx! { {items.into_iter()} }
         }
-        (_, children, _) => children,
+        (_, children) => children,
     };
     let attributes: Vec<_> = attributes
         .into_iter()
