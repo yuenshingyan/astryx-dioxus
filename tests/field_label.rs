@@ -30,3 +30,37 @@ fn group_labels_reflect_the_form_default_without_setting_native_required() {
     assert!(!html.contains("unused") && !html.contains("Required") && !html.contains("required="));
     assert!(html.contains("Optional"));
 }
+
+#[test]
+fn form_default_filters_conflicting_markers_before_optional_takes_precedence() {
+    for (default_optionality, expected_optional, expected_required) in [
+        (None, 1, 0),
+        (Some(FormOptionality::Required), 1, 0),
+        (Some(FormOptionality::Optional), 0, 1),
+    ] {
+        let label = rsx! { FieldLabel {
+            label: "Email", input_id: "email", is_optional: true, is_required: true,
+            optional_text: "Facultatif", required_text: "Obligatoire",
+        } };
+        let html = match default_optionality {
+            Some(default) => render_element(rsx! { FormLayout { default_optionality: default,
+                {label}
+            } }),
+            None => render_element(label),
+        };
+        assert_eq!(
+            html.matches("Facultatif").count(),
+            expected_optional,
+            "{default_optionality:?}: {html}"
+        );
+        assert_eq!(
+            html.matches("Obligatoire").count(),
+            expected_required,
+            "{default_optionality:?}: {html}"
+        );
+        assert!(
+            !html.contains("Optional") && !html.contains("Required"),
+            "{html}"
+        );
+    }
+}

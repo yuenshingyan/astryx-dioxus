@@ -8,6 +8,10 @@ Source: Meta Astryx `476a3153417dbf75c565f7df05b0784e94ddd59e`, `Field/FieldLabe
 
 All five standard Rust checks passed. Chrome verified label and description associations, hidden label semantics, optionality markers, and description activation without intercepting nested links. FormLayout, FieldStatus, and showcase navigation regressions passed. Touch, other browsers, and manual assistive technology remain unverified. The migration checklist stays open.
 
+The pinned spec's FR4/ORD1 precedence already matches: when both flags are set, Optional wins with no default or a Required default; an Optional default suppresses Optional and leaves Required. `tests/field_label.rs` covers all three cases using caller-localized marker text. This is a regression test only; it does not change marker resolution, the port's caller-supplied translations, or the sibling help button and its existing “More information about {label}” fallback.
+
+Upstream FR7/OQ1 still needs an API decision on group-mode element and ref typing before any parity change there. The checklist remains open; this SSR coverage does not establish browser, touch, assistive-technology, or visual parity.
+
 ```sh
 SHOWCASE_URL=http://127.0.0.1:8146 node tests/field_label.browser.mjs
 ```
