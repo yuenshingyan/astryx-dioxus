@@ -65,4 +65,32 @@ await withTarget(async ({send, evaluate, waitFor}) => {
   assert.deepEqual(states.inline, ['inline-flex', 'center', 'center']);
   assert.deepEqual(states.inherit, states.parent);
   console.log('Center: three patterns match source-derived flex geometry; axis, padding, inline display and inherited dimensions passed');
+
+  const root = 'document.getElementById("center-native-root")';
+  const clicks = 'document.getElementById("center-native-clicks").textContent';
+  await waitFor('!!document.querySelector("#center-examples [data-center-mounted=true]")');
+  assert.deepEqual(await evaluate(`(() => {
+    const node = ${root};
+    return [node.tagName, node.classList.contains('astryx-center'),
+      node.classList.contains('center-caller-width'),
+      ...['data-center-mounted', 'data-axis', 'data-caller', 'lang', 'role', 'aria-label']
+        .map(name => node.getAttribute(name))];
+  })()`), ['DIV', true, true, 'true', 'horizontal', 'kept', 'en', 'group', 'Caller group']);
+  assert.deepEqual(await evaluate(`['center-width-prop', 'center-width-class', 'center-native-root']
+    .map(id => getComputedStyle(document.getElementById(id)).width)`), ['200px', '152px', '112px']);
+
+  assert.equal(await evaluate(clicks), '0');
+  const point = await evaluate(`(() => {
+    const node = ${root};
+    node.scrollIntoView({block: 'center', behavior: 'instant'});
+    const rect = node.getBoundingClientRect();
+    const x = Math.floor(rect.x + rect.width / 2), y = Math.floor(rect.y + rect.height / 2);
+    if (document.elementFromPoint(x, y) !== node) throw new Error('Center root is not the click target');
+    return {x, y};
+  })()`);
+  for (const type of ['mousePressed', 'mouseReleased']) {
+    await send('Input.dispatchMouseEvent', {type, ...point, button: 'left', clickCount: 1});
+  }
+  await waitFor(`${clicks} === '1'`);
+  console.log('Center: mounted root identity, native click delivery and caller width precedence passed');
 });

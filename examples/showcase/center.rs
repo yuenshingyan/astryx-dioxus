@@ -1,4 +1,6 @@
 use dioxus::prelude::*;
+#[cfg(target_arch = "wasm32")]
+use web_sys::Element as WebElement;
 
 use astryx_dioxus::{
     ButtonSize, ButtonVariant, Card, Center, CenterAxis, Heading, HeadingLevel, Icon, IconButton,
@@ -46,6 +48,8 @@ fn glyph(path_data: &'static str) -> Element {
 
 #[component]
 pub(super) fn CenterExamples() -> Element {
+    let mut root_clicks = use_signal(|| 0);
+    const CALLER_CSS: &str = ".center-caller-width { width: 152px; }";
     rsx! {
         section { id: "center-examples", "data-astryx-theme": "neutral",
             h2 { "Center — original patterns" }
@@ -94,6 +98,27 @@ pub(super) fn CenterExamples() -> Element {
                     "Inherited dimensions"
                 }
             }
+            h3 { "Native root and caller styles" }
+            style { "{CALLER_CSS}" }
+            Center { id: "center-width-prop", width: SizeValue::from(200), "Width prop" }
+            Center { id: "center-width-class", width: SizeValue::from(200), class: "center-caller-width", "Caller class" }
+            Center {
+                id: "center-native-root", width: SizeValue::from(200), class: "center-caller-width",
+                style: "width:112px;height:48px", axis: CenterAxis::Horizontal,
+                "data-axis": "spoof", "data-caller": "kept", lang: "en", role: "group",
+                "aria-label": "Caller group",
+                onmounted: move |_event: MountedEvent| {
+                    // Mark the renderer's node rather than looking it up by ID.
+                    #[cfg(target_arch = "wasm32")]
+                    if let Some(node) = _event.data().downcast::<WebElement>() {
+                        node.set_attribute("data-center-mounted", "true")
+                            .expect("mark the mounted Center fixture node");
+                    }
+                },
+                onclick: move |_| root_clicks += 1,
+                "Native root"
+            }
+            output { id: "center-native-clicks", "{root_clicks}" }
         }
     }
 }
