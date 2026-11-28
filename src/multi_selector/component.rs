@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 
 use crate::{
     Field, FieldStatusInput, FieldStatusPlacement, InputStatusType, SelectorChoice, SizeValue,
+    Spinner, SpinnerSize,
 };
 
 /// A controlled multiple-choice field backed by a native listbox.
@@ -27,6 +28,9 @@ pub fn MultiSelector(
     #[props(default)] width: Option<SizeValue>,
     #[props(default)] is_required: bool,
     #[props(default)] is_disabled: bool,
+    /// Show caller-owned loading progress without disabling existing options.
+    #[props(default)]
+    is_loading: bool,
 ) -> Element {
     let id = use_hook(|| format!("astryx-multi-selector-{}", current_scope_id().0));
     let mount_id = id.clone();
@@ -80,9 +84,11 @@ pub fn MultiSelector(
     });
     rsx! {
         Field { label, input_id: id.clone(), width, is_required, is_disabled, description, description_id, status, status_variant,
+            div { class: "astryx-selector__entry", "data-loading": is_loading.then_some("true"),
             select { id, class: "astryx-selector__control astryx-multi-selector__control", name: html_name,
                 multiple: true, required: is_required, disabled: is_disabled,
                 "aria-describedby": (!described_by.is_empty()).then_some(described_by),
+                "aria-busy": is_loading.then_some("true"),
                 "aria-invalid": (severity == Some(InputStatusType::Error)).then_some("true"),
                 "data-status": severity.map(InputStatusType::as_str),
                 onmounted: move |_| {
@@ -99,6 +105,8 @@ pub fn MultiSelector(
                         selected: value.contains(&choice.value),
                         "data-astryx-selected": value.contains(&choice.value).to_string(), "{choice.label}" }
                 }
+            }
+            if is_loading { Spinner { size: SpinnerSize::Small, is_decorative: true } }
             }
         }
     }
