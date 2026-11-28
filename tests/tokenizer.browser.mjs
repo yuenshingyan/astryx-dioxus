@@ -4,7 +4,7 @@ import {withTarget} from './card_metrics.mjs';
 await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await send('Network.enable');
   await send('Network.setBlockedURLs', {urls: ['https://*']});
-  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8276'});
+  await send('Page.navigate', {url: process.env.SHOWCASE_URL ?? 'http://127.0.0.1:8317'});
   const input = "document.querySelector('#tokenizer-examples [role=combobox]')";
   const list = `document.getElementById(${input}.getAttribute('aria-controls'))`;
   const values = `JSON.stringify(new FormData(${input}.form).getAll('tags'))`;
@@ -30,6 +30,17 @@ await withTarget(async ({send, evaluate, waitFor, exceptions}) => {
   await evaluate(`${remove}.focus()`);
   await press('Enter', 13, '\r');
   await waitFor(`${values} === '["2","3"]' && document.activeElement === ${input}`);
+  await evaluate(`document.querySelector('#tokenizer-examples [aria-label="Remove Engineering"]').focus()`);
+  await press('Enter', 13, '\r');
+  await waitFor(`${values} === '["3"]' && ${input}.getAttribute('aria-invalid') === 'true'`);
+  const {nodes} = await send('Accessibility.getFullAXTree');
+  assert.ok(nodes.some(node => !node.ignored && node.role?.value === 'combobox' && node.name?.value === 'Tags' && /Choose tags for the project\..*Select at least two tags\./.test(node.description?.value ?? '')));
+  await send('Input.insertText', {text:'Research'});
+  await waitFor(`${list}.querySelectorAll('[role=option]').length === 1`);
+  await press('ArrowDown', 40);
+  await press('Enter', 13, '\r');
+  await waitFor(`${values} === '["3","5"]' && !${input}.hasAttribute('aria-invalid')`);
+  assert.equal(await evaluate(`document.getElementById(${input}.getAttribute('aria-describedby')).textContent`), 'Choose tags for the project.');
   assert.deepEqual(exceptions, []);
   console.log('Tokenizer: labeled input, filtered choices, add/remove, repeated form values, and focus return passed');
 });

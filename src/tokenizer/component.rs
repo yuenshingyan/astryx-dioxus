@@ -3,7 +3,10 @@ use std::collections::HashSet;
 use dioxus::core::current_scope_id;
 use dioxus::prelude::*;
 
-use crate::{BaseTypeahead, BaseTypeaheadOption, Field, SizeValue, Token};
+use crate::{
+    BaseTypeahead, BaseTypeaheadOption, Field, FieldStatusInput, FieldStatusPlacement,
+    InputStatusType, SizeValue, Token,
+};
 
 /// The item affected by a tokenizer change.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -22,12 +25,42 @@ pub fn Tokenizer(
     value: Vec<BaseTypeaheadOption>,
     on_change: EventHandler<(Vec<BaseTypeaheadOption>, TokenizerChange)>,
     #[props(default)] placeholder: Option<String>,
+    /// Help text associated with the search input.
+    #[props(default)]
+    description: Option<String>,
+    /// Caller-owned validation feedback for the token selection.
+    #[props(default)]
+    status: Option<FieldStatusInput>,
+    /// Placement of the validation message.
+    #[props(default)]
+    status_variant: FieldStatusPlacement,
     #[props(default)] html_name: Option<String>,
     #[props(default)] width: Option<SizeValue>,
     #[props(default)] has_entries_on_focus: bool,
     #[props(default)] is_disabled: bool,
 ) -> Element {
     let id = use_hook(|| format!("astryx-tokenizer-{}", current_scope_id().0));
+    let description_id = description
+        .as_ref()
+        .filter(|text| !text.is_empty())
+        .map(|_| format!("{id}-desc"));
+    let is_invalid = status
+        .as_ref()
+        .is_some_and(|status| status.status_type == InputStatusType::Error);
+    let status_id = status
+        .as_ref()
+        .filter(|status| status.message.as_ref().is_some_and(|text| !text.is_empty()))
+        .map(|status| {
+            status
+                .message_id
+                .clone()
+                .unwrap_or_else(|| format!("{id}-status"))
+        });
+    let described_by = [description_id.as_deref(), status_id.as_deref()]
+        .into_iter()
+        .flatten()
+        .collect::<Vec<_>>()
+        .join(" ");
     let mut ids = HashSet::new();
     let value: Vec<_> = value
         .into_iter()
@@ -51,7 +84,7 @@ pub fn Tokenizer(
         }
     };
     rsx! {
-        Field { label: label.clone(), input_id: id.clone(), width, is_disabled,
+        Field { label: label.clone(), input_id: id.clone(), width, is_disabled, description, description_id, status, status_variant,
             div { class: "astryx-tokenizer",
                 if !value.is_empty() {
                     ul { class: "astryx-tokenizer__tokens", role: "list",
@@ -77,7 +110,8 @@ pub fn Tokenizer(
                     }
                 }
                 BaseTypeahead { label, input_id: id, placeholder, options, value: None,
-                    on_change: add, has_entries_on_focus, is_disabled,
+                    on_change: add, has_entries_on_focus, is_disabled, is_invalid,
+                    described_by: (!described_by.is_empty()).then_some(described_by),
                 }
                 if !is_disabled && let Some(name) = html_name {
                     for item in value {
